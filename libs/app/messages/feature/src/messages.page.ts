@@ -27,6 +27,81 @@ export class MessagesPage {
         unread: false,
         name: 'Joe',
       },
+      {
+        id: '1',
+        unread: true,
+        name: 'John',
+      },
+      {
+        id: '2',
+        unread: false,
+        name: 'Jane',
+      },
+      {
+        id: '3',
+        unread: false,
+        name: 'Joe',
+      },
+      {
+        id: '1',
+        unread: true,
+        name: 'John',
+      },
+      {
+        id: '2',
+        unread: false,
+        name: 'Jane',
+      },
+      {
+        id: '3',
+        unread: false,
+        name: 'Joe',
+      },
+      {
+        id: '1',
+        unread: true,
+        name: 'John',
+      },
+      {
+        id: '2',
+        unread: false,
+        name: 'Jane',
+      },
+      {
+        id: '3',
+        unread: false,
+        name: 'Joe',
+      },
+      {
+        id: '1',
+        unread: true,
+        name: 'John',
+      },
+      {
+        id: '2',
+        unread: false,
+        name: 'Jane',
+      },
+      {
+        id: '3',
+        unread: false,
+        name: 'Joe',
+      },
+      {
+        id: '1',
+        unread: true,
+        name: 'John',
+      },
+      {
+        id: '2',
+        unread: false,
+        name: 'Jane',
+      },
+      {
+        id: '3',
+        unread: false,
+        name: 'Joe',
+      },
     ];
     //this.chats = [];
     this.noChats = this.chats.length === 0;

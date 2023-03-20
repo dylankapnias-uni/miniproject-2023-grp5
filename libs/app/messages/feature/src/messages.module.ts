@@ -6,6 +6,7 @@ import { MessagesRouting } from './messages.routing';
 
 @NgModule({
   imports: [CommonModule, IonicModule, MessagesRouting],
-  declarations: [MessagesPage]
+  declarations: [MessagesPage],
+  exports: [MessagesPage],
 })
 export class MessagesModule {}

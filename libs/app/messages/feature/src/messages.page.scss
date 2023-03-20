@@ -28,6 +28,12 @@ ion-searchbar {
   .chat-bubble .content {
     flex: 1;
   }
+
+  .scrl{
+    flex-direction: column;
+    overflow: scroll;
+    height:85%;
+  }
   
   .chat-bubble .name {
     font-family: 'Roboto';

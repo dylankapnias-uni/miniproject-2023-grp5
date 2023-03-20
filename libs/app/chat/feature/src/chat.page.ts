@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { chat } from '../../chat.interface';
+import { chat } from './chat.interface';
 
 @Component({
   selector: 'mp-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+  templateUrl: './chat.page.html',
+  styleUrls: ['./chat.page.scss'],
 })
-export class ChatComponent {
+export class ChatPage {
   Chat!: chat;
-  id!: string;
+  id!: number;
   me!: string;
   outgoingMessage: string = '';
 
@@ -17,6 +17,10 @@ export class ChatComponent {
     private router:Router,
     private route: ActivatedRoute,
     ) {
+      //Get id from route 
+      this.route.paramMap.subscribe(paramMap => {
+        this.id = parseInt(paramMap.get('id')!);
+      })
       //Grab the chat here
       this.me='2';
       this.Chat = {
@@ -48,14 +52,6 @@ export class ChatComponent {
         timeLeft: 7770
     }
   }
-
-    NgOnInit(){
-      this.route.queryParams.subscribe(params => {
-        this.id = params['id'];
-        console.log(this.id);
-      })
-    }
-
     isMe(id: string){return id===this.me;}
     showid(){
       alert(this.id);
