@@ -1,15 +1,125 @@
-ion-title {
-  display: flex;
+body {
+  // background-color: #fde0e0;
+  // color: #fde0e0;
+  // display: flex;
 }
 
-ion-card-title {
-  display: flex;
+ion-card {
+  position: relative;
+  height:250%;
+  width: 85%;
+  z-index: -1;
+
+  margin-top: 0%;
+  margin-left: 7%;
+  margin-right: 7%;
+  border-radius: 4%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+
+ // display: flex;
+// flex-direction: column;
+// align-items: center;
+// padding: 0px;
+
+// position: absolute;
+// left: 10.26%;
+// right: 10.26%;
+// top: 8.89%;
+// bottom: 62.68%;
+
+// background: #FFFFFF;
+// /* 2dp — Elevation */
+
+// box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+// border-radius: 8px;
 }
 
-ion-card-title > ion-icon {
-  margin-top: 0px;
+ion-card-content {
+  margin-top: 0;
+  height: 70%;
+  z-index: -1;
 }
 
-ion-icon {
-  padding-left: 5px;
+ion-img {
+  height: auto;
+  width: auto;
+  z-index: 2;
+  position: absolute;
+  padding-right: 7%;
+ // padding-left: 5%;
+ margin-right: 6%;
+  padding-top: 8%;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: 1px solid #f3c1c0;
+  // rgb(33, 33, 33);
+}
+
+
+.center {
+  margin-top: 7%;
+  margin-left: 10%;
+}
+
+ion-icon{
+  color: #f87c7c;
+  font-size: 2.3rem;
+//  float: left;
+}
+
+ion-chip {
+  background-color: #f3c1c0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+  
+}
+
+.first {
+  margin-top: 125%;
+  margin-left: 35%;
+}
+
+.middle{
+  margin-top: 125%;
+  margin-left: 25%;
+}
+
+.last {
+  margin-top: 125%;
+  margin-left: 0;
+}
+.card2 {
+  //width: 320px;
+  text-align: center;
+  width: 100%;
+  height: 55%;
+  margin-left: 0;
+ // margin-right: 15%;
+}
+
+.title1 {
+  font-size: 200%;
+  color:rgb(126, 126, 126);
+  //align-self: center;
+  
+  
+}
+
+.title2 {
+  font-size: 120%;
+  color:rgb(171, 171, 171);
+}
+
+.descript {
+  background-color: #f3c1c0;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 3%;
+  margin-bottom: 3%;
+  height: auto;
+}
+
+.photosecond {
+  height: auto;
+  width:95%; 
+
 }
