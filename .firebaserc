@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "<REPLACE_ME>",
-    "production": "<REPLACE_ME>",
-    "development": "<REPLACE_ME>"
+    "default": "miniproject-2023-grp5-dev",
+    "production": "miniproject-2023-grp5",
+    "development": "miniproject-2023-grp5-dev"
   }
 }
