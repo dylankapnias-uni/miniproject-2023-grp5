@@ -1,0 +1,77 @@
+name: (PROD) Build and Deploy
+'on':
+  push:
+    branches:
+      - main
+
+jobs:
+  prod_build:
+    name: Build
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create .env.prod file
+        env:
+          NX_FIREBASE_USE_EMULATORS: ${{ secrets.NX_FIREBASE_USE_EMULATORS }}
+          NX_FIREBASE_API_KEY: ${{ secrets.NX_FIREBASE_API_KEY }}
+          NX_FIREBASE_AUTH_DOMAIN: ${{ secrets.NX_FIREBASE_AUTH_DOMAIN }}
+          NX_FIREBASE_DATABASE_URL: ${{ secrets.NX_FIREBASE_DATABASE_URL }}
+          NX_FIREBASE_PROJECT_ID: ${{ secrets.NX_FIREBASE_PROJECT_ID }}
+          NX_FIREBASE_STORAGE_BUCKET: ${{ secrets.NX_FIREBASE_STORAGE_BUCKET }}
+          NX_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NX_FIREBASE_MESSAGING_SENDER_ID }}
+          NX_FIREBASE_APP_ID: ${{ secrets.NX_FIREBASE_APP_ID }}
+          NX_FIREBASE_MEASUREMENT_ID: ${{ secrets.NX_FIREBASE_MEASUREMENT_ID }}
+        run: |
+          cat <<EOF > .env.prod
+          NX_ENVIRONMENT=development
+          NX_FIREBASE_USE_EMULATORS="$NX_FIREBASE_USE_EMULATORS"
+          NX_FIREBASE_API_KEY="$NX_FIREBASE_API_KEY"
+          NX_FIREBASE_AUTH_DOMAIN="$NX_FIREBASE_AUTH_DOMAIN"
+          NX_FIREBASE_DATABASE_URL="$NX_FIREBASE_DATABASE_URL"
+          NX_FIREBASE_PROJECT_ID="$NX_FIREBASE_PROJECT_ID"
+          NX_FIREBASE_STORAGE_BUCKET="$NX_FIREBASE_STORAGE_BUCKET"
+          NX_FIREBASE_MESSAGING_SENDER_ID="$NX_FIREBASE_MESSAGING_SENDER_ID"
+          NX_FIREBASE_APP_ID="$NX_FIREBASE_APP_ID"
+          NX_FIREBASE_MEASUREMENT_ID="$NX_FIREBASE_MEASUREMENT_ID"
+          EOF
+
+          echo "cat .env.prod"
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Project
+        run: yarn build:app:prod
+
+      - name: Archive Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifact
+          path: dist
+          retention-days: 1
+
+  prod_deploy:
+    name: Deploy
+    environment: production
+    needs: prod_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist-artifact
+          path: dist
+
+      - name: Deploy and Host
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          channelId: live
+          projectId: '${{ secrets.NX_FIREBASE_PROJECT_ID }}'
