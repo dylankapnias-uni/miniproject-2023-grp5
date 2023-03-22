@@ -1,0 +1,93 @@
+body
+{
+    background-color: #FDE0E0;
+}
+
+ion-searchbar 
+{
+    --background: #FFFFFF;
+    --icon-color: #F6A7A7;
+    --border-radius: 20px;
+    
+}
+
+.search
+{
+    position : relative;
+    top: 2%;
+    width: 90%;
+    margin: 0 auto;
+    height: 5%;
+}
+
+
+.profile
+{
+    // width : 100% !important;
+    
+    // position: relative;
+    top: 1.2%;
+    text-align: center;
+    height: 75%;
+    // display : flex;
+    
+}
+
+.profile .profile_picture
+{
+    border-radius: 12px !important;
+    overflow: hidden;
+    height: 100%;
+    // width : 100%;
+    // position: relative;
+    
+}
+
+.profile .profile_info
+{
+    position: absolute;
+    left: 5%;
+    bottom: 2%;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: 90%;
+    height: 148px;
+    
+    background-color:rgb(224, 224, 224, 0.85) ; 
+  
+}
+
+.user_name
+{
+    //position: relative;
+   
+    // left: 135px;
+    top: 591px;
+    
+   // margin: 0 auto;
+    opacity: 100%;
+    font-size: 48px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+
+}
+
+.age
+{
+    font-size: 32px;
+}
+
+ion-chip
+{
+    background-color: #F3C1C0;
+
+    width: 90.89px;
+    height: 28px;
+    font-size: 17px;;
+    justify-content: center;
+    box-shadow: 3px 3px 5px rgb(73, 72, 72);
+    text-transform: bold;
+    letter-spacing: 0.4px;
+    
+}
+
