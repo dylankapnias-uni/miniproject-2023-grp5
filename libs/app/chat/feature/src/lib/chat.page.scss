@@ -1,0 +1,232 @@
+.chat{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    height: 82%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.gold{
+    border: 2px solid gold;
+}
+
+.bronze{
+    border: 2px solid #CD7F32;
+}
+
+.silver{
+    border: 2px solid #C0C0C0;
+}
+
+.inp{
+    position: fixed;
+    bottom: 12px;
+    width: 100%;
+    background-color: #FFFFFF;
+}
+.message-widgets{
+    color:#666666;
+    font-size:27px;
+    padding-top:3px;
+}
+
+
+.message {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1.5rem;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    overflow: scroll;
+    height:90%;
+}
+  
+.message p {
+    //border-radius: 1.15rem;
+    border-radius: 5px;
+    line-height: 1.25;
+    max-width: 75%;
+    padding: 0.5rem .875rem;
+    position: relative;
+    word-wrap: break-word;
+}
+  
+.message p::before,
+.message p::after {
+    bottom: -0.1rem;
+    content: "";
+    height: 1rem;
+    position: absolute;
+}
+  
+p.from-me {
+    align-self: flex-end;
+    background-color: #FCABAA; 
+}
+  
+p.from-me::before {
+    border-bottom-left-radius: 0.8rem 0.7rem;
+    border-right: 1rem solid #FCABAA;
+    right: -0.35rem;
+    transform: translate(0, -0.1rem);
+}
+  
+p.from-me::after {
+    background-color: #fff;
+    border-bottom-left-radius: 0.5rem;
+    right: -40px;
+    transform:translate(-30px, -2px);
+    width: 10px;
+}
+  
+p[class^="from-"] {
+    margin: 0.5rem 0;
+    width: fit-content;
+}
+  
+p.from-me ~ p.from-me {
+    margin: 0.25rem 0 0;
+}
+  
+p.from-me ~ p.from-me:not(:last-child) {
+    margin: 0.25rem 0 0;
+}
+  
+p.from-me ~ p.from-me:last-child {
+    margin-bottom: 0.5rem;
+}
+  
+p.from-them {
+    align-items: flex-start;
+    background-color: #F2C1C0;
+    color: #000;
+}
+  
+p.from-them:before {
+    border-bottom-right-radius: 0.8rem 0.7rem;
+    border-left: 1rem solid #F2C1C0;
+    left: -0.35rem;
+    transform: translate(0, -0.1rem);
+}
+  
+p.from-them::after {
+    background-color: #fff;
+    border-bottom-right-radius: 0.5rem;
+    left: 20px;
+    transform: translate(-30px, -2px);
+    width: 10px;
+}
+  
+p[class^="from-"].emoji {
+    background: none;
+    font-size: 2.5rem;
+}
+  
+p[class^="from-"].emoji::before {
+    content: none;
+}
+  
+.no-tail::before {
+    display: none;
+}
+  
+.margin-b_none {
+    margin-bottom: 0 !important;
+}
+  
+.margin-b_one {
+    margin-bottom: 1rem !important;
+}
+  
+.margin-t_one {
+    margin-top: 1rem !important;
+}
+
+.time{
+    font-size:8px;
+    margin-left: 10px;
+}
+
+.back{
+    height:37px;
+    width:42px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-icon{
+    font-size:30px;
+}
+
+.center{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.name{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+    margin-left: 9px;
+}
+
+ion-chip{
+    --background:#F3C1C0;
+    --color:#000000;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 16px;
+    line-height: 16px;
+}
+
+ion-modal#example-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  ion-modal#example-modal h1 {
+    margin: 20px 20px 10px 20px;
+  }
+
+  ion-modal#example-modal ion-icon {
+    margin-right: 6px;
+    width:19px;
+    height:21px;
+    padding: 4px 0;
+    color: #141B34;
+  }
+  
+  ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+  }
+
+  ion-item {
+    --ion-background-color: rgba(243,193,192,0.8);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    margin-bottom: 21px;
+    width: 90%;
+    margin-left:5%;
+  }
+
+  
+  //For some reason these two give different shades of grey??
+  /*ion-modal {
+    --background: rgba(217, 217, 217, 0.7);
+  }
+
+  ion-list{
+    background:rgba(217, 217, 217, 0.6);
+  }*/
