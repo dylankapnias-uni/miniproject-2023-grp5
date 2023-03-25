@@ -1,20 +1,39 @@
 <body>
+  <ion-content>
+    <ion-grid [ngStyle]="{'background':'#FDE0E0'}">
+      <ion-row>
+        <ion-col>
+          <div>  
+            <ion-searchbar class = "search" clear-icon="close-outline"></ion-searchbar>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="users" *ngIf="users.length > 0; emptyTemplate">
+            <div class="user" *ngFor="let user of users; let i = index" [style.zIndex]="users.length-i" (touchstart)="touchStart($event)" (touchmove)="touchMove($event,i)" (touchend)="touchEnd(i)" id="{{'card-'+i}}">
+              <ion-card class = "profile">
+                <img class="profile_picture" src = "{{user.photo}}">
+                <div class="profile_info">
+                  <h1 class="user_name">{{user.name}}</h1>
+                  <h2 class="age">{{user.age}}</h2>
+                  <ion-chip *ngFor="let interests of user.interests">{{interests}}</ion-chip>
+                </div>
+              </ion-card>
+            </div>
+            <!--Icons-->
+            <ion-icon name="heart-dislike" class="icon" id="reject-icon"></ion-icon>
+            <ion-icon name="heart" class="icon" id="accept-icon"></ion-icon>
+          </div>
 
-  <ion-searchbar class = "search" clear-icon="close-outline"></ion-searchbar>
-
-  <ion-card class = "profile" *ngFor = "let profile of array_profile">
-        
-    <img class = "profile_picture" src = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80">
-    <div class ="profile_info">
-      <h1 class = "user_name">{{profile.name}}</h1>
-      <h2 class ="age">{{profile.age}}</h2>
-      <ion-chip *ngFor = "let interests of profile.interests">{{interests}}</ion-chip>
-    </div>
-    
-  </ion-card>
-
- 
- 
-  
-
+          <ng-template #emptyTemplate>
+            <div class="center">
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <ion-note>All Swiped!</ion-note>
+            </div>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
 </body>
