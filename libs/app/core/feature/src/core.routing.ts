@@ -50,6 +50,11 @@ const routes: Routes = [
       import('@mp/app/profile/feature').then((m) => m.ProfileModule),
   },
   // {
+  //   path: 'notification',
+  //   loadChildren: () =>
+  //     import('@mp/app/notification/feature').then((m) => m.NotificationModule),
+  // },
+  // {
   //   path: 'verify',
   //   pathMatch: 'full',
   //   canActivate: [AuthGuard],
