@@ -1,14 +1,16 @@
-name: Deploy to Dev Firebase Hosting without preview on merge
+name: (DEV) Build and Deploy
 'on':
   push:
     branches:
       - dev
+      
 jobs:
-  build_and_deploy:
+  dev_build:
+    name: Build
     environment: development
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Create .env file
@@ -40,10 +42,35 @@ jobs:
 
           echo "cat .env"
 
-      - name: Install deps and build
-        run: yarn install --frozen-lockfile && yarn build:app:dev
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
 
-      - name: Deploy and host
+      - name: Build Project
+        run: yarn build:app:dev
+
+      - name: Archive Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifact
+          path: dist
+          retention-days: 1
+
+  dev_deploy:
+    name: Deploy
+    environment: development
+    needs: dev_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist-artifact
+          path: dist
+
+      - name: Deploy and Host
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

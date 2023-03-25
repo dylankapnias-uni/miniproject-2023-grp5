@@ -1,0 +1,24 @@
+<ion-tabs *ngIf="this.hasRoute('/home') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post')">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button (click)="navigate('/home')" [ngClass]="{'active':hasRoute('/home')}" tab="home">
+        <ion-icon name="heart"></ion-icon>
+        Home
+      </ion-tab-button>
+      <ion-tab-button (click)="navigate('/messages')" [ngClass]="{'active':hasRoute('/messages')}" tab="messages">
+        <ion-icon name="paper-plane"></ion-icon>
+        Messages
+      </ion-tab-button>
+      <ion-tab-button (click)="navigate('/post')" [ngClass]="{'active':hasRoute('/post')}" tab="post">
+        <ion-icon name="add-circle"></ion-icon>
+        Post
+      </ion-tab-button>
+      <ion-tab-button (click)="navigate('/notifications')" [ngClass]="{'active':hasRoute('/notifications')}" tab="notifications">
+        <ion-icon name="notifications"></ion-icon>
+        Notification
+      </ion-tab-button>
+      <ion-tab-button (click)="navigate('/profile')" [ngClass]="{'active':hasRoute('/profile')}" tab="profile">
+        <ion-icon name="person"></ion-icon>
+        Profile
+      </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>

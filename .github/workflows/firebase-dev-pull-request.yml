@@ -1,16 +1,49 @@
-name: Deploy to Dev Firebase Hosting with preview on PR
+name: (DEV) Build and Preview
 'on':
   pull_request:
     branches:
       - dev
 
 jobs:
-  build_and_preview:
-    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
-    environment: development
+  dev_lint_and_test:
+    name: Lint and Unit Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Linter
+        run: yarn lint
+        
+      - name: Run Unit Tests
+        run: yarn test:ci
+
+      - name: Archive Failed Coverage Artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-fail-artifact
+          path: coverage
+          retention-days: 2
+          
+      - name: Archive Coverage Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-artifact
+          path: coverage
+          retention-days: 2
+
+  dev_build_pr:
+    name: Build
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    environment: development
+    needs: dev_lint_and_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Create .env file
@@ -42,10 +75,35 @@ jobs:
 
           echo "cat .env"
 
-      - name: Install deps and build
-        run: yarn install --frozen-lockfile && yarn build:app:dev
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
 
-      - name: Deploy and preview
+      - name: Build Project
+        run: yarn build:app:dev
+
+      - name: Archive Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifact
+          path: dist
+          retention-days: 1
+
+  dev_deploy_pr:
+    name: Deploy
+    environment: development
+    needs: dev_build_pr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist-artifact
+          path: dist
+
+      - name: Deploy and Preview
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
