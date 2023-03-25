@@ -1,15 +1,16 @@
-name: Deploy to Prod Firebase Hosting with preview on PR
+name: (PROD) Build and Preview
 'on':
   pull_request:
     branches:
       - main
+
 jobs:
-  build_and_preview:
+  prod_build_pr:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     environment: production
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Create .env.prod file
@@ -39,10 +40,33 @@ jobs:
 
           echo "cat .env.prod"
 
-      - name: Install deps and build
-        run: yarn install --frozen-lockfile && yarn build:app:prod
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
 
-      - name: Deploy and preview
+      - name: Build Project
+        run: yarn build:app:prod
+
+      - name: Archive Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifact
+          path: dist
+          retention-days: 1
+      
+  prod_deploy:
+    name: Deploy
+    needs: prod_build_pr
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist-artifact
+          path: dist
+          
+      - name: Deploy and Preview
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
