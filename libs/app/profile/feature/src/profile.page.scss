@@ -6,7 +6,7 @@ body {
 
 ion-card {
   position: relative;
-  height:250%;
+  height:251%;
   width: 85%;
   z-index: -1;
 
@@ -49,7 +49,7 @@ ion-img {
  // padding-left: 5%;
  margin-right: 6%;
   padding-top: 8%;
-  margin-bottom: 0;
+  margin-bottom: 5%;
   padding-bottom: 0;
   border: 1px solid #f3c1c0;
   // rgb(33, 33, 33);
@@ -58,7 +58,7 @@ ion-img {
 
 .center {
   margin-top: 7%;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 
 ion-icon{
@@ -97,6 +97,7 @@ ion-chip {
 }
 
 .title1 {
+  margin-top: -5%;
   font-size: 200%;
   color:rgb(126, 126, 126);
   //align-self: center;
