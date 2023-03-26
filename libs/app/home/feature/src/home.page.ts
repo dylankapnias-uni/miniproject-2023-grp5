@@ -40,10 +40,10 @@ export class HomePage {
     }
   ];
 
-  startX:number = 0;
-  endX:number = 0;
+  startX = 0;
+  endX = 0;
 
-  constructor(){}
+  //constructor(){}
 
 
   touchStart(evt: any) {
@@ -51,8 +51,8 @@ export class HomePage {
   }
 
   touchMove(evt: any, index: number) {
-    let deltaX = this.startX - evt.touches[0].pageX;
-    let deg = deltaX/10;
+    const deltaX = this.startX - evt.touches[0].pageX;
+    const deg = deltaX/10;
     this.endX = evt.touches[0].pageX;
 
     (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX("+ -deltaX+"px) rotate("+deg+"deg)";
@@ -67,7 +67,7 @@ export class HomePage {
 
   touchEnd(index: number) {
     if(this.endX > 0){
-      let finalX = this.endX - this.startX;
+      const finalX = this.endX - this.startX;
       if(finalX > -100 && finalX < 100){ //Reset Card
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = ".3s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(0px) rotate(0deg)";
