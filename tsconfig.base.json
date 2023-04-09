@@ -37,6 +37,11 @@
       ],
       "@mp/api/profiles/feature": ["libs/api/profiles/feature/src/index.ts"],
       "@mp/api/profiles/util": ["libs/api/profiles/util/src/index.ts"],
+      "@mp/api/settings/data-access": [
+        "libs/api/settings/data-access/src/index.ts"
+      ],
+      "@mp/api/settings/feature": ["libs/api/settings/feature/src/index.ts"],
+      "@mp/api/settings/util": ["libs/api/settings/util/src/index.ts"],
       "@mp/api/users/data-access": ["libs/api/users/data-access/src/index.ts"],
       "@mp/api/users/feature": ["libs/api/users/feature/src/index.ts"],
       "@mp/api/users/util": ["libs/api/users/util/src/index.ts"],
