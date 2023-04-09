@@ -1,0 +1,141 @@
+body
+{
+    background-color: #FDE0E0;
+}
+
+.back_button{
+    height:37px;
+    width:42px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1.5%;
+    left: 1.5%;
+}
+.back-icon{
+    font-size:30px;
+}
+
+.page_name
+{
+    position: absolute;
+    top: 2.3%;
+    left: 20%;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    align-items: center;
+
+    color: #000000;
+}
+
+
+ion-item
+{
+   --background: #FDE0E0;
+}
+
+ion-item ion-label
+{
+    font-size : 20px;
+    font-weight: 500;
+}
+
+ion-item ion-input
+{
+    font-size : 16px;
+    font-weight: 400;
+    
+}
+
+.img-container
+{   
+    position: absolute;
+    left: 11%;
+  
+    top: 12%;
+
+    width: 310px;
+    height: 240px;
+
+    
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 8px; 
+}
+
+.img
+{
+    background-color : #D9D9D9;
+    position: relative;
+    left: 3.5%;
+   
+    top: 4%;
+   
+    height: 220px;
+    width: 286px;
+}
+
+.add_picture_btn
+{
+    --background: #F3C1C0;
+    position: absolute;
+    color: black;
+    bottom: 0%;
+    right: 0%;
+    height: 20px;
+    font-size: 14px;
+    border-radius: 0px;
+    font-weight: bold;
+}
+
+.label_bio
+{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.bio
+{
+    position: absolute;
+    top: 45%;
+    
+}
+
+
+
+.label_interests
+{
+    position: absolute;
+    top: 60%;
+    font-size: 20px;
+    font-weight: 700;
+    left: 4%;
+}
+
+.interests_btn
+{
+    position: absolute;
+    width: 114px;
+    height: 47px;
+    left: 35%;
+    top: 65%;
+    --background: #FFFF;
+    position: absolute;
+    color: black;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.4px;
+    border-radius: 16px;
+
+}
+
+
+

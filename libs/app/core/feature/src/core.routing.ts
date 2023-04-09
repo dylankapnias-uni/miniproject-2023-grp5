@@ -84,6 +84,50 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
   },
+  {
+    path: 'settings',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/settings/feature').then((m) => m.SettingsPageModule),
+  },
+
+  {
+    path: 'account',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/account/feature').then((m) => m.AccountPageModule),
+  },
+
+  {
+    path: 'edit-profile',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/edit-profile/feature').then((m) => m.EditProfilePageModule),
+  },
+
+  {
+    path: 'shop',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/shop/feature').then((m) => m.ShopPageModule),
+  },
+
+  {
+    path: 'about',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/about/feature').then((m) => m.AboutPageModule),
+  },
 ];
 
 @NgModule({

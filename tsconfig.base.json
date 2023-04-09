@@ -40,6 +40,8 @@
       "@mp/api/users/data-access": ["libs/api/users/data-access/src/index.ts"],
       "@mp/api/users/feature": ["libs/api/users/feature/src/index.ts"],
       "@mp/api/users/util": ["libs/api/users/util/src/index.ts"],
+      "@mp/app/about/feature": ["libs/app/about/feature/src/index.ts"],
+      "@mp/app/account/feature": ["libs/app/account/feature/src/index.ts"],
       "@mp/app/auth/data-access": ["libs/app/auth/data-access/src/index.ts"],
       "@mp/app/auth/feature": ["libs/app/auth/feature/src/index.ts"],
       "@mp/app/auth/util": ["libs/app/auth/util/src/index.ts"],
@@ -52,6 +54,9 @@
       ],
       "@mp/app/dashboard/feature": ["libs/app/dashboard/feature/src/index.ts"],
       "@mp/app/dashboard/util": ["libs/app/dashboard/util/src/index.ts"],
+      "@mp/app/edit-profile/feature": [
+        "libs/app/edit-profile/feature/src/index.ts"
+      ],
       "@mp/app/errors/data-access": [
         "libs/app/errors/data-access/src/index.ts"
       ],
@@ -82,6 +87,8 @@
       "@mp/app/reset/data-access": ["libs/app/reset/data-access/src/index.ts"],
       "@mp/app/reset/feature": ["libs/app/reset/feature/src/index.ts"],
       "@mp/app/reset/util": ["libs/app/reset/util/src/index.ts"],
+      "@mp/app/settings/feature": ["libs/app/settings/feature/src/index.ts"],
+      "@mp/app/shop/feature": ["libs/app/shop/feature/src/index.ts"],
       "@mp/app/tos/feature": ["libs/app/tos/feature/src/index.ts"],
       "@mp/app/updates/data-access": [
         "libs/app/updates/data-access/src/index.ts"
