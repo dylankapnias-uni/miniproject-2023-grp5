@@ -1,1 +1,1 @@
-export * from './lib/api-api-time-get-data-access';
+export * from './testing/api-api-time-get-data-access';

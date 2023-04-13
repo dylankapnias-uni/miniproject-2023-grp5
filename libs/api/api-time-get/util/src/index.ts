@@ -1,4 +1,4 @@
-export * from './lib/api-api-time-get-util';
+export * from './testing/api-api-time-get-util';
 export * from './commands';
 export * from './enums';
 export * from './events';
