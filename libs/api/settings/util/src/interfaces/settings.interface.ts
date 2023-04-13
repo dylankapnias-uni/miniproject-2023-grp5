@@ -1,7 +1,7 @@
 import { ITime } from './time.interface';
-import { ProfilePrivacy } from '../enums';
+import { IPrivacyDetails } from './privacy-settings.interface';
 export interface ISettings {
   userId: string,
-  privacy: ProfilePrivacy,
+  privacy: IPrivacyDetails,
   time: ITime,
 }

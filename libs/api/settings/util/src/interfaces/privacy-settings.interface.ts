@@ -1,6 +1,6 @@
 import { ProfilePrivacy } from "../enums";
 
-export interface PrivacDetails {
+export interface IPrivacyDetails {
   profileVisibility: ProfilePrivacy,
   blockedAccounts: string[],
 }
