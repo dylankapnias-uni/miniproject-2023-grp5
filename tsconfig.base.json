@@ -32,6 +32,11 @@
       ],
       "@mp/api/history/feature": ["libs/api/history/feature/src/index.ts"],
       "@mp/api/history/util": ["libs/api/history/util/src/index.ts"],
+      "@mp/api/interests/data-access": [
+        "libs/api/interests/data-access/src/index.ts"
+      ],
+      "@mp/api/interests/feature": ["libs/api/interests/feature/src/index.ts"],
+      "@mp/api/interests/util": ["libs/api/interests/util/src/index.ts"],
       "@mp/api/profiles/data-access": [
         "libs/api/profiles/data-access/src/index.ts"
       ],
