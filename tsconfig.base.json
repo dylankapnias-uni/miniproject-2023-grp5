@@ -16,6 +16,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mp/api/api-time-get/data-access": [
+        "libs/api/api-time-get/data-access/src/index.ts"
+      ],
+      "@mp/api/api-time-get/feature": [
+        "libs/api/api-time-get/feature/src/index.ts"
+      ],
+      "@mp/api/api-time-get/util": ["libs/api/api-time-get/util/src/index.ts"],
       "@mp/api/auth/data-access": ["libs/api/auth/data-access/src/index.ts"],
       "@mp/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@mp/api/auth/util": ["libs/api/auth/util/src/index.ts"],
