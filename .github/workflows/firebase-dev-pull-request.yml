@@ -1,0 +1,111 @@
+name: (DEV) Build and Preview
+'on':
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  dev_lint_and_test:
+    name: Lint and Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Linter
+        run: yarn lint
+        
+      - name: Run Unit Tests
+        run: yarn test:ci
+
+      - name: Archive Failed Coverage Artifact
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-fail-artifact
+          path: coverage
+          retention-days: 2
+          
+      - name: Archive Coverage Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-artifact
+          path: coverage
+          retention-days: 2
+
+  dev_build_pr:
+    name: Build
+    if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+    environment: development
+    needs: dev_lint_and_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create .env file
+        env:
+          NX_FIREBASE_USE_EMULATORS: ${{ secrets.NX_FIREBASE_USE_EMULATORS }}
+          NX_FIREBASE_API_KEY: ${{ secrets.NX_FIREBASE_API_KEY }}
+          NX_FIREBASE_AUTH_DOMAIN: ${{ secrets.NX_FIREBASE_AUTH_DOMAIN }}
+          NX_FIREBASE_DATABASE_URL: ${{ secrets.NX_FIREBASE_DATABASE_URL }}
+          NX_FIREBASE_PROJECT_ID: ${{ secrets.NX_FIREBASE_PROJECT_ID }}
+          NX_FIREBASE_STORAGE_BUCKET: ${{ secrets.NX_FIREBASE_STORAGE_BUCKET }}
+          NX_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NX_FIREBASE_MESSAGING_SENDER_ID }}
+          NX_FIREBASE_APP_ID: ${{ secrets.NX_FIREBASE_APP_ID }}
+          NX_FIREBASE_MEASUREMENT_ID: ${{ secrets.NX_FIREBASE_MEASUREMENT_ID }}
+          FIRESTORE_EMULATOR_HOST: ${{ secrets.FIRESTORE_EMULATOR_HOST }}
+        run: |
+          cat <<EOF > .env
+          NX_ENVIRONMENT=development
+          NX_FIREBASE_USE_EMULATORS="$NX_FIREBASE_USE_EMULATORS"
+          NX_FIREBASE_API_KEY="$NX_FIREBASE_API_KEY"
+          NX_FIREBASE_AUTH_DOMAIN="$NX_FIREBASE_AUTH_DOMAIN"
+          NX_FIREBASE_DATABASE_URL="$NX_FIREBASE_DATABASE_URL"
+          NX_FIREBASE_PROJECT_ID="$NX_FIREBASE_PROJECT_ID"
+          NX_FIREBASE_STORAGE_BUCKET="$NX_FIREBASE_STORAGE_BUCKET"
+          NX_FIREBASE_MESSAGING_SENDER_ID="$NX_FIREBASE_MESSAGING_SENDER_ID"
+          NX_FIREBASE_APP_ID="$NX_FIREBASE_APP_ID"
+          NX_FIREBASE_MEASUREMENT_ID="$NX_FIREBASE_MEASUREMENT_ID"
+          FIRESTORE_EMULATOR_HOST="$FIRESTORE_EMULATOR_HOST"
+          EOF
+
+          echo "cat .env"
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Project
+        run: yarn build:app:dev
+
+      - name: Archive Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-artifact
+          path: dist
+          retention-days: 1
+
+  dev_deploy_pr:
+    name: Deploy
+    environment: development
+    needs: dev_build_pr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: dist-artifact
+          path: dist
+
+      - name: Deploy and Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          projectId: '${{ secrets.NX_FIREBASE_PROJECT_ID }}'

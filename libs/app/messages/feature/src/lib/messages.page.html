@@ -1,0 +1,21 @@
+<body [ngStyle]="{'background':'#FDE0E0'}">
+    <ion-searchbar clear-icon="close-outline"></ion-searchbar>
+    <ion-grid class="scrl">
+        <ion-row class="chat-bubble" *ngFor="let chat of chats" (click)="openChat(chat.id)">
+          <ion-col size="2">
+            <ion-avatar>
+              <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="9">
+            <div>
+              <div class="content">
+                <div class="name">{{chat.name}}</div>
+                <div class="last-message" *ngIf="chat.unread">Sent you a new message!</div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!--h3 *ngIf="noChats">No chats</h3-->
+</body>
