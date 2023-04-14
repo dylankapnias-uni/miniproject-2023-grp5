@@ -3,7 +3,7 @@ import { Timestamp } from "firebase-admin/firestore"
 export interface IAddTimeRequest {
   userId: string,
   purchase: {
-    time: Timestamp,
+    date: Timestamp,
     amount: number
   }
 }

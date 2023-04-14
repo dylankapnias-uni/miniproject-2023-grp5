@@ -3,21 +3,25 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   //command handlers
-  CreateSettingsHandler
+  CreateSettingsHandler,
+  AddTimeHandler
 } from './commands';
 import { 
   //event handlers
-  SettingsCreatedHandler
+  SettingsCreatedHandler,
+  TimeAddedHandler
 } from './events';
 import { SettingsSagas } from './settings.sagas';
 import { SettingsService } from './settings.service'
 
 export const CommandHandlers = [
-  CreateSettingsHandler
+  CreateSettingsHandler,
+  AddTimeHandler
 ];
 
 export const EventHandlers = [
-  SettingsCreatedHandler
+  SettingsCreatedHandler,
+  TimeAddedHandler
 ]
 
 @Module({
