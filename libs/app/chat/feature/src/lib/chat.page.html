@@ -1,0 +1,94 @@
+<body [ngStyle]="{'Background-color': '#FDE0E0'}">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="2"><a href="https://www.youtube.com/"><div class="back"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
+            <ion-col size="8">
+                <div class="center" [ngStyle]="{'margin-top':'29px'}">
+                    <ion-avatar slot="start">
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="avatar">
+                    </ion-avatar>
+                    <ion-label class="name">Liam</ion-label>
+                </div>
+            </ion-col>
+            <ion-col size="1">
+                <ion-button fill="clear" id="open-custom-dialog2">
+                    <ion-icon [ngStyle]="{'font-size': '20px'}" slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12">
+                <div class="center">
+                    <ion-chip class="{{this.color}}" id="open-custom-dialog" expand="block">{{secondsToTime(this.Chat.timeLeft)}}</ion-chip>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div class="chat">
+        <div class="message">
+            <p *ngFor="let message of this.Chat.messages" [ngClass]="{'from-me': isMe(message.from), 'from-them': !isMe(message.from)}">{{message.content}}<small class="time">{{message.time}}</small></p>
+        </div>
+        <ion-grid class="inp">
+            <ion-row>
+                <ion-col size="1"><ion-icon name="camera" class="message-widgets"></ion-icon></ion-col>
+                <ion-col size="8">
+                        <ion-input [(ngModel)]="outgoingMessage" inputmode="text" placeholder="Message..."></ion-input>
+                </ion-col>
+                <ion-col size="1"><ion-icon name="paper-plane" class="message-widgets" (click)="send()"></ion-icon></ion-col>
+                <ion-col size="1"><ion-icon name="image" class="message-widgets"></ion-icon></ion-col>
+                <ion-col size="1"><ion-icon name="gift" class="message-widgets"></ion-icon></ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</body>
+
+<!--Modal to add time-->
+<ion-content class="ion-padding">
+    <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
+      <ng-template>
+        <div class="wrapper">
+          <h1 class="center">Add time</h1>
+          <ion-list lines="none">
+            <ion-item button="true" detail="false" (click)="modal.dismiss()" (click)="addTime(5)">
+              <ion-icon name="time-outline"></ion-icon>
+              <ion-label>Add 5 Minutes</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="false" (click)="modal.dismiss()" (click)="addTime(10)">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>Add 10 Minutes</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="false" (click)="modal.dismiss()" (click)="addTime(15)">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>Add 15 Minutes</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="false" (click)="modal.dismiss()" (click)="addTime(30)">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>Add 30 Minutes</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="false" (click)="modal.dismiss()" (click)="addTime(60)">
+                <ion-icon name="time-outline"></ion-icon>
+                <ion-label>Add 60 Minutes</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ng-template>
+    </ion-modal>
+</ion-content>
+
+<!--Modal to report/block-->
+<ion-content class="ion-padding">
+    <ion-modal id="example-modal" #modal2 trigger="open-custom-dialog2">
+      <ng-template>
+        <div class="wrapper">
+          <ion-list lines="none">
+            <ion-item [ngStyle]="{'margin-top':'29px'}" button="true" detail="false" (click)="modal2.dismiss()" (click)="Report()">
+              <ion-label>Report User</ion-label>
+            </ion-item>
+            <ion-item button="true" detail="false" (click)="modal2.dismiss()" (click)="Block()">
+                <ion-label>Block User</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ng-template>
+    </ion-modal>
+</ion-content>

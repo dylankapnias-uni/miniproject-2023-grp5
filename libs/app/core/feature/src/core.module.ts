@@ -51,6 +51,8 @@ import { NgxsModule } from '@ngxs/store';
 import { MomentModule } from 'ngx-moment';
 import { CoreRouting } from './core.routing';
 import { CoreShell } from './core.shell';
+//import { CoreModule as NavComponent } from '@mp/app/core/ui';
+ 
 
 let resolvePersistenceEnabled: (enabled: boolean) => void;
 
@@ -87,6 +89,7 @@ const FIREBASE_OPTIONS: FirebaseOptions = {
   declarations: [CoreShell],
   entryComponents: [],
   imports: [
+  //  NavComponent,
     BrowserModule,
     IonicModule.forRoot(),
     CoreRouting, SettingsPageModule,
