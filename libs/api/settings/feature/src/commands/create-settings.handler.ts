@@ -11,7 +11,7 @@ import {
   ICommandHandler
 } from '@nestjs/cqrs';
 import { Settings } from '../models';
-
+import { Timestamp } from 'firebase-admin/firestore';
 @CommandHandler(CreateSettingsCommand)
 export class CreateSettingsHandler
 implements ICommandHandler<CreateSettingsCommand> {
@@ -27,9 +27,11 @@ implements ICommandHandler<CreateSettingsCommand> {
       blockedAccounts: []
     };
     const time = {
-      // DEFAULT TIME
-      remaining: 0
-    }
+      // DEFAULT TIME/HISTORY
+      // TODO change how initial time is added
+      remaining: 1000,
+      history: [{amount:1000, date:Timestamp.fromDate(new Date())}]
+    };
 
     const data: ISettings = {
       userId: userId,

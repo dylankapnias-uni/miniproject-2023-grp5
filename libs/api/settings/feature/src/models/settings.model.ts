@@ -9,6 +9,7 @@ import {
   ProfilePrivacy
 } from '@mp/api/settings/util';
 import { AggregateRoot } from '@nestjs/cqrs';
+import { Timestamp } from 'firebase-admin/firestore';
 
 export class Settings 
   extends AggregateRoot 
@@ -34,6 +35,43 @@ export class Settings
   create() {
     this.apply(new SettingsCreatedEvent(this.toJSON()));
   }
+
+  addTime(data:{amount:number,date:Timestamp}) {
+    this.time.history.push(data);
+    // TODO create event
+  }
+
+  subtractTime(amount: number) {
+    this.time.remaining -= amount;
+    // TODO create event
+  }
+
+  blockUser(blockedId: string) {
+    this.privacy.blockedAccounts.push(blockedId);
+    // TODO create event
+  }
+
+  unblockUser(blockedId: string) {
+    const index = this.privacy.blockedAccounts.indexOf(blockedId);
+    if (index == -1) return;
+    this.privacy.blockedAccounts.splice(index, 1);
+    // TODO create event
+  }
+
+  updatePrivacy(visibility: ProfilePrivacy) {
+    this.privacy.profileVisibility = visibility;
+    // TODO create event
+  }
+  /* TODO
+    Add queries to:
+
+      get time, 
+      get history, 
+      get blocked users, 
+      check if user is blocked,
+      get profile visibility
+
+  */
 
   toJSON(): ISettings {
     return {
