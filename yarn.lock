@@ -3067,6 +3067,19 @@
   dependencies:
     nx "15.7.1"
 
+"@nrwl/vite@15.7.1":
+  version "15.7.1"
+  resolved "https://registry.yarnpkg.com/@nrwl/vite/-/vite-15.7.1.tgz#90d8fc523eb2bf6dac05d9913971bd3712f25318"
+  integrity sha512-rnud9y4rm3iD5i3JlHlKwvpRifCeKCdUF8LgQG8R7M3gQJD2mDaOFwG6Pd81p7JAhjGm42geMVhNFEW3uiaLCA==
+  dependencies:
+    "@nrwl/devkit" "15.7.1"
+    "@nrwl/js" "15.7.1"
+    "@nrwl/workspace" "15.7.1"
+    "@phenomnomnominal/tsquery" "4.1.1"
+    "@swc/helpers" "^0.4.11"
+    dotenv "~10.0.0"
+    enquirer "~2.3.6"
+
 "@nrwl/webpack@15.7.1":
   version "15.7.1"
   resolved "https://registry.yarnpkg.com/@nrwl/webpack/-/webpack-15.7.1.tgz#e130b734bc1a6654f0f3fefc4e2af68d976601fe"
@@ -3276,6 +3289,13 @@
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.22.2.tgz#f518b6bfae85352c72cd07fcaf2f2b61e0581fd9"
   integrity sha512-r+vbxsGNcBaV1VDOYW25lv4QfXTlNoIb5GpUX7rZ+cr59yqYCZC5tlV+IzX6YgHKW62ulCc9M3RYtTfHtNbNNw==
+
+"@swc/helpers@^0.4.11":
+  version "0.4.14"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.14.tgz#1352ac6d95e3617ccb7c1498ff019654f1e12a74"
+  integrity sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==
+  dependencies:
+    tslib "^2.4.0"
 
 "@tootallnate/once@2":
   version "2.0.0"

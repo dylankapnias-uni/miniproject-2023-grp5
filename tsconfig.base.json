@@ -99,7 +99,10 @@
       ],
       "@mp/app/welcome/feature": ["libs/app/welcome/feature/src/index.ts"],
       "@mp/app/welcome/util": ["libs/app/welcome/util/src/index.ts"],
-      "@mp/cli/core/feature": ["libs/cli/core/feature/src/index.ts"]
+      "@mp/cli/core/feature": ["libs/cli/core/feature/src/index.ts"],
+      "@mp/data-access": ["libs/data-access/src/index.ts"],
+      "@mp/feature": ["libs/feature/src/index.ts"],
+      "@mp/util": ["libs/util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

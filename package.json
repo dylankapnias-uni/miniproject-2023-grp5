@@ -93,6 +93,7 @@
     "@nrwl/nest": "15.7.1",
     "@nrwl/node": "15.7.1",
     "@nrwl/nx-cloud": "15.0.3",
+    "@nrwl/vite": "15.7.1",
     "@nrwl/webpack": "15.7.1",
     "@nrwl/workspace": "15.7.1",
     "@nxtend/capacitor": "^13.0.0",
