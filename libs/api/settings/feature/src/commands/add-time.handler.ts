@@ -9,6 +9,7 @@ import {
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
 // TODO Test return value
+// TODO Clean up
 @CommandHandler(AddTimeCommand)
 export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeResponse> {
 

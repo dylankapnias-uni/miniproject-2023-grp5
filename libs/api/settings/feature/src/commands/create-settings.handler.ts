@@ -15,7 +15,7 @@ import {
 import { Settings } from '../models';
 import { Timestamp } from 'firebase-admin/firestore';
 import { SettingsRepository } from '@mp/api/settings/data-access';
-
+// TODO Clean up
 @CommandHandler(CreateSettingsCommand)
 export class CreateSettingsHandler
 implements ICommandHandler<CreateSettingsCommand> {

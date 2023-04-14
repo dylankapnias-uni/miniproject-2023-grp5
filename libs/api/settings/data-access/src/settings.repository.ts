@@ -1,4 +1,4 @@
-import { ISettings, ITime } from '@mp/api/settings/util';
+import { ISettings, ITime, ProfilePrivacy } from '@mp/api/settings/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { FieldValue, Timestamp, WriteResult } from 'firebase-admin/firestore';
@@ -62,8 +62,53 @@ export class SettingsRepository {
   // TODO subtract time
 
   // TODO block user
+  async blockUser(userId: string, blockedId: string) {
+    return await admin
+      .firestore()
+      .collection('Settings')
+      .doc(userId)
+      .update({
+        'privacy.blockedAccounts': FieldValue.arrayUnion(blockedId)
+      })
+      .catch((error) => {
+        console.log(
+          `Error while adding user ${blockedId} to blockedAccounts of user ${userId}: ${error}`
+          )
+        }
+      );
+  }
 
   // TODO unblock user
+  async unblockUser(userId: string, blockedId: string) {
+    return await admin
+      .firestore()
+      .collection('Settings')
+      .doc(userId)
+      .update({
+        'privacy.blockedAccounts': FieldValue.arrayRemove(blockedId)
+      })
+      .catch((error) => {
+        console.log(
+          `Error while removing user ${blockedId} from blockedAccounts of user ${userId}: ${error}`
+          )
+        }
+      );
+  }
 
   // TODO change visibility
+  async updatePrivacy(userId: string, profileVisibility: ProfilePrivacy) {
+    return await admin
+      .firestore()
+      .collection('Settings')
+      .doc(userId)
+      .update({
+        'privacy.profileVisibility': profileVisibility
+      })
+      .catch((error) => {
+        console.log(
+          `Error while setting profile visibility of user ${userId} to ${profileVisibility}: ${error}`
+          )
+        }
+      );
+  }
 }

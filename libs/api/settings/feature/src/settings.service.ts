@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
-import { AddTimeCommand, IAddTimeRequest, IAddTimeResponse } from "@mp/api/settings/util";
+import { AddTimeCommand, BlockUserCommand, IAddTimeRequest, IAddTimeResponse, IBlockUserRequest, IUnblockUserRequest, IUpdatePrivacyRequest, UnblockUserCommand, UpdatePrivacyCommand } from "@mp/api/settings/util";
 
 @Injectable()
 export class SettingsService {
@@ -14,5 +14,32 @@ export class SettingsService {
       IAddTimeResponse
     >(new AddTimeCommand(request));
   }
-  // TODO everything
+  // TODO implement responses
+
+  async blockUser(
+    request: IBlockUserRequest
+  ): Promise<any> {
+    return await this.commandBus.execute<
+      BlockUserCommand,
+      any
+    >(new BlockUserCommand(request));
+  }
+
+  async unblockUser(
+    request: IUnblockUserRequest
+  ): Promise<any> {
+    return await this.commandBus.execute<
+      UnblockUserCommand,
+      any
+    >(new BlockUserCommand(request));
+  }
+
+  async updatePrivacy(
+    request: IUpdatePrivacyRequest
+  ): Promise<any> {
+    return await this.commandBus.execute<
+      UpdatePrivacyCommand,
+      any
+    >(new UpdatePrivacyCommand(request));
+  }
 }
