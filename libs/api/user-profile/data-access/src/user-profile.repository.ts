@@ -1,9 +1,12 @@
 import { IProfile } from '@mp/api/user-profiles/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import firebase from "firebase/app";
+import "firebase/storage";
+
 @Injectable()
 export class ProfileRepository {
-    async getUserByID(profile: IProfile) {
+    async getUserByID(userID: string) {
         return await admin
           .firestore()
           .collection('User_Profile')
@@ -13,27 +16,38 @@ export class ProfileRepository {
             },
             toFirestore: (it: IProfile) => it,
           })
-          .doc(profile.userId)
+          .doc(userID)
           .get();
       }
     
-      async createProfile(profile: IProfile) {
-        // Remove password field if present
-        delete profile.accountDetails?.password;
+      async createProfile(userID : string, profile: IProfile) {
         return await admin
           .firestore()
           .collection('User_Profile')
-          .doc(profile.userId)
+          .doc(userID)
           .create(profile);
       }
     
-      async updateProfile(profile: IProfile) {
-        // Remove password field if present
-        delete profile.accountDetails?.password;
+      async updateProfile(userID:string, profile: IProfile) {
         return await admin
           .firestore()
           .collection('User_Profile')
-          .doc(profile.userId)
+          .doc(userID)
           .set(profile, { merge: true });
       }
+
+      /*async uploadFileAndGetDownloadURL(file: File): Promise<string> {
+        // Get a reference to the file you want to upload
+        const storageRef = admin.app().storage();
+        const fileRef = storageRef.child("myFiles/" + file.name);
+    
+        // Upload the file to Firebase Storage
+        const snapshot = await fileRef.put(file);
+    
+        // Get the download URL for the uploaded file
+        const downloadURL = await snapshot.ref.getDownloadURL();
+    
+        // Return the download URL as a string
+        return downloadURL;
+      }*/
 }
