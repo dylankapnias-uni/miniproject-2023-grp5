@@ -1,53 +1,24 @@
+<body>
 
-
-<ion-content [fullscreen]="true">
  
-  <div class="header">
-    <a href="/" class="back">
-      <ion-icon name="arrow-back" class="back-icon"></ion-icon>
-    </a>
-    <h1 class="title">Log  In</h1>
 
-  </div>
-
-
-
-
-      <div> 
-    <ion-label position="floating"   style="margin-bottom: 30px;font-weight: bold;">Email</ion-label>
-        <ion-input
-          type="email"
-          minlength="6"
-          maxlength="64"
-         required="true"
-          autocomplete="email"
-          style=" border: 1px solid black; border-top: none;border-right: none;border-left: none;"
-          ></ion-input>
-        </div>
-      <div> 
-      <ion-label position="floating" style="margin-bottom: 30px; font-weight: bold;">Password</ion-label>
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          minlength="6"
-          maxlength="64"
-          required="true"
-          autocomplete="password"
-          style=" border: 1px solid black; border-top: none;border-right: none;border-left: none;"
-         ></ion-input>
-       
-        
-         
-        <ion-grid class="ion-padding">
-          <ion-button
-               expand="block"
-               class="custom-buttons"
-               type="submit">
-              
-               <ion-text>Log In</ion-text>
-             </ion-button>
-          </ion-grid>
-         
-
-
-        <ion-content>
-
+  <a routerLink = "/"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
+  
+  <ion-label class = "page_name"><b>Log In</b></ion-label>
+  
+  <ion-item class = "email">
+    <ion-label position = "stacked" ><b>E-mail Address</b></ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+  
+  <ion-item class = "password">
+    <ion-label position = "stacked" ><b>Password</b></ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+  
+  
+    
+  <ion-button class = "login_button">Log In</ion-button>
+    
+  
+</body>

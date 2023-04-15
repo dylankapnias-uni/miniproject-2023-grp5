@@ -1,20 +1,14 @@
 
 
 
+ <body>
 
-
-<ion-content class="my-page-container">
+  <ion-label class = "page_name"><b>Welcome</b></ion-label>
   
-  <div  style=" text-align:center;margin-top: 70px;">
-
-    <h1>
-         Welcome
-         
-    </h1>
-  </div>
+  
 
 
-  <div style=" text-align: center; margin-top: 35px;">
+  <div style=" text-align: center; margin-top: 10%;">
      
     <ion-row>
       <ion-col>
@@ -23,11 +17,12 @@
     </ion-nav-link>
   </ion-col>
 </ion-row>
-     
+  </div>
+  <div  style="text-align: center">
     <ion-row>
       <ion-col>
         <ion-nav-link [routerLink]="['login']">
-          <ion-button expand="block"  class="custom-button">Log In</ion-button>
+          <ion-button expand="block"  class="login-button">Log In</ion-button>
         </ion-nav-link>
       </ion-col>
     </ion-row>
@@ -42,9 +37,9 @@
 
 
 
-</ion-content>
+
 <ion-footer collapse="condense" class="ion-padding ion-text-center" style="background-color: #FDE0E0">
   <ms-version-component></ms-version-component><br />
   <ms-copyright-component></ms-copyright-component>
 </ion-footer>
-
+</body>

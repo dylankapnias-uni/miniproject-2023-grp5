@@ -1,90 +1,38 @@
-
-
-  
-<ion-content [fullscreen]="true">
-  <div class="header">
-    <a href="/" class="back">
-      <ion-icon name="arrow-back" class="back-icon"></ion-icon>
-    </a>
-    <h1 class="title">Sign Up</h1>
-
-  </div>
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input
-          type="email"
-          minlength="6"
-          maxlength="64"
-          placeholder="Enter email"
-          required="true"
-          autocomplete="email"
-          formControlName="email"></ion-input>
-      </ion-item>
-   
-      <ion-item>
-        <ion-label position="floating">Phone Number</ion-label>
-        <ion-input
-          type="tel"
-          minlength="10"
-          maxlength="15"
-          placeholder="Enter phone number"
-          required="true"
-          autocomplete="tel"
-          formControlName="phoneNumber"></ion-input>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="floating">Date of Birth</ion-label>
-        <ion-input
-          type="date"
-          placeholder="Enter date of birth"
-          required="true"
-          formControlName="dateOfBirth"></ion-input>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="floating">Age</ion-label>
-        <ion-input
-          type="number"
-          min="1"
-          max="120"
-          placeholder="Enter age"
-          required="true"
-          formControlName="age"></ion-input>
-      </ion-item>
-    
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          minlength="6"
-          maxlength="64"
-          formControlName="password"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Confirm Password</ion-label>
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          minlength="6"
-          maxlength="64"
-          formControlName="password"></ion-input>
-      </ion-item>
-      
-   
-  
-   
-       <ion-button
-            expand="block"
-            style="margin-top: 100px"
-            class="custom-buttons"
-            [disabled]="!this.registerForm.valid || (busy$ | async)"
-            type="submit">
-            <ion-spinner *ngIf="busy$ | async"></ion-spinner>
-            <ion-text>Next</ion-text>
-          </ion-button>
-     
-        </ion-content>
-  
+ <body>
+   <a routerLink = "/"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
+          
+          <ion-label class = "page_name"><b>Sign Up</b></ion-label>
+          
+          <ion-item class = "full_name">
+            <ion-label position = "stacked" ><b>Full Name</b></ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+          
+          <ion-item class = "email">
+            <ion-label position = "stacked" ><b>E-mail Address</b></ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+          
+          <ion-item class = "phone">
+            <ion-label position = "stacked" ><b>Phone Number</b></ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+          
+          <ion-item class = "password">
+            <ion-label position = "stacked" ><b>Password</b></ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+          
+          <ion-item class = "confirmpassword">
+            <ion-label position = "stacked" ><b>Confirm Paasword</b></ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+          
+            
+          <ion-button class = "next_button">Next</ion-button>
+            
+          
+      </body>
   
   
 
