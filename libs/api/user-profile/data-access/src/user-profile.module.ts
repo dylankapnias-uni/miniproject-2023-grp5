@@ -1,3 +1,8 @@
 import { Module } from '@nestjs/common';
-@Module({})
-export class ProfileModule {}
+import { ProfileRepository } from './user-profile.repository';
+
+@Module({
+  providers: [ProfileRepository],
+  exports: [ProfileRepository],
+})
+export class UserProfileModule {}

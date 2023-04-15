@@ -1,4 +1,8 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
+import { HomeRepository } from './home.repository';
 
-@Module({})
+@Module({
+  providers: [HomeRepository],
+  exports: [HomeRepository],
+})
 export class HomeModule {}

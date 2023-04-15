@@ -1,4 +1,4 @@
-import { IProfile } from '@mp/api/user-profiles/util';
+import { IProfile } from '@mp/api/user-profile/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 @Injectable()
