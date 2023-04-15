@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { IHome } from '@mp/api/home/util';
+import { IHome, IMatched, IUserRef } from '@mp/api/home/util';
 import * as admin from 'firebase-admin';
-import { DocumentReference } from 'firebase-admin/firestore';
+import { IProfile } from '@mp/api/user-profile/util';
 @Injectable()
 export class HomeRepository {
-    async getList(userID: string) {
-        var swiped = await (await admin
+    async getUserList(userID: string) {
+        const swiped =  (await admin
             .firestore()
             .collection('Home')
             .withConverter<IHome>({
@@ -17,20 +17,37 @@ export class HomeRepository {
             .doc(userID)
             .get()).data() as IHome;
         if(swiped.userList==null||swiped.userList==undefined){
-            swiped.userList = [];
-            
-            for(var i=0;i<10;i++){
+            const list=[];
+            for(let i=0;i<10;i++){
                 
-                var allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
-                var usersLength = allDocs.length;
-                var random = Math.floor(Math.random() * usersLength);
-                var randomDoc = allDocs[random];
-                var randomDocData = randomDoc;
+                const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
+                const docRefs = allDocs.map(doc => doc.ref);
+                const usersLength = allDocs.length;
+                let random = Math.floor(Math.random() * usersLength);
+                let randomDoc = allDocs[random];
+                let randomDocRef=docRefs[random];
+                while(randomDoc.id==userID){
+                   random = Math.floor(Math.random() * usersLength);
+                   randomDoc = allDocs[random];
+                  randomDocRef=docRefs[random];
+                }
+                const ref = {userRef:randomDocRef} as IUserRef;
+                const matched = {matched:false} as IMatched;
+                list.push({user:ref,match:matched});
             }
+            const out = {  } as IHome ;
+            out.userList=list;
+            return out;
         }
-        else if(swiped.userList.length > 10){
-            var front = swiped.userList.slice(0, 10);
-            var back = swiped.userList.slice(10, swiped.userList.length);
+        else if(swiped.userList.length >= 10){
+
+          const frontItems = swiped.userList.slice(0, 10);
+          const front=[];
+          for(let i=0;i<frontItems.length;i++){
+            const matched = {matched:false} as IMatched;
+              front.push({user:frontItems[i].user,match:matched});
+          }
+          const back = swiped.userList.slice(10, swiped.userList.length);
             admin
             .firestore()
             .collection('Home')
@@ -38,44 +55,47 @@ export class HomeRepository {
             .set(back, { merge: false });
             return front;
         }else{
-
+          const listItems = swiped.userList;
+          const list=[];
+          const out = {} as IHome ;
+          for(let i=0;i<listItems.length;i++){
+            const matched = {matched:true} as IMatched;
+            list.push({user:listItems[i].user,match:matched});
+            out.userList?.push(listItems[i]);
+          }
+              for(let i=0;i<10-(swiped.userList.length);i++){
+              const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
+              const docRefs = allDocs.map(doc => doc.ref);
+              const usersLength = allDocs.length;
+              let random = Math.floor(Math.random() * usersLength);
+              let randomDoc = allDocs[random];
+              let randomDocRef=docRefs[random];
+              while(randomDoc.id==userID){
+                 random = Math.floor(Math.random() * usersLength);
+                 randomDoc = allDocs[random];
+                randomDocRef=docRefs[random];
+              }
+              const ref = {userRef:randomDocRef} as IUserRef;
+              const matched = {matched:true} as IMatched;
+              list.push({user:ref,match:matched});
+              out.userList?.push(listItems[i]);
+          }
+          
+          return out;
         }
         
-        return await admin
-          .firestore()
-          .collection('User_Profile')
-          .withConverter<IProfile>({
-            fromFirestore: (snapshot) => {
-              return snapshot.data() as IProfile;
-            },
-            toFirestore: (it: IProfile) => it,
-          })
-          .doc(profile.userId)
-          .get();
       }
 
-      async getDocs() {
-        const snapshot = await admin.firestore().collection('User_Profile').get()
-        return snapshot.docs.map(doc => doc.data());
-        }
-    
-      async createProfile(profile: IProfile) {
-        // Remove password field if present
-        delete profile.accountDetails?.password;
-        return await admin
+      async acceptUser(userID:string, acceptProfile:IProfile){ 
+        const ref =   admin
+        .firestore()
+        .collection('User_Profile')
+        .doc(userID);
+        admin
           .firestore()
-          .collection('User_Profile')
-          .doc(profile.userId)
-          .create(profile);
+          .collection('Home')
+          .doc(acceptProfile.userId)
+          .set([ref], { merge: true });
       }
-    
-      async updateProfile(profile: IProfile) {
-        // Remove password field if present
-        delete profile.accountDetails?.password;
-        return await admin
-          .firestore()
-          .collection('User_Profile')
-          .doc(profile.userId)
-          .set(profile, { merge: true });
-      }
+      
 }

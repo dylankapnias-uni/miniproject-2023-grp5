@@ -19,7 +19,7 @@ export class ChatListRepository {
   }
 
   async addToChatList(creatorID:string,chatID:DocumentReference, otherUser:DocumentReference ) {
-    var entry: IChatList = {chatRef:chatID, otherUserID:otherUser};
+    const entry: IChatList = {chatRef:chatID, otherUserID:otherUser};
     return await admin
       .firestore()
       .collection('Chatlist')
