@@ -133,6 +133,16 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/about/feature').then((m) => m.AboutPageModule),
   },
+
+  {
+    path: 'privacy-policy',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
+  },
+  
 ];
 
 @NgModule({

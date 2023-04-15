@@ -15,4 +15,9 @@ export class AboutPage
   {
     this.r.navigate(['/settings']);
   }
+
+  LoadPrivacyPolicyPage()
+  {
+    this.r.navigate(['/privacy-policy']);
+  }
 }
