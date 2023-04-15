@@ -20,4 +20,9 @@ export class AboutPage
   {
     this.r.navigate(['/privacy-policy']);
   }
+
+  LoadTermsOfUsePage()
+  {
+    this.r.navigate(['/tos']);
+  }
 }
