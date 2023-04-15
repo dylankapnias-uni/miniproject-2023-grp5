@@ -1,3 +1,5 @@
+import { DocumentReference } from '@firebase/firestore-types'
+import * as admin from 'firebase-admin';
 export interface IUserRef {
-    userRef: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>;
+    userRef: admin.firestore.DocumentReference<admin.firestore.DocumentData>;
 }

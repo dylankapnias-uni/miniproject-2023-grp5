@@ -26,6 +26,7 @@ export class HomeRepository {
                 let random = Math.floor(Math.random() * usersLength);
                 let randomDoc = allDocs[random];
                 let randomDocRef=docRefs[random];
+
                 while(randomDoc.id==userID){
                    random = Math.floor(Math.random() * usersLength);
                    randomDoc = allDocs[random];
