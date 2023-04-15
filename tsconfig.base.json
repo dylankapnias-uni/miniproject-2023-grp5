@@ -19,6 +19,11 @@
       "@mp/api/auth/data-access": ["libs/api/auth/data-access/src/index.ts"],
       "@mp/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@mp/api/auth/util": ["libs/api/auth/util/src/index.ts"],
+      "@mp/api/chat-list/data-access": [
+        "libs/api/chat-list/data-access/src/index.ts"
+      ],
+      "@mp/api/chat-list/feature": ["libs/api/chat-list/feature/src/index.ts"],
+      "@mp/api/chat-list/util": ["libs/api/chat-list/util/src/index.ts"],
       "@mp/api/core/feature": ["libs/api/core/feature/src/index.ts"],
       "@mp/api/eventstore/data-access": [
         "libs/api/eventstore/data-access/src/index.ts"
