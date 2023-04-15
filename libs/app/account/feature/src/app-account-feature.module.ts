@@ -9,7 +9,7 @@ import { AccountPageRoutingModule } from './app-account-feature.routing';
   imports: [
     CommonModule,
  
-    IonicModule,
+    IonicModule.forRoot(),
     AccountPageRoutingModule
   ],
   declarations: [AccountPage],
