@@ -25,4 +25,9 @@ export class AboutPage
   {
     this.r.navigate(['/tos']);
   }
+
+  LoadUpdatesPage()
+  {
+    this.r.navigate(['/updates']);
+  }
 }

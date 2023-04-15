@@ -143,6 +143,14 @@ const routes: Routes = [
       import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
   },
   
+  {
+    path: 'updates',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
+  },
 ];
 
 @NgModule({
