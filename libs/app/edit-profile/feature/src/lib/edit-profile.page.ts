@@ -15,4 +15,9 @@ export class EditProfilePage
   {
     this.r.navigate(['/settings'])
   }
+
+  LoadInterests()
+  {
+    this.r.navigate(['/interests'])
+  }
 }
