@@ -44,6 +44,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/privacy/feature').then((m) => m.PrivacyModule),
   },
+  {
+    path: 'interests',
+    loadChildren: () =>
+      import('@mp/app/interests/feature').then((m) => m.interestsPageModule),
+  },
   // {
   //   path: 'verify',
   //   pathMatch: 'full',
@@ -83,6 +88,68 @@ const routes: Routes = [
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
+  },
+  {
+    path: 'settings',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/settings/feature').then((m) => m.SettingsPageModule),
+  },
+
+  {
+    path: 'account',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/account/feature').then((m) => m.AccountPageModule),
+  },
+
+  {
+    path: 'edit-profile',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/edit-profile/feature').then((m) => m.EditProfilePageModule),
+  },
+
+  {
+    path: 'shop',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/shop/feature').then((m) => m.ShopPageModule),
+  },
+
+  {
+    path: 'about',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/about/feature').then((m) => m.AboutPageModule),
+  },
+
+  {
+    path: 'privacy-policy',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
+  },
+  
+  {
+    path: 'updates',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
   },
 ];
 
