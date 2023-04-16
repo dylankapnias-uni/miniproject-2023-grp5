@@ -4,42 +4,18 @@ body {
 .custom-button {
   --background: #F3C1C0;
   color: black;
-  width: 365px;
-  height: 69px;
-  left: 2.5%;
-  font-size: 24px;
  
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
-   
+  margin-right: 10px;
+  margin-left: 10px;
   
 }
-.login-button {
-  --background: #F3C1C0;
-  color: black;
-  width: 365px;
-  height: 69px;
- 
- 
-  font-size: 24px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
-    position: absolute;
-  
-}
-.page_name
-{
-    position: absolute;
-    top: 2.3%;
-    left: 32.5%;
-    bottom: 12% ;
-    font-size: 24px;
-    line-height: 28px;
-    font-weight: 700;
-    align-items: center;
+h1{
 
-    color: #000000;
+  color: #000000;
+  font-size: 48px;
+  
 }
+
 ion-img {
   width: 25%; 
   height: 25%;

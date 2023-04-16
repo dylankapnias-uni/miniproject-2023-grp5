@@ -1,24 +1,42 @@
 <body>
-
  
+  <div class="header">
+    <a href="/" class="back">
+      <ion-icon name="arrow-back" class="back-icon"></ion-icon>
+    </a>
+    <h1 class="title">Log In</h1>
 
-  <a routerLink = "/"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
-  
-  <ion-label class = "page_name"><b>Log In</b></ion-label>
-  
-  <ion-item class = "email">
-    <ion-label position = "stacked" ><b>E-mail Address</b></ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  
-  <ion-item class = "password">
-    <ion-label position = "stacked" ><b>Password</b></ion-label>
-    <ion-input></ion-input>
-  </ion-item>
-  
-  
-    
-  <ion-button class = "login_button">Log In</ion-button>
-    
-  
+  </div>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input
+          type="email"
+          minlength="6"
+          maxlength="64"
+          placeholder="Enter email"
+          required="true"
+          autocomplete="email"
+          formControlName="email"></ion-input>
+      </ion-item>
+   
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+        [type]="showPassword ? 'text' : 'password'"
+        minlength="6"
+        maxlength="64"
+        placeholder="Enter password"
+        required="true"
+        autocomplete="password"
+         ></ion-input>
+      </ion-item>
+      <ion-grid class="ion-padding">
+        <ion-button
+             expand="block"
+             class="custom-buttons"
+             type="submit">
+            
+             <ion-text>Log In</ion-text>
+           </ion-button>
+        </ion-grid>
 </body>
