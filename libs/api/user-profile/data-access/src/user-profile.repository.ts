@@ -1,11 +1,10 @@
 import { IProfile } from '@mp/api/user-profile/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import firebase from "firebase/app";
-import "firebase/storage";
 
 @Injectable()
-export class ProfileRepository {
+export class ProfileRepository 
+{
     async getUserByID(userID: string) {
         return await admin
           .firestore()
@@ -36,18 +35,32 @@ export class ProfileRepository {
           .set(profile, { merge: true });
       }
 
-      /*async uploadFileAndGetDownloadURL(file: File): Promise<string> {
-        // Get a reference to the file you want to upload
-        const storageRef = admin.app().storage();
-        const fileRef = storageRef.child("myFiles/" + file.name);
-    
-        // Upload the file to Firebase Storage
-        const snapshot = await fileRef.put(file);
-    
-        // Get the download URL for the uploaded file
-        const downloadURL = await snapshot.ref.getDownloadURL();
-    
-        // Return the download URL as a string
-        return downloadURL;
-      }*/
+      async uploadFile(filePath : string, userID : string, fileName : string): Promise<string> 
+      {
+        const storagePath = userID + "/" + fileName;
+
+        admin.storage().bucket().upload(filePath, { destination:  storagePath})
+        .then(data => {
+          console.log('upload successful');
+        })
+        .catch(err => {
+          console.log('upload failed');
+        });
+
+        return storagePath;
+      }
+
+      async downloadFile(storagePath : string, filePath : string): Promise<string>
+      {
+        admin.storage().bucket().file(filePath).download({destination: storagePath})
+        .then(data => {
+          console.log('download successful');
+        }
+        )
+        .catch(err => {
+          console.log('download failed');
+        });
+        
+        return filePath;
+      }
 }
