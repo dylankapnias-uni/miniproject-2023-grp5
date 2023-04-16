@@ -3,7 +3,7 @@
         <ion-row>
             <ion-col>
               <div class="search">
-                <ion-searchbar class = "search" clear-icon="close-outline"></ion-searchbar>
+                <ion-searchbar class = "search" (keyup)="handleChange($event)" (ionClear)="Reset()" clear-icon="close-outline"></ion-searchbar>
               </div>
           </ion-col>
         </ion-row>

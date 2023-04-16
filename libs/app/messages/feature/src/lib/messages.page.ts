@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Chat } from '../Chat.interface';
 import { Router } from '@angular/router';
+import { Store, Selector, Select } from '@ngxs/store';
+import { GetMessages, SearchMessages } from '@mp/app/messages/util';
+import { MessagesState } from 'libs/app/messages/data-access/src/lib/messages.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'mp-messages',
@@ -8,104 +12,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./messages.page.scss'],
 })
 export class MessagesPage {
-  chats!: Chat[];
+  chats!: any;
   noChats!: boolean;
-  constructor(private router: Router) {
-    //Fetch these chats later with a service which I(adrian) will develop
-    this.chats = [
-      {
-        id: '1',
-        unread: true,
-        name: 'John',
-      },
-      {
-        id: '2',
-        unread: false,
-        name: 'Jane',
-      },
-      {
-        id: '3',
-        unread: false,
-        name: 'Joe',
-      },
-      {
-        id: '1',
-        unread: true,
-        name: 'John',
-      },
-      {
-        id: '2',
-        unread: false,
-        name: 'Jane',
-      },
-      {
-        id: '3',
-        unread: false,
-        name: 'Joe',
-      },
-      {
-        id: '1',
-        unread: true,
-        name: 'John',
-      },
-      {
-        id: '2',
-        unread: false,
-        name: 'Jane',
-      },
-      {
-        id: '3',
-        unread: false,
-        name: 'Joe',
-      },
-      {
-        id: '1',
-        unread: true,
-        name: 'John',
-      },
-      {
-        id: '2',
-        unread: false,
-        name: 'Jane',
-      },
-      {
-        id: '3',
-        unread: false,
-        name: 'Joe',
-      },
-      {
-        id: '1',
-        unread: true,
-        name: 'John',
-      },
-      {
-        id: '2',
-        unread: false,
-        name: 'Jane',
-      },
-      {
-        id: '3',
-        unread: false,
-        name: 'Joe',
-      },
-      {
-        id: '1',
-        unread: true,
-        name: 'John',
-      },
-      {
-        id: '2',
-        unread: false,
-        name: 'Jane',
-      },
-      {
-        id: '3',
-        unread: false,
-        name: 'Joe',
-      },
-    ];
-    //this.chats = [];
-    this.noChats = this.chats.length === 0;
+  //@Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(MessagesState.messages) messages$!: Observable<string[]>;
+
+
+  constructor(private router: Router, private store: Store) {
+    this.store.dispatch(new GetMessages())
+    this.messages$.subscribe((messages) => {
+      if(messages != null){
+        this.chats = messages;
+        this.noChats = this.chats.length === 0;
+      }
+    });
   }
 
   openChat(chatId: string){
@@ -115,4 +35,14 @@ export class MessagesPage {
       window.location.reload();
     }, 100)
   }
+
+  handleChange(event:any) {
+    const query = event.target.value;
+    this.store.dispatch(new SearchMessages({query}));
+  }
+
+  Reset(){
+    this.store.dispatch(new GetMessages());
+  }
+  
 }

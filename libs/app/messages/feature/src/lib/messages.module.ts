@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MessagesPage } from './messages.page';
 import { IonicModule } from '@ionic/angular';
 import { MessagesRouting } from './messages.routing';
+import { NgxsModule } from '@ngxs/store';
+import { MessagesState } from 'libs/app/messages/data-access/src/lib/messages.state';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, MessagesRouting],
+  imports: [CommonModule, IonicModule, MessagesRouting, NgxsModule.forFeature([MessagesState])],
   declarations: [MessagesPage]
 })
 export class MessagesModule {}
