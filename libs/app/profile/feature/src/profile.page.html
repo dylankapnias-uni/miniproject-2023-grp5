@@ -14,23 +14,19 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
+    
         <ion-grid>
           <ion-row>
             <ion-col size-md="6">
-              <ion-card>
-                <ion-card-content>
-                  <ion-img src="./assets/images/photo1.jpg"></ion-img>
-                      </ion-card-content>
-                      <ion-card-header>
-                      </ion-card-header>
+              <ion-card class="plz">
+                  <ion-img class="firstphoto" src="https://images.unsplash.com/photo-1609741873305-3208c472c269?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"></ion-img>
               </ion-card>
             </ion-col>
           </ion-row>
         </ion-grid>
 
         <ion-grid>
-          <ion-row>
+          <ion-row class="pls">
             <ion-col size="4">
               <div class="first">
                 <ion-chip>Student</ion-chip>
@@ -49,17 +45,8 @@
           </ion-row>
         </ion-grid>
 
-        <!--<ion-slides [options]="slideOpts" #slides>
-          <ion-slide *ngFor="let image of images">
-            <img src="./assets/images/photo2.jpeg">
-          </ion-slide>
-          <ion-slide *ngFor="let image of images">
-            <img src="./assets/images/photo1.jpg">
-          </ion-slide>
-        </ion-slides>
-      -->
-        
-
+      
+      
           <ion-card class="card2">
             <ion-card-header>
               <ion-card-title class="title1">Emily 23</ion-card-title>
@@ -67,13 +54,42 @@
               </ion-card-header>
           
              <ion-card-content class="descript">
-              Here's a small text description for the card content. Nothing more, nothing less.
+              Hi my name is Emily. I am 23 years old and I am an Olympic athlete in star gazing.
+
             </ion-card-content>
-            <img class="photosecond" src="./assets/images/photo2.jpeg" />
+
+            <ion-slides [options]="option" loop="true" class="ion-margin-top">
+              <ion-slide>
+                <ion-card class="asb">
+                  <img class="photosecond" src="https://images.unsplash.com/photo-1452611545118-2b35b308caf5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
+                </ion-card>
+              </ion-slide>
+              <ion-slide>
+                <ion-card>
+                  <img class="photosecond" src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"/>
+                </ion-card>
+              </ion-slide>
+              <ion-slide>
+                <ion-card>
+                  <img class="photosecond" src="https://images.unsplash.com/photo-1526547319484-63dce467060b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
+                </ion-card>
+              </ion-slide>
+              <ion-slide>
+                <ion-card>
+                  <img class="photosecond" src="https://images.unsplash.com/photo-1459908676235-d5f02a50184b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
+                </ion-card>
+              </ion-slide>
+              <ion-slide>
+                <ion-card>
+                  <img class="photosecond" src="https://images.unsplash.com/photo-1536809188428-e8ecf663d0be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
+                </ion-card>
+              </ion-slide>
+            </ion-slides>
+            <!-- <img class="photosecond" src="./assets/images/photo2.jpeg" /> -->
           </ion-card>
 
         
- 
+
 
 </body>
 
