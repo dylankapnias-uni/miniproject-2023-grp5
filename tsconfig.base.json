@@ -37,6 +37,15 @@
       ],
       "@mp/api/history/feature": ["libs/api/history/feature/src/index.ts"],
       "@mp/api/history/util": ["libs/api/history/util/src/index.ts"],
+      "@mp/api/notifications/data-access": [
+        "libs/api/notifications/data-access/src/index.ts"
+      ],
+      "@mp/api/notifications/feature": [
+        "libs/api/notifications/feature/src/index.ts"
+      ],
+      "@mp/api/notifications/util": [
+        "libs/api/notifications/util/src/index.ts"
+      ],
       "@mp/api/home/data-access": ["libs/api/home/data-access/src/index.ts"],
       "@mp/api/home/feature": ["libs/api/home/feature/src/index.ts"],
       "@mp/api/home/util": ["libs/api/home/util/src/index.ts"],
