@@ -1,7 +1,9 @@
-
-ion-content {
+body
+{
     --ion-background-color: #FDE0E0;
-  }
+}
+
+  
   .custom-buttons{
 
     --background: #F3C1C0;
@@ -9,9 +11,6 @@ ion-content {
  
   margin-right: 50px;
   margin-left: 50px;
-  .custom-input {
-    border: 1px solid black;
-  }
    
   }
   .back{
@@ -47,19 +46,6 @@ ion-content {
     font-weight: bold;
   }
   ion-input {
-    --border-color: black;
-    --border-style: solid;
-    --border-width: 1px;
+    --color: black;
   }
-  div:first-child {
-    margin-bottom: 20px;
-  }
-  
-  div:nth-child(2) {
-    margin-top: 20px;
-  }
-  
 
-
-  
-  
