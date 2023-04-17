@@ -4,7 +4,6 @@ import * as admin from 'firebase-admin';
 import { FieldValue, Timestamp, WriteResult } from 'firebase-admin/firestore';
 @Injectable()
 export class SettingsRepository {
-
   async findOne(userId: string) {
     return await admin
       .firestore()

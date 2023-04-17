@@ -7,10 +7,12 @@ import {
   IPrivacyDetails,
   // Enums
   ProfilePrivacy,
-  TimeAddedEvent
+  TimeAddedEvent,
+  PrivacyUpdatedEvent
 } from '@mp/api/settings/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Timestamp } from 'firebase-admin/firestore';
+import { UpdatePrivacyHandler } from '../commands';
 
 export class Settings 
   extends AggregateRoot 
@@ -63,7 +65,7 @@ export class Settings
 
   updatePrivacy(visibility: ProfilePrivacy) {
     this.privacy.profileVisibility = visibility;
-    // TODO create event
+    this.apply(new PrivacyUpdatedEvent({userId: this.userId, profileVisibility: visibility}));
   }
   /* TODO
     Add queries to:

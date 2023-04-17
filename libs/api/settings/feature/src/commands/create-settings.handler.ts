@@ -1,11 +1,7 @@
 import { 
   CreateSettingsCommand,
   ISettings,
-  IPrivacyDetails,
-  ProfilePrivacy,
-  ITime,
-  IAddTimeResponse,
-  IAddTimeRequest
+  ProfilePrivacy
 } from '@mp/api/settings/util';
 import {
   CommandHandler,
@@ -13,13 +9,11 @@ import {
   ICommandHandler
 } from '@nestjs/cqrs';
 import { Settings } from '../models';
-import { Timestamp } from 'firebase-admin/firestore';
-import { SettingsRepository } from '@mp/api/settings/data-access';
 // TODO Clean up
 @CommandHandler(CreateSettingsCommand)
 export class CreateSettingsHandler
 implements ICommandHandler<CreateSettingsCommand> {
-  constructor(private publisher: EventPublisher, private readonly repository: SettingsRepository){}
+  constructor(private publisher: EventPublisher){}
 
   async execute(command: CreateSettingsCommand) {
     console.log(`${CreateSettingsHandler.name}`);

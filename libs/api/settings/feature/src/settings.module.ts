@@ -4,24 +4,28 @@ import { CqrsModule } from '@nestjs/cqrs';
 import {
   //command handlers
   CreateSettingsHandler,
-  AddTimeHandler
+  AddTimeHandler,
+  UpdatePrivacyHandler
 } from './commands';
 import { 
   //event handlers
   SettingsCreatedHandler,
-  TimeAddedHandler
+  TimeAddedHandler,
+  PrivacyUpdatedHandler
 } from './events';
 import { SettingsSagas } from './settings.sagas';
 import { SettingsService } from './settings.service'
 
 export const CommandHandlers = [
   CreateSettingsHandler,
-  AddTimeHandler
+  AddTimeHandler,
+  UpdatePrivacyHandler
 ];
 
 export const EventHandlers = [
   SettingsCreatedHandler,
-  TimeAddedHandler
+  TimeAddedHandler,
+  PrivacyUpdatedHandler
 ]
 
 @Module({
