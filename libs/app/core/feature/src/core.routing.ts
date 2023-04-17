@@ -44,6 +44,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/privacy/feature').then((m) => m.PrivacyModule),
   },
+  {
+    path: 'interests',
+    loadChildren: () =>
+      import('@mp/app/interests/feature').then((m) => m.interestsPageModule),
+  },
   // {
   //   path: 'verify',
   //   pathMatch: 'full',
@@ -127,6 +132,24 @@ const routes: Routes = [
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/about/feature').then((m) => m.AboutPageModule),
+  },
+
+  {
+    path: 'privacy-policy',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
+  },
+  
+  {
+    path: 'updates',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
   },
 ];
 
