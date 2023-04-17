@@ -151,6 +151,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
   },
+
+  {
+    path: 'blocked',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/blocked/feature').then((m) => m.BlockedPageModule),
+  },
 ];
 
 @NgModule({
