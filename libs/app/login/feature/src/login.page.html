@@ -12,9 +12,10 @@
 
 
 
-
-      <div> 
-    <ion-label position="floating"   style="margin-bottom: 30px;font-weight: bold;">Email</ion-label>
+  <form [formGroup]="loginForm" ngxsForm="login.loginForm" (submit)="login()">
+    <div> 
+      <ion-item>
+      <ion-label position="floating"   style="margin-bottom: 30px;font-weight: bold;">Email</ion-label>
         <ion-input
           type="email"
           minlength="6"
@@ -22,9 +23,13 @@
          required="true"
           autocomplete="email"
           style=" border: 1px solid black; border-top: none;border-right: none;border-left: none;"
-          ></ion-input>
-        </div>
+          formControlName="email"
+          >
+        </ion-input>
+      </ion-item>
+      </div>
       <div> 
+      <ion-item>
       <ion-label position="floating" style="margin-bottom: 30px; font-weight: bold;">Password</ion-label>
         <ion-input
           [type]="showPassword ? 'text' : 'password'"
@@ -33,8 +38,11 @@
           required="true"
           autocomplete="password"
           style=" border: 1px solid black; border-top: none;border-right: none;border-left: none;"
-         ></ion-input>
-       
+          formControlName="password"
+         >
+        </ion-input>
+      </ion-item>
+      </div> 
         
          
         <ion-grid class="ion-padding">
@@ -46,7 +54,7 @@
                <ion-text>Log In</ion-text>
              </ion-button>
           </ion-grid>
-         
+    </form> 
 
 
         <ion-content>
