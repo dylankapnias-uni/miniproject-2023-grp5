@@ -19,9 +19,7 @@ export class ChatPage {
     private route: ActivatedRoute,
     ) {
       //Get id from route 
-      /*this.route.paramMap.subscribe(paramMap => {
-        this.id = parseInt(paramMap.get('id')!);
-      })*/
+      
       //Grab the chat here
       this.me='2';
       this.Chat = {
@@ -105,8 +103,7 @@ export class ChatPage {
     }
 
     return(){
-      console.log('go back');
-      //this.router.navigate(['/messages']);
+      this.router.navigate(['/messages']);
     }
 
 }

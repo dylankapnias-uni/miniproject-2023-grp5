@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
 import { SubscribeToAuthState } from '@mp/app/auth/util';
 import { Store } from '@ngxs/store';
 import { Subject, takeUntil, tap } from 'rxjs';
+// import { CoreModule as NavComponent } from '@mp/app/core/ui';
+//  NavComponent
 
 @Component({
   selector: 'ms-core-shell',
@@ -24,7 +27,8 @@ export class CoreShell implements OnInit, OnDestroy {
   constructor(
     private readonly store: Store,
     private readonly swUpdate: SwUpdate,
-    private readonly toastController: ToastController
+    private readonly toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +39,10 @@ export class CoreShell implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  hasRoute(route: string) {
+    return this.router.url === route;
   }
 
   async updateToast() {

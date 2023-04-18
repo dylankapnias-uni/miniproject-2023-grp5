@@ -13,7 +13,9 @@ export class NavBarComponent{
     return this.router.url === route;
   }
   navigate(page:string){
-    //This gives errors for now as we need to implement all the routes properly
     this.router.navigate([page]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 100)
   }
 }
