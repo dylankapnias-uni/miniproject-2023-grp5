@@ -7,9 +7,12 @@ import { Action, State, StateContext } from '@ngxs/store';
 export interface RegisterStateModel {
   registerForm: {
     model: {
-      displayName: string | null;
       email: string | null;
+      phoneNumber: number;
+      dateOfBirth: string | null;
+      age: number;
       password: string | null;
+      confirmPassword: string | null;
     };
     dirty: false;
     status: string;
@@ -22,9 +25,12 @@ export interface RegisterStateModel {
   defaults: {
     registerForm: {
       model: {
-        displayName: null,
         email: null,
+        phoneNumber: 0,
+        dateOfBirth: null,
+        age: 0,
         password: null,
+        confirmPassword: null,
       },
       dirty: false,
       status: '',
@@ -40,7 +46,14 @@ export class RegisterState {
       const state = ctx.getState();
       const email = state.registerForm.model.email;
       const password = state.registerForm.model.password;
+      const phoneNumber = state.registerForm.model.phoneNumber;
+      const dateOfBirth = state.registerForm.model.dateOfBirth;
+      const age = state.registerForm.model.age;
+      const confirmPassword = state.registerForm.model.confirmPassword; 
 
+      if(password !== confirmPassword) {
+        return ctx.dispatch(new SetError('Password and confirm password not match'));
+      }
       if (email && password) {
         return ctx.dispatch(new AuthRegister(email, password));
       }

@@ -14,7 +14,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
+    //data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/welcome/feature').then((m) => m.WelcomeModule),
   },
@@ -77,7 +77,7 @@ const routes: Routes = [
     path: 'register',
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
+    //data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/register/feature').then((m) => m.RegisterModule),
   },

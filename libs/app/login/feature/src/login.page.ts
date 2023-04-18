@@ -22,6 +22,7 @@ export class LoginPage {
       [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
     ],
     password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+    confirmPassword: ['', [Validators.minLength(6), Validators.maxLength(64)]],
   });
   showPassword = false;
 

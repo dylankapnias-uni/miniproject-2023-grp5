@@ -1,6 +1,3 @@
-
-
-  
 <ion-content [fullscreen]="true">
   <div class="header">
     <a href="/" class="back">
@@ -9,6 +6,10 @@
     <h1 class="title">Sign Up</h1>
 
   </div>
+  <form
+  [formGroup]="registerForm"
+  ngxsForm="register.registerForm"
+  (submit)="register()">
       <ion-item>
         <ion-label position="floating">Email</ion-label>
         <ion-input
@@ -20,16 +21,16 @@
           autocomplete="email"
           formControlName="email"></ion-input>
       </ion-item>
-   
+      
       <ion-item>
         <ion-label position="floating">Phone Number</ion-label>
         <ion-input
-          type="tel"
+          type="number"
           minlength="10"
           maxlength="15"
           placeholder="Enter phone number"
           required="true"
-          autocomplete="tel"
+          autocomplete="phoneNumber"
           formControlName="phoneNumber"></ion-input>
       </ion-item>
       
@@ -39,6 +40,7 @@
           type="date"
           placeholder="Enter date of birth"
           required="true"
+          autocomplete="dateOfBirth"
           formControlName="dateOfBirth"></ion-input>
       </ion-item>
       
@@ -50,6 +52,7 @@
           max="120"
           placeholder="Enter age"
           required="true"
+          autocomplete="age"
           formControlName="age"></ion-input>
       </ion-item>
     
@@ -59,6 +62,7 @@
           [type]="showPassword ? 'text' : 'password'"
           minlength="6"
           maxlength="64"
+          autocomplete="password"
           formControlName="password"></ion-input>
       </ion-item>
       <ion-item>
@@ -67,7 +71,8 @@
           [type]="showPassword ? 'text' : 'password'"
           minlength="6"
           maxlength="64"
-          formControlName="password"></ion-input>
+          autocomplete="confirmPassword"
+          formControlName="confirmPassword"></ion-input>
       </ion-item>
       
    
@@ -82,6 +87,7 @@
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
             <ion-text>Next</ion-text>
           </ion-button>
+    </form>      
      
         </ion-content>
   

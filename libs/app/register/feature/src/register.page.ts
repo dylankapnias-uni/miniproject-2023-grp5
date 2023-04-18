@@ -21,7 +21,11 @@ export class RegisterPage {
       '',
       [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
     ],
+    phoneNumber: ['', [Validators.minLength(10), Validators.maxLength(10)]],
+    dateOfBirth: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+    age: ['', [Validators.minLength(1), Validators.maxLength(3)]],
     password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+    confirmPassword: ['', [Validators.minLength(6), Validators.maxLength(64)]],
   });
   showPassword = false;
 
@@ -31,6 +35,22 @@ export class RegisterPage {
 
   get password() {
     return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  get phoneNumber() {
+    return this.registerForm.get('phoneNumber');
+  }
+
+  get dateOfBirth() {
+    return this.registerForm.get('dateOfBirth');
+  }
+
+  get age() {
+    return this.registerForm.get('age');
   }
 
   get emailError(): string {
@@ -52,6 +72,43 @@ export class RegisterPage {
       return 'Password should be shorter than 64 characters';
 
     return 'Password is invalid';
+  }
+
+  get confirmPasswordError(): string {
+    if (this.password?.errors?.['required']) return 'Password is required';
+    if (this.password?.errors?.['minlength'])
+      return 'Password should be longer than 6 characters';
+    if (this.password?.errors?.['maxlength'])
+      return 'Password should be shorter than 64 characters';
+
+    return 'Password is invalid';
+  }
+
+  get phoneNumberError(): string {
+    if (this.phoneNumber?.errors?.['required'])
+      return 'Phone number is required';
+    if (this.phoneNumber?.errors?.['minlength'] || this.phoneNumber?.errors?.['maxlength'])
+      return 'Phone number should be 10 digits long';
+
+    return 'Phone number is invalid';
+  }
+
+  get dateOfBirthError(): string {
+    if (this.dateOfBirth?.errors?.['required']) 
+      return 'Date of birth is required';
+     
+
+    return 'Date of birth is invalid';
+  }
+
+  get ageError(): string {
+    if (this.age?.errors?.['required']) return 'Age is required'; 
+    if (this.age?.errors?.['minlength'])
+      return 'Age is empty';
+    if (this.age?.errors?.['maxlength'])
+      return 'Age should be shorter than 3 digits long';
+
+    return 'Age is invalid';
   }
 
   constructor(
