@@ -3,6 +3,19 @@ body {
     background-color: #fde0e0;
 }
 
+.page_name
+{
+    position: absolute;
+    top: 2.3%;
+    left: 20%;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    align-items: center;
+
+    color: #000000;
+}
+
 h1 {
   // text-align: center;
   margin-top: 1%;
@@ -20,9 +33,18 @@ h1 {
     display:flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 1.5%;
+    left: 1.5%;
 }
 .back-icon{
     font-size:30px;
+}
+
+ion-grid
+{
+    top:11%;
+    position: relative;
 }
 
 .rye {

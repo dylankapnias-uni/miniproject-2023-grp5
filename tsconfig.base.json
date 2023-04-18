@@ -72,14 +72,7 @@
       "@mp/app/login/data-access": ["libs/app/login/data-access/src/index.ts"],
       "@mp/app/login/feature": ["libs/app/login/feature/src/index.ts"],
       "@mp/app/login/util": ["libs/app/login/util/src/index.ts"],
-      "@mp/app/notification/feature": [
-        "libs/app/notification/feature/src/index.ts"
-      ],
-      "@mp/app/notifications/feature": [
-        "libs/app/notifications/feature/src/index.ts"
-      ],
-      "@mp/app/notificationss/feature": [
-        "libs/app/notificationss/feature/src/index.ts"
+
       ],
       "@mp/app/privacy/feature": ["libs/app/privacy/feature/src/index.ts"],
       "@mp/app/profile/data-access": [
