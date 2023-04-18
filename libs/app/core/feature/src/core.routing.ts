@@ -83,6 +83,14 @@ const routes: Routes = [
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
+
+  },
+  {
+    path: 'welcome',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
+    loadChildren: () =>
+      import('@mp/app/welcome/feature').then((m) => m.WelcomeModule),
   },
 ];
 
