@@ -5,13 +5,15 @@ import {
   //command handlers
   CreateSettingsHandler,
   AddTimeHandler,
-  UpdatePrivacyHandler
+  UpdatePrivacyHandler,
+  BlockUserHandler
 } from './commands';
 import { 
   //event handlers
   SettingsCreatedHandler,
   TimeAddedHandler,
-  PrivacyUpdatedHandler
+  PrivacyUpdatedHandler,
+  UserBlockedHandler
 } from './events';
 import { SettingsSagas } from './settings.sagas';
 import { SettingsService } from './settings.service'
@@ -19,13 +21,15 @@ import { SettingsService } from './settings.service'
 export const CommandHandlers = [
   CreateSettingsHandler,
   AddTimeHandler,
-  UpdatePrivacyHandler
+  UpdatePrivacyHandler,
+  BlockUserHandler
 ];
 
 export const EventHandlers = [
   SettingsCreatedHandler,
   TimeAddedHandler,
-  PrivacyUpdatedHandler
+  PrivacyUpdatedHandler,
+  UserBlockedHandler
 ]
 
 @Module({

@@ -8,7 +8,9 @@ import {
   // Enums
   ProfilePrivacy,
   TimeAddedEvent,
-  PrivacyUpdatedEvent
+  PrivacyUpdatedEvent,
+  UserBlockedEvent,
+  UserUnblockedEvent
 } from '@mp/api/settings/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Timestamp } from 'firebase-admin/firestore';
@@ -53,7 +55,8 @@ export class Settings
 
   blockUser(blockedId: string) {
     this.privacy.blockedAccounts.push(blockedId);
-    // TODO create event
+
+    this.apply(new UserBlockedEvent({userId: this.userId, blockedUserId: blockedId}));
   }
 
   unblockUser(blockedId: string) {
@@ -61,6 +64,7 @@ export class Settings
     if (index == -1) return;
     this.privacy.blockedAccounts.splice(index, 1);
     // TODO create event
+    this.apply(new UserUnblockedEvent({userId: this.userId, blockedUserId: blockedId}));
   }
 
   updatePrivacy(visibility: ProfilePrivacy) {

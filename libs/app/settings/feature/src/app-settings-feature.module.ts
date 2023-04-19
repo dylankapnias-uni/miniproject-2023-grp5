@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgxsModule } from '@ngxs/store';
 import { SettingsPage } from './lib/settings.page';
 import { SettingsPageRoutingModule } from './app-settings-feature.routing';
-import { SettingsState } from 'libs/app/settings/data-access/src';
+import { SettingsState } from '@mp/app/settings/data-access';
 import { SettingsApi } from '@mp/app/settings/data-access';
 @NgModule({
   imports: [
