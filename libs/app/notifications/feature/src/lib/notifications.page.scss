@@ -6,12 +6,17 @@ ion-button {
     margin-top: 5%;
     color: grey;
     --background: white;
-     margin-left: 5%;
+    margin-left: 5%;
     // margin-right: 7%;
-    width: 346.4px;
+    width: 90%;
     height: 36px;
     
 }
+
+// .button {
+//     width: 80%;
+//     align-items: center;
+// }
 
 .card1 {
     background-color: #f3c1c0;
@@ -20,6 +25,7 @@ ion-button {
     padding-top: 0;
     padding-bottom: 0;
     height: 65px;
+    margin-bottom: 6%;
    // text-align: center;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
 }
@@ -29,10 +35,16 @@ ion-button {
 }
 
 .label {
-    padding-top: -5%;
+   // padding-top: -5%;
     align-self: center;
-    font-size: 105%;
+    font-size: 1.2em;
+    margin-top: -5%;
+   // text-align: center;
 }
+
+// .card2label {
+    
+// }
 
 .foto {
     margin-top: -5%;
@@ -40,25 +52,35 @@ ion-button {
 }
 
 .matchphoto {
+    margin: 0;
+  position: absolute;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
-    height: 50px;
-    width: 60px;
-    margin-top: 15%;
+    height: 6vh;
+    margin-top: 4vh;
+    width: 6vh;
+ //   margin-top: 22%;
     margin-left: -30%;
-    object-fit: fill;
+    // object-fit: fill;
+    // line-height: 0%;
 }
 
 .card2 {
     background-color: #f3c1c0;
+    //margin-top: 200%;
     color: black;
     text-align: center;
+    margin-bottom: 6%;
     height: 65px;
-    margin-top: -5%;
+    margin-top: -4%;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 .fonty {
-    font-size: 125%;
+    font-size: 1.22em;
+    text-align: center;
+    margin-top: 0.5%;
 }
 
 .komaan {

@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: 'notifications',
     loadChildren: () =>
-      import('@mp/app/notifications/feature').then((m) => m.notificationsPageModule),
+      import('../../../notifications/feature/src/app-notificationss-feature.module').then((m) => m.notificationsPageModule),
   },
 
   //   path: 'verify',
@@ -143,7 +143,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
-      import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
+      import('../../../privacy-policy/feature/src/app-privacy-policy-feature.module').then((m) => m.PrivacyPolicyPageModule),
   },
   
   {
