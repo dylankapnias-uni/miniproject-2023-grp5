@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class EditProfilePage 
 {
+  Bio:string = "My Bio"
   constructor(public r : Router)
   {}
 
@@ -19,5 +20,9 @@ export class EditProfilePage
   LoadInterests()
   {
     this.r.navigate(['/interests'])
+  }
+
+  UpdateBio(){
+    console.log(this.Bio, " Push to state from here");
   }
 }
