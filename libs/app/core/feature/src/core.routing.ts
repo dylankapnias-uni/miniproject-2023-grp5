@@ -30,8 +30,8 @@ const routes: Routes = [
   // },
   {
     path: 'home',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedOut },
+    //canActivate: [AuthGuard],
+    //data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/home/feature').then((m) => m.HomeModule),
   },
@@ -154,6 +154,30 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/blocked/feature').then((m) => m.BlockedPageModule),
   },
+  {
+    path: 'messages',
+    loadChildren: () =>
+      import('@mp/app/messages/feature').then((m) => m.MessagesModule),
+  },
+  {
+    path: 'chat/:id',
+    loadChildren: () =>
+      import('@mp/app/chat/feature').then((m) => m.ChatModule),
+  },
+  {
+    path: 'profile',
+    // canActivate: [AuthGuard],
+    // data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/profile/feature').then((m) => m.ProfileModule),
+  }
+  // {
+  //   path: 'notifications',
+  //   // canActivate: [AuthGuard],
+  //   // data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import('@mp/app/notifications/feature').then((m) => m.NotificationsModule),
+  // }
 ];
 
 @NgModule({
