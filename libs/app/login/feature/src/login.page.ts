@@ -7,6 +7,7 @@ import {
 } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ms-login-page',
@@ -55,16 +56,18 @@ export class LoginPage {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly store: Store
+    private readonly store: Store,
+  
   ) {}
-
+  
   login() {
     if (this.loginForm.valid) {
       this.store.dispatch(new Login());
     }
   }
-
+ 
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
+  imagePath = 'https://firebasestorage.googleapis.com/v0/b/miniproject-2023-grp5-dev.appspot.com/o/Timeless_Icon.png?alt=media&token=fe347608-23e2-4c47-be3e-e5b0506dd350';
 }

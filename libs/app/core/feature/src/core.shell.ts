@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
 import { SubscribeToAuthState } from '@mp/app/auth/util';
@@ -26,7 +27,8 @@ export class CoreShell implements OnInit, OnDestroy {
   constructor(
     private readonly store: Store,
     private readonly swUpdate: SwUpdate,
-    private readonly toastController: ToastController
+    private readonly toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +39,10 @@ export class CoreShell implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  hasRoute(route: string) {
+    return this.router.url === route;
   }
 
   async updateToast() {

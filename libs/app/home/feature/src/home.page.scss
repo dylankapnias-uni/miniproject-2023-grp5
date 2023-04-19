@@ -1,0 +1,152 @@
+body
+{
+    background-color: #FDE0E0;
+}
+
+ion-searchbar 
+{
+    --background: #FFFFFF;
+    --icon-color: #F6A7A7;
+    --border-radius: 20px;
+}
+
+.search
+{
+    position : relative;
+    top: 2%;
+    //width: 90%;
+    margin: 0 auto;
+    //height: 5%;
+}
+
+
+.profile
+{
+    //top: 1.2%;
+    text-align: center;
+    height: 110%;
+    bottom: 50%;
+}
+
+.profile .profile_picture
+{
+    border-radius: 12px !important;
+    overflow: hidden;
+    height: 100%;   
+}
+
+.profile .profile_info
+{
+    position: absolute;
+    left: 5%;
+    bottom: 2%;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: 90%;
+    height: 148px;
+    background-color:rgb(224, 224, 224, 0.85) ; 
+}
+
+.user_name
+{
+    top: 591px;
+    opacity: 100%;
+    font-size: 48px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+}
+
+.age
+{
+    font-size: 32px;
+}
+
+ion-chip
+{
+    background-color: #F3C1C0;
+    width: 90.89px;
+    height: 28px;
+    font-size: 17px;;
+    justify-content: center;
+    box-shadow: 3px 3px 5px rgb(73, 72, 72);
+    text-transform: bold;
+    letter-spacing: 0.4px;
+}
+
+
+
+//All styling necesary for card swiping
+
+::-webkit-scrollbar{
+    display:none;
+}
+
+.users{
+    position: relative;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FDE0E0 !important;
+
+    .user{
+        position: absolute;
+        //background-color: #FDE0E0 !important;
+
+        ion-card{
+            position: relative;
+            border-radius: 16px;
+            height: 650px;
+
+            ion-card-content{
+                padding:0;
+                img{
+                    width: 100vw;
+                    height: 75vh;
+                    border-radius: 16px;
+                    object-fit: cover;
+                    object-position: top;
+                    mask-image: linear-gradient(to bottom, #000000, #000000, transparent);
+                }
+                ion-item{
+                    --padding-start: 0px;
+                    position: absolute;
+                    left:0;
+                    bottom:0;
+                    text-align: center;
+                    --background: transparent;
+                    ion-label{
+                        h2{
+                            font-size: x-large;
+                        }
+                        p{
+                            font-size: large;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .icon{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        opacity: 0;
+        font-size: 100px;
+        color: #F3C1C0;
+    }
+}
+
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+
+    ion-icon{
+        font-size: 45px;
+    }
+}
