@@ -7,11 +7,31 @@ import { Router } from '@angular/router';
 })
 export class ShopPage 
 {
-    constructor (public r: Router)
-    {}
+  constructor (public r: Router)
+  {}
 
-    LoadSettingsPage()
-    {
-      this.r.navigate(['/settings']);
-    }
+  add5Minutes()
+  {
+    console.log("Add 5 minutes to the time");
+  }
+
+  add10Minutes()
+  {
+    console.log("Add 10 minutes to the time");
+  }
+
+  add15Minutes()
+  {
+    console.log("Add 15 minutes to the time");
+  }
+
+  add30Minutes()
+  {
+    console.log("Add 30 minutes to the time");
+  }
+
+  add60Minutes()
+  {
+    console.log("Add 60 minutes to the time");
+  }
 }

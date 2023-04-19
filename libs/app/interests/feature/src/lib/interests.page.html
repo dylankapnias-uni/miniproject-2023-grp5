@@ -22,7 +22,7 @@
     <ion-row>
       <ion-col class = "cat">My Interests</ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row style = "margin-top: 10px;">
       <ion-col size="4" *ngFor="let i of MyInterests"><ion-chip><ion-label>{{i}}</ion-label> <ion-icon name="close" (click)="removeItem(i)"></ion-icon></ion-chip></ion-col>
     </ion-row>
   </ion-grid>

@@ -15,7 +15,7 @@ export class InterestsPage{
     },
     {
       catagory:'Food',
-      content:['Vegan', 'Meat', 'Vegetarian']
+      content:['Vegan', 'Pasta', 'Pizza']
     },
     {
       catagory:'Music',
