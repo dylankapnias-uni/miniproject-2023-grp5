@@ -143,7 +143,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
-      import('../../../privacy-policy/feature/src/app-privacy-policy-feature.module').then((m) => m.PrivacyPolicyPageModule),
+      import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
   },
   
   {
