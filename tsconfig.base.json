@@ -107,6 +107,10 @@
       "@mp/app/welcome/data-access": [
         "libs/app/welcome/data-access/src/index.ts"
       ],
+      "@mp/app/notifications/feature": ["libs/app/notifications/feature/src/index.ts"],
+      "@mp/app/notifications/util": ["libs/app/notifications/util/src/index.ts"],
+      "@mp/app/notifications/ui": ["libs/app/notifications/ui/src/index.ts"],
+      
       "@mp/app/welcome/feature": ["libs/app/welcome/feature/src/index.ts"],
       "@mp/app/welcome/util": ["libs/app/welcome/util/src/index.ts"],
       "@mp/cli/core/feature": ["libs/cli/core/feature/src/index.ts"]

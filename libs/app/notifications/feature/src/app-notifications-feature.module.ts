@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { notificationsPage } from './lib/notifications.page';
-import { notificationsPageRoutingModule } from './app-notificationss-feature.routing';
+import { notificationsPageRoutingModule } from './app-notifications-feature.routing';
 
 @NgModule({
   imports: [
     CommonModule,
- 
     IonicModule,
     notificationsPageRoutingModule
   ],

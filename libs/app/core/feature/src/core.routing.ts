@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: 'notifications',
     loadChildren: () =>
-      import('../../../notifications/feature/src/app-notificationss-feature.module').then((m) => m.notificationsPageModule),
+      import('../../../notifications/feature/src/app-notifications-feature.module').then((m) => m.notificationsPageModule),
   },
 
   //   path: 'verify',
