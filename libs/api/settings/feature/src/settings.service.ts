@@ -62,6 +62,8 @@ export class SettingsService {
   async createSettings(
     request: ICreateSettingsRequest
   ): Promise<ICreateSettingsResponse> {
+    // There is no way this is going to work -_-
+    console.log("Hello world, from Service SettingsService::createSettings")
     return await this.commandBus.execute<
       CreateSettingsCommand,
       ICreateSettingsResponse

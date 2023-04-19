@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CreateSetting } from '@mp/app/settings/util';
+import { Store, Selector, Select } from '@ngxs/store';
+import { SettingsState } from '@mp/app/settings/data-access';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'mp-settings',
@@ -7,12 +11,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./settings.page.scss']
 })
 export class SettingsPage {
-  constructor (public r : Router)
+  constructor (public r : Router, private store: Store)
   {}
+  @Select(SettingsState.settings) settings$!: Observable<string[]>;
+
 
   LoadAccountPage()
   {
-    this.r.navigate(['/account']);
+   // this.r.navigate(['/account']);
+
+    this.store.dispatch(new CreateSetting({id:'5'}));
   }
 
   LoadEditProfilePage()

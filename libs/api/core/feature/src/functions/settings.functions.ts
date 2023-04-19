@@ -57,9 +57,11 @@ export const addTime = functions.https.onCall(
 // for testing only
 export const createSettings = functions.https.onCall(
   async (
-    request: ICreateSettingsRequest
-  ) => {
+    request: ICreateSettingsRequest,
+    any
+  ): Promise<any> => {
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(SettingsService);
+    return service.createSettings(request);
   }
 )
