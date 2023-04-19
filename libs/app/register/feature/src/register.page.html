@@ -1,83 +1,88 @@
 <body>
 
   <div class="header">
-    <a href="/" class="back">
+    <a href="/welcome" class="back">
       <ion-icon name="arrow-back" class="back-icon"></ion-icon>
     </a>
     <h1 class="title">Sign Up</h1>
 
   </div>
-      <ion-item>
+  <form [formGroup]="myForm">
+      <ion-item >
         <ion-label position="floating">Email</ion-label>
         <ion-input
           type="email"
           minlength="6"
           maxlength="64"
+          style="  margin-bottom: 15px;"
           placeholder="Enter email"
           required="true"
           autocomplete="email"
           formControlName="email"></ion-input>
       </ion-item>
    
-      <ion-item>
+      <ion-item >
         <ion-label position="floating">Phone Number</ion-label>
         <ion-input
           type="tel"
           minlength="10"
           maxlength="15"
+          style="  margin-bottom: 15px;"
           placeholder="Enter phone number"
           required="true"
           autocomplete="tel"
           formControlName="phoneNumber"></ion-input>
       </ion-item>
       
-      <ion-item>
+      <ion-item >
         <ion-label position="floating">Date of Birth</ion-label>
         <ion-input
           type="date"
           placeholder="Enter date of birth"
+          style="  margin-bottom: 15px;"
           required="true"
           formControlName="dateOfBirth"></ion-input>
       </ion-item>
       
-      <ion-item>
+      <ion-item >
         <ion-label position="floating">Age</ion-label>
         <ion-input
           type="number"
           min="1"
           max="120"
           placeholder="Enter age"
+          style="  margin-bottom: 15px;"
           required="true"
           formControlName="age"></ion-input>
       </ion-item>
     
-      <ion-item>
+      <ion-item >
         <ion-label position="floating">Password</ion-label>
         <ion-input
-          [type]="showPassword ? 'text' : 'password'"
+        
           minlength="6"
           maxlength="64"
+          style="  margin-bottom: 15px;"
           formControlName="password"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Confirm Password</ion-label>
         <ion-input
-          [type]="showPassword ? 'text' : 'password'"
+        style="  margin-bottom: 15px;"
           minlength="6"
           maxlength="64"
           formControlName="password"></ion-input>
       </ion-item>
-      
-   
+      </form>
   
    
        <ion-button
             expand="block"
-            style="margin-top: 100px"
+          
             class="custom-buttons"
-            [disabled]="!this.registerForm.valid || (busy$ | async)"
+          
             type="submit">
-            <ion-spinner *ngIf="busy$ | async"></ion-spinner>
+            
             <ion-text>Next</ion-text>
           </ion-button>
      
