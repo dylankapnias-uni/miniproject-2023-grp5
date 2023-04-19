@@ -8,5 +8,24 @@
             </div></ion-col>
         </ion-row>
     </ion-grid>
+
+    <ion-grid>
+        <ion-row class="blocked-bubble" *ngFor="let i of users">
+            <ion-col size="2">
+              <ion-avatar>
+                <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="6">
+              <div>
+                <div class="content">
+                    <div class="name">{{i.name}}</div>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col size="2">
+                <ion-button color="danger" fill="solid" class="small-button">Unblock</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
-    

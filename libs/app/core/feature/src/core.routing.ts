@@ -76,8 +76,6 @@ const routes: Routes = [
   {
     path: 'register',
     pathMatch: 'full',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/register/feature').then((m) => m.RegisterModule),
   },
@@ -137,8 +135,6 @@ const routes: Routes = [
   {
     path: 'privacy-policy',
     pathMatch: 'full',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/privacy-policy/feature').then((m) => m.PrivacyPolicyPageModule),
   },
@@ -146,8 +142,6 @@ const routes: Routes = [
   {
     path: 'updates',
     pathMatch: 'full',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
   },

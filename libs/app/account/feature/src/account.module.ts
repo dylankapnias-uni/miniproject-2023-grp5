@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { AccountPage } from './lib/account.page';
-import { AccountPageRoutingModule } from './app-account-feature.routing';
+import { AccountPageRoutingModule } from './account.routing';
 
 @NgModule({
   imports: [
     CommonModule,
- 
     IonicModule.forRoot(),
     AccountPageRoutingModule,
     FormsModule
