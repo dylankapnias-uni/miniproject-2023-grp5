@@ -38,6 +38,7 @@ export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeR
     };
 
     result.history.push(request.purchase);
+    // TODO FIX THIS, FIND WAY TO UPDATE MODEL WITHOUT BREAKING FIRESTORE UPDATE
     const response: IAddTimeResponse = {userId: request.userId, time: result};
     console.log(`AddTimeHandler: \n${response}`);
     return response;

@@ -1,6 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
-import { AddTimeCommand, BlockUserCommand, IAddTimeRequest, IAddTimeResponse, IBlockUserRequest, IUnblockUserRequest, IUpdatePrivacyRequest, UnblockUserCommand, UpdatePrivacyCommand } from "@mp/api/settings/util";
+import { 
+  AddTimeCommand, 
+  BlockUserCommand, 
+  CreateSettingsCommand, 
+  IAddTimeRequest, 
+  IAddTimeResponse, 
+  IBlockUserRequest, 
+  IBlockUserResponse, 
+  ICreateSettingsRequest, 
+  ICreateSettingsResponse, 
+  IUnblockUserRequest, 
+  IUnblockUserResponse, 
+  IUpdatePrivacyRequest, 
+  IUpdatePrivacyResponse, 
+  UnblockUserCommand, 
+  UpdatePrivacyCommand 
+} from "@mp/api/settings/util";
 
 @Injectable()
 export class SettingsService {
@@ -18,28 +34,37 @@ export class SettingsService {
 
   async blockUser(
     request: IBlockUserRequest
-  ): Promise<any> {
+  ): Promise<IBlockUserResponse> {
     return await this.commandBus.execute<
       BlockUserCommand,
-      any
+      IBlockUserResponse
     >(new BlockUserCommand(request));
   }
 
   async unblockUser(
     request: IUnblockUserRequest
-  ): Promise<any> {
+  ): Promise<IUnblockUserResponse> {
     return await this.commandBus.execute<
       UnblockUserCommand,
-      any
+      IUnblockUserResponse
     >(new BlockUserCommand(request));
   }
 
   async updatePrivacy(
     request: IUpdatePrivacyRequest
-  ): Promise<any> {
+  ): Promise<IUpdatePrivacyResponse> {
     return await this.commandBus.execute<
       UpdatePrivacyCommand,
-      any
+      IUpdatePrivacyResponse
     >(new UpdatePrivacyCommand(request));
+  }
+
+  async createSettings(
+    request: ICreateSettingsRequest
+  ): Promise<ICreateSettingsResponse> {
+    return await this.commandBus.execute<
+      CreateSettingsCommand,
+      ICreateSettingsResponse
+    >(new CreateSettingsCommand(request));
   }
 }

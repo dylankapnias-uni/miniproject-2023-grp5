@@ -1,10 +1,11 @@
 import { SettingsRepository } from "@mp/api/settings/data-access";
-import { BlockUserCommand } from "@mp/api/settings/util";
+import { BlockUserCommand, IBlockUserResponse } from "@mp/api/settings/util";
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
 // TODO Add return
 @CommandHandler(BlockUserCommand)
-export class BlockUserHandler implements ICommandHandler<BlockUserCommand, any> {
+export class BlockUserHandler 
+implements ICommandHandler<BlockUserCommand, IBlockUserResponse> {
 
   constructor(
     private readonly publisher: EventPublisher,
@@ -26,5 +27,6 @@ export class BlockUserHandler implements ICommandHandler<BlockUserCommand, any> 
     settings.commit();
 
     // return response;
+    return { userId: settings.userId, blockedAccounts: settings.privacy.blockedAccounts };
   }
 }

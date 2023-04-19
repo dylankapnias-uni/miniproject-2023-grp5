@@ -1,10 +1,11 @@
 import { SettingsRepository } from "@mp/api/settings/data-access";
-import { UpdatePrivacyCommand } from "@mp/api/settings/util";
+import { IUpdatePrivacyResponse, UpdatePrivacyCommand } from "@mp/api/settings/util";
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
 // TODO Add return
 @CommandHandler(UpdatePrivacyCommand)
-export class UpdatePrivacyHandler implements ICommandHandler<UpdatePrivacyCommand, any> {
+export class UpdatePrivacyHandler 
+implements ICommandHandler<UpdatePrivacyCommand, IUpdatePrivacyResponse> {
 
   constructor(
     private readonly publisher: EventPublisher,
@@ -26,5 +27,6 @@ export class UpdatePrivacyHandler implements ICommandHandler<UpdatePrivacyComman
     settings.commit();
 
     // return response;
+    return {userId: settings.userId, privacy: settings.privacy.profileVisibility};
   }
 }

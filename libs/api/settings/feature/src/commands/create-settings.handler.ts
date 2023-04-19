@@ -1,5 +1,6 @@
 import { 
   CreateSettingsCommand,
+  ICreateSettingsResponse,
   ISettings,
   ProfilePrivacy
 } from '@mp/api/settings/util';
@@ -12,7 +13,10 @@ import { Settings } from '../models';
 // TODO Clean up
 @CommandHandler(CreateSettingsCommand)
 export class CreateSettingsHandler
-implements ICommandHandler<CreateSettingsCommand> {
+implements ICommandHandler<
+  CreateSettingsCommand,
+  ICreateSettingsResponse
+> {
   constructor(private publisher: EventPublisher){}
 
   async execute(command: CreateSettingsCommand) {
@@ -57,5 +61,6 @@ implements ICommandHandler<CreateSettingsCommand> {
     // result.history.push({amount:10000, date:Timestamp.fromDate(new Date())});
     // const response: IAddTimeResponse = {userId: req.userId, time: result};
     // console.log(`CreateSettingsHandler: \n${JSON.stringify(response)}`);
+    return {settings: settings.toJSON()};
   }
 }
