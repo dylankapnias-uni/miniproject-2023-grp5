@@ -1,26 +1,26 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 
 import {
-    ClearNotificationCommand,
+    SendNotificationCommand,
     INotification,
     IInbox,
 } from '@mp/api/notifications/util';
-@CommandHandler(ClearNotificationCommand)
-export class ClearNotificationHandler
-implements ICommandHandler<ClearNotificationCommand>
+
+import { Notification } from '../models';
+
+@CommandHandler(SendNotificationCommand)
+export class CreateNotificationHandler
+implements ICommandHandler<SendNotificationCommand>
 {
     constructor(private publisher: EventPublisher) {}
-    async execute(command: ClearNotificationCommand) {
-        console.log(`${ClearNotificationHandler.name}`);
+    async execute(command: SendNotificationCommand) {
+        console.log(`${CreateNotificationHandler.name}`);
     
-        // const request = command.request;
-        // const userId = request.user.id;
-        // const displayName = request.user.displayName;
-        // const email = request.user.email;
-        // const photoURL = request.user.photoURL;
-        // const cellphone = request.user.phoneNumber;
-    
-        // const data: IProfile = {
+         const request = command.request;
+         const userId = request.userId;
+
+         const inbox=request.inbox;
+
         //   userId,
         //   accountDetails: {
         //     displayName,
@@ -51,9 +51,9 @@ implements ICommandHandler<ClearNotificationCommand>
         //   status: ProfileStatus.INCOMPLETE,
         //   created: Timestamp.fromDate(new Date()),
         // };
-        // const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
+         const notification = this.publisher.mergeObjectContext(Notification.fromData(data));
     
-        // profile.create();
-        // profile.commit();
+         notification.create();
+        notification.commit();
       }
 }

@@ -53,7 +53,7 @@ export class HomeRepository {
             .firestore()
             .collection('Home')
             .doc(userID)
-            .set(back, { merge: false });
+            .set({swiped:back}, { merge: false });
             return front;
         }else{
           const listItems = swiped.userList;
@@ -96,7 +96,7 @@ export class HomeRepository {
           .firestore()
           .collection('Home')
           .doc(acceptProfile.userId)
-          .set([ref], { merge: true });
+          .update({swiped: admin.firestore.FieldValue.arrayUnion(ref)});
       }
       
 }
