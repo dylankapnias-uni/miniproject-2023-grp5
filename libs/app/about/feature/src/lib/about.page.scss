@@ -1,0 +1,79 @@
+body
+{
+    background-color: #FDE0E0;
+}
+
+.back_button{
+    height:37px;
+    width:42px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1.5%;
+    left: 1.5%;
+}
+.back-icon{
+    font-size:30px;
+}
+
+ion-label
+{
+    position: absolute;
+    top: 2.3%;
+    left: 20%;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    align-items: center;
+
+    color: #000000;
+}
+
+.privacy_policy
+{
+    --background: #F3C1C0;
+    width: 365px;
+    height: 69px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    position: absolute;
+    top: 12%;
+    left: 2.5%;
+    color: black;
+    font-size: 24px;
+}
+
+.terms
+{
+    --background: #F3C1C0;
+    width: 365px;
+    height: 69px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    position: absolute;
+    top: 22%;
+    left: 2.5%;
+    color: black;
+    font-size: 24px;
+}
+
+.updates
+{
+    --background: #F3C1C0;
+    width: 365px;
+    height: 69px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    position: absolute;
+    top: 32%;
+    left: 2.5%;
+    color: black;
+    font-size: 24px;
+}
+
+
+

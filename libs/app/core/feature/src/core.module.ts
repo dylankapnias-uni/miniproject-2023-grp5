@@ -40,6 +40,7 @@ import { AuthState } from '@mp/app/auth/data-access';
 import { AuthModule } from '@mp/app/auth/feature';
 import { ErrorsState } from '@mp/app/errors/data-access';
 import { ErrorsModule } from '@mp/app/errors/feature';
+import { SettingsPageModule } from '@mp/app/settings/feature';
 import { NgxsActionsExecutingModule } from '@ngxs-labs/actions-executing';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
@@ -50,6 +51,8 @@ import { NgxsModule } from '@ngxs/store';
 import { MomentModule } from 'ngx-moment';
 import { CoreRouting } from './core.routing';
 import { CoreShell } from './core.shell';
+//import { CoreModule as NavComponent } from '@mp/app/core/ui';
+ 
 import { CoreModule as NavComponent } from '@mp/app/core/ui';
 
 let resolvePersistenceEnabled: (enabled: boolean) => void;
@@ -90,7 +93,7 @@ const FIREBASE_OPTIONS: FirebaseOptions = {
     NavComponent,
     BrowserModule,
     IonicModule.forRoot(),
-    CoreRouting,
+    CoreRouting, SettingsPageModule,
     provideRemoteConfig(() => getRemoteConfig()),
     provideAnalytics(() => getAnalytics()),
     provideMessaging(() => getMessaging()),

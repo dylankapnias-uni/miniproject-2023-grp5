@@ -1,4 +1,4 @@
-<ion-tabs *ngIf="this.hasRoute('/home') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post')">
+<ion-tabs *ngIf="this.hasRoute('/home') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post') || this.hasRoute('/interests')">
     <ion-tab-bar slot="bottom">
       <ion-tab-button (click)="navigate('/home')" [ngClass]="{'active':hasRoute('/home')}" tab="home">
         <ion-icon name="heart"></ion-icon>
