@@ -1,16 +1,12 @@
-<body>
-
- 
-
-    <a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
-    
-    <ion-label class = "page_name"><b>Blocked Accounts</b></ion-label>
-    
-   
-    
-  
-
-      
-    
-</body>
+<ion-content [fullscreen]="true">
+    <ion-grid>
+        <ion-row>
+        <ion-col size="2"><a routerLink = "/privacy"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
+        <ion-col size="8" >
+            <div class="ion-text-center down">
+            <ion-label>Blocked Accounts</ion-label>
+            </div></ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
     
