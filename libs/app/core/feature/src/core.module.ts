@@ -51,7 +51,7 @@ import { NgxsModule } from '@ngxs/store';
 import { MomentModule } from 'ngx-moment';
 import { CoreRouting } from './core.routing';
 import { CoreShell } from './core.shell';
-import { NavBarComponent, NavBarModule } from '../../ui/src/lib/navbar';
+import { NavBarModule } from '@mp/app/core/ui';
 
 
 let resolvePersistenceEnabled: (enabled: boolean) => void;
