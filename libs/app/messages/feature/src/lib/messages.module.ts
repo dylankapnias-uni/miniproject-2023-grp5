@@ -4,7 +4,7 @@ import { MessagesPage } from './messages.page';
 import { IonicModule } from '@ionic/angular';
 import { MessagesRouting } from './messages.routing';
 import { NgxsModule } from '@ngxs/store';
-import { MessagesState } from 'libs/app/messages/data-access/src/lib/messages.state';
+import { MessagesState } from '@mp/app/messages/data-access';
 
 @NgModule({
   imports: [CommonModule, IonicModule, MessagesRouting, NgxsModule.forFeature([MessagesState])],

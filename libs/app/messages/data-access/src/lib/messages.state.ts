@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Register as AuthRegister } from '@mp/app/auth/util';
-import { SetError } from '@mp/app/errors/util';
+// import { Register as AuthRegister } from '@mp/app/auth/util';
+// import { SetError } from '@mp/app/errors/util';
+// import { Chat } from '@mp/app/messages/feature'
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
 
@@ -129,8 +130,7 @@ export class MessagesState {
   }
 
   @Selector()
-  static messages(state: MessagesStateModel) 
-  {
+  static messages(state: MessagesStateModel){
     return state.messages
   }
 

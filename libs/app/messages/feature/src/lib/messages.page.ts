@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Chat } from '../Chat.interface';
+// import { Chat } from '../Chat.interface';
 import { Router } from '@angular/router';
-import { Store, Selector, Select } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
-import { MessagesState } from 'libs/app/messages/data-access/src/lib/messages.state';
+import { MessagesState } from '@mp/app/messages/data-access';
 import { Observable } from 'rxjs';
 
 @Component({

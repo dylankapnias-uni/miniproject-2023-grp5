@@ -7,6 +7,7 @@
     "firebase:use:prod": "firebase use production",
     "export:emulators": "firebase emulators:export .emulators",
     "start:app:dev": "yarn run env-cmd -f .env nx run app:serve --configuration=development",
+    "start:app:watch": "yarn run env-cmd -f .env nx run app:serve --watch --configuration=development",
     "start:api:dev": "yarn run env-cmd -f .env nx run api:serve --configuration=development",
     "start:cli:dev": "yarn run env-cmd -f .env nx run cli:serve --configuration=development",
     "start:emulators": "firebase emulators:start",

@@ -10,30 +10,31 @@
     
     <ion-item class = "full_name">
       <ion-label position = "stacked" ><b>Full Name</b></ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="input.name"></ion-input>
     </ion-item>
     
     <ion-item class = "email">
       <ion-label position = "stacked" ><b>E-mail Address</b></ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="input.email"></ion-input>
     </ion-item>
     
     <ion-item class = "phone">
       <ion-label position = "stacked" ><b>Phone Number</b></ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="input.number"></ion-input>
     </ion-item>
     
     <ion-item class = "gender">
       <ion-label position = "stacked" ><b>Gender</b></ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="input.gender"></ion-input>
     </ion-item>
     
     <ion-item class = "birthday">
       <ion-label position = "stacked" ><b>Date of Birth</b></ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="input.dob"></ion-input>
     </ion-item>
     
       
+    <ion-button class = "update_account_button" (click)="updateAccount()">Update Account</ion-button>
     <ion-button class = "delete_account_button">Delete Account</ion-button>
       
     

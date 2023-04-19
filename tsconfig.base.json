@@ -46,7 +46,11 @@
       "@mp/api/users/feature": ["libs/api/users/feature/src/index.ts"],
       "@mp/api/users/util": ["libs/api/users/util/src/index.ts"],
       "@mp/app/about/feature": ["libs/app/about/feature/src/index.ts"],
+      "@mp/app/account/data-access": [
+        "libs/app/account/data-access/src/index.ts"
+      ],
       "@mp/app/account/feature": ["libs/app/account/feature/src/index.ts"],
+      "@mp/app/account/util": ["libs/app/account/util/src/index.ts"],
       "@mp/app/auth/data-access": ["libs/app/auth/data-access/src/index.ts"],
       "@mp/app/auth/feature": ["libs/app/auth/feature/src/index.ts"],
       "@mp/app/auth/util": ["libs/app/auth/util/src/index.ts"],
