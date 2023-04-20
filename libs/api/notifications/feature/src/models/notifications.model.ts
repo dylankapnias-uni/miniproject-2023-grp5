@@ -1,4 +1,4 @@
-import { IInbox, INotification, NotificationSentEvent } from '@mp/api/notifications/util';
+import { IInbox, INotification, NotificationSentEvent,NotificationDeletedEvent } from '@mp/api/notifications/util';
 
 import { AggregateRoot } from '@nestjs/cqrs';
 
@@ -34,4 +34,10 @@ export class Notification extends AggregateRoot implements INotification {
       this.inbox?.push(inbox);
       this.apply(new NotificationSentEvent(this.toJSON()));
   }
+
+  deleteNotification(userId: string) {
+    this.userId = userId;
+    this.inbox=[];
+    this.apply(new NotificationDeletedEvent(this.toJSON()));
+}
 }

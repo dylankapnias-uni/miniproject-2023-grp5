@@ -18,13 +18,11 @@ implements ICommandHandler<SendNotificationCommand>
     
          const request = command.request;
          const userId = request.userId;
-
-         const inbox=request.inbox;
          const notifDoc = await this.repository.getNotifications(userId);
          const data =  notifDoc.data();
          if (!data) throw new Error('Profile not found');
          const notification = this.publisher.mergeObjectContext(Notification.fromData(data));
          notification.sendNotification(request.inbox);
-        notification.commit();
+         notification.commit();
       }
 }
