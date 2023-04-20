@@ -1,7 +1,7 @@
 import { AgeGroup, Ethnicity, Gender, ProfileStatus } from '../enums';
 
 export interface IPersonalDetails {
-  name: string,
+  name?: string,
   bio?: string | null | undefined,
   age?: AgeGroup | null | undefined;
   gender?: Gender | null | undefined;

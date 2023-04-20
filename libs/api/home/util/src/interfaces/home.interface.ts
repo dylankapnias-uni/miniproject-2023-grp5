@@ -3,5 +3,5 @@ import { DocumentReference } from '@firebase/firestore-types'
 import { IUserRef } from './userRef.interface';
 export interface IHome{
     userID: string,
-    swiped: {user:IUserRef,match:IMatched}[] | null | undefined;
+    userList: {user:IUserRef,match:IMatched}[] | null | undefined;
 }
