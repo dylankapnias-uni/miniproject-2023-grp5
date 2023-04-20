@@ -19,6 +19,9 @@ import {
   UserUnblockedHandler,
   TimeSubtractedHandler
 } from './events';
+import {
+  IsBlockedHandler
+} from './queries';
 import { SettingsSagas } from './settings.sagas';
 import { SettingsService } from './settings.service'
 
@@ -38,7 +41,11 @@ export const EventHandlers = [
   UserBlockedHandler,
   UserUnblockedHandler,
   TimeSubtractedHandler
-]
+];
+
+export const QueryHandlers = [
+  IsBlockedHandler
+];
 
 @Module({
   imports: [CqrsModule, SettingsDataAccessModule],
@@ -46,6 +53,7 @@ export const EventHandlers = [
     SettingsService,
     ...CommandHandlers,
     ...EventHandlers,
+    ...QueryHandlers,
     SettingsSagas
   ],
   exports: [SettingsService]

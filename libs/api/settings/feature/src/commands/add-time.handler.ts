@@ -9,7 +9,7 @@ import {
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
 import { Timestamp } from "firebase-admin/firestore";
-// TODO Clean up
+
 @CommandHandler(AddTimeCommand)
 export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeResponse> {
 
@@ -19,12 +19,14 @@ export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeR
   ){}
 
   async execute(command: AddTimeCommand) {
+
     const request = {
       userId: command.request.userId,
       purchase: {
         amount: command.request.purchaseAmount,
         date: Timestamp.fromDate(new Date())
       }};
+
     const settingsDoc = await this.repository.findOne(request.userId);
     const settingsData = settingsDoc.data();
 
@@ -43,7 +45,6 @@ export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeR
     };
 
     result.history.push(request.purchase);
-    // TODO FIX THIS, FIND WAY TO UPDATE MODEL WITHOUT BREAKING FIRESTORE UPDATE
     const response: IAddTimeResponse = {userId: request.userId, time: result};
     console.log(`AddTimeHandler: \n${response}`);
     return response;

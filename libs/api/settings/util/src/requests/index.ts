@@ -4,3 +4,4 @@ export * from './update-privacy.request';
 export * from './block-user.request';
 export * from './unblock-user.request';
 export * from './subtract-time.request';
+export * from './is-blocked.request';

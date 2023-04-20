@@ -4,7 +4,7 @@ import { CreateSetting } from '@mp/app/settings/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { httpsCallable, Functions } from '@angular/fire/functions';
 // import { SettingsService } from '@mp/api/settings/feature';
-import { IAddTimeRequest, IAddTimeResponse, IBlockUserRequest, IBlockUserResponse, ICreateSettingsRequest, ICreateSettingsResponse, ISubtractTimeRequest, ISubtractTimeResponse, IUnblockUserRequest, IUnblockUserResponse, IUpdatePrivacyRequest, IUpdatePrivacyResponse, ProfilePrivacy } from '@mp/api/settings/util';
+import { IAddTimeRequest, IAddTimeResponse, IBlockUserRequest, IBlockUserResponse, ICreateSettingsRequest, ICreateSettingsResponse, IIsBlockedRequest, IIsBlockedResponse, ISubtractTimeRequest, ISubtractTimeResponse, IUnblockUserRequest, IUnblockUserResponse, IUpdatePrivacyRequest, IUpdatePrivacyResponse, ProfilePrivacy } from '@mp/api/settings/util';
 import { SettingsApi } from './settings.api'
 export interface SettingsStateModel {
     messages: string[];
@@ -53,8 +53,18 @@ export class SettingsState {
         >(
             this.settingsApi.functions, 
             'blockUser'
-        )({userId: payload.id, blockedUserId: '5'});
+        )({userId: '6', blockedUserId: '5'});
         console.log(response2.data);
+        
+        // Check if user 5 is blocked by user 6
+        let isBlocked = await httpsCallable<
+            IIsBlockedRequest,
+            IIsBlockedResponse
+        >(
+            this.functions,
+            'isBlocked'
+        )({userId: '6', blockedId: '5'});
+        console.log(isBlocked);
 
         // User 6 unblocks user 5
         response2 = await httpsCallable<
@@ -63,9 +73,19 @@ export class SettingsState {
         >(
             this.settingsApi.functions, 
             'unblockUser'
-        )({userId: payload.id, blockedUserId: '5'});
+        )({userId: '6', blockedUserId: '5'});
         console.log(response2.data);
         
+        // Check if user 5 is blocked by user 6
+        isBlocked = await httpsCallable<
+            IIsBlockedRequest,
+            IIsBlockedResponse
+        >(
+            this.functions,
+            'isBlocked'
+        )({userId: '6', blockedId: '5'});
+        console.log(isBlocked);
+
         // User 5 buys 10000 time
         let response3 = await httpsCallable<
             IAddTimeRequest,
