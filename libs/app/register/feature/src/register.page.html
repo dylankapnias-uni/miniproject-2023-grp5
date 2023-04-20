@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" scrollY="false">
   <ion-grid>
     <ion-row>
       <ion-col size="2"><a routerLink = "/"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
@@ -61,7 +61,7 @@
   formControlName="password"></ion-input>
 </ion-item>
 <ion-item>
-<ion-label position="floating">Confirm Password</ion-label>
+<ion-label>Confirm Password</ion-label>
 <ion-input
   [type]="showPassword ? 'text' : 'password'"
   minlength="6"

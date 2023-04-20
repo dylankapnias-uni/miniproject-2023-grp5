@@ -26,6 +26,9 @@ export class ProfilePage {
   loadSettingsPage()
   {
     this.r.navigate(['/settings']);
+    setTimeout(() => {
+      window.location.reload();
+    }, 100)
   }
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
