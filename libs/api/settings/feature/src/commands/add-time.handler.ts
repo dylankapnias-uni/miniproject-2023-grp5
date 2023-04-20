@@ -8,6 +8,7 @@ import {
 } from "@mp/api/settings/util";
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
+import { Timestamp } from "firebase-admin/firestore";
 // TODO Test return value
 // TODO Clean up
 @CommandHandler(AddTimeCommand)
@@ -19,7 +20,12 @@ export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeR
   ){}
 
   async execute(command: AddTimeCommand) {
-    const request = command.request;
+    const request = {
+      userId: command.request.userId,
+      purchase: {
+        amount: command.request.purchaseAmount,
+        date: Timestamp.fromDate(new Date())
+      }};
     const settingsDoc = await this.repository.findOne(request.userId);
     const settingsData = settingsDoc.data();
 

@@ -47,7 +47,7 @@ export class SettingsService {
     return await this.commandBus.execute<
       UnblockUserCommand,
       IUnblockUserResponse
-    >(new BlockUserCommand(request));
+    >(new UnblockUserCommand(request));
   }
 
   async updatePrivacy(
