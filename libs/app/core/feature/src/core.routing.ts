@@ -32,8 +32,19 @@ const routes: Routes = [
     path: 'home',
     //canActivate: [AuthGuard],
     //data: { authGuardPipe: redirectLoggedOut },
+
     loadChildren: () =>
       import('@mp/app/home/feature').then((m) => m.HomeModule),
+  },
+  {
+    path: 'messages',
+    loadChildren: () =>
+      import('@mp/app/messages/feature').then((m) => m.MessagesModule),
+  },
+  {
+    path:'chat/:id',
+    loadChildren: () =>
+      import('@mp/app/chat/feature').then((m) => m.ChatModule),
   },
   {
     path: 'tos',
