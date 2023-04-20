@@ -20,6 +20,7 @@ import {
   TimeSubtractedHandler
 } from './events';
 import {
+  GetVisibilityHandler,
   IsBlockedHandler
 } from './queries';
 import { SettingsSagas } from './settings.sagas';
@@ -44,7 +45,8 @@ export const EventHandlers = [
 ];
 
 export const QueryHandlers = [
-  IsBlockedHandler
+  IsBlockedHandler,
+  GetVisibilityHandler
 ];
 
 @Module({

@@ -1,19 +1,19 @@
 import { SettingsRepository } from "@mp/api/settings/data-access";
 import {
-  IsBlockedQuery,
-  IIsBlockedResponse
+  GetVisibilityQuery,
+  IGetVisibilityResponse
 } from "@mp/api/settings/util";
 import { QueryHandler, IQueryHandler } from "@nestjs/cqrs";
 
-@QueryHandler(IsBlockedQuery)
-export class IsBlockedHandler 
-implements IQueryHandler<IsBlockedQuery, IIsBlockedResponse> {
+@QueryHandler(GetVisibilityQuery)
+export class GetVisibilityHandler 
+implements IQueryHandler<GetVisibilityQuery, IGetVisibilityResponse> {
 
   constructor(
     private readonly repository: SettingsRepository
   ){}
 
-  async execute(query: IsBlockedQuery) {
+  async execute(query: GetVisibilityQuery) {
 
     const request = query.request;
 
@@ -21,14 +21,12 @@ implements IQueryHandler<IsBlockedQuery, IIsBlockedResponse> {
     const settingsData = settingsDoc.data();
 
 
-    const response: IIsBlockedResponse = {
+    const response: IGetVisibilityResponse = {
       userId: request.userId,
-      blockedId: request.blockedId,
-      isBlocked:
+      profileVisibility: 
         settingsData
         ?.privacy
-        .blockedAccounts
-        .includes(request.blockedId)
+        .profileVisibility
     }
 
     return response;

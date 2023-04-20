@@ -4,12 +4,15 @@ import {
   AddTimeCommand, 
   BlockUserCommand, 
   CreateSettingsCommand, 
+  GetVisibilityQuery, 
   IAddTimeRequest, 
   IAddTimeResponse, 
   IBlockUserRequest, 
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
+  IGetVisibilityRequest, 
+  IGetVisibilityResponse, 
   IIsBlockedRequest, 
   IIsBlockedResponse, 
   ISubtractTimeRequest, 
@@ -75,7 +78,7 @@ export class SettingsService {
       IIsBlockedResponse
     >(new IsBlockedQuery(request));
   }
-  
+
   async updatePrivacy(
     request: IUpdatePrivacyRequest
   ): Promise<IUpdatePrivacyResponse> {
@@ -83,6 +86,15 @@ export class SettingsService {
       UpdatePrivacyCommand,
       IUpdatePrivacyResponse
     >(new UpdatePrivacyCommand(request));
+  }
+
+  async getVisibility(
+    request: IGetVisibilityRequest
+  ): Promise<IGetVisibilityResponse> {
+    return await this.queryBus.execute<
+      GetVisibilityQuery,
+      IGetVisibilityResponse
+    >(new GetVisibilityQuery(request));
   }
 
   async createSettings(

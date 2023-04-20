@@ -4,6 +4,9 @@ import {
   IBlockUserRequest, 
   IBlockUserResponse, 
   ICreateSettingsRequest, 
+  ICreateSettingsResponse, 
+  IGetVisibilityRequest, 
+  IGetVisibilityResponse, 
   IIsBlockedRequest, 
   IIsBlockedResponse, 
   ISubtractTimeRequest, 
@@ -81,12 +84,21 @@ export const isBlocked = functions.https.onCall(
   }
 )
 
+export const getVisibility = functions.https.onCall(
+  async (
+    request: IGetVisibilityRequest
+  ): Promise<IGetVisibilityResponse> => {
+    const app = NestFactory.createApplicationContext(CoreModule);
+    const service = (await app).get(SettingsService);
+    return await service.getVisibility(request);
+  }
+)
 // for testing only
+// TODO remove
 export const createSettings = functions.https.onCall(
   async (
-    request: ICreateSettingsRequest,
-    any
-  ): Promise<any> => {
+    request: ICreateSettingsRequest
+  ): Promise<ICreateSettingsResponse> => {
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(SettingsService);
     return service.createSettings(request);

@@ -4,7 +4,24 @@ import { CreateSetting } from '@mp/app/settings/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { httpsCallable, Functions } from '@angular/fire/functions';
 // import { SettingsService } from '@mp/api/settings/feature';
-import { IAddTimeRequest, IAddTimeResponse, IBlockUserRequest, IBlockUserResponse, ICreateSettingsRequest, ICreateSettingsResponse, IIsBlockedRequest, IIsBlockedResponse, ISubtractTimeRequest, ISubtractTimeResponse, IUnblockUserRequest, IUnblockUserResponse, IUpdatePrivacyRequest, IUpdatePrivacyResponse, ProfilePrivacy } from '@mp/api/settings/util';
+import { IAddTimeRequest, 
+    IAddTimeResponse, 
+    IBlockUserRequest, 
+    IBlockUserResponse, 
+    ICreateSettingsRequest, 
+    ICreateSettingsResponse, 
+    IGetVisibilityRequest, 
+    IGetVisibilityResponse, 
+    IIsBlockedRequest, 
+    IIsBlockedResponse, 
+    ISubtractTimeRequest, 
+    ISubtractTimeResponse, 
+    IUnblockUserRequest, 
+    IUnblockUserResponse, 
+    IUpdatePrivacyRequest, 
+    IUpdatePrivacyResponse, 
+    ProfilePrivacy 
+} from '@mp/api/settings/util';
 import { SettingsApi } from './settings.api'
 export interface SettingsStateModel {
     messages: string[];
@@ -27,67 +44,67 @@ export class SettingsState {
         */
 
         // Create settings document for user 5
-        let response1 = await httpsCallable<
+        let createSettingsResponse = await httpsCallable<
             ICreateSettingsRequest,
             ICreateSettingsResponse
         >(
             this.settingsApi.functions, 
             'createSettings'
         )({userId: '5'});
-        console.log(response1.data);
+        console.log(createSettingsResponse.data);
 
         // Create settings document for user 6
-        response1 = await httpsCallable<
+        createSettingsResponse = await httpsCallable<
         ICreateSettingsRequest,
         ICreateSettingsResponse
         >(
             this.settingsApi.functions, 
             'createSettings'
         )({userId: '6'});
-        console.log(response1.data);
+        console.log(createSettingsResponse.data);
 
         // User 6 blocks user 5
-        let response2 = await httpsCallable<
+        let blockUserResponse = await httpsCallable<
             IUnblockUserRequest,
             IUnblockUserResponse
         >(
             this.settingsApi.functions, 
             'blockUser'
         )({userId: '6', blockedUserId: '5'});
-        console.log(response2.data);
+        console.log(blockUserResponse.data);
         
         // Check if user 5 is blocked by user 6
-        let isBlocked = await httpsCallable<
+        let isBlockedResponse = await httpsCallable<
             IIsBlockedRequest,
             IIsBlockedResponse
         >(
             this.functions,
             'isBlocked'
         )({userId: '6', blockedId: '5'});
-        console.log(isBlocked);
+        console.log(isBlockedResponse.data);
 
         // User 6 unblocks user 5
-        response2 = await httpsCallable<
+        blockUserResponse = await httpsCallable<
             IUnblockUserRequest,
             IUnblockUserResponse
         >(
             this.settingsApi.functions, 
             'unblockUser'
         )({userId: '6', blockedUserId: '5'});
-        console.log(response2.data);
+        console.log(blockUserResponse.data);
         
         // Check if user 5 is blocked by user 6
-        isBlocked = await httpsCallable<
+        isBlockedResponse = await httpsCallable<
             IIsBlockedRequest,
             IIsBlockedResponse
         >(
             this.functions,
             'isBlocked'
         )({userId: '6', blockedId: '5'});
-        console.log(isBlocked);
+        console.log(isBlockedResponse);
 
         // User 5 buys 10000 time
-        let response3 = await httpsCallable<
+        let addTimeResponse = await httpsCallable<
             IAddTimeRequest,
             IAddTimeResponse
         >(
@@ -97,10 +114,10 @@ export class SettingsState {
             userId: '5', 
             purchaseAmount: 10000
         });
-        console.log(response3);
+        console.log(addTimeResponse.data);
 
         // User 6 buys 20000 time
-        response3 = await httpsCallable<
+        addTimeResponse = await httpsCallable<
             IAddTimeRequest,
             IAddTimeResponse
         >(
@@ -110,10 +127,10 @@ export class SettingsState {
             userId: '6', 
             purchaseAmount: 20000
         });
-        console.log(response3);
+        console.log(addTimeResponse.data);
 
         // User 6 uses 4000 time
-        let response4 = await httpsCallable<
+        let subtractTimeResponse = await httpsCallable<
             ISubtractTimeRequest,
             ISubtractTimeResponse
         >(
@@ -123,10 +140,10 @@ export class SettingsState {
             userId: '6', 
             amount: 4000
         });
-        console.log(response4);
+        console.log(subtractTimeResponse.data);
 
         // User 6 uses 200 time
-        response4 = await httpsCallable<
+        subtractTimeResponse = await httpsCallable<
             ISubtractTimeRequest,
             ISubtractTimeResponse
         >(
@@ -136,8 +153,46 @@ export class SettingsState {
             userId: '5', 
             amount: 200
         });
-        console.log(response4);
+        console.log(subtractTimeResponse.data);
         
+        // User 6 changes profile visibility to Friends-Only
+        let updateVisibilityResponse = await httpsCallable<
+            IUpdatePrivacyRequest,
+            IUpdatePrivacyResponse
+        >(
+            this.settingsApi.functions,
+            'updateProfileVisibility'
+        )({
+            userId: '6', 
+            profileVisibility: ProfilePrivacy.FRIENDS
+        });
+        console.log(updateVisibilityResponse.data);
+
+        // Get the the profile visibility of user 6
+        const getVisibilityResponse = await httpsCallable<
+            IGetVisibilityRequest,
+            IGetVisibilityResponse
+        >(
+            this.settingsApi.functions,
+            'updateProfileVisibility'
+        )({
+            userId: '6'
+        });
+        console.log(getVisibilityResponse.data);
+
+        // User 6 changes profile visibility to Everyone
+        updateVisibilityResponse = await httpsCallable<
+            IUpdatePrivacyRequest,
+            IUpdatePrivacyResponse
+        >(
+            this.settingsApi.functions,
+            'updateProfileVisibility'
+        )({
+            userId: '6', 
+            profileVisibility: ProfilePrivacy.EVERYONE
+        });
+        console.log(updateVisibilityResponse.data);
+
         /*this.srvc.createSettings({userId: '1234'}).then((data) => {
             console.log(data);
         }, (error) => {
