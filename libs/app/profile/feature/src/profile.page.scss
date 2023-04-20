@@ -1,15 +1,195 @@
-ion-title {
-  display: flex;
+body {
+  // background-color: #fde0e0;
+  // color: #fde0e0;
+  // display: flex;
 }
 
-ion-card-title {
-  display: flex;
+ion-card {
+  position: relative;
+  height:240%;
+  width: 85%;
+  z-index: -1;
+
+  margin-top: 0%;
+  margin-left: 7%;
+  margin-right: 7%;
+  border-radius: 4%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+
+ // display: flex;
+// flex-direction: column;
+// align-items: center;
+// padding: 0px;
+
+// position: absolute;
+// left: 10.26%;
+// right: 10.26%;
+// top: 8.89%;
+// bottom: 62.68%;
+
+// background: #FFFFFF;
+// /* 2dp — Elevation */
+
+// box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+// border-radius: 8px;
 }
 
-ion-card-title > ion-icon {
-  margin-top: 0px;
+.set {
+  margin-top: 1vh;
+ // margin-right: 5vh;
+ margin-left: 1.5vh;
 }
 
-ion-icon {
-  padding-left: 5px;
+ion-card-content {
+  margin-top: 0;
+  height: 270px;
+  z-index: -1;
+}
+
+.plz {
+  margin-top: 0;
+  padding-top: 2%;
+  padding-left: 6%;
+  height: 240px;
+  z-index: -1;
+}
+
+.pls {
+  height: 20px;
+}
+
+ion-img {
+  height: 80%;
+  width: 95%;
+  margin-top: -5vh;
+  // z-index: 2;
+   position: absolute;
+ // padding-right: 7%;
+ // padding-left: 5%;
+// margin-right: 6%;
+  //padding-top: 8%;
+ // padding-bottom: 5%;
+  // padding-bottom: 0;
+  //border: 1px solid #f3c1c0;
+  // rgb(33, 33, 33);
+}
+
+
+.center {
+  margin-top: 7%;
+  margin-left: 5%;
+}
+
+ion-icon{
+  color: #f87c7c;
+  font-size: 2.3rem;
+//  float: left;
+}
+
+ion-chip {
+  font-weight: bold;
+  background-color: #f3c1c0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+  height: 3.5vh;
+}
+
+.first {
+  margin-top: -2.2vh;
+  margin-left: 35%;
+  //width: ;
+  //font-weight: bold;
+}
+
+.middle{
+  margin-top: -2.2vh;
+  margin-left: 25%;
+  //font-weight: bold;
+}
+
+.last {
+  margin-top: -2.2vh;
+  margin-left: 0;
+  //font-weight: bold;
+  
+}
+.card2 {
+  //width: 320px;
+  text-align: center;
+  width: 100%;
+  height: 55vh;
+  margin-left: 0;
+  margin-top: 1vh;
+  font-weight: bold;
+ // margin-right: 15%;
+}
+
+.title1 {
+  margin-top: -2vh;
+  font-size: 200%;
+  color:rgb(98, 97, 97);
+  //align-self: center;
+  font-weight: bold; 
+}
+
+.title2 {
+  margin-top: 0vh;
+  font-size: 120%;
+  color:rgb(131, 131, 131);
+  margin-bottom: -1vh;
+  font-weight: bold;
+}
+
+.descript {
+  margin-top: 5vh;
+  background-color: #f3c1c0;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 3%;
+  margin-bottom: 1vh;
+  color: black;
+  height: auto;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+  text-shadow: black;
+}
+
+.desc {
+  height: 15%;
+  width: 90%;
+ // margin-left: 5%;
+ text-align: center;
+ font-size: 1em;
+ border-radius: 3%;
+}
+
+.lab {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.photosecond {
+  padding-top: 1vh;
+  height: 240px;
+  width:95%; 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.profile_picture {
+  height: 230px;
+  width:95%; 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.swiper-slide-active {
+  transform: scale(1.05,1.05);
+}
+
+.swiper-slide {
+  transform: 400ms all ease in-out;
+}
+
+.firstphoto {
+  height: 85%;
+  width:85%; 
+  margin-top: 1vh;
+  padding-top: 0;
 }
