@@ -40,7 +40,9 @@ export interface ChatStateModel{
 export class ChatState {
   @Action(SendMessage)
   async SendMessage(ctx: StateContext<ChatStateModel>, {payload}: SendMessage) {
-
+    ctx.patchState({
+      
+    });
   }
 
   @Action(AddTime)
@@ -52,12 +54,16 @@ export class ChatState {
 
   @Action(GetTime)
   async GetTime(ctx: StateContext<ChatStateModel>, {payload}: GetTime) {
-
+    ctx.patchState({
+      
+    });
   }
 
   @Action(RemoveTime)
   async RemoveTime(ctx: StateContext<ChatStateModel>, {payload}: RemoveTime) {
-
+    ctx.patchState({
+      
+    });
   }
 
   @Selector()
