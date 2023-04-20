@@ -30,7 +30,8 @@ export class Notification extends AggregateRoot implements INotification {
     };
   }
 
-//   sendNotification(userId: string, inbox: IInbox) {
-    
-//   }
+   sendNotification(inbox: IInbox) {
+      this.inbox?.push(inbox);
+      this.apply(new NotificationSentEvent(this.toJSON()));
+  }
 }

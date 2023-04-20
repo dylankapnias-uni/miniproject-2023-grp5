@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-
+import { NotificationRepository } from '@mp/api/notifications/data-access';
 import {
     SendNotificationCommand,
     INotification,
@@ -9,51 +9,22 @@ import {
 import { Notification } from '../models';
 
 @CommandHandler(SendNotificationCommand)
-export class CreateNotificationHandler
+export class SendNotificationHandler
 implements ICommandHandler<SendNotificationCommand>
 {
-    constructor(private publisher: EventPublisher) {}
+    constructor(private publisher: EventPublisher, private readonly repository: NotificationRepository) {}
     async execute(command: SendNotificationCommand) {
-        console.log(`${CreateNotificationHandler.name}`);
+        console.log(`${SendNotificationHandler.name}`);
     
          const request = command.request;
          const userId = request.userId;
 
          const inbox=request.inbox;
-
-        //   userId,
-        //   accountDetails: {
-        //     displayName,
-        //     email,
-        //     photoURL,
-        //     status: ProfileStatus.INCOMPLETE,
-        //   },
-        //   personalDetails: {
-        //     age: null,
-        //     gender: null,
-        //     ethnicity: null,
-        //     status: ProfileStatus.INCOMPLETE,
-        //   },
-        //   contactDetails: {
-        //     cellphone,
-        //     status: ProfileStatus.INCOMPLETE,
-        //   },
-        //   addressDetails: {
-        //     residentialArea: null,
-        //     workArea: null,
-        //     status: ProfileStatus.INCOMPLETE,
-        //   },
-        //   occupationDetails: {
-        //     householdIncome: null,
-        //     occupation: null,
-        //     status: ProfileStatus.INCOMPLETE,
-        //   },
-        //   status: ProfileStatus.INCOMPLETE,
-        //   created: Timestamp.fromDate(new Date()),
-        // };
+         const notifDoc = await this.repository.getNotifications(userId);
+         const data =  notifDoc.data();
+         if (!data) throw new Error('Profile not found');
          const notification = this.publisher.mergeObjectContext(Notification.fromData(data));
-    
-         notification.create();
+         notification.sendNotification(request.inbox);
         notification.commit();
       }
 }

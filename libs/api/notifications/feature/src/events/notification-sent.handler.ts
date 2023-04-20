@@ -10,6 +10,7 @@ export class NotificationSentHandler
 
   async handle(event: NotificationSentEvent) {
     console.log(`${NotificationSentHandler.name}`);
-    await this.repository.sendNotification(event.notification.userId, event.notification.inbox);
+    if(!event.notification.inbox) return;
+    await this.repository.sendNotification(event.notification.userId, event.notification.inbox[event.notification.inbox?.length-1]); //sends last notification in inbox to API
   }
 }
