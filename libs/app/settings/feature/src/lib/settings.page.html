@@ -1,14 +1,31 @@
-<body>
-
-  <a><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
-
-  <ion-label>Settings</ion-label>
-  <ion-button class = "account_button" (click)="LoadAccountPage()" >Account</ion-button>
-  <ion-button class = "edit_profile_button" (click)="LoadEditProfilePage()">Edit Profile</ion-button>
-  <ion-button class = "shop_button" (click)="LoadShopPage()">Shop</ion-button>
-  <ion-button class = "privacy_button" (click)="LoadPrivacyPage()">Privacy</ion-button>
-  <ion-button class = "about_button" (click)="LoadAboutPage()">About</ion-button>
-  <ion-button class = "logout_button" (click)="LogOut()">Log Out</ion-button>
-  
-
-</body>
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2"><a routerLink = "/profile"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
+      <ion-col size="8" >
+        <div class="ion-text-center down">
+          <ion-label>Settings</ion-label>
+        </div></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="margin-top: 75px;">
+    <ion-row>
+      <ion-col size="12"><ion-button class="btn" (click)="LoadAccountPage()" >Account</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class="btn" (click)="LoadEditProfilePage()">Edit Profile</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class="btn" (click)="LoadShopPage()">Shop</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class="btn" (click)="LoadPrivacyPage()">Privacy</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class="btn" (click)="LoadAboutPage()">About</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class="btn" (click)="LogOut()">Log Out</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

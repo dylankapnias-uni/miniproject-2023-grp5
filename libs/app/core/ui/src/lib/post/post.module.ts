@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { NavBarComponent } from './navbar.component';
+import { PostComponent } from './post.component';
 
 @NgModule({
-    declarations: [NavBarComponent],
+    declarations: [PostComponent],
     imports: [
         CommonModule,
         IonicModule,
     ],
-    exports: [NavBarComponent]
+    exports: [PostComponent]
 })
-export class NavBarModule {}
+export class PostModule {}
