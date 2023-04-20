@@ -1,170 +1,29 @@
 
-import { IHome } from '@mp/api/home/util';
+import { HomeCreatedEvent, IHome, IMatched, IUserRef } from '@mp/api/home/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
 export class Home extends AggregateRoot implements IHome {
   constructor(
     public userId: string,
+    public userList: {user:IUserRef,match:IMatched}[] | null | undefined,
   ) {
     super();
   }
 
-  static fromData(profile: IProfile): Profile {
-    const instance = new Profile(
+  static fromData(profile: IHome): Home {
+    const instance = new Home(
       profile.userId,
-      profile.accountDetails,
-      profile.personalDetails,
-      profile.contactDetails,
-      profile.addressDetails,
-      profile.occupationDetails,
-      profile.status,
-      profile.created
+      profile.userList,
     );
     return instance;
   }
 
   create() {
-    this.apply(new ProfileCreatedEvent(this.toJSON()));
+    this.apply(new HomeCreatedEvent(this.toJSON()));
   }
 
-  updateAddressDetails(addressDetails: IAddressDetails) {
-    if (!this.addressDetails) this.addressDetails = {};
-    this.addressDetails.residentialArea = addressDetails.residentialArea
-      ? addressDetails.residentialArea
-      : this.addressDetails.residentialArea;
-    this.addressDetails.workArea = addressDetails.workArea
-      ? addressDetails.workArea
-      : this.addressDetails.workArea;
-    this.apply(new AddressDetailsUpdatedEvent(this.toJSON()));
-  }
 
-  updateContactDetails(contactDetails: IContactDetails) {
-    if (!this.contactDetails) this.contactDetails = {};
-    this.contactDetails.cellphone = contactDetails.cellphone
-      ? contactDetails.cellphone
-      : this.contactDetails.cellphone;
-    this.apply(new ContactDetailsUpdatedEvent(this.toJSON()));
-  }
-
-  updatePersonalDetails(personalDetails: IPersonalDetails) {
-    if (!this.personalDetails) this.personalDetails = {};
-    this.personalDetails.age = personalDetails.age
-      ? personalDetails.age
-      : this.personalDetails.age;
-    this.personalDetails.gender = personalDetails.gender
-      ? personalDetails.gender
-      : this.personalDetails.gender;
-    this.personalDetails.ethnicity = personalDetails.ethnicity
-      ? personalDetails.ethnicity
-      : this.personalDetails.ethnicity;
-    this.apply(new PersonalDetailsUpdatedEvent(this.toJSON()));
-  }
-
-  updateOccupationDetails(occupationDetails: IOccupationDetails) {
-    if (!this.occupationDetails) this.occupationDetails = {};
-    this.occupationDetails.householdIncome = occupationDetails.householdIncome
-      ? occupationDetails.householdIncome
-      : this.occupationDetails.householdIncome;
-    this.occupationDetails.occupation = occupationDetails.occupation
-      ? occupationDetails.occupation
-      : this.occupationDetails.occupation;
-    this.apply(new OccupationDetailsUpdatedEvent(this.toJSON()));
-  }
-
-  updateAccountDetails(accountDetails: IAccountDetails) {
-    if (!this.accountDetails) this.accountDetails = {};
-    this.accountDetails.displayName = accountDetails.displayName
-      ? accountDetails.displayName
-      : this.accountDetails.displayName;
-    this.accountDetails.email = accountDetails.email
-      ? accountDetails.email
-      : this.accountDetails.email;
-    this.accountDetails.photoURL = accountDetails.photoURL
-      ? accountDetails.photoURL
-      : this.accountDetails.photoURL;
-    this.accountDetails.password = accountDetails.password
-      ? accountDetails.password
-      : this.accountDetails.password;
-    this.apply(new AccountDetailsUpdatedEvent(this.toJSON()));
-  }
-
-  private updateAccountDetailsStatus() {
-    if (!this.accountDetails) {
-      this.accountDetails = {};
-      this.accountDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    if (!this.accountDetails.displayName || !this.accountDetails.email) {
-      this.accountDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    this.accountDetails.status = ProfileStatus.COMPLETE;
-    return;
-  }
-
-  private updateAddressDetailsStatus() {
-    if (!this.addressDetails) {
-      this.addressDetails = {};
-      this.addressDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    if (!this.addressDetails.residentialArea || !this.addressDetails.workArea) {
-      this.addressDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    this.addressDetails.status = ProfileStatus.COMPLETE;
-    return;
-  }
-
-  private updateContactDetailsStatus() {
-    if (!this.contactDetails) {
-      this.contactDetails = {};
-      this.contactDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    if (!this.contactDetails.cellphone) {
-      this.contactDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    this.contactDetails.status = ProfileStatus.COMPLETE;
-    return;
-  }
-
-  private updatePersonalDetailsStatus() {
-    if (!this.personalDetails) {
-      this.personalDetails = {};
-      this.personalDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    if (
-      !this.personalDetails.age ||
-      !this.personalDetails.gender ||
-      !this.personalDetails.ethnicity
-    ) {
-      this.personalDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    this.personalDetails.status = ProfileStatus.COMPLETE;
-    return;
-  }
-
-  private updateOccupationDetailsStatus() {
+  private acceptUser() {
     if (!this.occupationDetails) {
       this.occupationDetails = {};
       this.occupationDetails.status = ProfileStatus.INCOMPLETE;

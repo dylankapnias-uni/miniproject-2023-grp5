@@ -1,6 +1,6 @@
 
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { Home } from '../models';
+import { Home } from '../../../util/src/events';
 import { AcceptUserCommand } from '@mp/api/home/util';
 
 @CommandHandler(AcceptUserCommand)
