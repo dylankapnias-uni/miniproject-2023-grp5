@@ -5,33 +5,27 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class ChatRepository 
 {
-    async getChat(chatID: string) {
-        return await admin
-          .firestore()
-          .collection('Chats')
-          .withConverter<IChat>({
-            fromFirestore: (snapshot) => {
-              return snapshot.data() as IChat;
-            },
-            toFirestore: (it: IChat) => it,
-          })
-          .doc(chatID)
-          .get();
-      }
+  //private databaseRef: admin.database.Reference;
 
-      async updateChat(chatID : string, chat: IChat) {
-        return await admin
-          .firestore()
-          .collection('Chats')
-          .doc(chatID)
-          .set(chat, { merge: true });
-      }
+  constructor() {
+    //this.databaseRef = admin.database().ref('/chats');
+  }
 
-      async createChat(chatID : string, chat: IChat) {
-        return await admin
-          .firestore()
-          .collection('Chats')
-          .doc(chatID)
-          .create(chat);
-      }
+  async getChat(chatID: string): Promise<string> {
+    console.log('ChatRepository.getChat()');
+    const str = await Promise.resolve('Hello, world!');
+    return str;
+  }
+
+  async updateChat(chatID: string): Promise<string> {
+    console.log('ChatRepository.updateChat()', chatID);
+    const str = await Promise.resolve('Hello, world!');
+    return str;
+  }
+
+  async createChat(chatID: string, chat: IChat): Promise<string> {
+    console.log('ChatRepository.createChat()', chatID, chat);
+    const str = await Promise.resolve('Hello, world!');
+    return str;
+  }
 }
