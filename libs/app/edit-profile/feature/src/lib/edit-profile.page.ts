@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class EditProfilePage 
 {
-  Bio:string = "My Bio"
+  Bio = "My Bio"
   constructor(public r : Router)
   {}
 
