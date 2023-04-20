@@ -10,10 +10,13 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
+  ISubtractTimeRequest, 
+  ISubtractTimeResponse, 
   IUnblockUserRequest, 
   IUnblockUserResponse, 
   IUpdatePrivacyRequest, 
   IUpdatePrivacyResponse, 
+  SubtractTimeCommand, 
   UnblockUserCommand, 
   UpdatePrivacyCommand 
 } from "@mp/api/settings/util";
@@ -30,8 +33,16 @@ export class SettingsService {
       IAddTimeResponse
     >(new AddTimeCommand(request));
   }
-  // TODO implement responses
 
+  async subtractTime(
+    request: ISubtractTimeRequest
+  ): Promise<ISubtractTimeResponse> {
+    return await this.commandBus.execute<
+      SubtractTimeCommand,
+      ISubtractTimeResponse
+    >(new SubtractTimeCommand(request));
+  }
+  
   async blockUser(
     request: IBlockUserRequest
   ): Promise<IBlockUserResponse> {

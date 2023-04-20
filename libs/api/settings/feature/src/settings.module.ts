@@ -7,7 +7,8 @@ import {
   AddTimeHandler,
   UpdatePrivacyHandler,
   BlockUserHandler,
-  UnblockUserHandler
+  UnblockUserHandler,
+  SubtractTimeHandler
 } from './commands';
 import { 
   //event handlers
@@ -15,7 +16,8 @@ import {
   TimeAddedHandler,
   PrivacyUpdatedHandler,
   UserBlockedHandler,
-  UserUnblockedHandler
+  UserUnblockedHandler,
+  TimeSubtractedHandler
 } from './events';
 import { SettingsSagas } from './settings.sagas';
 import { SettingsService } from './settings.service'
@@ -25,7 +27,8 @@ export const CommandHandlers = [
   AddTimeHandler,
   UpdatePrivacyHandler,
   BlockUserHandler,
-  UnblockUserHandler
+  UnblockUserHandler,
+  SubtractTimeHandler
 ];
 
 export const EventHandlers = [
@@ -33,7 +36,8 @@ export const EventHandlers = [
   TimeAddedHandler,
   PrivacyUpdatedHandler,
   UserBlockedHandler,
-  UserUnblockedHandler
+  UserUnblockedHandler,
+  TimeSubtractedHandler
 ]
 
 @Module({

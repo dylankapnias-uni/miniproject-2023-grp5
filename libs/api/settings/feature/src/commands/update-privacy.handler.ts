@@ -2,7 +2,7 @@ import { SettingsRepository } from "@mp/api/settings/data-access";
 import { IUpdatePrivacyResponse, UpdatePrivacyCommand } from "@mp/api/settings/util";
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
-// TODO Add return
+
 @CommandHandler(UpdatePrivacyCommand)
 export class UpdatePrivacyHandler 
 implements ICommandHandler<UpdatePrivacyCommand, IUpdatePrivacyResponse> {

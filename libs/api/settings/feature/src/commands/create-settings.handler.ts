@@ -29,11 +29,7 @@ implements ICommandHandler<
       blockedAccounts: []
     };
     const time = {
-      // DEFAULT TIME/HISTORY
-      // TODO change how initial time is added
-      // remaining: 1000,
       remaining: 0,
-      // history: [{amount:1000, date:Timestamp.fromDate(new Date())}]
       history: []
     };
 

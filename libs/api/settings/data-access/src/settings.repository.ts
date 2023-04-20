@@ -58,9 +58,18 @@ export class SettingsRepository {
       })
       .catch((error) => {console.log(`Error while adding time to ${userId}: ${error}`)});
   }
-  // TODO subtract time
 
-  // TODO block user
+  async subtractTime(userId: string, time: {amount: number, date: Timestamp}) {
+    return await admin
+      .firestore()
+      .collection('Settings')
+      .doc(userId)
+      .update({
+        'time.remaining': FieldValue.increment(time.amount),
+        'time.history': FieldValue.arrayUnion(time)
+      })
+      .catch((error) => {console.log(`Error while subtracting time from ${userId}: ${error}`)})
+  }
   async blockUser(userId: string, blockedId: string) {
     return await admin
       .firestore()
@@ -77,7 +86,6 @@ export class SettingsRepository {
       );
   }
 
-  // TODO unblock user
   async unblockUser(userId: string, blockedId: string) {
     return await admin
       .firestore()
@@ -94,7 +102,6 @@ export class SettingsRepository {
       );
   }
 
-  // TODO change visibility
   async updatePrivacy(userId: string, profileVisibility: ProfilePrivacy) {
     return await admin
       .firestore()

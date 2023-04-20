@@ -4,6 +4,8 @@ import {
   IBlockUserRequest, 
   IBlockUserResponse, 
   ICreateSettingsRequest, 
+  ISubtractTimeRequest, 
+  ISubtractTimeResponse, 
   IUnblockUserRequest, 
   IUnblockUserResponse, 
   IUpdatePrivacyRequest, 
@@ -51,6 +53,16 @@ export const addTime = functions.https.onCall(
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(SettingsService);
     return service.addTime(request);
+  }
+);
+
+export const subtractTime = functions.https.onCall(
+  async (
+    request: ISubtractTimeRequest
+  ): Promise<ISubtractTimeResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(SettingsService);
+    return service.subtractTime(request);
   }
 );
 

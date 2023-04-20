@@ -10,7 +10,8 @@ import {
   TimeAddedEvent,
   PrivacyUpdatedEvent,
   UserBlockedEvent,
-  UserUnblockedEvent
+  UserUnblockedEvent,
+  TimeSubtractedEvent
 } from '@mp/api/settings/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Timestamp } from 'firebase-admin/firestore';
@@ -42,15 +43,14 @@ export class Settings
   }
 
   addTime(data:{amount:number,date:Timestamp}) {
-    // TODO create event
     console.log("Settings.addTime()");
     console.log(JSON.stringify(data));
     this.apply(new TimeAddedEvent(this.userId, data));
   }
 
-  subtractTime(amount: number) {
-    this.time.remaining -= amount;
-    // TODO create event
+  subtractTime(data: {amount: number, date: Timestamp}) {
+    // this.time.remaining -= data.amount;
+    this.apply(new TimeSubtractedEvent(this.userId, data))
   }
 
   blockUser(blockedId: string) {
@@ -63,7 +63,6 @@ export class Settings
     const index = this.privacy.blockedAccounts.indexOf(blockedId);
     if (index == -1) return;
     this.privacy.blockedAccounts.splice(index, 1);
-    // TODO create event
     this.apply(new UserUnblockedEvent({userId: this.userId, blockedUserId: blockedId}));
   }
 

@@ -1,28 +1,30 @@
 import { SettingsRepository } from "@mp/api/settings/data-access";
 import { 
-  IAddTimeRequest,
-  IAddTimeResponse,
-  AddTimeCommand,
+  ISubtractTimeRequest,
+  ISubtractTimeResponse,
+  SubtractTimeCommand,
   ISettings,
   ITime
 } from "@mp/api/settings/util";
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { Settings } from "../models";
 import { Timestamp } from "firebase-admin/firestore";
+// TODO Test return value
 // TODO Clean up
-@CommandHandler(AddTimeCommand)
-export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeResponse> {
+@CommandHandler(SubtractTimeCommand)
+export class SubtractTimeHandler implements 
+ICommandHandler<SubtractTimeCommand, ISubtractTimeResponse> {
 
   constructor(
     private readonly publisher: EventPublisher,
     private readonly repository: SettingsRepository
   ){}
 
-  async execute(command: AddTimeCommand) {
+  async execute(command: SubtractTimeCommand) {
     const request = {
       userId: command.request.userId,
-      purchase: {
-        amount: command.request.purchaseAmount,
+      data: {
+        amount: -command.request.amount,
         date: Timestamp.fromDate(new Date())
       }};
     const settingsDoc = await this.repository.findOne(request.userId);
@@ -34,18 +36,18 @@ export class AddTimeHandler implements ICommandHandler<AddTimeCommand, IAddTimeR
 
     const settings = this.publisher.mergeObjectContext(Settings.fromData(settingsData));
 
-    settings.addTime(request.purchase);
+    // TODO check if enough time remains before subtracting
+    settings.subtractTime(request.data);
     settings.commit();
-
     const result: ITime = {
-      remaining: settings.time.remaining + request.purchase.amount,
+      remaining: settings.time.remaining + request.data.amount,
       history: settings.time.history
     };
 
-    result.history.push(request.purchase);
+    result.history.push(request.data);
     // TODO FIX THIS, FIND WAY TO UPDATE MODEL WITHOUT BREAKING FIRESTORE UPDATE
-    const response: IAddTimeResponse = {userId: request.userId, time: result};
-    console.log(`AddTimeHandler: \n${response}`);
+    const response: ISubtractTimeResponse = {userId: request.userId, time: result};
+    console.log(`SubtractTimeHandler: \n${JSON.stringify(response)}`);
     return response;
   }
 }
