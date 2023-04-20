@@ -9,19 +9,25 @@ import { chat } from '../chat.interface';
 })
 export class ChatPage {
   Chat!: chat;
-  id!: number;
+  id!: any;
   me!: string;
   outgoingMessage = '';
   color = 'bronze';
+
+  
+  ionViewDidEnter() {
+    const content = document.querySelector('.message');
+    if (content)
+      content.scrollTop = content.scrollHeight;
+  }
 
   constructor(
     private router:Router,
     private route: ActivatedRoute,
     ) {
       //Get id from route 
-      /*this.route.paramMap.subscribe(paramMap => {
-        this.id = parseInt(paramMap.get('id')!);
-      })*/
+      this.id = this.route.snapshot.paramMap.get('id');
+      console.log('ID:', this.id);
       //Grab the chat here
       this.me='2';
       this.Chat = {
@@ -101,12 +107,16 @@ export class ChatPage {
 
         this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
         this.outgoingMessage = '';
+        setTimeout(() => {
+          const content = document.querySelector('.message');
+          if (content)
+            content.scrollTop = content.scrollHeight;
+        }, 100);
       }
     }
 
     return(){
-      console.log('go back');
-      //this.router.navigate(['/messages']);
+      this.router.navigate(['/messages']);
     }
 
 }

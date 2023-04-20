@@ -1,15 +1,28 @@
-<body>
-
-  <a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
-
-    
-    <ion-label class = "page_name">Shop</ion-label>
-    <ion-button class = "buy_5_minutes"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 5 Minutes</ion-button>
-    <ion-button class = "buy_10_minutes"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 10 Minutes</ion-button>
-    <ion-button class = "buy_15_minutes"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 15 Minutes</ion-button>
-    <ion-button class = "buy_30_minutes"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 30 Minutes</ion-button>
-    <ion-button class = "buy_60_minutes"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 60 Minutes</ion-button>
-    
-    
-</body>
-    
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2"><a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
+      <ion-col size="8" >
+        <div class="ion-text-center down">
+          <ion-label>Shop</ion-label>
+        </div></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="margin-top: 75px;">
+    <ion-row>
+      <ion-col size="12"><ion-button class = "btn" (click) = "add5Minutes()"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 5 Minutes</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class = "btn" (click) = "add10Minutes()"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 10 Minutes</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class = "btn" (click) = "add15Minutes()"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 15 Minutes</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class = "btn" (click) = "add30Minutes()"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 30 Minutes</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12"><ion-button class = "btn" (click) = "add60Minutes()"><ion-icon class = "clock" slot = "start" name="timer-outline"></ion-icon>Buy 60 Minutes</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
