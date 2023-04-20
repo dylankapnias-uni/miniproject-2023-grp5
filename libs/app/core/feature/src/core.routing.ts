@@ -29,11 +29,6 @@ const routes: Routes = [
   //     import('./responses/responses.module').then((m) => m.ResponsesPageModule),
   // },
   {
-    path: 'messages',
-    loadChildren: () =>
-      import('@mp/app/messages/feature').then((m) => m.MessagesModule),
-  },
-  {
     path: 'home',
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedOut },

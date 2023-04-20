@@ -1,39 +1,13 @@
-<body [ngStyle]="{'background':'#FDE0E0'}">
-  <ion-content>
-    <ion-grid [ngStyle]="{'background':'#FDE0E0'}">
-      <ion-row>
-        <ion-col>
-          <div class="search">  
-            <ion-searchbar class = "search" clear-icon="close-outline"></ion-searchbar>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <div class="users" *ngIf="users.length > 0; emptyTemplate">
-            <div class="user" *ngFor="let user of users; let i = index" [style.zIndex]="users.length-i" (touchstart)="touchStart($event)" (touchmove)="touchMove($event,i)" (touchend)="touchEnd(i)" id="{{'card-'+i}}">
-              <ion-card class = "profile">
-                <img class="profile_picture" src = "{{user.photo}}">
-                <div class="profile_info">
-                  <h1 class="user_name">{{user.name}}</h1>
-                  <h2 class="age">{{user.age}}</h2>
-                  <ion-chip *ngFor="let interests of user.interests">{{interests}}</ion-chip>
-                </div>
-              </ion-card>
-            </div>
-            <!--Icons-->
-            <ion-icon name="heart-dislike" class="icon" id="reject-icon"></ion-icon>
-            <ion-icon name="heart" class="icon" id="accept-icon"></ion-icon>
-          </div>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="dashboard">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Dashboard</ion-label>
+    </ion-tab-button>
 
-          <ng-template #emptyTemplate>
-            <div class="center">
-              <ion-icon name="checkmark-circle"></ion-icon>
-              <ion-note>All Swiped!</ion-note>
-            </div>
-          </ng-template>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
-</body>
+    <ion-tab-button tab="profile">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

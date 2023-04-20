@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessagesPage } from './messages.page';
 import { IonicModule } from '@ionic/angular';
-import { MessagesRouting } from './messages.routing';
-import { NgxsModule } from '@ngxs/store';
-import { MessagesState } from 'libs/app/messages/data-access/src/lib/messages.state';
+//import { MessagesRouting } from './messages.routing';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, MessagesRouting, NgxsModule.forFeature([MessagesState])],
-  declarations: [MessagesPage]
+  imports: [CommonModule, IonicModule],
+  declarations: [MessagesPage],
+  exports: [MessagesPage],
 })
 export class MessagesModule {}
