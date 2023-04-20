@@ -54,6 +54,8 @@ import { CoreShell } from './core.shell';
 //import { CoreModule as NavComponent } from '@mp/app/core/ui';
  
 
+import { CoreModule as NavComponent } from '@mp/app/core/ui';
+
 let resolvePersistenceEnabled: (enabled: boolean) => void;
 
 export const persistenceEnabled = new Promise<boolean>((resolve) => {
@@ -89,7 +91,7 @@ const FIREBASE_OPTIONS: FirebaseOptions = {
   declarations: [CoreShell],
   entryComponents: [],
   imports: [
-  //  NavComponent,
+    NavComponent,
     BrowserModule,
     IonicModule.forRoot(),
     CoreRouting, SettingsPageModule,

@@ -5,7 +5,6 @@
   <mp-settings></mp-settings>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>
-<!-- <ion-toolbar>
+<ion-toolbar *ngIf="this.hasRoute('/home/dashboard') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post')">
   <mp-navbar></mp-navbar>
-</ion-toolbar> -->
-
+</ion-toolbar>
