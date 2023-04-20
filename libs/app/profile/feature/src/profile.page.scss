@@ -1,8 +1,4 @@
-body {
-  // background-color: #fde0e0;
-  // color: #fde0e0;
-  // display: flex;
-}
+
 
 ion-card {
   position: relative;
@@ -47,11 +43,12 @@ ion-card-content {
 }
 
 .plz {
-  margin-top: 0;
-  padding-top: 2%;
-  padding-left: 6%;
-  height: 240px;
+  // margin-top: 0;
+  // padding-top: 2%;
+  // padding-left: 6%;
+  height: 220px;
   z-index: -1;
+  align-content: center;
 }
 
 .pls {
@@ -188,8 +185,14 @@ ion-chip {
 }
 
 .firstphoto {
-  height: 85%;
-  width:85%; 
-  margin-top: 1vh;
-  padding-top: 0;
+  
+  position: relative;
+  margin-top: 0.2%;
+  margin-left: 2%;
+  margin-bottom: 0.2%;
+  height: 100%;
+  width: 96%; 
+  border-radius: 5px;
+   
 }
+

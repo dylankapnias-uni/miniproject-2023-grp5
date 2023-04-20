@@ -4,6 +4,7 @@ import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 //import {profile} from './profile.interface';
 
 @Component({
@@ -18,6 +19,14 @@ import { Observable } from 'rxjs';
 // } 
 
 export class ProfilePage {
+
+  constructor (public r : Router)
+  {}
+
+  loadSettingsPage()
+  {
+    this.r.navigate(['/settings']);
+  }
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
   option = {
