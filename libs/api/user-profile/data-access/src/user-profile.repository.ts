@@ -1,4 +1,4 @@
-import { IProfile } from '@mp/api/user-profile/util';
+import { IUserProfile } from '@mp/api/user-profile/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 
@@ -9,17 +9,17 @@ export class ProfileRepository
         return await admin
           .firestore()
           .collection('User_Profile')
-          .withConverter<IProfile>({
+          .withConverter<IUserProfile>({
             fromFirestore: (snapshot) => {
-              return snapshot.data() as IProfile;
+              return snapshot.data() as IUserProfile;
             },
-            toFirestore: (it: IProfile) => it,
+            toFirestore: (it: IUserProfile) => it,
           })
           .doc(userID)
           .get();
       }
     
-      async createProfile(userID : string, profile: IProfile) {
+      async createProfile(userID : string, profile: IUserProfile) {
         return await admin
           .firestore()
           .collection('User_Profile')
@@ -27,7 +27,7 @@ export class ProfileRepository
           .create(profile);
       }
     
-      async updateProfile(userID:string, profile: IProfile) {
+      async updateProfile(userID:string, profile: IUserProfile) {
         return await admin
           .firestore()
           .collection('User_Profile')

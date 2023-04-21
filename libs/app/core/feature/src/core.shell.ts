@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
-import { SubscribeToAuthState } from '@mp/app/auth/util';
+import { Register, SubscribeToAuthState } from '@mp/app/auth/util';
 import { Store } from '@ngxs/store';
 import { Subject, takeUntil, tap } from 'rxjs';
 // import { CoreModule as NavComponent } from '@mp/app/core/ui';

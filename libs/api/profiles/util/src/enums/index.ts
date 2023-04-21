@@ -3,4 +3,3 @@ export * from './ethnicity.enum';
 export * from './gender.enum';
 export * from './household-income.enum';
 export * from './profile-status.enum';
-export * from './interests.enum';

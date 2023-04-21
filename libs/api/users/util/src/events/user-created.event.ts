@@ -1,5 +1,5 @@
-import { IUser } from '../interfaces';
+import { IUserProfile } from '../interfaces';
 
 export class UserCreatedEvent {
-  constructor(public readonly user: IUser) {}
+  constructor(public readonly user: IUserProfile) {}
 }

@@ -1,5 +1,5 @@
-import { IUser } from '../interfaces';
+import { IUserProfile } from '../interfaces';
 
 export interface ICreateUserResponse {
-  user: IUser;
+  user: IUserProfile;
 }

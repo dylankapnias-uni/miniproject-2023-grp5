@@ -1,14 +1,14 @@
-import { IUser } from '@mp/api/users/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 
 @Injectable()
-export class UsersRepository {
-  async createUser(user: IUser) {
+export class UserProfileRepository {
+  async createUserProfile(user: IUserProfile) {
     return await admin
       .firestore()
-      .collection('users')
-      .doc(user.id)
+      .collection('User_Profile')
+      .doc(user.userId)
       .create(user);
   }
 }

@@ -1,4 +1,4 @@
-import { CreateUserCommand, IUser } from '@mp/api/users/util';
+import { CreateUserCommand, IUserProfile } from '@mp/api/users/util';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { User } from '../models';
 
@@ -10,11 +10,11 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     console.log(`${CreateUserHandler.name}`);
 
     const request = command.request;
-    const data: IUser = {
-      id: request.auth.id,
+    const data: IUserProfile = {
+      userId: request.auth.id,
       email: request.auth.email,
-      displayName: request.auth.displayName,
-      photoURL: request.auth.photoURL,
+      name: request.auth.displayName,
+      profilePicture: request.auth.photoURL,
       phoneNumber: request.auth.phoneNumber,
       customClaims: request.auth.customClaims,
       created: request.auth.created,
