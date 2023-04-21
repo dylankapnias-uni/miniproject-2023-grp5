@@ -32,6 +32,9 @@ export class RegisterPage
       [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
     ],
     password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+    phoneNumber:['', [Validators.minLength(10), Validators.maxLength(10)]],
+    age:['', [Validators.minLength(2), Validators.maxLength(2)]],
+    dateOfBirth:['', [Validators.minLength(10), Validators.maxLength(10)]],
   });
   showPassword = false;
 
