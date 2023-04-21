@@ -3,6 +3,9 @@ import { IHome, IMatched, IUserMatch, IUserRef } from '@mp/api/home/util';
 import * as admin from 'firebase-admin';
 import { IProfile } from '@mp/api/profiles/util';
 import { IInterests } from '@mp/api/interests/util';
+
+    //Behold the monstrosity that is the home repository
+
 @Injectable()
 export class HomeRepository {
     private filter={} as IInterests
@@ -28,8 +31,7 @@ export class HomeRepository {
                 let random = Math.floor(Math.random() * usersLength);
                 let randomDoc = allDocs[random];
                 // let randomDocRef=docRefs[random];
-                const tempProfile = randomDoc.data() as IProfile;
-                this.filter = tempProfile.interests as IInterests;
+                
                 if(this.filter==null||this.filter==undefined){
                   while(randomDoc.id==userID){
                     random = Math.floor(Math.random() * usersLength);
@@ -38,7 +40,9 @@ export class HomeRepository {
                    // randomDocRef=docRefs[random];
                  }
                 }else{
-                  if(!tempProfile.interests?.subCategory){
+                  const tempProfile = randomDoc.data() as IProfile;
+                  this.filter = tempProfile.interests as IInterests;
+                  if(tempProfile.interests?.subCategory){
                     const found = (tempProfile.interests?.subCategory).some(r=> (this.filter.subCategory).includes(r))
                     while(randomDoc.id==userID && found){
                        random = Math.floor(Math.random() * usersLength);
@@ -46,6 +50,13 @@ export class HomeRepository {
     
                       // randomDocRef=docRefs[random];
                     }
+                  }else{
+                    while(randomDoc.id==userID){
+                      random = Math.floor(Math.random() * usersLength);
+                      randomDoc = allDocs[random];
+   
+                     // randomDocRef=docRefs[random];
+                   }
                   }
                   
                 }
@@ -102,10 +113,33 @@ export class HomeRepository {
               let random = Math.floor(Math.random() * usersLength);
               let randomDoc = allDocs[random];
               // let randomDocRef=docRefs[random];
-              while(randomDoc.id==userID){
-                 random = Math.floor(Math.random() * usersLength);
-                 randomDoc = allDocs[random];
-                // randomDocRef=docRefs[random];
+              if(this.filter==null||this.filter==undefined){
+                while(randomDoc.id==userID){
+                  random = Math.floor(Math.random() * usersLength);
+                  randomDoc = allDocs[random];
+
+                 // randomDocRef=docRefs[random];
+               }
+              }else{
+                const tempProfile = randomDoc.data() as IProfile;
+                this.filter = tempProfile.interests as IInterests;
+                if(tempProfile.interests?.subCategory){
+                  const found = (tempProfile.interests?.subCategory).some(r=> (this.filter.subCategory).includes(r))
+                  while(randomDoc.id==userID && found){
+                     random = Math.floor(Math.random() * usersLength);
+                     randomDoc = allDocs[random];
+  
+                    // randomDocRef=docRefs[random];
+                  }
+                }else{
+                  while(randomDoc.id==userID){
+                    random = Math.floor(Math.random() * usersLength);
+                    randomDoc = allDocs[random];
+ 
+                   // randomDocRef=docRefs[random];
+                 }
+                }
+                
               }
               // const ref = {userRef:randomDocRef} as IUserRef;
               // const matched = {matched:true} as IMatched;
