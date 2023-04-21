@@ -2,6 +2,7 @@ import { INotification } from '@mp/api/notifications/util';
 import { IInbox } from '@mp/api/notifications/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 @Injectable()
 export class NotificationRepository {
@@ -26,7 +27,7 @@ export class NotificationRepository {
         .collection('Notifications')
         .doc(userID)
         .update({
-            inbox: admin.firestore.FieldValue.arrayUnion(notification)
+            'inbox': FieldValue.arrayUnion(notification)
         })
       }
       

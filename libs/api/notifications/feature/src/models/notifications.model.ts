@@ -8,6 +8,9 @@ export class Notification extends AggregateRoot implements INotification {
     public inbox:IInbox[]|null|undefined,
   ) {
     super();
+    if(this.inbox==null || this.inbox==undefined){
+      this.inbox=[]; 
+    }
   }
 
   static fromData(notif: INotification): Notification {
@@ -17,9 +20,9 @@ export class Notification extends AggregateRoot implements INotification {
     );
     return instance;
   }
-
+//to do: Create Needs to be implemented
   create() {
-    // this.apply(new NotificationCreatedEvent(this.toJSON()));
+    // this.apply(new NotificationCreatedEvent(this.toJSON()));   
   }
 
 
@@ -31,6 +34,8 @@ export class Notification extends AggregateRoot implements INotification {
   }
 
    sendNotification(inbox: IInbox) {
+   
+    
       this.inbox?.push(inbox);
       this.apply(new NotificationSentEvent(this.toJSON()));
   }
