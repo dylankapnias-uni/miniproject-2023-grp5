@@ -88,16 +88,23 @@ const routes: Routes = [
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
+
+  },
+  {
+    path: 'welcome',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
+    loadChildren: () =>
+      import('@mp/app/welcome/feature').then((m) => m.WelcomeModule),
   },
   {
     path: 'settings',
     pathMatch: 'full',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
+    //canActivate: [AuthGuard],
+    //data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/settings/feature').then((m) => m.SettingsPageModule),
   },
-
   {
     path: 'account',
     pathMatch: 'full',
@@ -150,6 +157,15 @@ const routes: Routes = [
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
+  },
+
+  {
+    path: 'blocked',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/blocked/feature').then((m) => m.BlockedPageModule),
   },
 ];
 
