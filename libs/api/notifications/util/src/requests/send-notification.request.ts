@@ -1,4 +1,4 @@
-import { IInbox, INotification } from '@mp/api/notifications/util';
+import { IInbox, INotification } from '../interfaces';
 
 export interface ISendNotificationRequest {
   userId: string;
