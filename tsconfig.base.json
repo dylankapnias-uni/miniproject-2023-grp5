@@ -76,6 +76,9 @@
       "@mp/app/login/feature": ["libs/app/login/feature/src/index.ts"],
       "@mp/app/login/util": ["libs/app/login/util/src/index.ts"],
       "@mp/app/messages/feature": ["libs/app/messages/feature/src/index.ts"],
+      "@mp/app/notifications/feature": [
+        "libs/app/notifications/feature/src/index.ts"
+      ],
       "@mp/app/privacy-policy/feature": [
         "libs/app/privacy-policy/feature/src/index.ts"
       ],

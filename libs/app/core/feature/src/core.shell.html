@@ -10,7 +10,7 @@
         <ion-icon name="paper-plane"></ion-icon>
         Messages
       </ion-tab-button>
-      <ion-tab-button [ngClass]="{'active':hasRoute('/post')}">
+      <ion-tab-button [ngClass]="{'active':hasRoute('/post')}" (click)="PostModal()">
         <ion-icon name="add-circle"></ion-icon>
         Post
       </ion-tab-button>

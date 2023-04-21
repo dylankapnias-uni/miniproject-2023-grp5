@@ -35,8 +35,14 @@
       </ion-col>
     </ion-row>    
     <ion-row>
-      <ion-col size="12">
-        <ion-button id="open-modal" expand="block" class="btn">Date of Birth</ion-button>
+      <ion-col>
+        <!--ion-button id="open-modal" expand="block" class="btn">Date of Birth</ion-button-->
+        <ion-item>
+          <ion-label position="stacked"><b>Date of Birth</b></ion-label>
+          <ion-button fill="clear" id="open-modal" expand="block">
+            <ion-icon [ngStyle]="{'font-size': '25px'}" slot="icon-only" name="calendar-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>

@@ -8,9 +8,13 @@ import { Router } from '@angular/router';
 })
 export class EditProfilePage 
 {
-  Bio = "My Bio"
-  constructor(public r : Router)
-  {}
+  Bio!: string;
+  StateBio!: string;
+  changed: boolean = false;
+  constructor(public r : Router){
+    this.StateBio = "This is my bio pulled from state";
+    this.Bio = this.StateBio;
+  }
 
   LoadSettingsPage()
   {
@@ -24,5 +28,12 @@ export class EditProfilePage
 
   UpdateBio(){
     console.log(this.Bio, " Push to state from here");
+  }
+
+  validateBio(){
+    if(this.Bio != this.StateBio)
+      this.changed = true;
+    else
+      this.changed = false;
   }
 }

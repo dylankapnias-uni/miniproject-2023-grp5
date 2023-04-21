@@ -22,15 +22,15 @@
       <ion-col size="12">
         <ion-item class = "bio">
           <ion-label class = "label_bio" position = "stacked" ><b>Bio</b></ion-label>
-          <ion-input [(ngModel)]="Bio"></ion-input>
+          <ion-input [(ngModel)]="Bio" (keyup)="validateBio()"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row class="text-center" style="margin-top: 30px;">
       <ion-button class="interests_btn" (click)="LoadInterests()">Interests</ion-button>
     </ion-row>
-    <ion-row class="text-center">
-      <ion-button class="btn" (click)="UpdateBio()">Submit</ion-button>
+    <ion-row class="text-center" *ngIf="changed">
+      <ion-button class="btn" (click)="UpdateBio()">Save Changes</ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

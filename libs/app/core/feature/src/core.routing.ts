@@ -167,19 +167,19 @@ const routes: Routes = [
       import('@mp/app/updates/feature').then((m) => m.UpdatesPageModule),
   },
 
-  // {
-  //   path: 'blocked',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import('@mp/app/blocked/feature').then((m) => m.BlockedPageModule),
-  // },
-  // {
-  //   path: 'messages',
-  //   loadChildren: () =>
-  //     import('@mp/app/messages/feature').then((m) => m.MessagesModule),
-  // },
+  {
+    path: 'blocked',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/blocked/feature').then((m) => m.BlockedPageModule),
+  },
+  {
+    path: 'messages',
+    loadChildren: () =>
+      import('@mp/app/messages/feature').then((m) => m.MessagesModule),
+  },
   {
     path: 'chat/:id',
     loadChildren: () =>
@@ -191,14 +191,14 @@ const routes: Routes = [
     // data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/profile/feature').then((m) => m.ProfileModule),
+  },
+  {
+    path: 'notifications',
+    // canActivate: [AuthGuard],
+    // data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/notifications/feature').then((m) => m.notificationsPageModule),
   }
-  // {
-  //   path: 'notifications',
-  //   // canActivate: [AuthGuard],
-  //   // data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import('@mp/app/notifications/feature').then((m) => m.NotificationsModule),
-  // }
 ];
 
 @NgModule({
