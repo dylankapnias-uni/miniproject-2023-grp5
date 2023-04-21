@@ -1,8 +1,9 @@
-import { IPost, IUserProfile, UserCreatedEvent } from '@mp/api/users/util';
+import { IInterests } from '@mp/api/users/util';
+import { IPost, IUserProfile, UserCreatedEvent, UserProfileDeletedEvent, UserProfileUpdatedEvent } from '@mp/api/users/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Timestamp } from 'firebase-admin/firestore';
 
-export class User extends AggregateRoot implements IUserProfile {
+export class UserProfile extends AggregateRoot implements IUserProfile {
   constructor(
     public userId: string,
     public email?: string | null | undefined,
@@ -15,7 +16,7 @@ export class User extends AggregateRoot implements IUserProfile {
     public bio?: string | null | undefined,
     public dob?: Timestamp | null | undefined,
     public gender?: string | null | undefined,
-    public interests?: string[] | null | undefined,
+    public interests?: IInterests[] | null | undefined,
     public sexuality?: string | null | undefined,
     public time?: number | null | undefined,
     public posts?: IPost[] | null | undefined
@@ -23,8 +24,8 @@ export class User extends AggregateRoot implements IUserProfile {
     super();
   }
 
-  static fromData(user: IUserProfile): User {
-    const instance = new User(
+  static fromData(user: IUserProfile): UserProfile {
+    const instance = new UserProfile(
       user.userId,
       user.email,
       user.name,
@@ -43,9 +44,17 @@ export class User extends AggregateRoot implements IUserProfile {
     );
     return instance;
   }
-
+  
   create() {
     this.apply(new UserCreatedEvent(this.toJSON()));
+  }
+
+  update() {
+    this.apply(new UserProfileUpdatedEvent({userProfile: this.toJSON()}));
+  }
+
+  delete() {
+    this.apply(new UserProfileDeletedEvent({userId: this.userId}));
   }
 
   toJSON(): IUserProfile {

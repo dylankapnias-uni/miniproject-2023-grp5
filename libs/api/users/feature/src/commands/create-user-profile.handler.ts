@@ -1,6 +1,6 @@
 import { CreateUserCommand, IUserProfile } from '@mp/api/users/util';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { User } from '../models';
+import { UserProfile } from '../models';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -27,7 +27,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       sexuality: null,
       time: null
     };
-    const user = this.publisher.mergeObjectContext(User.fromData(data));
+    const user = this.publisher.mergeObjectContext(UserProfile.fromData(data));
 
     user.create();
     user.commit();
