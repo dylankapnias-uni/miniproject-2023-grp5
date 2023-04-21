@@ -39,7 +39,7 @@ export class UserProfileRepository {
       .set(userProfile);
   }
 
-  async deleteUserProfileCommand(userId: string) {
+  async deleteUserProfile(userId: string) {
     return await admin
       .firestore()
       .collection('User_Profile')
