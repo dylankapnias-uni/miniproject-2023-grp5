@@ -1,5 +1,5 @@
 import { IUserProfile } from "../interfaces";
 
 export interface IGetUserProfileResponse {
-    userProfile: IUserProfile
+    userProfile: IUserProfile | undefined;
 }
