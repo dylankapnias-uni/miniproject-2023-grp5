@@ -1,4 +1,5 @@
 import { Timestamp } from 'firebase-admin/firestore';
+import { IPost } from './post.interface';
 
 export interface IUserProfile {
   userId: string; // renamed from id
@@ -16,4 +17,5 @@ export interface IUserProfile {
   interests?: string[] | null | undefined;
   sexuality?: string | null | undefined;
   time?: number | null | undefined;
+  posts?: IPost[] | null | undefined;
 }

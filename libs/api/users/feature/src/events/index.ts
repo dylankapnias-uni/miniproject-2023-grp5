@@ -1,1 +1,1 @@
-export * from './user-created.handler';
+export * from './user-profile-created.handler';
