@@ -1,7 +1,7 @@
 
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { Home } from '../../../util/src/events';
-import { AcceptUserCommand } from '@mp/api/home/util';
+import { AcceptUserCommand, IHome } from '@mp/api/home/util';
+import { Home } from '../models';
 
 @CommandHandler(AcceptUserCommand)
 export class AcceptUserHandler
@@ -13,11 +13,14 @@ export class AcceptUserHandler
     console.log(`${AcceptUserHandler.name}`);
 
     const request = command.request;
-    
+    const userId = request.userId;
+    const userMatch = request.userMatch;
 
-    const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
+    const data = {userId:userId,userList:[userMatch]} as IHome;
 
-    profile.create();
+    const profile = this.publisher.mergeObjectContext(Home.fromData(data));
+
+    profile.acceptUser();
     profile.commit();
   }
 }

@@ -1,5 +1,6 @@
-import { IProfile } from '@mp/api/profiles/util';
+import { IUserMatch } from '../interfaces';
 
 export interface IAcceptUserRequest {
-  profile: IProfile;
+  userId: string,
+  userMatch: IUserMatch,
 }

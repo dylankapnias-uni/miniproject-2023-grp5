@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { IHome, IMatched, IUserMatch, IUserRef } from '@mp/api/home/util';
 import * as admin from 'firebase-admin';
-import { IProfile } from '@mp/api/user-profile/util';
+import { IProfile } from '@mp/api/profiles/util';
+import { IInterests } from '@mp/api/interests/util';
 @Injectable()
 export class HomeRepository {
+    private filter={} as IInterests
     async getUserList(userID: string) {
         const swiped =  (await admin
             .firestore()
@@ -21,17 +23,33 @@ export class HomeRepository {
             const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
             const out = {userId:userID,userList:[]} as IHome ;
             for(let i=0;i<10;i++){
-                const docRefs = allDocs.map(doc => doc.ref);
+                // const docRefs = allDocs.map(doc => doc.ref);
                 const usersLength = allDocs.length;
                 let random = Math.floor(Math.random() * usersLength);
                 let randomDoc = allDocs[random];
-                let randomDocRef=docRefs[random];
-
-                while(randomDoc.id==userID){
-                   random = Math.floor(Math.random() * usersLength);
-                   randomDoc = allDocs[random];
-                  randomDocRef=docRefs[random];
+                // let randomDocRef=docRefs[random];
+                const tempProfile = randomDoc.data() as IProfile;
+                this.filter = tempProfile.interests as IInterests;
+                if(this.filter==null||this.filter==undefined){
+                  while(randomDoc.id==userID){
+                    random = Math.floor(Math.random() * usersLength);
+                    randomDoc = allDocs[random];
+ 
+                   // randomDocRef=docRefs[random];
+                 }
+                }else{
+                  if(!tempProfile.interests?.subCategory){
+                    const found = (tempProfile.interests?.subCategory).some(r=> (this.filter.subCategory).includes(r))
+                    while(randomDoc.id==userID && found){
+                       random = Math.floor(Math.random() * usersLength);
+                       randomDoc = allDocs[random];
+    
+                      // randomDocRef=docRefs[random];
+                    }
+                  }
+                  
                 }
+                
                 
                 // const ref = {userRef:randomDocRef} as IUserRef;
                 //Trying to implement using IProfile
@@ -79,15 +97,15 @@ export class HomeRepository {
           }
               for(let i=0;i<10-(swiped.swiped.length);i++){
               const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
-              const docRefs = allDocs.map(doc => doc.ref);
+              // const docRefs = allDocs.map(doc => doc.ref);
               const usersLength = allDocs.length;
               let random = Math.floor(Math.random() * usersLength);
               let randomDoc = allDocs[random];
-              let randomDocRef=docRefs[random];
+              // let randomDocRef=docRefs[random];
               while(randomDoc.id==userID){
                  random = Math.floor(Math.random() * usersLength);
                  randomDoc = allDocs[random];
-                randomDocRef=docRefs[random];
+                // randomDocRef=docRefs[random];
               }
               // const ref = {userRef:randomDocRef} as IUserRef;
               // const matched = {matched:true} as IMatched;

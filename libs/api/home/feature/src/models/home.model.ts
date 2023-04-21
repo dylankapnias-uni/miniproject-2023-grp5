@@ -1,19 +1,19 @@
 
-import { HomeCreatedEvent, IHome, IMatched, IUserRef } from '@mp/api/home/util';
+import { HomeCreatedEvent, IHome, IMatched, IUserMatch, IUserRef, UserAcceptedEvent } from '@mp/api/home/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
 export class Home extends AggregateRoot implements IHome {
   constructor(
     public userId: string,
-    public userList: {user:IUserRef,match:IMatched}[] | null | undefined,
+    public userList: IUserMatch[] | null | undefined,
   ) {
     super();
   }
 
-  static fromData(profile: IHome): Home {
+  static fromData(home: IHome): Home {
     const instance = new Home(
-      profile.userId,
-      profile.userList,
+      home.userId,
+      home.userList,
     );
     return instance;
   }
@@ -23,57 +23,38 @@ export class Home extends AggregateRoot implements IHome {
   }
 
 
-  private acceptUser() {
-    if (!this.occupationDetails) {
-      this.occupationDetails = {};
-      this.occupationDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
+  public acceptUser() {
+    if(!this.userList){
+      console.log("no userlist");
       return;
     }
-
-    if (
-      !this.occupationDetails.householdIncome ||
-      !this.occupationDetails.occupation
-    ) {
-      this.occupationDetails.status = ProfileStatus.INCOMPLETE;
-      this.status = ProfileStatus.INCOMPLETE;
-      return;
-    }
-
-    this.occupationDetails.status = ProfileStatus.COMPLETE;
-    return;
+    this.apply(new UserAcceptedEvent(this.toJSON()));
   }
 
-  updateStatus() {
-    this.updateAccountDetailsStatus();
-    this.updateAddressDetailsStatus();
-    this.updateContactDetailsStatus();
-    this.updatePersonalDetailsStatus();
-    this.updateOccupationDetailsStatus();
+  // updateStatus() {
+  //   this.updateAccountDetailsStatus();
+  //   this.updateAddressDetailsStatus();
+  //   this.updateContactDetailsStatus();
+  //   this.updatePersonalDetailsStatus();
+  //   this.updateOccupationDetailsStatus();
 
-    if (
-      this.accountDetails?.status === ProfileStatus.COMPLETE &&
-      this.addressDetails?.status === ProfileStatus.COMPLETE &&
-      this.contactDetails?.status === ProfileStatus.COMPLETE &&
-      this.personalDetails?.status === ProfileStatus.COMPLETE &&
-      this.occupationDetails?.status === ProfileStatus.COMPLETE
-    ) {
-      this.status = ProfileStatus.COMPLETE;
-    }
+  //   if (
+  //     this.accountDetails?.status === ProfileStatus.COMPLETE &&
+  //     this.addressDetails?.status === ProfileStatus.COMPLETE &&
+  //     this.contactDetails?.status === ProfileStatus.COMPLETE &&
+  //     this.personalDetails?.status === ProfileStatus.COMPLETE &&
+  //     this.occupationDetails?.status === ProfileStatus.COMPLETE
+  //   ) {
+  //     this.status = ProfileStatus.COMPLETE;
+  //   }
 
-    this.apply(new ProfileStatusUpdatedEvent(this.toJSON()));
-  }
+  //   this.apply(new ProfileStatusUpdatedEvent(this.toJSON()));
+  // }
 
-  toJSON(): IProfile {
+  toJSON(): IHome {
     return {
       userId: this.userId,
-      accountDetails: this.accountDetails,
-      personalDetails: this.personalDetails,
-      contactDetails: this.contactDetails,
-      addressDetails: this.addressDetails,
-      occupationDetails: this.occupationDetails,
-      status: this.status,
-      created: this.created,
+      userList: this.userList,
     };
   }
 }
