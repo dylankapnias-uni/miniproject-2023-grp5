@@ -40,11 +40,11 @@ export class SettingsRepository {
   }
 
   async createSettings(settings: ISettings) {
-    await admin
-      .firestore()
-      .collection('Notifications')
-      .doc(settings.userId)
-      .create({Inbox:[]}).then((res) => console.log(res));
+    // await admin
+    //   .firestore()
+    //   .collection('Notifications')
+    //   .doc(settings.userId)
+    //   .create({Inbox:[]}).then((res) => console.log(res));
 
     return await admin
       .firestore()

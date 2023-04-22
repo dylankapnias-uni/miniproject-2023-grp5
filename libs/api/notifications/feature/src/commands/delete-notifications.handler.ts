@@ -4,13 +4,14 @@ import {
     INotification,
     IInbox,
     DeleteNotificationCommand,
+    IDeleteNotificationResponse,
 } from '@mp/api/notifications/util';
 
 import { Notification } from '../models';
 
 @CommandHandler(DeleteNotificationCommand)
 export class DeleteNotificationHandler
-implements ICommandHandler<DeleteNotificationCommand>
+implements ICommandHandler<DeleteNotificationCommand, IDeleteNotificationResponse>
 {
     constructor(private publisher: EventPublisher, private readonly repository: NotificationRepository) {}
     async execute(command: DeleteNotificationCommand) {
@@ -24,5 +25,7 @@ implements ICommandHandler<DeleteNotificationCommand>
          const notification = this.publisher.mergeObjectContext(Notification.fromData(data));
          notification.deleteNotification(userId);
          notification.commit();
+         const resp: IDeleteNotificationResponse ={notification:notification};
+        return resp;
       }
 }

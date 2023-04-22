@@ -23,7 +23,7 @@ import { IAddTimeRequest,
     ProfilePrivacy 
 } from '@mp/api/settings/util';
 
-import { ISendNotificationRequest, ISendNotificationResponse } from '@mp/api/notifications/util'
+import { ICreateNotificationRequest, ICreateNotificationResponse, ISendNotificationRequest, ISendNotificationResponse } from '@mp/api/notifications/util'
 import { SettingsApi } from './settings.api'
 import { Timestamp } from '@angular/fire/firestore';
 export interface SettingsStateModel {
@@ -197,7 +197,26 @@ export class SettingsState {
         // });
         // console.log(updateVisibilityResponse.data);
 
-        let sendNotificationResponse = await httpsCallable<
+        let createNotificationResponse = await httpsCallable<
+        ICreateNotificationRequest,
+        ICreateNotificationResponse
+        >(
+            this.settingsApi.functions, 
+            'CreateNotification'
+        )({userId: '5'});
+        console.log(createNotificationResponse.data);
+
+        createNotificationResponse = await httpsCallable<
+        ICreateNotificationRequest,
+        ICreateNotificationResponse
+        >(
+            this.settingsApi.functions, 
+            'CreateNotification'
+        )({userId: '6'});
+        console.log(createNotificationResponse.data);
+
+
+        const sendNotificationResponse = await httpsCallable<
         ISendNotificationRequest,
         ISendNotificationResponse
         >(

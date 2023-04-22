@@ -6,6 +6,15 @@ import { FieldValue } from 'firebase-admin/firestore';
 
 @Injectable()
 export class NotificationRepository {
+  
+    async createNotification(userId:string){
+      return await admin
+      .firestore()
+      .collection('Notifications')
+      .doc(userId)
+      .create({Inbox:[]}).then((res) => console.log(res));
+    }
+
     async getNotifications(userID: string) {
         return await admin
           .firestore()
