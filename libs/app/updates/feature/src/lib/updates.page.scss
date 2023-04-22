@@ -1,6 +1,6 @@
-body
+ion-content
 {
-    background-color: #FDE0E0;
+    --ion-background-color: #FDE0E0;
 }
 
 .back_button{
@@ -20,22 +20,28 @@ body
     font-size:30px;
 }
 
-.page_name
-{
-    position: absolute;
-    top: 2.3%;
-    left: 20%;
-    font-size: 24px;
-    line-height: 28px;
-    font-weight: 700;
-    align-items: center;
-
-    color: #000000;
-}
-
 p
 {
     align-self: center;
     position: relative;
     top: 10%;
 }
+
+.page
+{
+    top: 50%;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #000000;
+
+}
+
+.text
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+

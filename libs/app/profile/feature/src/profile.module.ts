@@ -7,6 +7,7 @@ import { ProfileModule as ProfileUiModule } from '@mp/app/profile/ui';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProfilePage } from './profile.page';
 import { ProfileRouting } from './profile.routing';
+//import { SwiperModule} from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ProfileRouting } from './profile.routing';
     ProfileUiModule,
     ProfileDataAccessModule,
     NgxSkeletonLoaderModule,
+   
   ],
   declarations: [ProfilePage],
 })
