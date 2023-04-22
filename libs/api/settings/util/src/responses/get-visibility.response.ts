@@ -1,6 +1,6 @@
 import { ProfilePrivacy } from "../enums";
 
-export interface IGetVisibilityResponse {
+export interface IGetProfileVisibilityResponse {
   userId: string,
   profileVisibility: ProfilePrivacy | undefined
 }

@@ -1,3 +1,3 @@
-export interface IGetVisibilityRequest {
+export interface IGetProfileVisibilityRequest {
   userId: string
 }

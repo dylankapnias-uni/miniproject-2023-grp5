@@ -1,13 +1,13 @@
 import { SettingsRepository } from "@mp/api/settings/data-access";
 import {
   GetVisibilityQuery,
-  IGetVisibilityResponse
+  IGetProfileVisibilityResponse
 } from "@mp/api/settings/util";
 import { QueryHandler, IQueryHandler } from "@nestjs/cqrs";
 
 @QueryHandler(GetVisibilityQuery)
 export class GetVisibilityHandler 
-implements IQueryHandler<GetVisibilityQuery, IGetVisibilityResponse> {
+implements IQueryHandler<GetVisibilityQuery, IGetProfileVisibilityResponse> {
 
   constructor(
     private readonly repository: SettingsRepository
@@ -21,7 +21,7 @@ implements IQueryHandler<GetVisibilityQuery, IGetVisibilityResponse> {
     const settingsData = settingsDoc.data();
 
 
-    const response: IGetVisibilityResponse = {
+    const response: IGetProfileVisibilityResponse = {
       userId: request.userId,
       profileVisibility: 
         settingsData

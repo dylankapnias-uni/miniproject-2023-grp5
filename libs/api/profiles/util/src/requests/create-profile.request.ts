@@ -1,5 +1,5 @@
-import { IUser } from '@mp/api/users/util';
+import { IUserProfile } from '@mp/api/users/util';
 
 export interface ICreateProfileRequest {
-  user: IUser;
+  user: IUserProfile;
 }

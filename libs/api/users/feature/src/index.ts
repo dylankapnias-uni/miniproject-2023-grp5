@@ -1,3 +1,3 @@
-export * from './users.module';
-export * from './users.sagas';
-export * from './users.service';
+export * from './user-profile.module';
+export * from './user-profile.sagas';
+export * from './user-profile.service';
