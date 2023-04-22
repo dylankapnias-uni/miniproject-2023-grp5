@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +12,9 @@ export class EditProfilePage
   Bio!: string;
   StateBio!: string;
   changed: boolean = false;
-  constructor(public r : Router){
+  uploadImg: boolean = false;
+  imagePreview!: SafeResourceUrl;
+  constructor(public r : Router, private sanitizer: DomSanitizer){
     this.StateBio = "This is my bio pulled from state";
     this.Bio = this.StateBio;
   }
@@ -35,5 +38,24 @@ export class EditProfilePage
       this.changed = true;
     else
       this.changed = false;
+  }
+
+  onFileSelected(event: any) {
+    this.changed= true;
+    this.uploadImg = true;
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        if (reader.result !== null) {
+          this.imagePreview = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result.toString());
+        }
+      };
+    }
+  }
+
+  onUpload() {
+    // Add your code to post the image here
   }
 }

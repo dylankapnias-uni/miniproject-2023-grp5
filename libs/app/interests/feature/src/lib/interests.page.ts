@@ -6,7 +6,7 @@ import { Component} from '@angular/core';
   styleUrls: ['./interests.page.scss']
 })
 export class InterestsPage{
-  MyInterests: string[] = ['Adrian', 'Is', 'Great'];
+  MyInterests: string[] = ['Adrian', 'Is', 'Handsome'];
 
   interests: any[] = [
     {

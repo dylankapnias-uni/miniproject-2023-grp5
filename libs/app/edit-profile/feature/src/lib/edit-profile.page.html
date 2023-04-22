@@ -11,11 +11,15 @@
   <ion-grid style="margin-top: 30px;">
     <ion-row class="ion-align-items-center">
       <ion-col size="12" >
-        <div class = "img-container">
+        <div class = "img-container" *ngIf="!uploadImg">
           <div class = "img">
-          <ion-button class = "add_picture_btn">Add profile picture</ion-button>
+          <ion-button class = "add_picture_btn" id="open-modal" expand="block">Add profile picture</ion-button>
           </div>
-      </div>
+        </div>
+        <ion-card *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Selected Image">
+          <ion-button class = "add_picture_btn" id="open-modal" expand="block">Change profile picture</ion-button>
+        </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -33,4 +37,21 @@
       <ion-button class="btn" (click)="UpdateBio()">Save Changes</ion-button>
     </ion-row>
   </ion-grid>
+
+  <ion-modal #modal trigger="open-modal">
+    <ng-template>
+      <ion-content [scrollY]="false">
+        <ion-toolbar>
+          <ion-title>Upload picture</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-list>
+          <ion-input type="file" (change)="onFileSelected($event)" style="display: block; margin: 0 auto;"></ion-input>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
 </ion-content>

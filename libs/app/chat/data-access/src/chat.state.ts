@@ -7,7 +7,8 @@ import {
     SendMessage,
     AddTime,
     GetTime,
-    RemoveTime
+    RemoveTime,
+    GetMessages
  } from '@mp/app/chat/util';
 
 export interface ChatStateModel{
@@ -38,8 +39,18 @@ export interface ChatStateModel{
 })
 @Injectable()
 export class ChatState {
+
+  @Action(GetMessages)
+  async GetMessages(ctx: StateContext<ChatStateModel>, {payload}: GetMessages) {
+    //Works and catches Chat id
+    ctx.patchState({
+      
+    });
+  }
+
   @Action(SendMessage)
   async SendMessage(ctx: StateContext<ChatStateModel>, {payload}: SendMessage) {
+    //Works and catches Chat id and outGoingMessage
     ctx.patchState({
       
     });
@@ -47,6 +58,7 @@ export class ChatState {
 
   @Action(AddTime)
   async AddTime(ctx: StateContext<ChatStateModel>, {payload}: AddTime) {
+    //Works and catches Chat id and time
     ctx.patchState({
       
     });

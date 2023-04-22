@@ -1,6 +1,6 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
-  <ion-tabs *ngIf="this.hasRoute('/home/dashboard') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post')">
+  <ion-tabs *ngIf="this.hasRoute('/home/dashboard') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post') || this.hasRouteVariable('/other-user/:id')">
     <ion-tab-bar slot="bottom">
       <ion-tab-button [ngClass]="{'active':hasRoute('/home/dashboard')}" tab="home">
         <ion-icon name="heart"></ion-icon>

@@ -60,6 +60,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/profile/feature').then((m) => m.ProfileModule),
   },
+  {
+    path: 'other-user/:id',
+    loadChildren: () =>
+      import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
+  },
   // {
   //   path: 'notification',
   //   loadChildren: () =>

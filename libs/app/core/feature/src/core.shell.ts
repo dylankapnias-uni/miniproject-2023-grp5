@@ -62,6 +62,11 @@ export class CoreShell implements OnInit, OnDestroy {
     return this.router.url === route;
   }
 
+  hasRouteVariable(route: string) {
+    const pattern = new RegExp('^' + route.replace(':id', '\\d+') + '$');
+    return pattern.test(this.router.url);
+  }
+
   async updateToast() {
     const toast = await this.toastController.create({
       header: 'Update Available',

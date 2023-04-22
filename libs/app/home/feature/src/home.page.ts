@@ -15,24 +15,28 @@ export class HomePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   users: Array<any> = [
     {
+      id: 1,
       photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
       name: 'Emily',
       age: 22,
       interests: ["At Uni", "Aries", "Vegan"]
     },
     {
+      id:2,
       photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
       name: 'John',
       age: 21,
       interests: ["At Uni", "Aries", "Vegan"]
     },
     {
+      id:3,
       photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
       name: 'Jessica',
       age: 25,
       interests: ["At Uni", "Aries", "Vegan"]
     },
     {
+      id:4,
       photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
       name: 'Chris',
       age: 35,
@@ -86,24 +90,28 @@ export class HomePage {
             //Repopulate array
             this.users.push(              
               {
+                id:3,
                 photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
                 name: 'Jessica',
                 age: 25,
                 interests: ["At Uni", "Aries", "Vegan"]
               },
               {
+                id:4,
                 photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
                 name: 'Chris',
                 age: 35,
                 interests: ["At Uni", "Aries", "Vegan"]
               },
               {
+                id:2,
                 photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
                 name: 'John',
                 age: 21,
                 interests: ["At Uni", "Aries", "Vegan"]
               },
               {
+                id:1,
                 photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
                 name: 'Emily',
                 age: 22,
@@ -122,24 +130,28 @@ export class HomePage {
             //Repopulate array
             this.users.push(              
               {
+                id:3,
                 photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
                 name: 'Jessica',
                 age: 25,
                 interests: ["At Uni", "Aries", "Vegan"]
               },
               {
+                id:4,
                 photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
                 name: 'Chris',
                 age: 35,
                 interests: ["At Uni", "Aries", "Vegan"]
               },
               {
+                id:2,
                 photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
                 name: 'John',
                 age: 21,
                 interests: ["At Uni", "Aries", "Vegan"]
               },
               {
+                id:1,
                 photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
                 name: 'Emily',
                 age: 22,
