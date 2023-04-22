@@ -1,7 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateNotificationCommand, ICreateNotificationRequest, IDeleteNotificationRequest, ISendNotificationRequest } from '@mp/api/notifications/util';
+import { ClearNotificationsCommand, CreateNotificationCommand, IClearNotificationsRequest, IClearNotificationsResponse, ICreateNotificationRequest, IDeleteNotificationRequest, ISendNotificationRequest } from '@mp/api/notifications/util';
 import { DeleteNotificationCommand, SendNotificationCommand } from '@mp/api/notifications/util';
 import { ICreateNotificationResponse, IDeleteNotificationResponse, ISendNotificationResponse } from '@mp/api/notifications/util';
 
@@ -34,6 +34,15 @@ export class NotificationService {
       CreateNotificationCommand,
       ICreateNotificationResponse
     >(new CreateNotificationCommand(request));
+  }
+
+  async clearNotifications(
+    request: IClearNotificationsRequest
+  ): Promise<IClearNotificationsResponse> {
+    return await this.commandBus.execute<
+      ClearNotificationsCommand,
+      IClearNotificationsResponse
+    >(new ClearNotificationsCommand(request));
   }
 
 }

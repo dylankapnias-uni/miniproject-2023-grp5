@@ -10,6 +10,7 @@ export class NotificationDeleteHandler
 
   async handle(event: NotificationDeletedEvent) {
     console.log(`${NotificationDeleteHandler.name}`);
-    await this.repository.clearNotification(event.notification.userId); //clears notifications in inbox to API
+    if(!event.notification.inbox) return;
+    await this.repository.deleteNotification(event.notification.userId, event.notification.inbox); //clears notifications in inbox to API
   }
 }

@@ -1,13 +1,13 @@
 import { ProfilesModule as ProfilesDataAccessModule } from '@mp/api/profiles/data-access';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { CreateNotificationHandler, DeleteNotificationHandler, SendNotificationHandler } from './commands';
+import { ClearNotificationsHandler, CreateNotificationHandler, DeleteNotificationHandler, SendNotificationHandler } from './commands';
 import { NotificationService } from './notifications.service';
 import { NotificationModule as NotificationDataAccessModule } from '@mp/api/notifications/data-access';
-import { NotificationCreatedHandler, NotificationDeleteHandler, NotificationSentHandler } from './events';
+import { NotificationCreatedHandler, NotificationDeleteHandler, NotificationSentHandler, NotificationsClearedHandler } from './events';
 
-export const CommandHandlers = [DeleteNotificationHandler,SendNotificationHandler, CreateNotificationHandler];
-export const EventHandlers = [NotificationDeleteHandler,NotificationSentHandler, NotificationCreatedHandler];
+export const CommandHandlers = [DeleteNotificationHandler,SendNotificationHandler, CreateNotificationHandler, ClearNotificationsHandler];
+export const EventHandlers = [NotificationDeleteHandler,NotificationSentHandler, NotificationCreatedHandler, NotificationsClearedHandler];
 
 @Module({
   imports: [CqrsModule, NotificationDataAccessModule],

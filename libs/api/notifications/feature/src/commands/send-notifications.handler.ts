@@ -21,7 +21,7 @@ implements ICommandHandler<SendNotificationCommand,ISendNotificationResponse>
          const request = command.request;
          const userId = request.userId;
          const notifDoc = await this.repository.getNotifications(userId);
-         const data =  {userId:userId, inbox:notifDoc.data()?.inbox};
+         const data =  {userId:userId, inbox:notifDoc?.inbox};
          console.log(data);
          if (!data) throw new Error('Profile not found');
          const notification = this.publisher.mergeObjectContext(Notification.fromData(data));

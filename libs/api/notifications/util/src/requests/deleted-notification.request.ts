@@ -1,4 +1,5 @@
 
 export interface IDeleteNotificationRequest {
-  userId: string;
+  userId: string,
+  inboxId:number
 }

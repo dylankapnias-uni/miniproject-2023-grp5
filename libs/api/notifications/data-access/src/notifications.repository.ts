@@ -12,11 +12,11 @@ export class NotificationRepository {
       .firestore()
       .collection('Notifications')
       .doc(userId)
-      .create({Inbox:[]}).then((res) => console.log(res));
+      .create({'inbox':[]}).then((res) => console.log(res));
     }
 
     async getNotifications(userID: string) {
-        return await admin
+        return (await admin
           .firestore()
           .collection('Notifications')
           .withConverter<INotification>({
@@ -26,7 +26,7 @@ export class NotificationRepository {
             toFirestore: (it: INotification) => it,
           })
           .doc(userID)
-          .get();
+          .get()).data();
       }
 
       async sendNotification(userID: string, notification : IInbox)
@@ -45,14 +45,27 @@ export class NotificationRepository {
       }
       }
       
-      async clearNotification(userID : string)
+      async deleteNotification(userID : string, inInbox: IInbox[])
       {
+
         return await admin
         .firestore()
         .collection('Notifications')
         .doc(userID)
         .update({
-            inbox: admin.firestore.FieldValue.delete()
+          'inbox': inInbox
+        })
+      }
+
+      async clearAllNotifications(userID : string)
+      {
+
+        return await admin
+        .firestore()
+        .collection('Notifications')
+        .doc(userID)
+        .update({
+          'inbox': []
         })
       }
 }
