@@ -1,4 +1,4 @@
-import { ISettings, ITime, ProfilePrivacy } from '@mp/api/settings/util';
+import { IBlockedAccounts, ISettings, ITime, ProfilePrivacy } from '@mp/api/settings/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { FieldValue, Timestamp, WriteResult } from 'firebase-admin/firestore';
@@ -17,6 +17,24 @@ export class SettingsRepository {
       .doc(userId)
       .get();
   }
+  async getBlockedAccounts(userId: string) {
+    const settingsRef = await admin
+      .firestore()
+      .collection('Blocked_Account')
+      .withConverter<IBlockedAccounts>({
+        fromFirestore: (snapshot) => {
+          return snapshot.data() as IBlockedAccounts;
+        },
+        toFirestore: (it: IBlockedAccounts) => it,
+      })
+      .doc(userId)
+      .get();
+    const settingsDoc = settingsRef.data();
+    if (settingsDoc === undefined) {
+      throw new Error(`getBlockedAccounts(): Settings data for user ${userId} does not exist`);
+    }
+    return settingsDoc.blocked;
+  }
 
   async getTime(userId: string){
     const settingsRef = await admin
@@ -32,7 +50,7 @@ export class SettingsRepository {
       .get();
     const settingsDoc = settingsRef.data();
     if (settingsDoc === undefined) {
-      throw new Error(`getTime(): Settings data for user ${userId} does not exist`);
+      throw new Error(`getTime(): Array of blocked users for user ${userId} does not exist`);
     }
     console.log("getTime");
     console.log(JSON.stringify(settingsDoc))
@@ -40,11 +58,17 @@ export class SettingsRepository {
   }
 
   async createSettings(settings: ISettings) {
-    return await admin
+    await admin
       .firestore()
       .collection('Settings')
       .doc(settings.userId)
       .create(settings);
+
+    return await admin
+      .firestore()
+      .collection('Blocked_Account')
+      .doc(settings.userId)
+      .create({blocked: []});
   }
 
   async addTime(userId: string, data: {amount: number, date: Timestamp}) {
@@ -73,14 +97,14 @@ export class SettingsRepository {
   async blockUser(userId: string, blockedId: string) {
     return await admin
       .firestore()
-      .collection('Settings')
+      .collection('Blocked_Account')
       .doc(userId)
       .update({
-        'privacy.blockedAccounts': FieldValue.arrayUnion(blockedId)
+        'blocked': FieldValue.arrayUnion(blockedId)
       })
       .catch((error) => {
         console.log(
-          `Error while adding user ${blockedId} to blockedAccounts of user ${userId}: ${error}`
+          `Error while adding user ${blockedId} to blocked account list of user ${userId}: ${error}`
           )
         }
       );
@@ -89,14 +113,14 @@ export class SettingsRepository {
   async unblockUser(userId: string, blockedId: string) {
     return await admin
       .firestore()
-      .collection('Settings')
+      .collection('Blocked_Account')
       .doc(userId)
       .update({
-        'privacy.blockedAccounts': FieldValue.arrayRemove(blockedId)
+        'blocked': FieldValue.arrayRemove(blockedId)
       })
       .catch((error) => {
         console.log(
-          `Error while removing user ${blockedId} from blockedAccounts of user ${userId}: ${error}`
+          `Error while removing user ${blockedId} from blocked account list of user ${userId}: ${error}`
           )
         }
       );

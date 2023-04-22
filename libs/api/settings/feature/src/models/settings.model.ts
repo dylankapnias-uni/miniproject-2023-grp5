@@ -53,15 +53,15 @@ export class Settings
   }
 
   blockUser(blockedId: string) {
-    this.privacy.blockedAccounts.push(blockedId);
+    // this.privacy.blockedAccounts.push(blockedId);
 
     this.apply(new UserBlockedEvent({userId: this.userId, blockedUserId: blockedId}));
   }
 
   unblockUser(blockedId: string) {
-    const index = this.privacy.blockedAccounts.indexOf(blockedId);
-    if (index == -1) return;
-    this.privacy.blockedAccounts.splice(index, 1);
+    // const index = this.privacy.blockedAccounts.indexOf(blockedId);
+    // if (index == -1) return;
+    // this.privacy.blockedAccounts.splice(index, 1);
     this.apply(new UserUnblockedEvent({userId: this.userId, blockedUserId: blockedId}));
   }
 
