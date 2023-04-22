@@ -18,7 +18,7 @@ export class BlockedPage {
   ];
 
   unblock(id:string){
-
+    console.log(id);
   }
 
   LoadSettingsPage()

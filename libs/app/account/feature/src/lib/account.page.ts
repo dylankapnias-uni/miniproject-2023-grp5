@@ -62,7 +62,7 @@ export class AccountPage
     await alert.present();
   }
   Update(){
-    let dateString = this.dob.split('T')[0];
+    const dateString = this.dob.split('T')[0];
     console.log(dateString);
   }
 

@@ -11,8 +11,8 @@ export class EditProfilePage
 {
   Bio!: string;
   StateBio!: string;
-  changed: boolean = false;
-  uploadImg: boolean = false;
+  changed = false;
+  uploadImg = false;
   imagePreview!: SafeResourceUrl;
   constructor(public r : Router, private sanitizer: DomSanitizer){
     this.StateBio = "This is my bio pulled from state";
