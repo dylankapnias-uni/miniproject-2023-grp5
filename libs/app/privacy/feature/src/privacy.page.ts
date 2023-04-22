@@ -14,4 +14,9 @@ export class PrivacyPage {
   {
     this.r.navigate(['/settings']);
   }
+
+  LoadBlockedPage()
+  {
+    this.r.navigate(['/blocked']);
+  }
 }
