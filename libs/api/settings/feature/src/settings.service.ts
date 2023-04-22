@@ -11,8 +11,8 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
-  IGetVisibilityRequest, 
-  IGetVisibilityResponse, 
+  IGetProfileVisibilityRequest, 
+  IGetProfileVisibilityResponse, 
   IIsBlockedRequest, 
   IIsBlockedResponse, 
   ISubtractTimeRequest, 
@@ -89,11 +89,11 @@ export class SettingsService {
   }
 
   async getVisibility(
-    request: IGetVisibilityRequest
-  ): Promise<IGetVisibilityResponse> {
+    request: IGetProfileVisibilityRequest
+  ): Promise<IGetProfileVisibilityResponse> {
     return await this.queryBus.execute<
       GetVisibilityQuery,
-      IGetVisibilityResponse
+      IGetProfileVisibilityResponse
     >(new GetVisibilityQuery(request));
   }
 

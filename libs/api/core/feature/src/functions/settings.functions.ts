@@ -5,16 +5,16 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
-  IGetVisibilityRequest, 
-  IGetVisibilityResponse, 
+  IGetProfileVisibilityRequest, 
+  IGetProfileVisibilityResponse, 
   IIsBlockedRequest, 
   IIsBlockedResponse, 
   ISubtractTimeRequest, 
   ISubtractTimeResponse, 
   IUnblockUserRequest, 
   IUnblockUserResponse, 
-  IUpdatePrivacyRequest, 
-  IUpdatePrivacyResponse 
+  IUpdatePrivacyRequest as IUpdateProfileVisibilityRequest, 
+  IUpdatePrivacyResponse as IUpdateProfileVisibilityResponse 
 } from '@mp/api/settings/util';
 import { SettingsService } from '@mp/api/settings/feature';
 import { NestFactory } from '@nestjs/core';
@@ -23,8 +23,8 @@ import { CoreModule } from '../core.module';
 
 export const updateProfileVisibility = functions.https.onCall(
   async (
-    request: IUpdatePrivacyRequest
-  ): Promise<IUpdatePrivacyResponse> => {
+    request: IUpdateProfileVisibilityRequest
+  ): Promise<IUpdateProfileVisibilityResponse> => {
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(SettingsService);
     return service.updatePrivacy(request);
@@ -84,10 +84,10 @@ export const isBlocked = functions.https.onCall(
   }
 )
 
-export const getVisibility = functions.https.onCall(
+export const getProfileVisibility = functions.https.onCall(
   async (
-    request: IGetVisibilityRequest
-  ): Promise<IGetVisibilityResponse> => {
+    request: IGetProfileVisibilityRequest
+  ): Promise<IGetProfileVisibilityResponse> => {
     const app = NestFactory.createApplicationContext(CoreModule);
     const service = (await app).get(SettingsService);
     return await service.getVisibility(request);

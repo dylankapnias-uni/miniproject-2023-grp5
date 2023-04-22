@@ -1,5 +1,5 @@
-import { IGetVisibilityRequest } from "../requests";
+import { IGetProfileVisibilityRequest } from "../requests";
 
 export class GetVisibilityQuery{
-  constructor(public readonly request: IGetVisibilityRequest){}
+  constructor(public readonly request: IGetProfileVisibilityRequest){}
 }

@@ -10,8 +10,8 @@ import { IAddTimeRequest,
     IBlockUserResponse, 
     ICreateSettingsRequest, 
     ICreateSettingsResponse, 
-    IGetVisibilityRequest, 
-    IGetVisibilityResponse, 
+    IGetProfileVisibilityRequest, 
+    IGetProfileVisibilityResponse, 
     IIsBlockedRequest, 
     IIsBlockedResponse, 
     ISubtractTimeRequest, 
@@ -193,11 +193,11 @@ export class SettingsState {
 
         // Get the the profile visibility of user 6
         const getVisibilityResponse = await httpsCallable<
-            IGetVisibilityRequest,
-            IGetVisibilityResponse
+            IGetProfileVisibilityRequest,
+            IGetProfileVisibilityResponse
         >(
             this.settingsApi.functions,
-            'updateProfileVisibility'
+            'getProfileVisibility'
         )({
             userId: '6'
         });
