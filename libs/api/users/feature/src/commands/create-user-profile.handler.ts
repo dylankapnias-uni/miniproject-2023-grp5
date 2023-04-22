@@ -31,5 +31,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
     user.create();
     user.commit();
+
+    return {user: data};
   }
 }

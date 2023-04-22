@@ -21,7 +21,7 @@ implements ICommandHandler<UpdateUserProfileCommand,IUpdateUserProfileResponse> 
         userProfile.update();
         userProfile.commit();
 
-        const response: IUpdateUserProfileResponse = {userProfile: userProfile.toJSON()};
+        const response: IUpdateUserProfileResponse = {userProfile: userProfileData};
         return response;
     }
 }

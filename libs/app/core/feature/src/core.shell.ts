@@ -32,8 +32,6 @@ export class CoreShell implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(new SubscribeToAuthState());
     this.updateAvailable$.subscribe();
-    //TODO Remove after testing
-    this.store.dispatch(new Register('blahblah@gmail.com', '123456'));
   }
 
   ngOnDestroy(): void {

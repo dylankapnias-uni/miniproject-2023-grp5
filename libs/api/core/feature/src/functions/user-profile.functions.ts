@@ -4,6 +4,8 @@ import * as functions from 'firebase-functions';
 import { CoreModule } from '../core.module';
 import { UserProfileService } from '@mp/api/users/feature';
 import { 
+  ICreateUserRequest,
+  ICreateUserResponse,
   IDeleteUserProfileRequest,
   IDeleteUserProfileResponse,
   IGetUserProfileRequest,
@@ -38,3 +40,12 @@ export const deleteUserProfile = functions.https.onCall(
     const service = app.get(UserProfileService);
     return service.deleteUserProfile(request);
   });
+
+export const createUserProfile = functions.https.onCall(
+  async (
+    request: ICreateUserRequest
+  ): Promise<ICreateUserResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(UserProfileService);
+    return service.createUserProfile(request);
+  })
