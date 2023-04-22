@@ -23,7 +23,7 @@ import { IAddTimeRequest,
     ProfilePrivacy 
 } from '@mp/api/settings/util';
 
-import { ICreateNotificationRequest, ICreateNotificationResponse, ISendNotificationRequest, ISendNotificationResponse } from '@mp/api/notifications/util'
+import { ICreateNotificationRequest, ICreateNotificationResponse, IDeleteNotificationRequest, IDeleteNotificationResponse, ISendNotificationRequest, ISendNotificationResponse } from '@mp/api/notifications/util'
 import { SettingsApi } from './settings.api'
 import { Timestamp } from '@angular/fire/firestore';
 export interface SettingsStateModel {
@@ -216,7 +216,7 @@ export class SettingsState {
         console.log(createNotificationResponse.data);
 
 
-        const sendNotificationResponse = await httpsCallable<
+        let sendNotificationResponse = await httpsCallable<
         ISendNotificationRequest,
         ISendNotificationResponse
         >(
@@ -225,7 +225,23 @@ export class SettingsState {
         )({userId: '5', inbox:{content:'test',recipient:'6',sender:'5',time:Timestamp.fromDate(new Date())}});
         console.log(sendNotificationResponse.data);
 
-
+        sendNotificationResponse = await httpsCallable<
+        ISendNotificationRequest,
+        ISendNotificationResponse
+        >(
+            this.settingsApi.functions, 
+            'SendNotification'
+        )({userId: '6', inbox:{content:'test2',recipient:'5',sender:'6',time:Timestamp.fromDate(new Date())}});
+        console.log(sendNotificationResponse.data);
+        
+        const deleteNotificationResponse = await httpsCallable<
+        IDeleteNotificationRequest,
+        IDeleteNotificationResponse
+        >(
+            this.settingsApi.functions, 
+            'DeleteNotification'
+        )({userId: '6'});
+        console.log(deleteNotificationResponse.data);
 
         /*this.srvc.createSettings({userId: '1234'}).then((data) => {
             console.log(data);

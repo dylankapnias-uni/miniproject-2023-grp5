@@ -20,7 +20,7 @@ export class Notification extends AggregateRoot implements INotification {
     );
     return instance;
   }
-//to do: Create Needs to be implemented
+  
   create() {
     this.apply(new NotificationCreatedEvent(this.toJSON()));   
   }

@@ -31,13 +31,18 @@ export class NotificationRepository {
 
       async sendNotification(userID: string, notification : IInbox)
       {
+        if(notification.recipient==null || notification.recipient==undefined){
+          console.log("No Recipient provided");
+          return;
+        }else{
         return await admin
         .firestore()
         .collection('Notifications')
-        .doc(userID)
+        .doc(notification.recipient)
         .update({
             'inbox': FieldValue.arrayUnion(notification)
         })
+      }
       }
       
       async clearNotification(userID : string)

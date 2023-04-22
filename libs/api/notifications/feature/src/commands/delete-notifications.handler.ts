@@ -20,7 +20,7 @@ implements ICommandHandler<DeleteNotificationCommand, IDeleteNotificationRespons
          const request = command.request;
          const userId = request.userId;
          const notifDoc = await this.repository.getNotifications(userId);
-         const data =  notifDoc.data();
+         const data =  {userId:userId, inbox:notifDoc.data()?.inbox};
          if (!data) throw new Error('Profile not found');
          const notification = this.publisher.mergeObjectContext(Notification.fromData(data));
          notification.deleteNotification(userId);
