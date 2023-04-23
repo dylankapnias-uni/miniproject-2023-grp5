@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Injectable } from '@nestjs/common';
 import { IHome, IMatched, IUserMatch, IUserRef } from '@mp/api/home/util';
 import * as admin from 'firebase-admin';
@@ -5,8 +6,12 @@ import { IProfile } from '@mp/api/profiles/util';
 import { IInterests } from '@mp/api/interests/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { UserProfileRepository } from '@mp/api/users/data-access';
+import { DocumentData, DocumentSnapshot, FieldValue, QueryDocumentSnapshot } from 'firebase-admin/firestore';
     //Behold the monstrosity that is the home repository, abandon all hope, ye who enter here
     //Ashen one, thou must link the first flame.
+
+
+    //We tried ¯\_(ツ)_/¯
 @Injectable()
 export class HomeRepository {
     private filter={} as IInterests
@@ -56,6 +61,18 @@ export class HomeRepository {
         if (userProfileDoc == undefined) {
           throw new Error('User profile not found');
         }
+        const userL: IUserMatch[] = [];
+        const out: IHome = {userId:userID,userList:userL};
+        // Add users that swiped on current user to output
+        userList.forEach(e => {
+          userProfileRepository.getUserProfile(e).then((doc) => {
+            if (doc == undefined) {
+              throw new Error('User profile not found');
+            }
+            const userMatch: IUserMatch = {user:doc.data(),match:true};
+            out.userList.push(userMatch);
+          });
+        });
         if(userList.length < 10){
             const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
             const docList : string[] = [];
@@ -63,110 +80,93 @@ export class HomeRepository {
               docList.push(doc.id) // For doc name
             });
             //const validDocs = await admin.firestore().collection('User_Profile').where('country', 'not-in', docList).get();
-            // Get initial collection of users
+            // Get initial collection of users that have not been swiped on
             let validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
+            // If user is heterosexual
+
+            // START OF SEXUALITY
+
+            /*
             if (userProfileDoc.sexuality == 'heterosexual'){
+              // select users from collection that are of opposite gender
               validDocsCollection = (validDocsCollection.where('gender', '!=', userProfileDoc.gender));
-              validDocsCollection = (validDocsCollection.where('sexuality', '!=', "homosexual"));
+              // select users from collection that are heterosexual
+              validDocsCollection = (validDocsCollection.where('sexuality', '==', "homosexual"));
             }
-            else if(userProfileDoc.sexuality == 'homosexual')
-            {
+            // If user is homosexual
+            else if(userProfileDoc.sexuality == 'homosexual'){
+              // select users from collection that are of same gender
               validDocsCollection = (validDocsCollection.where('gender', '==', userProfileDoc.gender));
               validDocsCollection = (validDocsCollection.where('sexuality', '==', "heterosexual"));
             }
-             
-              
-            
+            else if(userProfileDoc.sexuality == 'bisexual') 
+            {
+              let temp0 = (validDocsCollection.where('gender', '!=', userProfileDoc.gender));
+              temp0 = (temp0.where('sexuality', '==', 'homosexual'));
 
-            if(validDocs.empty){
-              console.log("Visited all users");
-              return;
-            }
-            const out = {userId:userID,userList:[]} as IHome ;
-            for(let i=0;i<(10-userList.length);i++){
-                // const docRefs = allDocs.map(doc => doc.ref);
-                const usersLength = validDocs.length;
-                let random = Math.floor(Math.random() * usersLength);
-                let randomDoc = validDocs[random].;
-                // let randomDocRef=docRefs[random];
-                
-                if(this.filter==null||this.filter==undefined){
-                  while(randomDocId==userID){
-                    random = Math.floor(Math.random() * usersLength);
-                    randomDocId = docList[random];
- 
-                   // randomDocRef=docRefs[random];
-                  }
-                }else{
-                  const randomDoc = (await admin.firestore().collection('User_Profile').doc(randomDocId).get());
-                  const tempProfile = randomDoc.data() as IUserProfile;
-                  this.filter = tempProfile.interests as IInterests;
-                  if(tempProfile.interests?.subCategory){
-                    const found = (tempProfile.interests?.subCategory).some(r=> (this.filter.subCategory).includes(r))
-                    while(randomDoc.id==userID && found){
-                       random = Math.floor(Math.random() * usersLength);
-                       randomDoc = allDocs[random];
-    
-                      // randomDocRef=docRefs[random];
-                    }
-                  }else{
-                    while(randomDoc.id==userID){
-                      random = Math.floor(Math.random() * usersLength);
-                      randomDoc = allDocs[random];
-   
-                     // randomDocRef=docRefs[random];
-                   }
-                  }
-                  
+              // const temp0Docs = ((await temp0.get()).docs).data as IUserRef[];
+              const temp0QSnap = await temp0.get();
+
+              const tempIDs: string[] = [];
+
+              temp0QSnap.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+                const userData = doc.data() as IUserProfile;
+                if (userData) {
+                  tempIDs.push(userData.userId);
                 }
-                
-                
-                // const ref = {userRef:randomDocRef} as IUserRef;
-                //Trying to implement using IProfile
-                const profile = randomDoc.data() as IProfile;
-                const userMatch = {user:profile,match:false} as IUserMatch;
-                // const matched = {matched:false} as IMatched;
-                out.userList?.push(userMatch);
-                // list.push({user:ref,);
-            }
+              });
+
+              // list of heterosexual users of same gender
+              let temp1 = (validDocsCollection.where('gender', '==', userProfileDoc.gender));
+              temp1 = (temp1.where('sexuality', '==', 'heterosexual'));
+              
+              const temp1QSnap = await temp1.get();
+              temp1QSnap.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+                const userData = doc.data() as IUserProfile;
+                if (userData) {
+                  tempIDs.push(userData.userId);
+                }
+              });
+              console.log(JSON.stringify(tempIDs));
+
+              validDocsCollection = (validDocsCollection.where('userId', 'not-in', tempIDs));
+            }*/
+
+            // END OF SEXUALITY
+
+            // validDocsCollection: query that gets a list of users documents that are valid and have not swiped on the current user
+            // userList: We have a list of userIds of users who swiped on the current user  
+            //const q1 = query(citiesRef, where("state", ">=", "CA"), where("state", "<=", "IN"));
+
+            validDocsCollection = validDocsCollection.where('userId', '<=', randomIDGeneratorInator(userProfileDoc.userId.length)).limit(10-out.userList.length);
+            const validDocsSnapshot = await validDocsCollection.get();
+            validDocsSnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+              const userMatch: IUserMatch = {user:doc.data() as IUserProfile,match:false};
+              out.userList.push(userMatch);
+            });
             
             return out;
         }
-        else if(swiped.swiped.length >= 10){
-
-          const frontItems = swiped.swiped.slice(0, 10);
-          // const front=[];
-          const out = {userId:userID,userList:[]} as IHome;
-
-          for(let i=0;i<frontItems.length;i++){
-            // const matched = {matched:false} as IMatched;
-              // front.push({user:frontItems[i].user,match:matched});
-              const profile = (await frontItems[i].get()).data() as IProfile;
-              const userMatch = {user:profile,match:true} as IUserMatch;
-              out.userList?.push(userMatch);
-          }
-          const back = swiped.swiped.slice(10, swiped.swiped.length);
-            admin
-            .firestore()
-            .collection('Home')
-            .doc(userID)
-            .set({swiped:back}, { merge: false });
-            return out;
-        }
         
       }
 
-      async acceptUser(userID:string, acceptProfile:IProfile){ 
-        const ref =   admin
-        .firestore()
-        .collection('User_Profile')
-        .doc(userID);
-        
-        admin
-          .firestore()
-          .collection('Home')
-          .doc(acceptProfile.userId)
-          .update({swiped: admin.firestore.FieldValue.arrayUnion(ref)});
-      }
-      
+  async acceptUser(userID:string, acceptProfile:IProfile){
+    admin
+      .firestore()
+      .collection('Home')
+      .doc(acceptProfile.userId)
+      .update({
+      'accepted':FieldValue.arrayUnion(userID)});
+  }
 }
+
+function randomIDGeneratorInator(l:number):string {
+  let randumID = "";
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let x = 0; x < l; ++x){
+      randumID += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return randumID;
+}
+
