@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 import { IProfile } from '@mp/api/profiles/util';
 import { IInterests } from '@mp/api/interests/util';
 import { IUserProfile } from '@mp/api/users/util';
+import { UserProfileRepository } from '@mp/api/users/data-access';
     //Behold the monstrosity that is the home repository, abandon all hope, ye who enter here
     //Ashen one, thou must link the first flame.
 @Injectable()
@@ -50,7 +51,11 @@ export class HomeRepository {
         let userList = [] as string[];
       
         userList = swiped.accepted.slice(0, Math.min(swiped.accepted.length, 10));
-        
+        const userProfileRepository = new UserProfileRepository();
+        const userProfileDoc = (await userProfileRepository.getUserProfile(userID))?.data();
+        if (userProfileDoc == undefined) {
+          throw new Error('User profile not found');
+        }
         if(userList.length < 10){
             const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
             const docList : string[] = [];
@@ -59,11 +64,19 @@ export class HomeRepository {
             });
             //const validDocs = await admin.firestore().collection('User_Profile').where('country', 'not-in', docList).get();
             // Get initial collection of users
-            const validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
-            if (sexuality == 'straight')
-              validDocsCollection = (validDocsCollection.where('gender', '!=', othergender));
+            let validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
+            if (userProfileDoc.sexuality == 'heterosexual'){
+              validDocsCollection = (validDocsCollection.where('gender', '!=', userProfileDoc.gender));
+              validDocsCollection = (validDocsCollection.where('sexuality', '!=', "homosexual"));
+            }
+            else if(userProfileDoc.sexuality == 'homosexual')
+            {
+              validDocsCollection = (validDocsCollection.where('gender', '==', userProfileDoc.gender));
+              validDocsCollection = (validDocsCollection.where('sexuality', '==', "heterosexual"));
+            }
+             
+              
             
-            validDocsCollection = validDocsCollection.where('sexuality', '==', swiped.visited)
 
             if(validDocs.empty){
               console.log("Visited all users");
