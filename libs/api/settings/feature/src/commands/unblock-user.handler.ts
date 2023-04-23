@@ -27,9 +27,9 @@ implements ICommandHandler<UnblockUserCommand, IUnblockUserResponse> {
     if (!blockedUsers.includes(request.blockedUserId)) {
       return { userId: request.userId, blockedAccounts: blockedUsers};
     }
-    // Add blockedUserId to blockedUsers array
-    blockedUsers.push(request.blockedUserId);
-
+    // Remove blockedUserId from blockedUsers array
+    blockedUsers.splice(blockedUsers.indexOf(request.blockedUserId), 1);
+    
     // create settings model that can dispatch events
     const settings = this.publisher.mergeObjectContext(Settings.fromData(settingsData));
 
