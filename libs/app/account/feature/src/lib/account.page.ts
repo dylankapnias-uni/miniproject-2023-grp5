@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { IonPopover } from '@ionic/angular';
+import { UpdateAccount, DeleteAccount } from '@mp/app/settings/util';
+import { Select, Store } from '@ngxs/store';
 
 @Component({
   selector: 'mp-account',
@@ -10,7 +12,7 @@ import { IonPopover } from '@ionic/angular';
 })
 export class AccountPage 
 {
-  constructor(public r : Router, public alertController:AlertController){
+  constructor(public r : Router, public alertController:AlertController, private store: Store){
     //Fetch these from state
     this.dob = '2002-10-07'+'T21:50:00+02:00';
     this.name = 'John';
@@ -39,6 +41,7 @@ export class AccountPage
   }
 
   deleteAccount(){
+    this.store.dispatch(new DeleteAccount({uid:"1"}));
     console.log("Account Deleted");
   }
 

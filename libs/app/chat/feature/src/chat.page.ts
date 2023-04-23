@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { chat } from '../chat.interface';
+import { chat } from './chat.interface';
 import { ChatState } from '@mp/app/chat/data-access';
 import { Store, Select } from '@ngxs/store';
 import { 

@@ -4,12 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { AccountPage } from './lib/account.page';
 import { AccountPageRoutingModule } from './account.routing';
+import { NgxsModule } from '@ngxs/store';
+import { SettingsState } from '@mp/app/settings/data-access';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule.forRoot(),
     AccountPageRoutingModule,
+    NgxsModule.forFeature([SettingsState]),
     FormsModule
   ],
   declarations: [AccountPage],

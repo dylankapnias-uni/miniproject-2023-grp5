@@ -86,8 +86,14 @@
       ],
       "@mp/app/messages/feature": ["libs/app/messages/feature/src/index.ts"],
       "@mp/app/messages/util": ["libs/app/messages/util/src/index.ts"],
+      "@mp/app/notifications/data-access": [
+        "libs/app/notifications/data-access/src/index.ts"
+      ],
       "@mp/app/notifications/feature": [
         "libs/app/notifications/feature/src/index.ts"
+      ],
+      "@mp/app/notifications/util": [
+        "libs/app/notifications/util/src/index.ts"
       ],
       "@mp/app/other-user/feature": [
         "libs/app/other-user/feature/src/index.ts"
@@ -110,7 +116,11 @@
       "@mp/app/reset/data-access": ["libs/app/reset/data-access/src/index.ts"],
       "@mp/app/reset/feature": ["libs/app/reset/feature/src/index.ts"],
       "@mp/app/reset/util": ["libs/app/reset/util/src/index.ts"],
+      "@mp/app/settings/data-access": [
+        "libs/app/settings/data-access/src/index.ts"
+      ],
       "@mp/app/settings/feature": ["libs/app/settings/feature/src/index.ts"],
+      "@mp/app/settings/util": ["libs/app/settings/util/src/index.ts"],
       "@mp/app/shop/feature": ["libs/app/shop/feature/src/index.ts"],
       "@mp/app/tos/feature": ["libs/app/tos/feature/src/index.ts"],
       "@mp/app/updates/data-access": [

@@ -4,13 +4,16 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { EditProfilePage } from './lib/edit-profile.page';
 import { EditProfilePageRoutingModule } from './app-edit-profile-feature.routing';
+import { NgxsModule } from '@ngxs/store';
+import { SettingsState } from '@mp/app/settings/data-access';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     EditProfilePageRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxsModule.forFeature([SettingsState])
   ],
   declarations: [EditProfilePage],
   exports: [EditProfilePage]
