@@ -12,7 +12,7 @@ import {
  } from '@mp/app/chat/util';
 import { IMessages } from './messages.interface';
 import { IChat } from './chat.interface';
-import { Timestamp } from "firebase-admin/firestore";
+import { Timestamp } from '@angular/fire/firestore';
 
 export interface ChatStateModel {
   chatForm: {
@@ -58,12 +58,12 @@ export class ChatState {
     messages: [
       {
         message: 'Hello World!',
-        time: new Date(),
+        time: Timestamp.now(),
         userID: '1'
       },
       {
         message: 'How are you?',
-        time: new Date(),
+        time: Timestamp.now(),
         userID: '2'
       }
     ],
