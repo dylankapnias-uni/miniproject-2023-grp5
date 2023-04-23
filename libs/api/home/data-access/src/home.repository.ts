@@ -73,13 +73,7 @@ export class HomeRepository {
             out.userList.push(userMatch);
           });
         });
-        if(userList.length < 10){
-            const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
-            const docList : string[] = [];
-            allDocs.forEach((doc) => {
-              docList.push(doc.id) // For doc name
-            });
-            //const validDocs = await admin.firestore().collection('User_Profile').where('country', 'not-in', docList).get();
+        if(out.userList.length < 10){
             // Get initial collection of users that have not been swiped on
             let validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
             // If user is heterosexual
@@ -136,7 +130,6 @@ export class HomeRepository {
 
             // validDocsCollection: query that gets a list of users documents that are valid and have not swiped on the current user
             // userList: We have a list of userIds of users who swiped on the current user  
-            //const q1 = query(citiesRef, where("state", ">=", "CA"), where("state", "<=", "IN"));
 
             validDocsCollection = validDocsCollection.where('userId', '<=', randomIDGeneratorInator(userProfileDoc.userId.length)).limit(10-out.userList.length);
             const validDocsSnapshot = await validDocsCollection.get();
@@ -145,9 +138,9 @@ export class HomeRepository {
               out.userList.push(userMatch);
             });
             
-            return out;
         }
-        
+
+        return out;
       }
 
   async acceptUser(userID:string, acceptProfile:IProfile){
