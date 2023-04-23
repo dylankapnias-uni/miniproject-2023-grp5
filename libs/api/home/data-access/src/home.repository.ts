@@ -3,13 +3,24 @@ import { IHome, IMatched, IUserMatch, IUserRef } from '@mp/api/home/util';
 import * as admin from 'firebase-admin';
 import { IProfile } from '@mp/api/profiles/util';
 import { IInterests } from '@mp/api/interests/util';
-
-    //Behold the monstrosity that is the home repository
-
+import { IUserProfile } from '@mp/api/users/util';
+    //Behold the monstrosity that is the home repository, abandon all hope, ye who enter here
+    //Ashen one, thou must link the first flame.
 @Injectable()
 export class HomeRepository {
     private filter={} as IInterests
-    async getSwipedForUser(userID: string) {
+
+    async createHome(userID: string) {
+      return (await admin
+        .firestore()
+        .collection('Home')
+        .doc(userID)
+        .create({accepted:[],visited:[userID]}));
+    }
+
+
+
+    async getHomeValuesForUser(userID: string) {
       return (await admin
         .firestore()
         .collection('Home')
@@ -22,7 +33,7 @@ export class HomeRepository {
         .doc(userID)
         .get()).data() as IUserRef;
     }
-
+    
     async getUserList(userID: string) {
         const swiped =  (await admin
             .firestore()
@@ -35,26 +46,47 @@ export class HomeRepository {
             })
             .doc(userID)
             .get()).data() as IUserRef;
-        if(swiped.swiped==null||swiped.swiped==undefined){
-            const list=[];
+        //list of ids for users to put on homepage
+        let userList = [] as string[];
+      
+        userList = swiped.accepted.slice(0, Math.min(swiped.accepted.length, 10));
+        
+        if(userList.length < 10){
             const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
+            const docList : string[] = [];
+            allDocs.forEach((doc) => {
+              docList.push(doc.id) // For doc name
+            });
+            //const validDocs = await admin.firestore().collection('User_Profile').where('country', 'not-in', docList).get();
+            // Get initial collection of users
+            const validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
+            if (sexuality == 'straight')
+              validDocsCollection = (validDocsCollection.where('gender', '!=', othergender));
+            
+            validDocsCollection = validDocsCollection.where('sexuality', '==', swiped.visited)
+
+            if(validDocs.empty){
+              console.log("Visited all users");
+              return;
+            }
             const out = {userId:userID,userList:[]} as IHome ;
-            for(let i=0;i<10;i++){
+            for(let i=0;i<(10-userList.length);i++){
                 // const docRefs = allDocs.map(doc => doc.ref);
-                const usersLength = allDocs.length;
+                const usersLength = validDocs.length;
                 let random = Math.floor(Math.random() * usersLength);
-                let randomDoc = allDocs[random];
+                let randomDoc = validDocs[random].;
                 // let randomDocRef=docRefs[random];
                 
                 if(this.filter==null||this.filter==undefined){
-                  while(randomDoc.id==userID){
+                  while(randomDocId==userID){
                     random = Math.floor(Math.random() * usersLength);
-                    randomDoc = allDocs[random];
+                    randomDocId = docList[random];
  
                    // randomDocRef=docRefs[random];
-                 }
+                  }
                 }else{
-                  const tempProfile = randomDoc.data() as IProfile;
+                  const randomDoc = (await admin.firestore().collection('User_Profile').doc(randomDocId).get());
+                  const tempProfile = randomDoc.data() as IUserProfile;
                   this.filter = tempProfile.interests as IInterests;
                   if(tempProfile.interests?.subCategory){
                     const found = (tempProfile.interests?.subCategory).some(r=> (this.filter.subCategory).includes(r))
@@ -107,64 +139,6 @@ export class HomeRepository {
             .doc(userID)
             .set({swiped:back}, { merge: false });
             return out;
-        }else{
-          const listItems = swiped.swiped;
-          const list=[];
-          // const out = {} as IHome ;
-          const out = {userId:userID,userList:[]} as IHome ;
-          for(let i=0;i<listItems.length;i++){
-            // const matched = {matched:true} as IMatched;
-            // list.push({user:listItems[i].user,match:matched});
-            // out.userList?.push(listItems[i]);
-            const profile = (await (listItems[i].get())).data() as IProfile;
-            const userMatch = {user:profile,match:true} as IUserMatch;
-            out.userList?.push(userMatch);
-          }
-              for(let i=0;i<10-(swiped.swiped.length);i++){
-              const allDocs=(await admin.firestore().collection('User_Profile').get()).docs;
-              // const docRefs = allDocs.map(doc => doc.ref);
-              const usersLength = allDocs.length;
-              let random = Math.floor(Math.random() * usersLength);
-              let randomDoc = allDocs[random];
-              // let randomDocRef=docRefs[random];
-              if(this.filter==null||this.filter==undefined){
-                while(randomDoc.id==userID){
-                  random = Math.floor(Math.random() * usersLength);
-                  randomDoc = allDocs[random];
-
-                 // randomDocRef=docRefs[random];
-               }
-              }else{
-                const tempProfile = randomDoc.data() as IProfile;
-                this.filter = tempProfile.interests as IInterests;
-                if(tempProfile.interests?.subCategory){
-                  const found = (tempProfile.interests?.subCategory).some(r=> (this.filter.subCategory).includes(r))
-                  while(randomDoc.id==userID && found){
-                     random = Math.floor(Math.random() * usersLength);
-                     randomDoc = allDocs[random];
-  
-                    // randomDocRef=docRefs[random];
-                  }
-                }else{
-                  while(randomDoc.id==userID){
-                    random = Math.floor(Math.random() * usersLength);
-                    randomDoc = allDocs[random];
- 
-                   // randomDocRef=docRefs[random];
-                 }
-                }
-                
-              }
-              // const ref = {userRef:randomDocRef} as IUserRef;
-              // const matched = {matched:true} as IMatched;
-              // list.push({user:ref,match:matched});
-              // out.userList?.push(listItems[i]);
-              const profile = (await (listItems[i].get())).data() as IProfile;
-              const userMatch = {user:profile,match:false} as IUserMatch;
-              out.userList?.push(userMatch);
-          }
-          
-          return out;
         }
         
       }
