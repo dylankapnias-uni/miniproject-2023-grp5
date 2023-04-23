@@ -1,8 +1,7 @@
-import { IInterests } from '@mp/api/users/util';
 import { IPost, IUserProfile, UserCreatedEvent, UserProfileDeletedEvent, UserProfileUpdatedEvent } from '@mp/api/users/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Timestamp } from 'firebase-admin/firestore';
-
+import { IInterests } from '@mp/api/interests/util';
 export class UserProfile extends AggregateRoot implements IUserProfile {
   constructor(
     public userId: string,

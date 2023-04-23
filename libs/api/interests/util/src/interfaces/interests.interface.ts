@@ -1,3 +1,4 @@
 export interface IInterests {
-    subCategory: string[];
+    interest:string;
+    category:string;
 }

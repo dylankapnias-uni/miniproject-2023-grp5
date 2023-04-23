@@ -10,12 +10,9 @@ import { DocumentData, DocumentSnapshot, FieldValue, QueryDocumentSnapshot } fro
     //Behold the monstrosity that is the home repository, abandon all hope, ye who enter here
     //Ashen one, thou must link the first flame.
 
-
     //We tried ¯\_(ツ)_/¯
 @Injectable()
 export class HomeRepository {
-    private filter={} as IInterests
-
     async createHome(userID: string) {
       return (await admin
         .firestore()
@@ -40,7 +37,7 @@ export class HomeRepository {
         .get()).data() as IUserRef;
     }
     
-    async getUserList(userID: string) {
+    async getUserList(userID: string,filters:IInterests[] | null | undefined) {
         const swiped =  (await admin
             .firestore()
             .collection('Home')
@@ -54,12 +51,15 @@ export class HomeRepository {
             .get()).data() as IUserRef;
         //list of ids for users to put on homepage
         let userList = [] as string[];
-      
+        // add users who've swiped on current user to list
         userList = swiped.accepted.slice(0, Math.min(swiped.accepted.length, 10));
         const userProfileRepository = new UserProfileRepository();
         const userProfileDoc = (await userProfileRepository.getUserProfile(userID))?.data();
         if (userProfileDoc == undefined) {
           throw new Error('User profile not found');
+        }
+        if (filters == null || filters == undefined){
+          filters = userProfileDoc?.interests;
         }
         const userL: IUserMatch[] = [];
         const out: IHome = {userId:userID,userList:userL};
@@ -74,23 +74,29 @@ export class HomeRepository {
           });
         });
         if(out.userList.length < 10){
-            // Get initial collection of users that have not been swiped on
-            let validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
-            // If user is heterosexual
-
-            // START OF SEXUALITY
-
-            /*
-            if (userProfileDoc.sexuality == 'heterosexual'){
-              // select users from collection that are of opposite gender
-              validDocsCollection = (validDocsCollection.where('gender', '!=', userProfileDoc.gender));
-              // select users from collection that are heterosexual
-              validDocsCollection = (validDocsCollection.where('sexuality', '==', "homosexual"));
+          
+          let validDocsCollection = (admin.firestore().collection('User_Profile').where('userId', 'not-in', swiped.visited));
+          if(filters){
+            if(filters.length>0){
+              validDocsCollection = (validDocsCollection.where('interests', 'array-contains-any', filters));
             }
+          }
+            // Get initial collection of users that have not been swiped on
+             
+
+            // If user is heterosexual
+            if (userProfileDoc.sexuality == 'heterosexual'){
+              // select users that are of opposite gender from collection of all users
+              validDocsCollection = (validDocsCollection.where('gender', '!=', userProfileDoc.gender));
+              // select users that are not homosexual from collection of oposite gender users
+              validDocsCollection = (validDocsCollection.where('sexuality', '!=', "homosexual"));
+            }
+        
             // If user is homosexual
             else if(userProfileDoc.sexuality == 'homosexual'){
-              // select users from collection that are of same gender
+              // select users that are of same gender from collection of all users
               validDocsCollection = (validDocsCollection.where('gender', '==', userProfileDoc.gender));
+              // select users that are not heterosexual from collection of same gender user
               validDocsCollection = (validDocsCollection.where('sexuality', '==', "heterosexual"));
             }
             else if(userProfileDoc.sexuality == 'bisexual') 
@@ -98,7 +104,6 @@ export class HomeRepository {
               let temp0 = (validDocsCollection.where('gender', '!=', userProfileDoc.gender));
               temp0 = (temp0.where('sexuality', '==', 'homosexual'));
 
-              // const temp0Docs = ((await temp0.get()).docs).data as IUserRef[];
               const temp0QSnap = await temp0.get();
 
               const tempIDs: string[] = [];
@@ -124,9 +129,7 @@ export class HomeRepository {
               console.log(JSON.stringify(tempIDs));
 
               validDocsCollection = (validDocsCollection.where('userId', 'not-in', tempIDs));
-            }*/
-
-            // END OF SEXUALITY
+            }
 
             // validDocsCollection: query that gets a list of users documents that are valid and have not swiped on the current user
             // userList: We have a list of userIds of users who swiped on the current user  

@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase-admin/firestore';
 import { IPost } from './post.interface';
-import { IInterests } from '../enums';
+import { IInterests } from '@mp/api/interests/util';
 
 export interface IUserProfile {
   userId: string; // renamed from id
