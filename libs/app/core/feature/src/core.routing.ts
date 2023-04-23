@@ -134,11 +134,12 @@ const routes: Routes = [
   {
     path: 'edit-profile',
     pathMatch: 'full',
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectLoggedIn },
+    // canActivate: [AuthGuard],
+    // data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/edit-profile/feature').then((m) => m.EditProfilePageModule),
-  },
+      // import('@mp/app/profile/feature').then((m) => m.ProfileModule),
+    },
 
   {
     path: 'shop',

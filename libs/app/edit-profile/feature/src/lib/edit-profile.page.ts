@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+// import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Storage, getStorage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
+//import { FieldPath } from 'firebase-admin/firestore';
 
 @Component({
   selector: 'mp-edit-profile',
@@ -14,7 +17,11 @@ export class EditProfilePage
   changed = false;
   uploadImg = false;
   imagePreview!: SafeResourceUrl;
-  constructor(public r : Router, private sanitizer: DomSanitizer){
+  fileToUpload!: File|null;
+
+  constructor(public r : Router, private sanitizer: DomSanitizer, 
+    private storage: Storage
+    ){
     this.StateBio = "This is my bio pulled from state";
     this.Bio = this.StateBio;
   }
@@ -29,9 +36,18 @@ export class EditProfilePage
     this.r.navigate(['/interests'])
   }
 
-  UpdateBio(){
-    console.log(this.Bio, " Push to state from here");
+  async UpdateProfile(){
+    if(this.fileToUpload){
+      try{
+        const url = await this.onUpload(this.fileToUpload);
+        console.log(`This is the url: ${url}`);
+      }catch (error){
+        console.error("Error uploading image", error);
+      }
+    }
+    
   }
+
 
   validateBio(){
     if(this.Bio != this.StateBio)
@@ -52,10 +68,32 @@ export class EditProfilePage
           this.imagePreview = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result.toString());
         }
       };
+      this.fileToUpload = event.target.files[0];
     }
   }
 
-  onUpload() {
+  async onUpload(file: File) {
     // Add your code to post the image here
+    const filePath = `profilePhotos/${new Date().getTime()}_${file.name}`;
+    const storage = getStorage();
+    const fileRef = ref(storage, filePath);
+    // const task = this.storage.uploadByt(filePath, file);
+    const task = uploadBytesResumable(fileRef, file);
+
+
+    task.on('state_changed' ,(snapshot) => {
+      console.log(snapshot);
+    }, (error) => {
+      console.log(error);
+    }, () => {
+      getDownloadURL(task.snapshot.ref).then(async downloadURL => {
+        console.log(downloadURL);
+        return downloadURL;
+      })
+    }
+    )
+
+    // return "failure";
+
   }
 }
