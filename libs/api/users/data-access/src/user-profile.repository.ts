@@ -1,6 +1,7 @@
 import { IPost, IUserProfile } from '@mp/api/users/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { Storage, getStorage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 
 @Injectable()
 export class UserProfileRepository {
@@ -47,7 +48,24 @@ export class UserProfileRepository {
       .delete();
   }
 
-  async uploadImage(userId: string, post: IPost) {
-    return "hello, world"; // TODO
+  async uploadImage(file: File, userId: string) 
+  {
+    const filePath = `${userId}/${file.name}`;
+    const storage = getStorage();
+    const fileRef = ref(storage, filePath);
+    const task = uploadBytesResumable(fileRef, file);
+
+
+    task.on('state_changed' ,(snapshot) => {
+      console.log(snapshot);
+    }, (error) => {
+      console.log(error);
+    }, () => {
+      getDownloadURL(task.snapshot.ref).then(async downloadURL => {
+        console.log(downloadURL);
+        return downloadURL;
+      })
+    }
+    )
   }
 }
