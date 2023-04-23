@@ -13,20 +13,31 @@ implements ICommandHandler<BlockUserCommand, IBlockUserResponse> {
   ){}
 
   async execute(command: BlockUserCommand) {
+    // Get settings data
     const request = command.request;
     const settingsDoc = await this.repository.findOne(request.userId);
     const settingsData = settingsDoc.data();
-
+    // check if settings data exists
     if (settingsData === undefined) {
       throw new Error(`Settings data for user ${request.userId} does not exist`);
     }
+    // get array of blocked users
+    const blockedUsers = await this.repository.getBlockedAccounts(request.userId);
+    // if user already blocked
+    if (blockedUsers.includes(request.blockedUserId)) {
+      return { userId: request.userId, blockedAccounts: blockedUsers};
+    }
+    // Add blockedUserId to blockedUsers array
+    blockedUsers.push(request.blockedUserId);
 
+    // create settings model that can dispatch events
     const settings = this.publisher.mergeObjectContext(Settings.fromData(settingsData));
 
     settings.blockUser(request.blockedUserId);
     settings.commit();
 
+    
     // return response;
-    return { userId: settings.userId, blockedAccounts: settings.privacy.blockedAccounts };
+    return { userId: settings.userId, blockedAccounts: blockedUsers };
   }
 }

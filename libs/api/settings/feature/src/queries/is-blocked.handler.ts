@@ -17,18 +17,13 @@ implements IQueryHandler<IsBlockedQuery, IIsBlockedResponse> {
 
     const request = query.request;
 
-    const settingsDoc = await this.repository.findOne(request.userId);
-    const settingsData = settingsDoc.data();
+    const blockedUsers = await this.repository.getBlockedAccounts(request.userId);
 
 
     const response: IIsBlockedResponse = {
       userId: request.userId,
       blockedId: request.blockedId,
-      isBlocked:
-        settingsData
-        ?.privacy
-        .blockedAccounts
-        .includes(request.blockedId)
+      isBlocked: blockedUsers.includes(request.blockedId)
     }
 
     return response;
