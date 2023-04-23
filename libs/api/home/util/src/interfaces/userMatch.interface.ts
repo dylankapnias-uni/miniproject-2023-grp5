@@ -1,6 +1,6 @@
-import { IProfile } from "@mp/api/profiles/util";
+import { IUserProfile } from "@mp/api/users/util";
 
 export interface IUserMatch{
-    user:IProfile | null | undefined,
+    user:IUserProfile | null | undefined,
     match:boolean,
 }

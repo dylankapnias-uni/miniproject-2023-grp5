@@ -9,6 +9,20 @@ import { IInterests } from '@mp/api/interests/util';
 @Injectable()
 export class HomeRepository {
     private filter={} as IInterests
+    async getSwipedForUser(userID: string) {
+      return (await admin
+        .firestore()
+        .collection('Home')
+        .withConverter<IUserRef>({
+            fromFirestore: (snapshot) => {
+                return snapshot.data() as IUserRef;
+            },
+            toFirestore: (it: IUserRef) => it,
+        })
+        .doc(userID)
+        .get()).data() as IUserRef;
+    }
+
     async getUserList(userID: string) {
         const swiped =  (await admin
             .firestore()
