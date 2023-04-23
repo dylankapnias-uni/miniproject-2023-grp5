@@ -23,7 +23,7 @@ import { IAddTimeRequest,
     ProfilePrivacy 
 } from '@mp/api/settings/util';
 
-import { IClearNotificationsRequest, IClearNotificationsResponse, ICreateNotificationRequest, ICreateNotificationResponse, IDeleteNotificationRequest, IDeleteNotificationResponse, ISendNotificationRequest, ISendNotificationResponse } from '@mp/api/notifications/util'
+import { IClearNotificationsRequest, IClearNotificationsResponse, ICreateNotificationRequest, ICreateNotificationResponse, IDeleteNotificationRequest, IDeleteNotificationResponse, IFetchNotificationsRequest, IFetchNotificationsResponse, ISendNotificationRequest, ISendNotificationResponse } from '@mp/api/notifications/util'
 import { SettingsApi } from './settings.api'
 import { Timestamp } from '@angular/fire/firestore';
 export interface SettingsStateModel {
@@ -250,6 +250,14 @@ export class SettingsState {
         //     'DeleteNotification'
         // )({userId: '6',inboxId:0});
         // console.log(deleteNotificationResponse.data);
+        const fetchNotificationsResponse = await httpsCallable<
+        IFetchNotificationsRequest,
+        IFetchNotificationsResponse
+        >(
+            this.settingsApi.functions, 
+            'FetchNotifications'
+        )({userId: '6'});
+        console.log(fetchNotificationsResponse.data);
 
         const clearNotificationResponse = await httpsCallable<
         IClearNotificationsRequest,
@@ -259,6 +267,7 @@ export class SettingsState {
             'ClearNotifications'
         )({userId: '6'});
         console.log(clearNotificationResponse.data);
+
 
         /*this.srvc.createSettings({userId: '1234'}).then((data) => {
             console.log(data);

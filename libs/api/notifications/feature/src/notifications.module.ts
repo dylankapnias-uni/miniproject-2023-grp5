@@ -5,16 +5,18 @@ import { ClearNotificationsHandler, CreateNotificationHandler, DeleteNotificatio
 import { NotificationService } from './notifications.service';
 import { NotificationModule as NotificationDataAccessModule } from '@mp/api/notifications/data-access';
 import { NotificationCreatedHandler, NotificationDeleteHandler, NotificationSentHandler, NotificationsClearedHandler } from './events';
+import { FetchNotificationsHandler } from './queries/fetch-notifications.handler';
 
 export const CommandHandlers = [DeleteNotificationHandler,SendNotificationHandler, CreateNotificationHandler, ClearNotificationsHandler];
 export const EventHandlers = [NotificationDeleteHandler,NotificationSentHandler, NotificationCreatedHandler, NotificationsClearedHandler];
-
+export const QueryHandlers = [FetchNotificationsHandler];
 @Module({
   imports: [CqrsModule, NotificationDataAccessModule],
   providers: [
     NotificationService,
     ...CommandHandlers,
     ...EventHandlers,
+    ...QueryHandlers,
   ],
   exports: [NotificationService],
 })
