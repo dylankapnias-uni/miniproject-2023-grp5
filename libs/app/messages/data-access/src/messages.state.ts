@@ -3,13 +3,7 @@ import { Register as AuthRegister } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
-import { 
-    SendMessage,
-    AddTime,
-    GetTime,
-    RemoveTime,
-    GetMessages
- } from '@mp/app/chat/util';
+import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { IMessages } from '@mp/app/chat/data-access';
 import { IChat } from '@mp/app/chat/data-access';
 import { Timestamp } from '@angular/fire/firestore';
@@ -18,11 +12,7 @@ export interface MessagesStateModel {
   chatForm: {
     chatMessages:{
       model:{
-        chatID: string | null;
-        messages: IMessages[] | null;
-        timeAdderID: string | null;
-        timeRemaining: number | null;
-        totalTimeUsed: number | null;
+        chats: IChat[] | null;
       }
     }
     dirty: false;
@@ -37,11 +27,7 @@ export interface MessagesStateModel {
     chatForm: {
       chatMessages:{
         model:{
-          chatID: null,
-          messages: null,
-          timeAdderID: null,
-          timeRemaining: null,
-          totalTimeUsed: null,
+          chats: null
         }
       },
       dirty: false,
@@ -52,6 +38,99 @@ export interface MessagesStateModel {
 })
 @Injectable()
 export class MessagesState {
+  private static chats: IChat[] = [
+    {
+        ChatID: '1',
+        messages: [],
+        timeAdderID: null,
+        timeRemaining: null,
+        totalTimeUsed: null,
+    },
+    {
+        ChatID: '2',
+        messages: [],
+        timeAdderID: null,
+        timeRemaining: null,
+        totalTimeUsed: null,
+    },
+    {
+        ChatID: '3',
+        messages: [],
+        timeAdderID: '1',
+        timeRemaining: 1000,
+        totalTimeUsed: 500,
+    },
+    {
+      ChatID: '3',
+      messages: [],
+      timeAdderID: '1',
+      timeRemaining: 1000,
+      totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+  {
+    ChatID: '3',
+    messages: [],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 500,
+  },
+];
 
   private static chat: IChat = {
     ChatID: '1',
@@ -75,66 +154,38 @@ export class MessagesState {
   @Action(GetMessages)
   async GetMessages(ctx: StateContext<MessagesStateModel>, {payload}: GetMessages) {
     //Works and catches Chat id
-    ctx.patchState({
-
-    });
-  }
-
-  @Action(SendMessage)
-  async SendMessage(ctx: StateContext<MessagesStateModel>, {payload}: SendMessage) {
-    //Works and catches Chat id and outGoingMessage
-    ctx.patchState({
-      
-    });
-  }
-
-  @Action(AddTime)
-  async AddTime(ctx: StateContext<MessagesStateModel>, {payload}: AddTime) {
-    //Works and catches Chat id and time
-    ctx.patchState({
-      
-    });
-  }
-
-  @Action(GetTime)
-  async GetTime(ctx: StateContext<MessagesStateModel>, {payload}: GetTime) {
-    ctx.patchState({
-      
-    });
-  }
-
-  @Action(RemoveTime)
-  async RemoveTime(ctx: StateContext<MessagesStateModel>, {payload}: RemoveTime) {
     const state = ctx.getState();
-    const timeRemaining = state.chatForm.chatMessages.model.timeRemaining || 0;
-    const totalTimeUsed = state.chatForm.chatMessages.model.totalTimeUsed || 0;
-    if(timeRemaining <= 0){
-      ctx.patchState({
-        chatForm: {
-          ...state.chatForm,
-          status: 'TimeUp',
-        },
-      });
-    }
-    else{
-      ctx.patchState({
-        chatForm: {
-          ...state.chatForm,
-          chatMessages: {
-            ...state.chatForm.chatMessages,
-            model: {
-              ...state.chatForm.chatMessages.model,
-              timeRemaining: timeRemaining - 1,
-              totalTimeUsed: totalTimeUsed + 1,
-            },
+    ctx.patchState({
+      chatForm: {
+        ...state.chatForm,
+        chatMessages: {
+          model: {
+            chats: MessagesState.chats,
           },
         },
-      });
-    }
+      },
+    });
   }
 
+  @Action(SearchMessages)
+  async SearchMessages(ctx: StateContext<MessagesStateModel>, {payload}: SearchMessages) {
+    //Works and catches Chat id
+    const state = ctx.getState();
+    ctx.patchState({
+      chatForm: {
+        ...state.chatForm,
+        chatMessages: {
+          model: {
+            chats: MessagesState.chats,
+          },
+        },
+      },
+    });
+  }
+
+
   @Selector()
-  static messages(state: MessagesStateModel) {
-    return state.chatForm.chatMessages.model.messages;
+  static messages(state: MessagesStateModel): IChat[] | null {
+    return state.chatForm.chatMessages.model.chats;
   }
 }

@@ -19,6 +19,7 @@ export class AccountPage
     this.email = 'Email@gmail.com';
     this.phone = '1234567890';
     this.gender = 'Other';
+    this.sexuality = 'heterosexual';
   }
   @ViewChild('popover', { static: false }) popover!: IonPopover;
 
@@ -34,6 +35,7 @@ export class AccountPage
   phone!: string;
   gender!: string;
   dob!: string;
+  sexuality!: string;
 
   LoadSettingsPage()
   {
@@ -66,6 +68,7 @@ export class AccountPage
   }
   Update(){
     const dateString = this.dob.split('T')[0];
+    console.log(this.sexuality);
     console.log(dateString);
   }
 

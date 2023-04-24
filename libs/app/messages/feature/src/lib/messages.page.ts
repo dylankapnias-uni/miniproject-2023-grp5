@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { Store, Selector, Select } from '@ngxs/store';
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { MessagesState } from '@mp/app/messages/data-access';
+import { ProfileState } from '@mp/app/profile/data-access';
 import { Observable } from 'rxjs';
+import { IChat } from '@mp/app/chat/data-access';
+import { IProfile } from '@mp/api/profiles/util';
 
 @Component({
   selector: 'mp-messages',
@@ -12,17 +15,18 @@ import { Observable } from 'rxjs';
   styleUrls: ['./messages.page.scss'],
 })
 export class MessagesPage {
-  chats!: any;
+  chats!: IChat[];
   noChats!: boolean;
-  //@Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  @Select(MessagesState.messages) messages$!: Observable<string[]>;
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(MessagesState.messages) messages$!: Observable<IChat[]>;
 
 
   constructor(private router: Router, private store: Store) {
-    this.store.dispatch(new GetMessages())
+    this.store.dispatch(new GetMessages({uid: '1'}));
     this.messages$.subscribe((messages) => {
       if(messages != null){
         this.chats = messages;
+        console.log(this.chats);
         this.noChats = this.chats.length === 0;
       }
     });
@@ -42,7 +46,7 @@ export class MessagesPage {
   }
 
   Reset(){
-    this.store.dispatch(new GetMessages());
+    this.store.dispatch(new GetMessages({uid: '1'}));
   }
   
 }

@@ -32,7 +32,7 @@ export interface NotificationsStateModel {
 @Injectable()
 export class NotificationsState {
    
-  constructor() {}
+  //constructor() {}
   @Action(SetNotifications)
   async SetNotifications(ctx: StateContext<NotificationsStateModel>) {
     //Query api here
