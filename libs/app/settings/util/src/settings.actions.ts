@@ -27,3 +27,8 @@ export class GetBlocked{
     static readonly type = '[GetBlocked] Get Blocked';
     constructor(public payload: { uid: string }) {}
 }
+
+export class CreateSetting{
+    static readonly type = '[CreateSetting] Create settings';
+    constructor(public payload: {id: string}){};
+}

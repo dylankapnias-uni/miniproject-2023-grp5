@@ -3,13 +3,43 @@ import { Register as AuthRegister } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
+import { 
+  IAddTimeRequest, 
+  IAddTimeResponse, 
+  IBlockUserRequest, 
+  IBlockUserResponse, 
+  ICreateSettingsRequest, 
+  ICreateSettingsResponse, 
+  IGetProfileVisibilityRequest, 
+  IGetProfileVisibilityResponse, 
+  IIsBlockedRequest, 
+  IIsBlockedResponse, 
+  ISubtractTimeRequest, 
+  ISubtractTimeResponse, 
+  IUnblockUserRequest, 
+  IUnblockUserResponse, 
+  IUpdatePrivacyRequest, 
+  IUpdatePrivacyResponse,
+} from '@mp/api/settings/util';
+import { SettingsApi } from './settings.api'
+import { 
+  ICreateUserRequest, 
+  ICreateUserResponse, 
+  IDeleteUserProfileRequest, 
+  IDeleteUserProfileResponse, 
+  IGetUserProfileRequest, 
+  IGetUserProfileResponse, 
+  IUpdateUserProfileRequest,
+  IUpdateUserProfileResponse 
+} from '@mp/api/users/util';
 import {
     UpdateAccount,
     DeleteAccount,
     EditProfile,
     BuyTime,
     Unblock,
-    GetBlocked
+    GetBlocked,
+    CreateSetting
 }
 from '@mp/app/settings/util';
 import { IChat } from '@mp/app/chat/data-access';
@@ -18,6 +48,7 @@ import { Timestamp } from '@angular/fire/firestore';
 import { ITime } from './interfaceTemp/time.interface';
 import { IPrivacyDetails } from './interfaceTemp/privacy-settings.interface';
 import { ProfilePrivacy } from './interfaceTemp/profile-privacy.enum';
+import { httpsCallable } from '@angular/fire/functions';
 
 
 export interface SettingsStateModel {
@@ -115,6 +146,8 @@ export class SettingsState {
     totalTimeUsed: 0
   };*/
 
+  constructor(public settingsApi: SettingsApi){};
+
   @Action(UpdateAccount)
   async UpdateAccount(ctx: StateContext<SettingsStateModel>, {payload}: UpdateAccount) {
     //Works and catches Chat id
@@ -167,6 +200,17 @@ export class SettingsState {
         }
     });
   }
+  @Action(CreateSetting)
+    async createSettings(ctx: StateContext<SettingsStateModel>, {payload}: CreateSetting) {
+        /*this.srvc.createSettings({userId: '1234'}).then((data) => {
+            console.log(data);
+        }, (error) => {
+            console.log(error);
+        });*/
+        ctx.patchState({
+            //messages: MessagesState.chats
+        })
+    }
 
   @Selector()
   static settings(state: SettingsStateModel) {

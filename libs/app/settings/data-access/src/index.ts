@@ -5,3 +5,4 @@ export * from './interfaceTemp/privacy-settings.interface';
 export * from './interfaceTemp/time.interface';
 export * from './interfaceTemp/blocked-accounts.interface';
 export * from './interfaceTemp/profile-privacy.enum';
+export * from './settings.api';

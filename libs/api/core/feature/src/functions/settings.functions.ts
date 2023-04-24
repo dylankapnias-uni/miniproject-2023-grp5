@@ -71,9 +71,6 @@ export const subtractTime = functions.https.onCall(
   }
 );
 
-// TODO add way to check if user is blocked, 
-// a way to find a user's profile visibility
-
 export const isBlocked = functions.https.onCall(
   async (
     request: IIsBlockedRequest
@@ -104,3 +101,5 @@ export const createSettings = functions.https.onCall(
     return service.createSettings(request);
   }
 )
+
+//TODO getBlockedAccounts
