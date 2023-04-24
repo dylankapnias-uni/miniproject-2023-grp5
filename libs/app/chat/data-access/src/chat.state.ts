@@ -138,6 +138,7 @@ export class ChatState {
     return state.chatForm.chatMessages.model.messages;
   }
 
+
   @Selector()
   static timeLeft(state: ChatStateModel) {
     return state.chatForm.chatMessages.model.timeRemaining;
