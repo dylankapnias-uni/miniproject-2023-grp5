@@ -1,34 +1,85 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Register } from '@mp/app/register/util';
-import { FormGroup } from '@angular/forms';
 import {
     ActionsExecuting,
     actionsExecuting
 } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { AgeGroup } from '@mp/api/profiles/util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ms-register-page',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+export class RegisterPage 
+{
 
-export class RegisterPage {
-  
-  myForm: FormGroup;
-  
-  constructor(private fb: FormBuilder) {
-    this.myForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
-      age: [''],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      dateOfBirth: ['']
-    });
+ 
+
+  editProfile()
+  {
+    this.r.navigate(['/edit-profile']);
   }
-  
+
+  @Select(actionsExecuting([Register]))
+  busy$!: Observable<ActionsExecuting>;
+  registerForm = this.fb.group({
+    email: [
+      '',
+      [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
+    ],
+    password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+    phoneNumber:['', [Validators.minLength(10), Validators.maxLength(10)]],
+    age:['', [Validators.minLength(2), Validators.maxLength(2)]],
+    dateOfBirth:['', [Validators.minLength(10), Validators.maxLength(10)]],
+  });
+  showPassword = false;
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get emailError(): string {
+    if (this.email?.errors?.['email']) return 'Email is invalid';
+    if (this.email?.errors?.['required']) return 'Email is required';
+    if (this.email?.errors?.['minlength'])
+      return 'Email should be longer than 6 characters';
+    if (this.email?.errors?.['maxlength'])
+      return 'Email should be shorter than 64 characters';
+
+    return 'Email is invalid';
+  }
+
+  get passwordError(): string {
+    if (this.password?.errors?.['required']) return 'Password is required';
+    if (this.password?.errors?.['minlength'])
+      return 'Password should be longer than 6 characters';
+    if (this.password?.errors?.['maxlength'])
+      return 'Password should be shorter than 64 characters';
+
+    return 'Password is invalid';
+  }
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly store: Store,
+    public r : Router
+  ) {}
+
+  register() {
+    if (this.registerForm.valid) {
+      this.store.dispatch(new Register());
+    }
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
 }
