@@ -1,24 +1,29 @@
-export class CreateSetting{
-    static readonly type = '[CreateSetting] Create Setting';
-    constructor(public payload: {id:string}){}
-}
-//TODO Fix after testing
-export class CreateUserProfile{
-    static readonly type = '[CreateUserProfile] Create User Profile';
-    constructor(public payload: {id:string}){}
+export class UpdateAccount{
+    static readonly type = '[UpdateAccount] Update Account';
+    constructor(public payload: { account: any }) {}
 }
 
-export class GetUserProfile{
-    static readonly type = '[GetUserProfile] GetUser Profile';
-    constructor(public payload: {id:string}){}
+export class DeleteAccount{
+    static readonly type = '[DeleteAccount] Delete Account';
+    constructor(public payload: { uid: string }) {}
 }
 
-export class UpdateUserProfile{
-    static readonly type = '[UpdateUserProfile] Update User Profile';
-    constructor(public payload: {id:string}){}
+export class EditProfile{
+    static readonly type = '[EditProfile] Edit Profile';
+    constructor(public payload: { profile: any }) {}
 }
 
-export class DeleteUserProfile{
-    static readonly type = '[DeleteUserProfile] Delete User Profile';
-    constructor(public payload: {id:string}){}
+export class BuyTime{
+    static readonly type = '[BuyTime] Buy Time';
+    constructor(public payload: { time: number,  uid: string }) {}
+}
+
+export class Unblock{
+    static readonly type = '[Unblock] Unblock';
+    constructor(public payload: { uid: string }) {}
+}
+
+export class GetBlocked{
+    static readonly type = '[GetBlocked] Get Blocked';
+    constructor(public payload: { uid: string }) {}
 }

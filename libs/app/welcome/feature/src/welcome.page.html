@@ -1,50 +1,31 @@
-
-
-
- <body>
-
-  
-  
-    <div  style=" text-align: center;">
-  
-      <h1>
-           Welcome
-           
-      </h1>
-    </div>
-    
-  
-    <div style=" text-align: center; margin-top: 35px;">
-        
-      <div class="image-container">
-        <ion-img src="https://firebasestorage.googleapis.com/v0/b/miniproject-2023-grp5-dev.appspot.com/o/Timeless_Icon.png?alt=media&token=fe347608-23e2-4c47-be3e-e5b0506dd350 "
-              ></ion-img>
-           </div>
-      
-
-      <ion-row>
-        <ion-col>
-      <ion-nav-link [routerLink]="['register']">
-        <ion-button expand="block" class="custom-button"> Sign Up</ion-button>
-      </ion-nav-link>
-    </ion-col>
-  </ion-row>
-       
-      <ion-row>
-        <ion-col>
-          <ion-nav-link [routerLink]="['login']">
-            <ion-button expand="block"  class="custom-button">Log In</ion-button>
-          </ion-nav-link>
-        </ion-col>
-      </ion-row>
+<ion-content class="my-page-container" scrollY="false">  
+  <div  style=" text-align:center;margin-top: 70px;">
+    <h1>
+         Welcome
+    </h1>
   </div>
-  
-
-  
-  
-
-
-
-
-
-</body>
+  <div style=" text-align: center; margin-top: 35px;">
+    <ion-row>
+      <ion-col>
+    <ion-nav-link [routerLink]="['register']">
+      <ion-button expand="block" class="custom-button">Create Account</ion-button>
+    </ion-nav-link>
+  </ion-col>
+</ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-nav-link [routerLink]="['login']">
+          <ion-button expand="block"  class="custom-button">Log In</ion-button>
+        </ion-nav-link>
+      </ion-col>
+    </ion-row>
+</div>
+  <div class="image-container">
+    <ion-img src="https://firebasestorage.googleapis.com/v0/b/miniproject-2023-grp5-dev.appspot.com/o/Timeless_Icon.png?alt=media&token=fe347608-23e2-4c47-be3e-e5b0506dd350 "
+          ></ion-img>
+       </div>
+       <!--ion-footer collapse="condense" class="ion-padding ion-text-center" style="background-color: #FDE0E0">
+        <ms-version-component></ms-version-component><br />
+        <ms-copyright-component></ms-copyright-component>
+      </ion-footer-->
+</ion-content>

@@ -1,34 +1,90 @@
-body
+ion-content
 {
-    background-color: #FDE0E0;
+    --ion-background-color: #FDE0E0;
 }
 
 .back_button{
     height:37px;
-    width:42px;
+    width: 42px;
     border-radius: 12px;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     display:flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 1.5%;
-    left: 1.5%;
+}
+.down{
+    position: relative;
+    top: 15%;
+}
+.btn{
+    --background: #F3C1C0;
+    width: 98.7%;
+    height: 69px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    color: black;
+    font-size: 24px;
+   
 }
 .back-icon{
     font-size:30px;
 }
 
-.page_name
+ion-label
 {
-    position: absolute;
-    top: 2.3%;
-    left: 20%;
+    top: 50%;
     font-size: 24px;
     line-height: 28px;
     font-weight: 700;
-    align-items: center;
-
     color: #000000;
+    margin-left: 7%;
+    margin-right: 7%;
+
 }
+
+.blocked-bubble {
+    display: flex;
+    align-items: center;
+    height: 69px;
+    background-color: #F3C1C0;
+    border-radius: 12px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 14px 0;
+    margin-left: 13px;
+    margin-right: 13px;
+    overflow: hidden;
+  }
+  
+  .blocked-bubble img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .blocked-bubble .content {
+    flex: 1;
+  }
+
+  .blocked-bubble .name {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
+  .blocked-bubble .last-message {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+
+  .small-button {
+    padding: 4px 8px;
+    font-size: 14px;
+  }

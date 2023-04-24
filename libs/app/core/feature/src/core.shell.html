@@ -1,11 +1,27 @@
-<!-- import { CoreModule as NavComponent } from '@mp/app/core/ui';
- NavComponent  -->
-
 <ion-app>
-  <mp-settings></mp-settings>
   <ion-router-outlet></ion-router-outlet>
+  <ion-tabs *ngIf="this.hasRoute('/home/dashboard') || this.hasRoute('/messages') || this.hasRoute('/profile') || this.hasRoute('/notifications') || this.hasRoute('/post') || this.hasRouteVariable('/other-user/:id')">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button [ngClass]="{'active':hasRoute('/home/dashboard')}" tab="home">
+        <ion-icon name="heart"></ion-icon>
+        Home
+      </ion-tab-button>
+      <ion-tab-button [ngClass]="{'active':hasRoute('/messages')}" tab="messages">
+        <ion-icon name="paper-plane"></ion-icon>
+        Messages
+      </ion-tab-button>
+      <ion-tab-button [ngClass]="{'active':hasRoute('/post')}" (click)="PostModal()">
+        <ion-icon name="add-circle"></ion-icon>
+        Post
+      </ion-tab-button>
+      <ion-tab-button [ngClass]="{'active':hasRoute('/notifications')}" tab="notifications">
+        <ion-icon name="notifications"></ion-icon>
+        Notification
+      </ion-tab-button>
+      <ion-tab-button [ngClass]="{'active':hasRoute('/profile')}" tab="profile">
+        <ion-icon name="person"></ion-icon>
+        Profile
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-app>
-<!-- <ion-toolbar>
-  <mp-navbar></mp-navbar>
-</ion-toolbar> -->
-
