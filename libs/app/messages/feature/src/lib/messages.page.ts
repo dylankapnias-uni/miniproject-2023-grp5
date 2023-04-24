@@ -8,6 +8,7 @@ import { ProfileState } from '@mp/app/profile/data-access';
 import { Observable } from 'rxjs';
 import { IChat } from '@mp/app/chat/data-access';
 import { IProfile } from '@mp/api/profiles/util';
+import { Block } from '@mp/app/settings/util';
 
 @Component({
   selector: 'mp-messages',
@@ -34,7 +35,11 @@ export class MessagesPage {
 
   openChat(chatId: string){
     //Navigate to chat page once we've figured out a way to pass the chatId to the chat page
-    console.log(chatId);
+    //console.log(chatId);
+    this.router.navigate([`/chat/${chatId}`]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 100)
   }
 
   handleChange(event:any) {
@@ -44,6 +49,10 @@ export class MessagesPage {
 
   Reset(){
     this.store.dispatch(new GetMessages({uid: '1'}));
+  }
+
+  block(id:string){
+    this.store.dispatch(new Block({uid:'1', blockId: id}));
   }
   
 }

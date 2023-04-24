@@ -36,7 +36,7 @@ export class BlockedPage {
   ];
 
   unblock(id:string){
-    this.store.dispatch(new Unblock({uid:id}));
+    this.store.dispatch(new Unblock({uid:id, unblockId: '1'}));
   }
 
   LoadSettingsPage()

@@ -5,7 +5,6 @@ import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { 
   IAddTimeRequest, 
-  IAddTimeResponse, 
   IBlockUserRequest, 
   IBlockUserResponse, 
   ICreateSettingsRequest, 
@@ -22,16 +21,6 @@ import {
   IUpdatePrivacyResponse,
 } from '@mp/api/settings/util';
 import { SettingsApi } from './settings.api'
-import { 
-  ICreateUserRequest, 
-  ICreateUserResponse, 
-  IDeleteUserProfileRequest, 
-  IDeleteUserProfileResponse, 
-  IGetUserProfileRequest, 
-  IGetUserProfileResponse, 
-  IUpdateUserProfileRequest,
-  IUpdateUserProfileResponse 
-} from '@mp/api/users/util';
 import {
     UpdateAccount,
     DeleteAccount,
@@ -174,6 +163,12 @@ export class SettingsState {
 
   @Action(BuyTime)
   async BuyTime(ctx: StateContext<SettingsStateModel>, {payload}: BuyTime) {
+    const request : IAddTimeRequest = {
+      userId: payload.uid,
+      purchaseAmount: payload.time
+    };
+    const response = await this.settingsApi.addTime(request);
+    const rsps = response.data;
     ctx.patchState({
       
     });
@@ -182,6 +177,12 @@ export class SettingsState {
   @Action(Unblock)
   async Unblock(ctx: StateContext<SettingsStateModel>, {payload}: Unblock) {
     //Make call to api and update state
+    const request : IUnblockUserRequest = {
+      userId: payload.uid,
+      blockedUserId: payload.unblockId,
+    };
+    const response = await this.settingsApi.unblock(request);
+    const rsps = response.data;
   }
 
   @Action(GetBlocked)

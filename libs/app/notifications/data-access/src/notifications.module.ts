@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { AuthModule } from '@mp/app/auth/data-access';
 import { NgxsModule } from '@ngxs/store';
 import { NotificationsState } from './notifications.state';
-// import { ProfilesApi } from './profiles.api';
+import { NotificationsApi } from './notifications.api';
 
 @NgModule({
   imports: [CommonModule, NgxsModule.forFeature([NotificationsState]), AuthModule],
-  providers: [/*ProfilesApi*/],
+  providers: [NotificationsApi],
 })
 export class NotficationsModule {}

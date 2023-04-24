@@ -20,7 +20,7 @@ export class BuyTime{
 
 export class Unblock{
     static readonly type = '[Unblock] Unblock';
-    constructor(public payload: { uid: string }) {}
+    constructor(public payload: { uid: string, unblockId: string }) {}
 }
 
 export class GetBlocked{
@@ -31,4 +31,9 @@ export class GetBlocked{
 export class CreateSetting{
     static readonly type = '[CreateSetting] Create settings';
     constructor(public payload: {id: string}){};
+}
+
+export class Block{
+    static readonly type = '[Block] Block';
+    constructor(public payload: {uid: string, blockId: string}){};
 }

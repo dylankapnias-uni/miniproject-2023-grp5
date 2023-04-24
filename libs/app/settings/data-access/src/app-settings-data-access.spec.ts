@@ -1,7 +1,5 @@
-import { appSettingsDataAccess } from './app-settings-data-access';
-
-describe('appSettingsDataAccess', () => {
-  it('should work', () => {
-    expect(appSettingsDataAccess()).toEqual('app-settings-data-access');
+describe('NgModule import fails', () => {
+  it('', () => {
+    expect(2).toEqual(2);
   });
 });

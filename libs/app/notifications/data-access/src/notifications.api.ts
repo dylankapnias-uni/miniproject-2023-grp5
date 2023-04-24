@@ -14,7 +14,7 @@ import {
 
 
 @Injectable()
-export class SettingsApi {
+export class NotificationsApi {
     constructor(
         private readonly firestore: Firestore,
         private readonly functions: Functions
