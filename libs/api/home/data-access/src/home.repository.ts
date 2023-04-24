@@ -59,7 +59,8 @@ export class HomeRepository {
           throw new Error('User profile not found');
         }
         if (filters == null || filters == undefined){
-          filters = userProfileDoc?.interests;
+          //filters = userProfileDoc?.interests;          Maybe? Idk if we want such a strict enforcement of interests
+          filters=[];
         }
         const userL: IUserMatch[] = [];
         const out: IHome = {userId:userID,userList:userL};
@@ -146,15 +147,36 @@ export class HomeRepository {
         return out;
       }
 
-  async acceptUser(userID:string, acceptProfile:IProfile){
+  async acceptUser(userID:string, acceptedUserId:string){
     admin
       .firestore()
       .collection('Home')
-      .doc(acceptProfile.userId)
+      .doc(userID)
+      .update({
+      'visited':FieldValue.arrayUnion(acceptedUserId)});
+
+    admin
+      .firestore()
+      .collection('Home')
+      .doc(acceptedUserId)
       .update({
       'accepted':FieldValue.arrayUnion(userID)});
   }
+
+  async rejectUser(userID:string, rejectedUserId:string){
+    admin
+      .firestore()
+      .collection('Home')
+      .doc(userID)
+      .update({
+      'visited':FieldValue.arrayUnion(rejectedUserId)});
+  }
 }
+
+
+
+  
+
 
 function randomIDGeneratorInator(l:number):string {
   let randumID = "";

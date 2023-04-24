@@ -1,5 +1,5 @@
-import { IHome } from '../interfaces';
+import { IHome, IParsingData } from '../interfaces';
 
 export interface IAcceptUserResponse {
-  user: IHome;
+  home: IParsingData;
 }
