@@ -6,3 +6,4 @@ export * from './create-settings.response';
 export * from './subtract-time.response';
 export * from './is-blocked.response';
 export * from './get-visibility.response';
+export * from './get-blocked-accounts.response';

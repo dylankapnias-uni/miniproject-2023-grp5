@@ -5,6 +5,8 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
+  IGetBlockedAccountsRequest, 
+  IGetBlockedAccountsResponse, 
   IGetProfileVisibilityRequest, 
   IGetProfileVisibilityResponse, 
   IIsBlockedRequest, 
@@ -48,6 +50,16 @@ export const unblockUser = functions.https.onCall(
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(SettingsService);
     return service.unblockUser(request);
+  }
+);
+
+export const getBlockedAccounts = functions.https.onCall(
+  async (
+    request: IGetBlockedAccountsRequest
+  ): Promise<IGetBlockedAccountsResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(SettingsService);
+    return service.getBlockedAccounts(request);
   }
 );
 

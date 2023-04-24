@@ -4,6 +4,7 @@ import {
   AddTimeCommand, 
   BlockUserCommand, 
   CreateSettingsCommand, 
+  GetBlockedAccountsQuery, 
   GetVisibilityQuery, 
   IAddTimeRequest, 
   IAddTimeResponse, 
@@ -11,6 +12,8 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
+  IGetBlockedAccountsRequest, 
+  IGetBlockedAccountsResponse, 
   IGetProfileVisibilityRequest, 
   IGetProfileVisibilityResponse, 
   IIsBlockedRequest, 
@@ -79,7 +82,14 @@ export class SettingsService {
     >(new IsBlockedQuery(request));
   }
 
-  //TODO getBlockedUsers
+  async getBlockedAccounts(
+    request: IGetBlockedAccountsRequest
+  ): Promise<IGetBlockedAccountsResponse> {
+    return await this.queryBus.execute<
+      GetBlockedAccountsQuery,
+      IGetBlockedAccountsResponse
+    >(new GetBlockedAccountsQuery(request));
+  }
 
   async updatePrivacy(
     request: IUpdatePrivacyRequest

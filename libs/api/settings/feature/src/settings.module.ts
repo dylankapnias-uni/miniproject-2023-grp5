@@ -20,6 +20,7 @@ import {
   TimeSubtractedHandler
 } from './events';
 import {
+  GetBlockedAccountsHandler,
   GetVisibilityHandler,
   IsBlockedHandler
 } from './queries';
@@ -45,8 +46,9 @@ export const EventHandlers = [
 ];
 
 export const QueryHandlers = [
-  IsBlockedHandler,
-  GetVisibilityHandler
+  GetBlockedAccountsHandler,
+  GetVisibilityHandler,
+  IsBlockedHandler
 ];
 
 @Module({

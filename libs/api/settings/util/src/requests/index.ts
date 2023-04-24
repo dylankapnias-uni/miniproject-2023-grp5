@@ -6,3 +6,4 @@ export * from './unblock-user.request';
 export * from './subtract-time.request';
 export * from './get-visibility.request';
 export * from './is-blocked.request';
+export * from './get-blocked-accounts.request';
