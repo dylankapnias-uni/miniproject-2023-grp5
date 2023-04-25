@@ -8,7 +8,6 @@ import {
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'ms-login-page',
@@ -16,12 +15,59 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  myForm: FormGroup;
-  
-  constructor(private fb: FormBuilder) {
-    this.myForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-})
+  @Select(actionsExecuting([Login])) busy$!: Observable<ActionsExecuting>;
+  loginForm = this.fb.group({
+    email: [
+      '',
+      [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
+    ],
+    password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+  });
+  showPassword = false;
+
+  get email() {
+    return this.loginForm.get('email');
   }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  get emailError(): string {
+    if (this.email?.errors?.['email']) return 'Email is invalid';
+    if (this.email?.errors?.['required']) return 'Email is required';
+    if (this.email?.errors?.['minlength'])
+      return 'Email should be longer than 6 characters';
+    if (this.email?.errors?.['maxlength'])
+      return 'Email should be shorter than 64 characters';
+
+    return 'Email is invalid';
+  }
+
+  get passwordError(): string {
+    if (this.password?.errors?.['required']) return 'Password is required';
+    if (this.password?.errors?.['minlength'])
+      return 'Password should be longer than 6 characters';
+    if (this.password?.errors?.['maxlength'])
+      return 'Password should be shorter than 64 characters';
+
+    return 'Password is invalid';
+  }
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly store: Store,
+  
+  ) {}
+  
+  login() {
+    if (this.loginForm.valid) {
+      this.store.dispatch(new Login());
+    }
+  }
+ 
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+  imagePath = 'https://firebasestorage.googleapis.com/v0/b/miniproject-2023-grp5-dev.appspot.com/o/Timeless_Icon.png?alt=media&token=fe347608-23e2-4c47-be3e-e5b0506dd350';
 }

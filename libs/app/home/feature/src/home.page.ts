@@ -4,7 +4,12 @@ import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import {profile} from './profile.interface';
+//import {profile} from './profile.interface';
+import { 
+  SwipeAccept,
+  SwipeReject,
+  FilterCards
+} from '@mp/app/home/util';
 
 @Component({
   selector: 'ms-home-page',
@@ -13,6 +18,7 @@ import {profile} from './profile.interface';
 })
 export class HomePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  constructor(public store: Store){}
   users: Array<any> = [
     {
       id: 1,
@@ -46,10 +52,6 @@ export class HomePage {
 
   startX = 0;
   endX = 0;
-
-  //constructor(){}
-
-
   touchStart(evt: any) {
     this.startX = evt.touches[0].pageX;  
   }
@@ -81,6 +83,8 @@ export class HomePage {
         }, 350);
       }
       else if(finalX <= -100){ //Reject Card
+        const t = this.users[index].id;
+        this.store.dispatch(new SwipeReject({uid:t}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(-1000px) rotate(-30deg)";
 
@@ -121,6 +125,8 @@ export class HomePage {
         }, 100);
       }
       else if(finalX >= 100){  //Accept Card
+        const t = this.users[index].id;
+        this.store.dispatch(new SwipeAccept({uid:t}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(1000px) rotate(30deg)";
 

@@ -3,7 +3,6 @@ ion-searchbar {
     --icon-color: #F6A7A7;
     //transform:scale(1.01);
     --border-radius: 20px;
-    top: 2%;
 }
 
 .chat-bubble {
@@ -33,7 +32,7 @@ ion-searchbar {
   .scrl{
     flex-direction: column;
     overflow: scroll;
-    height:47%;
+    height:96%;
   }
   
   .chat-bubble .name {

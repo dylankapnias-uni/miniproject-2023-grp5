@@ -5,6 +5,8 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
+  IGetBlockedAccountsRequest, 
+  IGetBlockedAccountsResponse, 
   IGetProfileVisibilityRequest, 
   IGetProfileVisibilityResponse, 
   IIsBlockedRequest, 
@@ -51,6 +53,16 @@ export const unblockUser = functions.https.onCall(
   }
 );
 
+export const getBlockedAccounts = functions.https.onCall(
+  async (
+    request: IGetBlockedAccountsRequest
+  ): Promise<IGetBlockedAccountsResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(SettingsService);
+    return service.getBlockedAccounts(request);
+  }
+);
+
 export const addTime = functions.https.onCall(
   async (
     request: IAddTimeRequest
@@ -70,9 +82,6 @@ export const subtractTime = functions.https.onCall(
     return service.subtractTime(request);
   }
 );
-
-// TODO add way to check if user is blocked, 
-// a way to find a user's profile visibility
 
 export const isBlocked = functions.https.onCall(
   async (
@@ -104,3 +113,5 @@ export const createSettings = functions.https.onCall(
     return service.createSettings(request);
   }
 )
+
+//TODO getBlockedAccounts

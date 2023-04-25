@@ -1,223 +1,208 @@
 import { Injectable } from '@angular/core';
+import { Register as AuthRegister } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
-import { CreateSetting, CreateUserProfile, DeleteUserProfile, GetUserProfile, UpdateUserProfile } from '@mp/app/settings/util';
+import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
-import { httpsCallable, Functions } from '@angular/fire/functions';
-// import { SettingsService } from '@mp/api/settings/feature';
-import { IAddTimeRequest, 
-    IAddTimeResponse, 
-    IBlockUserRequest, 
-    IBlockUserResponse, 
-    ICreateSettingsRequest, 
-    ICreateSettingsResponse, 
-    IGetProfileVisibilityRequest, 
-    IGetProfileVisibilityResponse, 
-    IIsBlockedRequest, 
-    IIsBlockedResponse, 
-    ISubtractTimeRequest, 
-    ISubtractTimeResponse, 
-    IUnblockUserRequest, 
-    IUnblockUserResponse, 
-    IUpdatePrivacyRequest, 
-    IUpdatePrivacyResponse, 
-    ProfilePrivacy 
+import { 
+  IAddTimeRequest, 
+  IBlockUserRequest, 
+  IBlockUserResponse, 
+  ICreateSettingsRequest, 
+  ICreateSettingsResponse, 
+  IGetProfileVisibilityRequest, 
+  IGetProfileVisibilityResponse, 
+  IIsBlockedRequest, 
+  IIsBlockedResponse, 
+  ISubtractTimeRequest, 
+  ISubtractTimeResponse, 
+  IUnblockUserRequest, 
+  IUnblockUserResponse, 
+  IUpdatePrivacyRequest, 
+  IUpdatePrivacyResponse,
 } from '@mp/api/settings/util';
 import { SettingsApi } from './settings.api'
-import { 
-    ICreateUserRequest, 
-    ICreateUserResponse, 
-    IDeleteUserProfileRequest, 
-    IDeleteUserProfileResponse, 
-    IGetUserProfileRequest, 
-    IGetUserProfileResponse, 
-    IUpdateUserProfileRequest,
-    IUpdateUserProfileResponse 
-} from '@mp/api/users/util';
-import { IAuth } from '@mp/api/auth/util';
+import {
+    UpdateAccount,
+    DeleteAccount,
+    EditProfile,
+    BuyTime,
+    Unblock,
+    GetBlocked,
+    CreateSetting
+}
+from '@mp/app/settings/util';
+import { IChat } from '@mp/app/chat/data-access';
+import { Timestamp } from '@angular/fire/firestore';
+
+import { ITime } from './interfaceTemp/time.interface';
+import { IPrivacyDetails } from './interfaceTemp/privacy-settings.interface';
+import { ProfilePrivacy } from './interfaceTemp/profile-privacy.enum';
+import { httpsCallable } from '@angular/fire/functions';
+
+
 export interface SettingsStateModel {
-    messages: string[];
+  settingsForm:{
+    settings:{
+        model:{
+            userId: string | null;
+            privacy: IPrivacyDetails | null;
+            time: ITime | null;
+        }
+    }
+    dirty:false;
+    status: string;
+    errors: object;
+  };
+  blockedForm:{
+    blocked:{
+        model:{
+            blockedUsers: string[] | null;
+        }
+    }
+    dirty: false;
+    status: string;
+    errors: object;
+  };
+  privacyForm:{
+    privacy:{
+        model:{
+            profileVisibility: ProfilePrivacy | null;
+        }
+    }
+    dirty: false;
+    status: string;
+    errors: object;
+  };
 }
 
 @State<SettingsStateModel>({
     name: 'settings',
     defaults: {
-        messages: []
-    },
+      settingsForm:{
+          settings:{
+            model:{
+                userId: null,
+                privacy: null,
+                time: null,
+            }
+          },
+          dirty: false,
+          status: '',
+          errors: {} ,       
+      },
+      blockedForm:{
+        blocked:{
+            model:{
+                blockedUsers: null,
+            }
+        },
+        dirty: false,
+        status: '',
+        errors: {},
+      },
+      privacyForm:{
+        privacy:{
+            model:{
+                profileVisibility: null,
+            }
+        },
+        dirty: false,
+        status: '',
+        errors: {},
+      },
+    }
 })
-// TODO fix after testing
+  
 @Injectable()
 export class SettingsState {
-    constructor(private readonly functions: Functions, private readonly settingsApi: SettingsApi) {}
-    @Action(CreateSetting)
+
+  /*private static chat: IChat = {
+    ChatID: '1',
+    messages: [
+      {
+        message: 'Hello World!',
+        time: Timestamp.now(),
+        userID: '1'
+      },
+      {
+        message: 'How are you?',
+        time: Timestamp.now(),
+        userID: '2'
+      }
+    ],
+    timeAdderID: '1',
+    timeRemaining: 1000,
+    totalTimeUsed: 0
+  };*/
+
+  constructor(public settingsApi: SettingsApi){};
+
+  @Action(UpdateAccount)
+  async UpdateAccount(ctx: StateContext<SettingsStateModel>, {payload}: UpdateAccount) {
+    //Works and catches Chat id
+    ctx.patchState({
+
+    });
+  }
+
+  @Action(DeleteAccount)
+  async DeleteAccount(ctx: StateContext<SettingsStateModel>, {payload}: DeleteAccount) {
+    //Works and catches Chat id and outGoingMessage
+    ctx.patchState({
+      
+    });
+  }
+
+  @Action(EditProfile)
+  async EditProfile(ctx: StateContext<SettingsStateModel>, {payload}: EditProfile) {
+    //Works and catches Chat id and time
+    ctx.patchState({
+      
+    });
+  }
+
+  @Action(BuyTime)
+  async BuyTime(ctx: StateContext<SettingsStateModel>, {payload}: BuyTime) {
+    const request : IAddTimeRequest = {
+      userId: payload.uid,
+      purchaseAmount: payload.time
+    };
+    const response = await this.settingsApi.addTime(request);
+    const rsps = response.data;
+    ctx.patchState({
+      
+    });
+  }
+
+  @Action(Unblock)
+  async Unblock(ctx: StateContext<SettingsStateModel>, {payload}: Unblock) {
+    //Make call to api and update state
+    const request : IUnblockUserRequest = {
+      userId: payload.uid,
+      blockedUserId: payload.unblockId,
+    };
+    const response = await this.settingsApi.unblock(request);
+    const rsps = response.data;
+  }
+
+  @Action(GetBlocked)
+  async GetBlocked(ctx: StateContext<SettingsStateModel>, {payload}: GetBlocked) {
+    console.log("Get blocked users");
+    ctx.patchState({
+        blockedForm:{
+            blocked:{
+                model:{
+                    blockedUsers: ['1','2','3'],//Make call to api
+                }
+            },
+            dirty: false,
+            status: 'Fetched',
+            errors: {},
+        }
+    });
+  }
+  @Action(CreateSetting)
     async createSettings(ctx: StateContext<SettingsStateModel>, {payload}: CreateSetting) {
-
-        /*
-            Very very very scuffed, please ignore :(
-        */
-
-        // Create settings document for user 5
-        let createSettingsResponse = await httpsCallable<
-            ICreateSettingsRequest,
-            ICreateSettingsResponse
-        >(
-            this.settingsApi.functions, 
-            'createSettings'
-        )({userId: '5'});
-        console.log("Creating settings for user 5:");
-        console.log(createSettingsResponse.data);
-
-        // Create settings document for user 6
-        createSettingsResponse = await httpsCallable<
-        ICreateSettingsRequest,
-        ICreateSettingsResponse
-        >(
-            this.settingsApi.functions, 
-            'createSettings'
-        )({userId: '6'});
-        console.log("Creating settings for user 6:");
-        console.log(createSettingsResponse.data);
-
-        // User 6 blocks user 5
-        let blockUserResponse = await httpsCallable<
-            IUnblockUserRequest,
-            IUnblockUserResponse
-        >(
-            this.settingsApi.functions, 
-            'blockUser'
-        )({userId: '6', blockedUserId: '5'});
-        console.log("User 6 blocks user 5:");
-        console.log(blockUserResponse.data);
-        
-        // Check if user 5 is blocked by user 6
-        let isBlockedResponse = await httpsCallable<
-            IIsBlockedRequest,
-            IIsBlockedResponse
-        >(
-            this.functions,
-            'isBlocked'
-        )({userId: '6', blockedId: '5'});
-        console.log("Check if user 5 is blocked by user 6:");
-        console.log(isBlockedResponse.data);
-
-        // User 6 unblocks user 5
-        blockUserResponse = await httpsCallable<
-            IUnblockUserRequest,
-            IUnblockUserResponse
-        >(
-            this.settingsApi.functions, 
-            'unblockUser'
-        )({userId: '6', blockedUserId: '5'});
-        console.log("User 6 unblocks user 5:");
-        console.log(blockUserResponse.data);
-        
-        // Check if user 5 is blocked by user 6
-        isBlockedResponse = await httpsCallable<
-            IIsBlockedRequest,
-            IIsBlockedResponse
-        >(
-            this.functions,
-            'isBlocked'
-        )({userId: '6', blockedId: '5'});
-        console.log("Check if user 5 is blocked by user 6:");
-        console.log(isBlockedResponse.data);
-
-        // User 5 buys 10000 time
-        let addTimeResponse = await httpsCallable<
-            IAddTimeRequest,
-            IAddTimeResponse
-        >(
-            this.settingsApi.functions,
-            'addTime'
-        )({
-            userId: '5', 
-            purchaseAmount: 10000
-        });
-        console.log("User 5 buys 10000 time:");
-        console.log(addTimeResponse.data);
-
-        // User 6 buys 20000 time
-        addTimeResponse = await httpsCallable<
-            IAddTimeRequest,
-            IAddTimeResponse
-        >(
-            this.settingsApi.functions,
-            'addTime'
-        )({
-            userId: '6', 
-            purchaseAmount: 20000
-        });
-        console.log("User 6 buys 20000 time:");
-        console.log(addTimeResponse.data);
-
-        // User 6 uses 4000 time
-        let subtractTimeResponse = await httpsCallable<
-            ISubtractTimeRequest,
-            ISubtractTimeResponse
-        >(
-            this.settingsApi.functions,
-            'subtractTime'
-        )({
-            userId: '6', 
-            amount: 4000
-        });
-        console.log("User 6 uses 4000 time:");
-        console.log(subtractTimeResponse.data);
-
-        // User 5 uses 200 time
-        subtractTimeResponse = await httpsCallable<
-            ISubtractTimeRequest,
-            ISubtractTimeResponse
-        >(
-            this.settingsApi.functions,
-            'subtractTime'
-        )({
-            userId: '5', 
-            amount: 200
-        });
-        console.log("User 5 uses 200 time:");
-        console.log(subtractTimeResponse.data);
-        
-        // User 6 changes profile visibility to Friends-Only
-        let updateVisibilityResponse = await httpsCallable<
-            IUpdatePrivacyRequest,
-            IUpdatePrivacyResponse
-        >(
-            this.settingsApi.functions,
-            'updateProfileVisibility'
-        )({
-            userId: '6', 
-            profileVisibility: ProfilePrivacy.FRIENDS
-        });
-        console.log("User 6 changes profile visibility to Friends-Only:");
-        console.log(updateVisibilityResponse.data);
-
-        // Get the the profile visibility of user 6
-        const getVisibilityResponse = await httpsCallable<
-            IGetProfileVisibilityRequest,
-            IGetProfileVisibilityResponse
-        >(
-            this.settingsApi.functions,
-            'getProfileVisibility'
-        )({
-            userId: '6'
-        });
-        console.log("Get the the profile visibility of user 6:");
-        console.log(getVisibilityResponse.data);
-
-        // User 6 changes profile visibility to Everyone
-        updateVisibilityResponse = await httpsCallable<
-            IUpdatePrivacyRequest,
-            IUpdatePrivacyResponse
-        >(
-            this.settingsApi.functions,
-            'updateProfileVisibility'
-        )({
-            userId: '6', 
-            profileVisibility: ProfilePrivacy.EVERYONE
-        });
-        console.log("User 6 changes profile visibility to Everyone:");
-        console.log(updateVisibilityResponse.data);
-
         /*this.srvc.createSettings({userId: '1234'}).then((data) => {
             console.log(data);
         }, (error) => {
@@ -228,117 +213,19 @@ export class SettingsState {
         })
     }
 
-    @Action(CreateUserProfile)
-    async createUserProfile(ctx: StateContext<SettingsStateModel>, {payload}: CreateSetting) {
-        // Create user profile for user 5
-        const auth5: IAuth = {
-            id: '5',
-            email: 'blahblah5@gmail.com'
-        };
-        let userCreatedResponse = await httpsCallable<
-            ICreateUserRequest,
-            ICreateUserResponse
-        >(
-            this.settingsApi.functions, 
-            'createUserProfile'
-        )({auth: auth5});
-        console.log("Creating user profile for user 5:");
-        console.log(userCreatedResponse.data);
-        ctx.patchState({
-            //messages: MessagesState.chats
-        })
-        // Create user profile for user 6
-        const userProfile6: IAuth = {
-            id: '6',
-            email: 'blahblah6@gmail.com'
-        };
-        userCreatedResponse = await httpsCallable<
-            ICreateUserRequest,
-            ICreateUserResponse
-        >(
-            this.settingsApi.functions, 
-            'createUserProfile'
-        )({auth: userProfile6});
-        console.log("Creating user profile for user 6:");
-        console.log(userCreatedResponse.data);
-    }
-
-    @Action(GetUserProfile)
-    async getUserProfile(ctx: StateContext<SettingsStateModel>, {payload}: CreateSetting) {
-        // Get user profile of user 5
-        const getUserProfileResult = await httpsCallable<
-            IGetUserProfileRequest,
-            IGetUserProfileResponse
-        >(
-            this.settingsApi.functions, 
-            'getUserProfile'
-        )({userId: '5'});
-        console.log("Getting user profile for user 5:");
-        console.log(getUserProfileResult.data);
-        ctx.patchState({
-            //messages: MessagesState.chats
-        })
-    }
-
-    @Action(UpdateUserProfile)
-    async updateUserProfile(ctx: StateContext<SettingsStateModel>, {payload}: CreateSetting) {
-        // Get user profile of user 5
-        const getUserProfileResult = await httpsCallable<
-            IGetUserProfileRequest,
-            IGetUserProfileResponse
-        >(
-            this.settingsApi.functions, 
-            'getUserProfile'
-        )({userId: '5'}).then(
-            (result) => {
-                return result.data;
-            }
-        );
-        if (getUserProfileResult?.userProfile == null) { 
-            console.log("User profile for user 5 is null");
-            throw new Error("User profile for user 5 is null");
-        }
-        const userProfile5 = getUserProfileResult.userProfile;
-        userProfile5.email = 'new.email@gmail.com'
-
-        const emailUpdatedResponse = await httpsCallable<
-            IUpdateUserProfileRequest,
-            IUpdateUserProfileResponse
-        >(
-            this.settingsApi.functions, 
-            'updateUserProfile'
-        )({userProfile: userProfile5}).then(
-            (result) => {
-                return result.data;
-            }
-        );
-        console.log("Updating email of user 5:");
-        console.log(emailUpdatedResponse);
-        ctx.patchState({
-            //messages: MessagesState.chats
-        })
-    }
-
-    @Action(DeleteUserProfile)
-    async deleteSettings(ctx: StateContext<SettingsStateModel>, {payload}: CreateSetting) {
-        const deleteUserProfileResult = await httpsCallable<
-            IDeleteUserProfileRequest,
-            IDeleteUserProfileResponse
-        >(
-            this.settingsApi.functions, 
-            'deleteUserProfile'
-        )({userId: '5'})
-        ctx.patchState({
-            //messages: MessagesState.chats
-        })
-        console.log("Deleting user 5");
-        console.log(deleteUserProfileResult.data);
-    }
-
   @Selector()
-  static settings(state: SettingsStateModel) 
-  {
-    return state.messages;
+  static settings(state: SettingsStateModel) {
+    return state.settingsForm.settings.model;
   }
 
+
+  @Selector()
+  static privacy(state: SettingsStateModel) {
+    return state.privacyForm.privacy.model.profileVisibility;
+  }
+
+  @Selector()
+  static blocked(state: SettingsStateModel) {
+    return state.blockedForm.blocked.model.blockedUsers;
+  }
 }

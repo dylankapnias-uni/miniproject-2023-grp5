@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { chat } from '../chat.interface';
+import { chat } from './chat.interface';
 import { ChatState } from '@mp/app/chat/data-access';
 import { Store, Select } from '@ngxs/store';
 import { 
@@ -158,12 +158,12 @@ export class ChatPage {
     }
 
     return(){
-      this.router.navigate(['/messages']);
+      console.log('go back');
+      //this.router.navigate(['/messages']);
     }
 
     navigate(){
       //fetch the user id with state or sumn
       this.router.navigate(['/other-user/2']);
     }
-
 }

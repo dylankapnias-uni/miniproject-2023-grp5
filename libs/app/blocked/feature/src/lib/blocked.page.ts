@@ -1,5 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
+import { SettingsState } from '@mp/app/settings/data-access';
+import { Observable } from 'rxjs';
+import {
+  Unblock,
+  GetBlocked
+}
+from '@mp/app/settings/util';
+import { ProfileState } from '@mp/app/profile/data-access';
+import { IProfile } from '@mp/api/profiles/util';
 
 
 @Component({
@@ -8,8 +18,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./blocked.page.scss']
 })
 export class BlockedPage {
-  constructor(public r : Router)
-  {}
+  @Select(SettingsState.blocked) blocked$!: Observable<string[]>;
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  id!: string;
+  constructor(public r : Router, private store: Store){
+    this.profile$.subscribe((profile) => {
+      if(profile != null)
+        this.id = profile.userId;
+    });
+    this.store.dispatch(new GetBlocked({uid:this.id}));
+  }
 
   users: any[] = [
     { id: '1', name: 'John', age: 25, job: 'Designer', employed: true },
@@ -18,7 +36,7 @@ export class BlockedPage {
   ];
 
   unblock(id:string){
-    console.log(id);
+    this.store.dispatch(new Unblock({uid:id, unblockId: '1'}));
   }
 
   LoadSettingsPage()

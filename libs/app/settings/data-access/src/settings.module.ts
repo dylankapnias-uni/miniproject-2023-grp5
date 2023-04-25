@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SettingsState } from './settings.state';
-import { NgxsModule } from '@ngxs/store';
+import { NgModule } from '@angular/core';
 import { AuthModule } from '@mp/app/auth/data-access';
-//import { SettingsService } from 'libs/api/settings/feature/src';
-import { SettingsApi } from './settings.api'
+import { NgxsModule } from '@ngxs/store';
+import { SettingsState } from './settings.state';
+import { SettingsApi } from './settings.api';
+
 @NgModule({
   imports: [CommonModule, NgxsModule.forFeature([SettingsState]), AuthModule],
-  providers: [SettingsApi]
+  providers: [SettingsApi],
 })
 export class SettingsModule {}

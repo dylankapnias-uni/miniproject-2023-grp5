@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import {
+  DeleteAccount,
+  EditProfile,
+}
+from '@mp/app/settings/util';
 
 @Component({
   selector: 'mp-edit-profile',

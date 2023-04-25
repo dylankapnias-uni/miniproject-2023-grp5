@@ -58,6 +58,18 @@
       </ion-col>
     </ion-row>
     <ion-row>
+      <ion-col style="justify-content: center;">
+        <ion-item>
+          <ion-label position="stacked"><b>Sexuality</b></ion-label>
+          <ion-select aria-label="Sexuality" interface="popover" placeholder="Sexuality" [(ngModel)]="sexuality">
+            <ion-select-option value="heterosexual">Heterosexual</ion-select-option>
+            <ion-select-option value="homosexual">Homosexual</ion-select-option>
+            <ion-select-option value="bisexual">Bisexual</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col>
         <ion-button class="delete_account_button" id="delete" (click)="Update()">Update Account</ion-button>
       </ion-col>

@@ -4,6 +4,7 @@ import {
   AddTimeCommand, 
   BlockUserCommand, 
   CreateSettingsCommand, 
+  GetBlockedAccountsQuery, 
   GetVisibilityQuery, 
   IAddTimeRequest, 
   IAddTimeResponse, 
@@ -11,6 +12,8 @@ import {
   IBlockUserResponse, 
   ICreateSettingsRequest, 
   ICreateSettingsResponse, 
+  IGetBlockedAccountsRequest, 
+  IGetBlockedAccountsResponse, 
   IGetProfileVisibilityRequest, 
   IGetProfileVisibilityResponse, 
   IIsBlockedRequest, 
@@ -79,6 +82,15 @@ export class SettingsService {
     >(new IsBlockedQuery(request));
   }
 
+  async getBlockedAccounts(
+    request: IGetBlockedAccountsRequest
+  ): Promise<IGetBlockedAccountsResponse> {
+    return await this.queryBus.execute<
+      GetBlockedAccountsQuery,
+      IGetBlockedAccountsResponse
+    >(new GetBlockedAccountsQuery(request));
+  }
+
   async updatePrivacy(
     request: IUpdatePrivacyRequest
   ): Promise<IUpdatePrivacyResponse> {
@@ -100,8 +112,6 @@ export class SettingsService {
   async createSettings(
     request: ICreateSettingsRequest
   ): Promise<ICreateSettingsResponse> {
-    // There is no way this is going to work -_-
-    console.log("Hello world, from Service SettingsService::createSettings")
     return await this.commandBus.execute<
       CreateSettingsCommand,
       ICreateSettingsResponse
