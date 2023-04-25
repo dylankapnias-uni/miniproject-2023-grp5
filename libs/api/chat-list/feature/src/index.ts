@@ -1,4 +1,3 @@
 export * from './testing/api-chat-list-feature';
-export * from './commands';
-export * from './events';
-export * from './models';
+export * from './chat-list.service';
+export * from './chat-list.module';

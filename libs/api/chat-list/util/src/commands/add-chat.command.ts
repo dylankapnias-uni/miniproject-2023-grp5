@@ -1,3 +1,5 @@
+import { IAddChatRequest } from "../requests";
+
 export class AddChatCommand {
-    constructor(public readonly request: any) {}
+    constructor(public readonly request: IAddChatRequest) {}
 }
