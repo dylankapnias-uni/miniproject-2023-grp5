@@ -1,5 +1,6 @@
-import { DocumentReference } from '@firebase/firestore-types'
+import { IChatReferences } from "./chat-references.interface";
+
 export interface IChatList {
-    chatRef: DocumentReference;
-    otherUserID: DocumentReference;
+    userId: string,
+    chatRef: IChatReferences[]|null|undefined
 }

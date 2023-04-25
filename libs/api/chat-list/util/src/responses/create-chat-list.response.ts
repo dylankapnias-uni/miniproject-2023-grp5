@@ -1,5 +1,5 @@
 import { IChatList } from "../interfaces";
 
-export interface IAddChatResponse {
+export interface ICreateChatListResponse {
     chat:IChatList;
   }

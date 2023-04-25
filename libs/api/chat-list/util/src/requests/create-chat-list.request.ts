@@ -1,6 +1,5 @@
 import { IChatList, IChatReferences } from "../interfaces";
 
-export interface IAddChatRequest{
+export interface ICreateChatListRequest{
     userId:string,
-    chatRef: IChatReferences
 }
