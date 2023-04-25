@@ -3,11 +3,10 @@ import { NgModule } from '@angular/core';
 import { AuthModule } from '@mp/app/auth/data-access';
 import { NgxsModule } from '@ngxs/store';
 import { HomeState } from './home.state';
-// import { ProfileState } from './profile.state';
-// import { ProfilesApi } from './profiles.api';
+import { HomeApi } from './home.api';
 
 @NgModule({
   imports: [CommonModule, NgxsModule.forFeature([HomeState]), AuthModule],
-  providers: [/*ProfilesApi*/],
+  providers: [HomeApi],
 })
 export class HomeModule {}

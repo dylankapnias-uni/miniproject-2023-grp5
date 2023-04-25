@@ -18,6 +18,16 @@ import {
   IUpdatePrivacyResponse as IUpdateProfileVisibilityResponse 
 } from '@mp/api/settings/util';
 
+import {
+  ICreateUserRequest,
+  ICreateUserResponse,
+  IDeleteUserProfileRequest,
+  IDeleteUserProfileResponse,
+  IGetUserProfileRequest,
+  IGetUserProfileResponse,
+  IUpdateUserProfileRequest, 
+  IUpdateUserProfileResponse 
+} from '@mp/api/users/util';
 
 @Injectable()
 export class SettingsApi {
@@ -97,13 +107,44 @@ export class SettingsApi {
     )(request);
   }
 
-  // async blockUser(request: IBlockUserRequest){
-  //   return await httpsCallable<
-  //     IBlockUserRequest,
-  //     IBlockUserResponse
-  //   >(
-  //     this.functions,
-  //     'blockUser'
-  //   )(request);
-  // }
+  async getUserProfile(request: IGetUserProfileRequest)
+  {
+    return await httpsCallable<
+      IGetUserProfileRequest,
+      IGetUserProfileResponse
+    >(
+      this.functions,
+      'getUserProfile'
+    )(request);
+  }
+
+  async updateUserProfile(request: IUpdateUserProfileRequest){
+    return await httpsCallable<
+      IUpdateUserProfileRequest,
+      IUpdateUserProfileResponse
+    >(
+      this.functions,
+      'updateUserProfile'
+    )(request);
+  }
+
+  async deleteUserProfile(request: IDeleteUserProfileRequest){
+    return await httpsCallable<
+      IDeleteUserProfileRequest,
+      IDeleteUserProfileResponse
+    >(
+      this.functions,
+      'deleteUserProfile'
+    )(request);
+  }
+
+  async createUserProfile(request: ICreateUserResponse){
+    return await httpsCallable<
+      ICreateUserResponse,
+      ICreateUserRequest
+    >(
+      this.functions,
+      'createUserProfile'
+    )(request);
+  }
 }

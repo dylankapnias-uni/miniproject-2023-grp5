@@ -1,6 +1,25 @@
+import { Timestamp } from '@firebase/firestore-types';
+import { IInterests } from '@mp/api/interests/util';
+import { IPost } from '@mp/api/users/util';
+
 export class UpdateAccount{
     static readonly type = '[UpdateAccount] Update Account';
-    constructor(public payload: { account: any }) {}
+    constructor(public payload: {
+        uid: string,
+        email: string,
+        name: string,
+        profilePicture: string,
+        phoneNumber: string,
+        customClaims: { [key: string]: any } | null | undefined,
+        age: number,
+        bio: string,
+        dob: Timestamp,
+        gender: string,
+        interests: IInterests[],
+        sexuality: string,
+        time: number,
+        posts: IPost[]
+    }) {}
 }
 
 export class DeleteAccount{
@@ -10,7 +29,22 @@ export class DeleteAccount{
 
 export class EditProfile{
     static readonly type = '[EditProfile] Edit Profile';
-    constructor(public payload: { profile: any }) {}
+    constructor(public payload: { 
+        uid: string,
+        email: string,
+        name: string,
+        profilePicture: string,
+        phoneNumber: string,
+        customClaims: { [key: string]: any } | null | undefined,
+        age: number,
+        bio: string,
+        dob: Timestamp,
+        gender: string,
+        interests: IInterests[],
+        sexuality: string,
+        time: number,
+        posts: IPost[]
+    }) {}
 }
 
 export class BuyTime{
