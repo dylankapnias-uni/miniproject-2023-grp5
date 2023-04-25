@@ -1,2 +1,1 @@
-export * from './fetch-chat.handler';
-export * from './update-chat.handler';
+export * from './send-message.handler';
