@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
-import { Register, SubscribeToAuthState } from '@mp/app/auth/util';
+import { SubscribeToAuthState } from '@mp/app/auth/util';
 import { Store } from '@ngxs/store';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { PostComponent } from '@mp/app/core/ui';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 // import { CoreModule as NavComponent } from '@mp/app/core/ui';
 //  NavComponent
 

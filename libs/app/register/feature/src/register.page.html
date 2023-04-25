@@ -25,7 +25,6 @@
           type="email"
           minlength="6"
           maxlength="64"
-          style="  margin-bottom: 15px;"
           placeholder="Enter email"
           required="true"
           autocomplete="email"
@@ -43,7 +42,6 @@
           type="tel"
           minlength="10"
           maxlength="15"
-          style="  margin-bottom: 15px;"
           placeholder="Enter phone number"
           required="true"
           autocomplete="tel"
@@ -54,7 +52,6 @@
         <ion-input
           type="date"
           placeholder="Enter date of birth"
-          style="  margin-bottom: 15px;"
           required="true"
           formControlName="dateOfBirth"></ion-input>
         </ion-item>
@@ -66,7 +63,6 @@
           min="1"
           max="120"
           placeholder="Enter age"
-          style="  margin-bottom: 15px;"
           required="true"
           formControlName="age"></ion-input>
         </ion-item>
@@ -116,7 +112,7 @@
           <ion-button
             expand="block"
             class="custom-buttons"
-          
+            [disabled]="!this.registerForm.valid || (busy$ | async)"
             type="submit">
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
             <ion-text>Register</ion-text>

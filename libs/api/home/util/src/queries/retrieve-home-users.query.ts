@@ -1,4 +1,5 @@
+import { IRetrieveHomeUsersRequest } from "../requests";
 
 export class RetrieveHomeUsersQuery {
-    constructor(public readonly userId: string) {}
+    constructor(public readonly request: IRetrieveHomeUsersRequest) {}
 }

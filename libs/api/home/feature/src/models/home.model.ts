@@ -1,60 +1,52 @@
 
-import { HomeCreatedEvent, IHome, IMatched, IUserMatch, IUserRef, UserAcceptedEvent } from '@mp/api/home/util';
+import { UserHomeCreatedEvent, IHome, IMatched, IParsingData, IUserMatch, IUserRef, UserAcceptedEvent, UserRejectedEvent } from '@mp/api/home/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
-export class Home extends AggregateRoot implements IHome {
+export class Home extends AggregateRoot implements IParsingData {
   constructor(
     public userId: string,
-    public userList: IUserMatch[] | null | undefined,
+    public userRef: IUserRef,
   ) {
     super();
   }
 
-  static fromData(home: IHome): Home {
+  static fromData(home: IParsingData): Home {
     const instance = new Home(
       home.userId,
-      home.userList,
+      home.userRef
     );
     return instance;
   }
 
   create() {
-    this.apply(new HomeCreatedEvent(this.toJSON()));
+    this.apply(new UserHomeCreatedEvent(this.toJSON()));
   }
 
 
-  public acceptUser() {
-    if(!this.userList){
-      console.log("no userlist");
-      return;
+  public acceptUser(newUser: IUserMatch) {
+    if(!newUser.user?.userId) throw new Error('User ID is null');
+
+    if(newUser.match){
+      //TODO: Create New Chat
     }
-    this.apply(new UserAcceptedEvent(this.toJSON()));
+    else{
+      this.userRef.accepted.push(newUser.user?.userId);
+      this.apply(new UserAcceptedEvent(this.toJSON()));
+    }
+    
   }
 
-  // updateStatus() {
-  //   this.updateAccountDetailsStatus();
-  //   this.updateAddressDetailsStatus();
-  //   this.updateContactDetailsStatus();
-  //   this.updatePersonalDetailsStatus();
-  //   this.updateOccupationDetailsStatus();
+  public rejectUser(newUserId: string) {
 
-  //   if (
-  //     this.accountDetails?.status === ProfileStatus.COMPLETE &&
-  //     this.addressDetails?.status === ProfileStatus.COMPLETE &&
-  //     this.contactDetails?.status === ProfileStatus.COMPLETE &&
-  //     this.personalDetails?.status === ProfileStatus.COMPLETE &&
-  //     this.occupationDetails?.status === ProfileStatus.COMPLETE
-  //   ) {
-  //     this.status = ProfileStatus.COMPLETE;
-  //   }
+      this.userRef.visited.push(newUserId);
+      this.apply(new UserRejectedEvent(this.toJSON()));
+    
+  }
 
-  //   this.apply(new ProfileStatusUpdatedEvent(this.toJSON()));
-  // }
-
-  toJSON(): IHome {
+  toJSON(): IParsingData {
     return {
       userId: this.userId,
-      userList: this.userList,
+      userRef: this.userRef,
     };
   }
 }

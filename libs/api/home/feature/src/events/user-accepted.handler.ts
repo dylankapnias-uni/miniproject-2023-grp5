@@ -10,15 +10,7 @@ export class UserAcceptedHandler
 
   async handle(event: UserAcceptedEvent) {
     console.log(`${UserAcceptedHandler.name}`);
-    if(!event.home.userList){
-      console.log("no userlist");
-      return;
-    }
-    if(!event.home.userList[0].user)
-    {
-      console.log("no user");
-    return;
-    }
-    await this.repository.acceptUser(event.home.userId,event.home.userList[0].user);
+
+    await this.repository.acceptUser(event.home.userId,event.home.userRef.accepted[event.home.userRef.accepted.length-1]);
   }
 }

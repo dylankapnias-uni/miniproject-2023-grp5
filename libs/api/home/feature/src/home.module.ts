@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { AcceptUserHandler } from './commands';
+import { AcceptUserHandler, CreateUserHomeHandler, RejectUserHandler } from './commands';
 import { HomeDataAccessModule } from '@mp/api/home/data-access';
-import { UserAcceptedHandler } from './events/user-accepted.handler';
+import { UserAcceptedHandler, UserHomeCreatedHandler, UserRejectedHandler } from './events';
 import { HomeService } from './home.service';
+import { RetrieveHomeUsersHandler } from './queries/retrieve-home-users.handler';
 
-export const CommandHandlers = [AcceptUserHandler];
-export const EventHandlers = [UserAcceptedHandler];
+export const CommandHandlers = [AcceptUserHandler, RejectUserHandler, CreateUserHomeHandler];
+export const EventHandlers = [UserAcceptedHandler, UserRejectedHandler, UserHomeCreatedHandler];
+export const QueryHandlers = [RetrieveHomeUsersHandler];
 
 @Module({
   imports: [CqrsModule, HomeDataAccessModule],
@@ -14,6 +16,7 @@ export const EventHandlers = [UserAcceptedHandler];
     HomeService,
     ...CommandHandlers,
     ...EventHandlers,
+    ...QueryHandlers,
   ],
   exports: [HomeService],
 })

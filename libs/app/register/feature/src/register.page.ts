@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Register } from '@mp/app/register/util';
-import { FormGroup } from '@angular/forms';
 import {
     ActionsExecuting,
     actionsExecuting
@@ -83,5 +82,4 @@ export class RegisterPage
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
-  
 }
