@@ -5,4 +5,4 @@ import { HomeRepository } from './home.repository';
   providers: [HomeRepository],
   exports: [HomeRepository],
 })
-export class HomeModule {}
+export class HomeDataAccessModule {}

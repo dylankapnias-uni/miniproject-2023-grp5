@@ -7,6 +7,9 @@ import { RegisterModule as RegisterDataAccessModule } from '@mp/app/register/dat
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { RegisterPage } from './register.page';
 import { RegisterRouting } from './register.routing';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
 
 @NgModule({
   imports: [
@@ -17,7 +20,11 @@ import { RegisterRouting } from './register.routing';
     NgxsFormPluginModule,
     RegisterRouting,
     CopyrightModule,
+    ReactiveFormsModule
   ],
   declarations: [RegisterPage],
 })
-export class RegisterModule {}
+
+export class RegisterModule {
+
+}

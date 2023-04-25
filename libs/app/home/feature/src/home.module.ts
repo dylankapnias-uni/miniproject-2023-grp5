@@ -4,9 +4,11 @@ import { IonicModule } from '@ionic/angular';
 import { ProfileModule } from '@mp/app/profile/data-access';
 import { HomePage } from './home.page';
 import { HomeRouting } from './home.routing';
+import { HomeState } from '@mp/app/home/data-access';
+import { NgxsModule } from '@ngxs/store';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, ProfileModule, HomeRouting],
+  imports: [CommonModule, IonicModule, ProfileModule, HomeRouting, NgxsModule.forFeature([HomeState])],
   declarations: [HomePage],
 })
 export class HomeModule {}

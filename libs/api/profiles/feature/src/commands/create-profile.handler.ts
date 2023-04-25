@@ -17,10 +17,10 @@ export class CreateProfileHandler
     console.log(`${CreateProfileHandler.name}`);
 
     const request = command.request;
-    const userId = request.user.id;
-    const displayName = request.user.displayName;
+    const userId = request.user.userId;
+    const displayName = request.user.name;
     const email = request.user.email;
-    const photoURL = request.user.photoURL;
+    const photoURL = request.user.profilePicture;
     const cellphone = request.user.phoneNumber;
 
     const data: IProfile = {

@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase-admin/firestore';
 
-export interface IProfile {
+export interface IUserProfile {
+  userId:string;
   age: number | null | undefined;
   bio: string | null | undefined;
   dob: Timestamp | null | undefined;

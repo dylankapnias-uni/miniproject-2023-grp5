@@ -1,9 +1,17 @@
-<body>
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2"><a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
+      <ion-col size="8" >
+        <div class="ion-text-center down">
+          <ion-label>Shop</ion-label>
+        </div></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="margin-top: 75px;">
+    <ion-row>
+      <ion-col size="12"><ion-button class = "blocked_accounts" (click) = "LoadBlockedPage()">Blocked Accounts</ion-button></ion-col>
+    </ion-row>
 
-  <a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
-
-  <ion-label class = "page_name">Privacy</ion-label>
-  <ion-button class = "blocked_accounts">Blocked Accounts</ion-button>
-  
-  
-</body>
+  </ion-grid>
+</ion-content>

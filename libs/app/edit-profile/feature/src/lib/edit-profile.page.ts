@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import {
+  DeleteAccount,
+  EditProfile,
+}
+from '@mp/app/settings/util';
 
 @Component({
   selector: 'mp-edit-profile',
@@ -8,8 +14,15 @@ import { Router } from '@angular/router';
 })
 export class EditProfilePage 
 {
-  constructor(public r : Router)
-  {}
+  Bio!: string;
+  StateBio!: string;
+  changed = false;
+  uploadImg = false;
+  imagePreview!: SafeResourceUrl;
+  constructor(public r : Router, private sanitizer: DomSanitizer){
+    this.StateBio = "This is my bio pulled from state";
+    this.Bio = this.StateBio;
+  }
 
   LoadSettingsPage()
   {
@@ -19,5 +32,35 @@ export class EditProfilePage
   LoadInterests()
   {
     this.r.navigate(['/interests'])
+  }
+
+  UpdateBio(){
+    console.log(this.Bio, " Push to state from here");
+  }
+
+  validateBio(){
+    if(this.Bio != this.StateBio)
+      this.changed = true;
+    else
+      this.changed = false;
+  }
+
+  onFileSelected(event: any) {
+    this.changed= true;
+    this.uploadImg = true;
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        if (reader.result !== null) {
+          this.imagePreview = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result.toString());
+        }
+      };
+    }
+  }
+
+  onUpload() {
+    // Add your code to post the image here
   }
 }
