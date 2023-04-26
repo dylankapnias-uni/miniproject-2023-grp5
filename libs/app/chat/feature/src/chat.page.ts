@@ -25,10 +25,11 @@ export class ChatPage {
   @Select(ChatState.messages) messages$!: Observable<string[]>;
   Chat!: chat;
   id!: any;
-  me!: string;
+  profile!: IProfile | null;
   outgoingMessage = '';
   color = 'bronze';
   openChatTime!: Time;
+  me!: string;
 
   
   ionViewDidEnter() {
@@ -46,7 +47,7 @@ export class ChatPage {
       this.store.dispatch(new SubscribeToProfile());
       this.profile$.subscribe((profile) => {
         if (profile)
-          this.me = profile.userId;
+          this.profile = profile;
       });
 
       //Subscribe to chat state after getting id from route
@@ -62,10 +63,13 @@ export class ChatPage {
         }
       });
       const now: Date = new Date();
-      //console.log(tyepOf(now.getTime()));
 
       //this.openChatTime = Time();
-      this.me='2';
+      if(!this.profile)
+        this.me='2';
+      else
+        this.me=this.profile.userId;
+      
       this.Chat = {
         id: '1',
         messages: [
@@ -122,13 +126,6 @@ export class ChatPage {
       return timeString;
     }
 
-   /* startTimer(){
-      setInterval(() => {
-        this.Chat.timeLeft--;
-        }, 1000);
-      }
-    }*/
-
     startTimer(){
       setInterval(() => {
         this.Chat.timeLeft--;
@@ -157,6 +154,7 @@ export class ChatPage {
         const hour = now.getHours().toString().padStart(2, '0');
         const minute = now.getMinutes().toString().padStart(2, '0');
         const time = `${hour}:${minute}`;
+
 
         this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
         this.outgoingMessage = '';

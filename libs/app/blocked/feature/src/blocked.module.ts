@@ -1,24 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
-import { AccountPage } from './account.page';
-import { AccountPageRoutingModule } from './account.routing';
 import { NgxsModule } from '@ngxs/store';
 import { SettingsState, SettingsApi } from '@mp/app/settings/data-access';
 import { ProfileState, ProfilesApi } from '@mp/app/profile/data-access';
+import { BlockedPage } from './blocked.page';
+import { BlockedPageRoutingModule } from './blocked.routing';
 
 @NgModule({
   imports: [
     CommonModule,
+ 
     IonicModule.forRoot(),
-    AccountPageRoutingModule,
-    NgxsModule.forFeature([SettingsState, ProfileState]),
-    FormsModule
+    BlockedPageRoutingModule,
+    NgxsModule.forFeature([SettingsState, ProfileState])
   ],
-  declarations: [AccountPage],
-  exports: [AccountPage],
+  declarations: [BlockedPage],
+  exports: [BlockedPage],
   providers: [SettingsApi, ProfilesApi]
 
 })
-export class AccountPageModule {}
+export class BlockedPageModule {}

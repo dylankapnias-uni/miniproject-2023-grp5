@@ -1,9 +1,3 @@
-export * from './app-settings-feature.module';
-export * from './app-settings-feature.routing';
-export * from './lib/settings.page';
-
-
-
-
-
-
+export * from './settings.module';
+export * from './settings.routing';
+export * from './settings.page';

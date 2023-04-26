@@ -15,40 +15,7 @@ export class SettingsPage {
   {}
   @Select(SettingsState.settings) settings$!: Observable<string[]>;
 
-
-  LoadAccountPage()
-  {
-    this.r.navigate(['/account']);
-
-    //this.store.dispatch(new CreateSetting({id:'6'}));
+  LogOut(){
+    //this.r.navigate(['/login']);
   }
-
-  LoadEditProfilePage()
-  {
-    this.r.navigate(['/edit-profile']);
-  }
-
-  LoadPrivacyPage()
-  {
-    this.r.navigate(['/privacy']);
-  }
-
-  LoadShopPage()
-  {
-    this.r.navigate(['/shop']);
-  }
-
-  LoadAboutPage()
-  {
-    this.r.navigate(['/about']);
-  }
-
-  LogOut()
-  {
-    this.r.navigate(['/login']);
-  }
-
-
-
-
 }

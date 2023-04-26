@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
-import { InterestsPage } from './lib/interests.page';
-import { interestsPageRoutingModule } from './app-interests-feature.routing';
+import { InterestsPage } from './interests.page';
+import { interestsPageRoutingModule } from './interests.routing';
 
 @NgModule({
   imports: [
     CommonModule,
- 
     IonicModule,
     interestsPageRoutingModule
   ],

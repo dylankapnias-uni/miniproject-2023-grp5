@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Chat } from '../Chat.interface';
+import { Chat } from './Chat.interface';
 import { Router } from '@angular/router';
-import { Store, Selector, Select } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { MessagesState } from '@mp/app/messages/data-access';
 import { ProfileState } from '@mp/app/profile/data-access';
@@ -19,7 +19,7 @@ import { SubscribeToProfile } from '@mp/app/profile/util';
 export class MessagesPage {
   chats!: IChat[];
   noChats!: boolean;
-  uid!:string;
+  profile!: IProfile;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   @Select(MessagesState.messages) messages$!: Observable<IChat[]>;
 
@@ -27,17 +27,19 @@ export class MessagesPage {
   constructor(private router: Router, private store: Store) {
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {
-      if(profile != null)
-        this.uid = profile.userId;
+      if (profile)
+        this.profile = profile;
     });
-    this.store.dispatch(new GetMessages({uid: this.uid}));
-    this.messages$.subscribe((messages) => {
-      if(messages != null){
-        this.chats = messages;
-        console.log(this.chats);
-        this.noChats = this.chats.length === 0;
-      }
-    });
+    if(this.profile){
+      this.store.dispatch(new GetMessages({uid: this.profile.userId}));
+      this.messages$.subscribe((messages) => {
+        if(messages != null){
+          this.chats = messages;
+          console.log(this.chats);
+          this.noChats = this.chats.length === 0;
+        }
+      });
+    }
   }
 
   openChat(chatId: string){

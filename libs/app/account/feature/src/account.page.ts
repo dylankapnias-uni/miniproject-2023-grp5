@@ -82,5 +82,4 @@ export class AccountPage
     console.log(this.sexuality);
     console.log(dateString);
   }
-
 }

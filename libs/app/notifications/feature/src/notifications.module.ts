@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { notificationsPage } from './notifications.page';
 import { NotificationsRouting } from './notifications.routing';
 import { NgxsModule } from '@ngxs/store';
+import { ProfileState, ProfilesApi } from '@mp/app/profile/data-access';
 import { NotificationsState, NotificationsApi } from '@mp/app/notifications/data-access';
 
 @NgModule({
@@ -11,11 +12,11 @@ import { NotificationsState, NotificationsApi } from '@mp/app/notifications/data
     CommonModule,
     IonicModule,
     NotificationsRouting,
-    NgxsModule.forFeature([NotificationsState])
+    NgxsModule.forFeature([NotificationsState, ProfileState])
   ],
   declarations: [notificationsPage],
   exports: [notificationsPage],
-  providers: [NotificationsApi]
+  providers: [NotificationsApi, ProfilesApi]
 
 })
 export class notificationsPageModule {}

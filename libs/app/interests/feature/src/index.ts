@@ -1,4 +1,3 @@
-
-export * from './app-interests-feature.module';
-export * from './app-interests-feature.routing';
-export * from './lib/interests.page';
+export * from './interests.module';
+export * from './interests.routing';
+export * from './interests.page';

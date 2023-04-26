@@ -9,6 +9,10 @@ from '@mp/app/notifications/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { NotificationsState } from '@mp/app/notifications/data-access';
+import { IProfile } from '@mp/api/profiles/util';
+import { Block } from '@mp/app/settings/util';
+import { SubscribeToProfile } from '@mp/app/profile/util';
+import { ProfileState } from '@mp/app/profile/data-access';
 
 @Component({
   selector: 'mp-notificationss',
@@ -17,11 +21,18 @@ import { NotificationsState } from '@mp/app/notifications/data-access';
 })
 export class notificationsPage {
   @Select(NotificationsState.notifications) notifications$!: Observable<string[]>;
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
   notifications!: string[];
   matches!: any[];
+  profile!: IProfile | null;
   constructor(private router: Router, private store: Store){
     this.notifications = ['New match made', 'Your daily time has been added', 'Your time is running out'];
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if (profile)
+        this.profile = profile;
+    });
     this.matches = ["https://images.unsplash.com/photo-1609741873305-3208c472c269?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", "https://images.unsplash.com/photo-1609741873305-3208c472c269?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80", "https://images.unsplash.com/photo-1609741873305-3208c472c269?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"];
     this.notifications$.subscribe((notifications) => {
       if(notifications != null){

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { NgxsModule } from '@ngxs/store';
-import { SettingsPage } from './lib/settings.page';
-import { SettingsPageRoutingModule } from './app-settings-feature.routing';
+import { SettingsPage } from './settings.page';
+import { SettingsPageRoutingModule } from './settings.routing';
 import { SettingsState } from '@mp/app/settings/data-access';
 import { SettingsApi } from '@mp/app/settings/data-access';
 @NgModule({

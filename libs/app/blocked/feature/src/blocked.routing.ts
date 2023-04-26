@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SettingsPage } from './lib/settings.page';
+import { BlockedPage } from './blocked.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SettingsPage,
+    component: BlockedPage,
   }
 ];
 
@@ -13,5 +13,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SettingsPageRoutingModule 
+export class BlockedPageRoutingModule 
 {}

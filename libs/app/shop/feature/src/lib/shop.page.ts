@@ -13,17 +13,18 @@ import { IProfile } from '@mp/api/profiles/util';
 export class ShopPage 
 {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  id!: string;
+  profile!: IProfile | null;
   constructor (public r: Router, public store: Store){
     this.profile$.subscribe((profile) => {
       if(profile != null){
-        this.id = profile.userId;
+        this.profile = profile;
       }
     });
   }
   
   addTime(time:number){
     console.log("Add "+ time +" minutes to the time");
-    this.store.dispatch(new BuyTime({time:time, uid:this.id}));
+    if(this.profile)
+      this.store.dispatch(new BuyTime({time:time, uid:this.profile.userId}));
   }
 }

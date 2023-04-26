@@ -20,13 +20,14 @@ import { IProfile } from '@mp/api/profiles/util';
 export class BlockedPage {
   @Select(SettingsState.blocked) blocked$!: Observable<string[]>;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  id!: string;
+  profile!: IProfile | null;
   constructor(public r : Router, private store: Store){
     this.profile$.subscribe((profile) => {
       if(profile != null)
-        this.id = profile.userId;
+        this.profile = profile;
     });
-    this.store.dispatch(new GetBlocked({uid:this.id}));
+    if(this.profile)
+      this.store.dispatch(new GetBlocked({uid:this.profile.userId}));
   }
 
   users: any[] = [

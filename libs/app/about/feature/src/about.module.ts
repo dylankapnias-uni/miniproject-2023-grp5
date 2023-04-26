@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
-import { AboutPage } from './lib/about.page';
-import { AboutPageRoutingModule } from './app-about-feature.routing';
+import { AboutPage } from './about.page';
+import { AboutPageRoutingModule } from './about.routing';
 
 @NgModule({
   imports: [
