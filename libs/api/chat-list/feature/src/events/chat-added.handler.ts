@@ -10,7 +10,7 @@ export class ChatAddedHandler
 
   async handle(event: ChatAddedEvent) {
     console.log(`${ChatAddedHandler.name}`);
-    if(!event.chat.chatRef) throw new Error('ChatRef not found');
-    await this.repository.addToChatList(event.chat.userId, event.chat.chatRef[event.chat.chatRef.length-1].chatRef, event.chat.chatRef[event.chat.chatRef.length-1].otherUserID);
+    if(!event.chat.chatList) throw new Error('ChatRef not found');
+    await this.repository.addToChatList(event.chat.userId, event.chat.chatList[event.chat.chatList.length-1].chatRef, event.chat.chatList[event.chat.chatList.length-1].otherUserID);
   }
 }

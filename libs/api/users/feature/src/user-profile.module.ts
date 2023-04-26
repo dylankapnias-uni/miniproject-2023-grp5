@@ -33,4 +33,4 @@ export const QueryHandlers = [
   ],
   exports: [UserProfileService],
 })
-export class UsersModule {}
+export class UserProfileModule {}

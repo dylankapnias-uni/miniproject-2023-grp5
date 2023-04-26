@@ -1,5 +1,5 @@
-import { IChatReferences } from "../interfaces";
+import { IChatList } from "../interfaces";
 
 export interface IFetchChatListResponse {
-    chatRefs:IChatReferences[];
+    chatList:IChatList;
 }

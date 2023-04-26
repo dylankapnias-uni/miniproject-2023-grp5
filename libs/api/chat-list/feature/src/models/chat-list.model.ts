@@ -5,18 +5,18 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export class Chatlist extends AggregateRoot implements IChatList {
 constructor(
   public userId: string,
-  public chatRef: IChatReferences[]|null|undefined,
+  public chatList: IChatReferences[]|null|undefined,
 ) {
   super();
-  if(!chatRef){
-    this.chatRef=[];
+  if(!chatList){
+    this.chatList=[];
   }
 }
 
 static fromData(chatList:IChatList): Chatlist {
   const instance = new Chatlist(
     chatList.userId,
-    chatList.chatRef
+    chatList.chatList
   );
   return instance;
 }
@@ -26,8 +26,8 @@ create() {
 }
 
 addChat(chatRef: IChatReferences) {
-  if(!this.chatRef) this.chatRef=[];
-  this.chatRef.push(chatRef);
+  if(!this.chatList) this.chatList=[];
+  this.chatList.push(chatRef);
 
   this.apply(new ChatAddedEvent(this.toJSON()));
 }
@@ -35,7 +35,7 @@ addChat(chatRef: IChatReferences) {
 toJSON(): IChatList {
   return {
     userId: this.userId,
-    chatRef: this.chatRef,
+    chatList: this.chatList,
   };
 }
 }

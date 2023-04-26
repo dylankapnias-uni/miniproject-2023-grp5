@@ -10,8 +10,8 @@ export class FetchChatListHandler
     async execute(query: FetchChatListQuery) {
         console.log(`${FetchChatListHandler.name}`);
         const request = query.request;
-        const response: IChatReferences[] = (await this.repository.getForUserID(request.userId));
-        const data: IFetchChatListResponse = {chatRefs:response};
+        const response: IChatList = (await this.repository.getForUserID(request.userId));
+        const data: IFetchChatListResponse = {chatList: response};
         return data;
     }
 }

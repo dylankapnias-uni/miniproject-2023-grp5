@@ -1,6 +1,7 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
-import { SendMessageCommand, ISendMessageResponse } from "@mp/api/chat/util";
+import { SendMessageCommand, ISendMessageResponse, IChat } from "@mp/api/chat/util";
 import {ChatRepository} from '@mp/api/chat/data-access'
+import { Chat } from "../models";
 @CommandHandler(SendMessageCommand)
 export class SendMessageHandler implements ICommandHandler<SendMessageCommand, ISendMessageResponse>
 {
@@ -10,25 +11,15 @@ export class SendMessageHandler implements ICommandHandler<SendMessageCommand, I
       console.log(`${SendMessageHandler.name}`);
   
       const request = command.request;
-      const userId = request.userId;
     
       
-      if(!userMatch.user?.userId) throw new Error('User ID is null');
-      const resp = await this.repository.getHomeValuesForUser(userMatch.user?.userId) as IUserRef;
-      const data: IParsingData={userId:userId, userRef:resp};
-      const home = this.publisher.mergeObjectContext(Home.fromData(data));
+      if(!request.message.message) throw new Error('Message is null');
+      const resp = await this.repository.getChat(request.chatId) as IChat;
+      const chat = this.publisher.mergeObjectContext(Chat.fromData(resp));
+      chat.sendMessage(request.message);
+      chat.commit();
   
-      if (userMatch.match){
-        //TODO: Create New Chat
-        const response: IAcceptUserResponse ={home:home} as IAcceptUserResponse;
-  
-        return response;
-      }
-  
-      home.acceptUser(userMatch);
-      home.commit();
-  
-      const response: IAcceptUserResponse ={home:home} as IAcceptUserResponse;
+      const response: ISendMessageResponse ={chat:chat} as ISendMessageResponse;
       
       return response;
     }

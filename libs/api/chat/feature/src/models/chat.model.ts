@@ -1,26 +1,33 @@
 
-import { IChat, IMessages, MessageSentEvent } from '@mp/api/chat/util';
-import { UserHomeCreatedEvent, IHome, IMatched, IParsingData, IUserMatch, IUserRef, UserAcceptedEvent, UserRejectedEvent } from '@mp/api/home/util';
+import { 
+  ChatCreatedEvent, 
+  IChat, 
+  IMessages, 
+  MessageSentEvent 
+} from '@mp/api/chat/util';
+
 import { AggregateRoot } from '@nestjs/cqrs';
 
 export class Chat extends AggregateRoot implements IChat {
   constructor(
-    public ChatID: string,
+    public chatID: string,
     public messages: IMessages[]|null|undefined,
     public timeAdderID: string|null|undefined,
     public timeRemaining: number|null|undefined,
-    public totalTimeUsed: number|null|undefined
+    public totalTimeUsed: number|null|undefined,
+    public users: string[]
   ) {
     super();
   }
 
   static fromData(chat: IChat): Chat {
     const instance = new Chat(
-      chat.ChatID,
+      chat.chatID,
       chat.messages,
-        chat.timeAdderID,
-        chat.timeRemaining,
-        chat.totalTimeUsed
+      chat.timeAdderID,
+      chat.timeRemaining,
+      chat.totalTimeUsed,
+      [chat.users[0], chat.users[1]]
     );
     return instance;
   }
@@ -35,24 +42,16 @@ export class Chat extends AggregateRoot implements IChat {
     if(!this.messages) this.messages = [];
     this.messages.push(newMessage);
     this.apply(new MessageSentEvent(this.toJSON()));
-    
-    
-  }
-
-  public rejectUser(newUserId: string) {
-
-      this.userRef.visited.push(newUserId);
-      this.apply(new UserRejectedEvent(this.toJSON()));
-    
   }
 
   toJSON(): IChat {
     return {
-      ChatID: this.ChatID,
+      chatID: this.chatID,
       messages: this.messages,
       timeAdderID: this.timeAdderID,
      timeRemaining: this.timeRemaining,
-     totalTimeUsed: this.totalTimeUsed
+     totalTimeUsed: this.totalTimeUsed,
+     users:[this.users[0], this.users[1]]
     };
   }
 }

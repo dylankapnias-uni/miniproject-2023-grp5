@@ -16,7 +16,10 @@ export class AddChatHandler
         const userId=request.userId;
         const req = await this.repository.getForUserID(request.userId);
         if(!req) throw new Error('Chatlist not found');
-        const data:IChatList={userId:userId,chatRef:req};
+        const data:IChatList = {
+            userId:userId,
+            chatList:req.chatList
+        };
         const chatList = this.publisher.mergeObjectContext(Chatlist.fromData(data));
         chatList.addChat(request.chatRef);
         chatList.commit();

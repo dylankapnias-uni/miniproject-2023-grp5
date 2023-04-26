@@ -14,11 +14,11 @@ export class CreateChatListHandler
 
         const request = command.request;
         const userId=request.userId;
-        const data:IChatList={userId:userId,chatRef:[]};
+        const data:IChatList={userId:userId,chatList:[]};
         const chatList = this.publisher.mergeObjectContext(Chatlist.fromData(data));
         chatList.create();
         chatList.commit();
-        const response: IAddChatResponse = {chat:chatList};
+        const response: ICreateChatListResponse = {chat:chatList};
         return response;
     }
 }
