@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { chat } from './chat.interface';
 import { ChatState } from '@mp/app/chat/data-access';
-import { Store, Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { IProfile } from '@mp/api/profiles/util';
+import { ProfileState } from '@mp/app/profile/data-access';
+import { SubscribeToProfile } from '@mp/app/profile/util';
 import { 
   SendMessage,
   AddTime,
@@ -33,12 +36,20 @@ export class ChatPage {
     if (content)
       content.scrollTop = content.scrollHeight;
   }
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
   constructor(
     private router:Router,
     private route: ActivatedRoute,
     private store: Store
     ) {
+      this.store.dispatch(new SubscribeToProfile());
+      this.profile$.subscribe((profile) => {
+        if (profile)
+          this.me = profile.userId;
+      });
+
+      //Subscribe to chat state after getting id from route
       //Get id from route 
       this.id = this.route.snapshot.paramMap.get('id');
       console.log('ID:', this.id);
