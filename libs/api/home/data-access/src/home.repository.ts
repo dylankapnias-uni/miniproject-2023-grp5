@@ -18,7 +18,11 @@ export class HomeRepository {
         .firestore()
         .collection('Home')
         .doc(userID)
-        .create({accepted:[],visited:[userID]}));
+        .create({
+          userId: userID, 
+          accepted:[],
+          visited:[userID]
+        }));
     }
 
 
