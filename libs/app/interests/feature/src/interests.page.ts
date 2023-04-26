@@ -12,7 +12,7 @@ import { SubscribeToProfile } from '@mp/app/profile/util';
   styleUrls: ['./interests.page.scss']
 })
 export class InterestsPage{
-  MyInterests: string[] = ['Adrian', 'Is', 'Handsome'];
+  MyInterests: string[] = ['Swimming', 'Dog', 'Food'];
   uid!:string;
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   constructor(private store: Store){

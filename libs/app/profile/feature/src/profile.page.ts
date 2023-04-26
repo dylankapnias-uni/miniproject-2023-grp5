@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
 
 export class ProfilePage {
   interests: string[] = ['Swimming', 'Dog', 'Food'];
-  temp: string[] = ['Swimming', 'Dog', 'Food'];
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   profile!: IUserProfile | null;
   constructor (public r : Router, public store: Store){
