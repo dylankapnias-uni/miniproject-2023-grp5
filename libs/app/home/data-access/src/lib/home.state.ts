@@ -9,11 +9,23 @@ import {
     FilterCards
  } from '@mp/app/home/util';
 import { IUserProfile } from '@mp/api/users/util';
+import { 
+  IAcceptUserRequest,
+  IAcceptUserResponse,
+  IRejectUserRequest,
+  IRejectUserResponse,
+  ICreateUserHomeResponse,
+  ICreateUserHomeRequest,
+  IRetrieveHomeUsersResponse,
+  IRetrieveHomeUsersRequest,
+ } from '@mp/api/home/util';
+
+import { HomeApi } from './home.api';
 
 export interface HomeStateModel{
   home:{
     model:{
-      users: any[] | null;
+      users: IUserProfile[] | null;
     };
     dirty: false;
     status: string;
@@ -36,10 +48,16 @@ export interface HomeStateModel{
 })
 @Injectable()
 export class HomeState {
-
+  constructor(public homeApi: HomeApi) {};
   @Action(SwipeAccept)
   async SwipeAccept(ctx: StateContext<HomeStateModel>, {payload}: SwipeAccept) {
-    //Works and catches Chat id
+    const request: IAcceptUserRequest = {
+      userId: payload.userId,
+      swipedUserId : payload.swipedUserId,
+    };
+
+    const response = await this.homeApi.acceptUser(request);
+    const rsps = response.data;
     ctx.patchState({
       
     });
@@ -47,7 +65,13 @@ export class HomeState {
 
   @Action(SwipeReject)
   async SwipeReject(ctx: StateContext<HomeStateModel>, {payload}: SwipeReject) {
-    //Works and catches Chat id and outGoingMessage
+    const request: IRejectUserRequest = {
+      userId: payload.userId,
+      rejectedUserId : payload.swipedUserId
+    };
+
+    const response = await this.homeApi.rejectUser(request);
+    const rsps = response.data;
     ctx.patchState({
       
     });
@@ -60,6 +84,7 @@ export class HomeState {
       
     });
   }
+ 
 
 
   @Selector()

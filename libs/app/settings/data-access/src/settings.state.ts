@@ -152,25 +152,24 @@ export class SettingsState {
 
   @Action(UpdateAccount)
   async UpdateAccount(ctx: StateContext<SettingsStateModel>, {payload}: UpdateAccount) {
-    const tempRequest : IUserProfile = {
-      userId: payload.uid,
-      email: payload.email,
-      name: payload.name,
-      profilePicture: payload.profilePicture,
-      phoneNumber: payload.phoneNumber,
-      customClaims: payload.customClaims,
-      age: payload.age,
-      bio: payload.bio,
-      dob: payload.dob,
-      gender: payload.gender,
-      interests: payload.interests,
-      sexuality: payload.sexuality,
-      time: payload.time,
-      posts: payload.posts
-    };
 
     const request : IUpdateUserProfileRequest = {
-      userProfile : tempRequest
+      userProfile : {
+        userId: payload.uid,
+        email: payload.email,
+        name: payload.name,
+        profilePicture: payload.profilePicture,
+        phoneNumber: payload.phoneNumber,
+        customClaims: payload.customClaims,
+        age: payload.age,
+        bio: payload.bio,
+        dob: payload.dob,
+        gender: payload.gender,
+        interests: payload.interests,
+        sexuality: payload.sexuality,
+        time: payload.time,
+        posts: payload.posts
+      }
     };
     const response = await this.settingsApi.updateUserProfile(request);
     const rsps = response.data;

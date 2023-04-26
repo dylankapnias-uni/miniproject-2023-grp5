@@ -85,7 +85,7 @@ export class HomePage {
       }
       else if(finalX <= -100){ //Reject Card
         const t = this.users[index].id;
-        this.store.dispatch(new SwipeReject({uid:t}));
+        //this.store.dispatch(new SwipeReject({uid:t}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(-1000px) rotate(-30deg)";
 
@@ -127,7 +127,7 @@ export class HomePage {
       }
       else if(finalX >= 100){  //Accept Card
         const t = this.users[index].id;
-        this.store.dispatch(new SwipeAccept({uid:t}));
+        //this.store.dispatch(new SwipeAccept({uid:t}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(1000px) rotate(30deg)";
 
