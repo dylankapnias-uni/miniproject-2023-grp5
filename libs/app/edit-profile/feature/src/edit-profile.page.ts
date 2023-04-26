@@ -8,7 +8,8 @@ import {
 }
 from '@mp/app/settings/util';
 import { Observable } from 'rxjs';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 
@@ -26,7 +27,7 @@ export class EditProfilePage
   changed = false;
   uploadImg = false;
   imagePreview!: SafeResourceUrl;
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 
   constructor(public r : Router, private sanitizer: DomSanitizer, private store: Store){
     this.store.dispatch(new SubscribeToProfile());

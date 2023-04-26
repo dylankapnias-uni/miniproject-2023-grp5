@@ -3,7 +3,8 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { chat } from './chat.interface';
 import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { 
@@ -25,7 +26,7 @@ export class ChatPage {
   @Select(ChatState.messages) messages$!: Observable<string[]>;
   Chat!: chat;
   id!: any;
-  profile!: IProfile | null;
+  profile!: IUserProfile | null;
   outgoingMessage = '';
   color = 'bronze';
   openChatTime!: Time;
@@ -37,7 +38,7 @@ export class ChatPage {
     if (content)
       content.scrollTop = content.scrollHeight;
   }
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 
   constructor(
     private router:Router,

@@ -9,8 +9,8 @@ import {
 }
 from '@mp/app/settings/util';
 import { ProfileState } from '@mp/app/profile/data-access';
-import { IProfile } from '@mp/api/profiles/util';
-
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 
 @Component({
   selector: 'mp-blocked',
@@ -19,8 +19,8 @@ import { IProfile } from '@mp/api/profiles/util';
 })
 export class BlockedPage {
   @Select(SettingsState.blocked) blocked$!: Observable<string[]>;
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  profile!: IProfile | null;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  profile!: IUserProfile | null;
   constructor(public r : Router, private store: Store){
     this.profile$.subscribe((profile) => {
       if(profile != null)

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -10,5 +11,5 @@ import { Observable } from 'rxjs';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage {
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
@@ -18,8 +19,8 @@ import { Router } from '@angular/router';
 export class ProfilePage {
   interests: string[] = ['Swimming', 'Dog', 'Food'];
   temp: string[] = ['Swimming', 'Dog', 'Food'];
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  profile!: IProfile | null;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  profile!: IUserProfile | null;
   constructor (public r : Router, public store: Store){
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {

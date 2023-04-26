@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
@@ -32,7 +33,7 @@ export class OtherUserPage {
       window.location.reload();
     }, 100)
   }
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 
   option = {
     

@@ -5,7 +5,8 @@ import { IonPopover } from '@ionic/angular';
 import { UpdateAccount, DeleteAccount } from '@mp/app/settings/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 
@@ -17,7 +18,7 @@ import { SubscribeToProfile } from '@mp/app/profile/util';
 export class AccountPage 
 {
   uid!: string;
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   constructor(public r : Router, public alertController:AlertController, private store: Store){
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {

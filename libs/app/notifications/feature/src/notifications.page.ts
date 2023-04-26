@@ -9,7 +9,8 @@ from '@mp/app/notifications/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { NotificationsState } from '@mp/app/notifications/data-access';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { Block } from '@mp/app/settings/util';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { ProfileState } from '@mp/app/profile/data-access';
@@ -21,11 +22,11 @@ import { ProfileState } from '@mp/app/profile/data-access';
 })
 export class notificationsPage {
   @Select(NotificationsState.notifications) notifications$!: Observable<string[]>;
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 
   notifications!: string[];
   matches!: any[];
-  profile!: IProfile | null;
+  profile!: IUserProfile | null;
   constructor(private router: Router, private store: Store){
     this.notifications = ['New match made', 'Your daily time has been added', 'Your time is running out'];
     this.store.dispatch(new SubscribeToProfile());

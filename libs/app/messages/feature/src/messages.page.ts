@@ -7,7 +7,8 @@ import { MessagesState } from '@mp/app/messages/data-access';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Observable } from 'rxjs';
 import { IChat } from '@mp/app/chat/data-access';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 import { Block } from '@mp/app/settings/util';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 
@@ -19,8 +20,8 @@ import { SubscribeToProfile } from '@mp/app/profile/util';
 export class MessagesPage {
   chats!: IChat[];
   noChats!: boolean;
-  profile!: IProfile;
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  profile!: IUserProfile;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   @Select(MessagesState.messages) messages$!: Observable<IChat[]>;
 
 

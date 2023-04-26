@@ -4,7 +4,8 @@ import { BuyTime } from '@mp/app/settings/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ProfileState } from '@mp/app/profile/data-access';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { IUserProfile } from '@mp/api/users/util';
 @Component({
   selector: 'mp-shop',
   templateUrl: './shop.page.html',
@@ -12,8 +13,8 @@ import { IProfile } from '@mp/api/profiles/util';
 })
 export class ShopPage 
 {
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  profile!: IProfile | null;
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  profile!: IUserProfile | null;
   constructor (public r: Router, public store: Store){
     this.profile$.subscribe((profile) => {
       if(profile != null){
