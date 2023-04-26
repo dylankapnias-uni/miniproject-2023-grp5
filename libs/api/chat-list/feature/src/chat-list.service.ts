@@ -1,20 +1,42 @@
 import { Injectable } from '@angular/core';
 import { CommandBus } from '@nestjs/cqrs';
 import { 
-    ICreateChatRequest,
-    IFetchChatRequest,
+    ICreateChatListRequest,
+    IFetchChatListRequest,
     AddChatCommand,
     FetchChatListCommand,
     IAddChatResponse,
-    IFetchChatResponse
+    IFetchChatListResponse,
+    ICreateChatListResponse,
+    CreateChatListCommand,
+    FetchChatListQuery,
+    IAddChatRequest
 } from '@mp/api/chat-list/util'
 
 @Injectable()
-export class ChatService {
+export class ChatListService {
   constructor(private readonly commandBus: CommandBus) {}
 
-    async createChat(
-        request: ICreateChatRequest
+    async createChatList(
+        request: ICreateChatListRequest
+        ): Promise<ICreateChatListResponse> {
+        return await this.commandBus.execute<
+            CreateChatListCommand, 
+            ICreateChatListResponse
+        >(new CreateChatListCommand(request));
+    }
+
+    async fetchChatList(
+        request: IFetchChatListRequest
+        ): Promise<IFetchChatListResponse> {
+        return await this.commandBus.execute<
+            FetchChatListCommand, 
+            IFetchChatListResponse
+        >(new FetchChatListQuery(request));
+    }
+
+    async addChat(
+        request: IAddChatRequest
         ): Promise<IAddChatResponse> {
         return await this.commandBus.execute<
             AddChatCommand, 
@@ -22,12 +44,4 @@ export class ChatService {
         >(new AddChatCommand(request));
     }
 
-    async fetchChatList(
-        request: IFetchChatRequest
-        ): Promise<IFetchChatResponse> {
-        return await this.commandBus.execute<
-            FetchChatListCommand, 
-            IFetchChatResponse
-        >(new FetchChatListCommand(request));
-    }
 }

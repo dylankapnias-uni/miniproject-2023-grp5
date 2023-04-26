@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { IChat } from '@mp/app/chat/data-access';
 import { IProfile } from '@mp/api/profiles/util';
 import { Block } from '@mp/app/settings/util';
+import { SubscribeToProfile } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-messages',
@@ -18,12 +19,18 @@ import { Block } from '@mp/app/settings/util';
 export class MessagesPage {
   chats!: IChat[];
   noChats!: boolean;
+  uid!:string;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   @Select(MessagesState.messages) messages$!: Observable<IChat[]>;
 
 
   constructor(private router: Router, private store: Store) {
-    this.store.dispatch(new GetMessages({uid: '1'}));
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if(profile != null)
+        this.uid = profile.userId;
+    });
+    this.store.dispatch(new GetMessages({uid: this.uid}));
     this.messages$.subscribe((messages) => {
       if(messages != null){
         this.chats = messages;

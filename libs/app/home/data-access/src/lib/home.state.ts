@@ -8,6 +8,7 @@ import {
     SwipeReject,
     FilterCards
  } from '@mp/app/home/util';
+import { IUserProfile } from '@mp/api/users/util';
 
 export interface HomeStateModel{
   home:{

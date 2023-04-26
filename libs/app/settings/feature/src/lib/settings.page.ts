@@ -18,9 +18,9 @@ export class SettingsPage {
 
   LoadAccountPage()
   {
-    // this.r.navigate(['/account']);
+    this.r.navigate(['/account']);
 
-    this.store.dispatch(new CreateSetting({id:'6'}));
+    //this.store.dispatch(new CreateSetting({id:'6'}));
   }
 
   LoadEditProfilePage()

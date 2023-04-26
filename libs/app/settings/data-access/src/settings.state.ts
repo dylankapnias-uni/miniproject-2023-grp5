@@ -20,6 +20,18 @@ import {
   IUpdatePrivacyRequest, 
   IUpdatePrivacyResponse,
 } from '@mp/api/settings/util';
+
+import {
+  ICreateUserRequest,
+  ICreateUserResponse,
+  IDeleteUserProfileRequest,
+  IDeleteUserProfileResponse,
+  IGetUserProfileRequest,
+  IGetUserProfileResponse,
+  IUpdateUserProfileRequest, 
+  IUpdateUserProfileResponse 
+} from '@mp/api/users/util';
+
 import { SettingsApi } from './settings.api'
 import {
     UpdateAccount,
@@ -31,12 +43,13 @@ import {
     CreateSetting
 }
 from '@mp/app/settings/util';
+
+import { IUserProfile } from '@mp/api/users/util';
+
 import { IChat } from '@mp/app/chat/data-access';
 import { Timestamp } from '@angular/fire/firestore';
 
-import { ITime } from './interfaceTemp/time.interface';
-import { IPrivacyDetails } from './interfaceTemp/privacy-settings.interface';
-import { ProfilePrivacy } from './interfaceTemp/profile-privacy.enum';
+import { ITime, IPrivacyDetails, ProfilePrivacy } from '@mp/api/settings/util';
 import { httpsCallable } from '@angular/fire/functions';
 
 
@@ -139,15 +152,41 @@ export class SettingsState {
 
   @Action(UpdateAccount)
   async UpdateAccount(ctx: StateContext<SettingsStateModel>, {payload}: UpdateAccount) {
-    //Works and catches Chat id
-    ctx.patchState({
+    const tempRequest : IUserProfile = {
+      userId: payload.uid,
+      email: payload.email,
+      name: payload.name,
+      profilePicture: payload.profilePicture,
+      phoneNumber: payload.phoneNumber,
+      customClaims: payload.customClaims,
+      age: payload.age,
+      bio: payload.bio,
+      dob: payload.dob,
+      gender: payload.gender,
+      interests: payload.interests,
+      sexuality: payload.sexuality,
+      time: payload.time,
+      posts: payload.posts
+    };
 
+    const request : IUpdateUserProfileRequest = {
+      userProfile : tempRequest
+    };
+    const response = await this.settingsApi.updateUserProfile(request);
+    const rsps = response.data;
+    ctx.patchState({
+      
     });
   }
 
   @Action(DeleteAccount)
   async DeleteAccount(ctx: StateContext<SettingsStateModel>, {payload}: DeleteAccount) {
-    //Works and catches Chat id and outGoingMessage
+    const request : IDeleteUserProfileRequest = {
+      userId: payload.uid,
+    };
+
+    const response = await this.settingsApi.deleteUserProfile(request);
+    const rsps = response.data;
     ctx.patchState({
       
     });
@@ -155,7 +194,29 @@ export class SettingsState {
 
   @Action(EditProfile)
   async EditProfile(ctx: StateContext<SettingsStateModel>, {payload}: EditProfile) {
-    //Works and catches Chat id and time
+    //Make call to api and update state
+    const tempRequest : IUserProfile = {
+      userId: payload.uid,
+      email: payload.email,
+      name: payload.name,
+      profilePicture: payload.profilePicture,
+      phoneNumber: payload.phoneNumber,
+      customClaims: payload.customClaims,
+      age: payload.age,
+      bio: payload.bio,
+      dob: payload.dob,
+      gender: payload.gender,
+      interests: payload.interests,
+      sexuality: payload.sexuality,
+      time: payload.time,
+      posts: payload.posts
+    };
+
+    const request : IUpdateUserProfileRequest = {
+      userProfile : tempRequest
+    };
+    const response = await this.settingsApi.updateUserProfile(request);
+    const rsps = response.data;
     ctx.patchState({
       
     });

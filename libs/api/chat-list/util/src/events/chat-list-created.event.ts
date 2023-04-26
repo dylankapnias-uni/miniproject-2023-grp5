@@ -1,6 +1,6 @@
 import { IChatList } from "../interfaces";
 
-export class ChatAddedEvent {
+export class ChatListCreatedEvent {
     constructor(public readonly chat: IChatList) {}
   }
   

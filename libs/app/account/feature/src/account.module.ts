@@ -6,13 +6,14 @@ import { AccountPage } from './lib/account.page';
 import { AccountPageRoutingModule } from './account.routing';
 import { NgxsModule } from '@ngxs/store';
 import { SettingsState } from '@mp/app/settings/data-access';
+import { ProfileState } from '@mp/app/profile/data-access';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule.forRoot(),
     AccountPageRoutingModule,
-    NgxsModule.forFeature([SettingsState]),
+    NgxsModule.forFeature([SettingsState, ProfileState]),
     FormsModule
   ],
   declarations: [AccountPage],

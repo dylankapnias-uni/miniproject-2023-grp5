@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Store, Select } from '@ngxs/store';
 import {
   DeleteAccount,
   EditProfile,
 }
 from '@mp/app/settings/util';
+import { Observable } from 'rxjs';
+import { IProfile } from '@mp/api/profiles/util';
+import { ProfileState } from '@mp/app/profile/data-access';
+import { SubscribeToProfile } from '@mp/app/profile/util';
+
 
 @Component({
   selector: 'mp-edit-profile',
@@ -15,11 +21,19 @@ from '@mp/app/settings/util';
 export class EditProfilePage 
 {
   Bio!: string;
+  uid!:string;
   StateBio!: string;
   changed = false;
   uploadImg = false;
   imagePreview!: SafeResourceUrl;
-  constructor(public r : Router, private sanitizer: DomSanitizer){
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+
+  constructor(public r : Router, private sanitizer: DomSanitizer, private store: Store){
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if (profile)
+        this.uid = profile.userId;
+    });
     this.StateBio = "This is my bio pulled from state";
     this.Bio = this.StateBio;
   }

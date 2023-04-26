@@ -19,7 +19,7 @@ import {
 } from '@mp/api/notifications/util';
 import { NotificationsApi } from './notifications.api';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
-import { INotification } from './notifications.interface';
+import { INotification } from '@mp/api/notifications/util';
 import {  } from 'rxjs/operators';
 
 
@@ -106,17 +106,15 @@ export class NotificationsState {
     };
     const response = await this.notificationsApi.ClearNotifications(request);
     const rsps = response.data;
-
-
-
+  
     const notification: INotification = {
-      userID: payload.uid,
+      userId: payload.uid,
       inbox: []
     };
     ctx.patchState({
       NotificationForm:{
         model:{
-          notifications: notification
+          notifications: rsps.notification
         },
         dirty: false,
         status: '',
@@ -126,8 +124,7 @@ export class NotificationsState {
   }
 
   @Selector()
-  static notifications(state: NotificationsStateModel) 
-  {
+  static notifications(state: NotificationsStateModel) {
     return state.NotificationForm.model.notifications;
   }
 

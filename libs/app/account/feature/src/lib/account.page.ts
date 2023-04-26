@@ -4,6 +4,10 @@ import { AlertController } from '@ionic/angular';
 import { IonPopover } from '@ionic/angular';
 import { UpdateAccount, DeleteAccount } from '@mp/app/settings/util';
 import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { IProfile } from '@mp/api/profiles/util';
+import { ProfileState } from '@mp/app/profile/data-access';
+import { SubscribeToProfile } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-account',
@@ -12,7 +16,14 @@ import { Select, Store } from '@ngxs/store';
 })
 export class AccountPage 
 {
+  uid!: string;
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   constructor(public r : Router, public alertController:AlertController, private store: Store){
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if(profile != null)
+        this.uid = profile.userId;
+    });
     //Fetch these from state
     this.dob = '2002-10-07'+'T21:50:00+02:00';
     this.name = 'John';

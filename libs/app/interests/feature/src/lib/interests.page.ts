@@ -1,4 +1,9 @@
 import { Component} from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { IProfile } from '@mp/api/profiles/util';
+import { ProfileState } from '@mp/app/profile/data-access';
+import { SubscribeToProfile } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-interests',
@@ -7,6 +12,15 @@ import { Component} from '@angular/core';
 })
 export class InterestsPage{
   MyInterests: string[] = ['Adrian', 'Is', 'Handsome'];
+  uid!:string;
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  constructor(private store: Store){
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if (profile)
+        this.uid = profile.userId;
+    });
+  }
 
   interests: any[] = [
     {
