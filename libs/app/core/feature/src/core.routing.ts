@@ -30,19 +30,23 @@ const routes: Routes = [
   // },
   {
     path: 'home',
-    //canActivate: [AuthGuard],
-    //data: { authGuardPipe: redirectLoggedOut },
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
 
     loadChildren: () =>
       import('@mp/app/home/feature').then((m) => m.HomeModule),
   },
   {
     path: 'messages',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/messages/feature').then((m) => m.MessagesModule),
   },
   {
     path:'chat/:id',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/chat/feature').then((m) => m.ChatModule),
   },
@@ -52,16 +56,22 @@ const routes: Routes = [
   },
   {
     path: 'privacy',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/privacy/feature').then((m) => m.PrivacyModule),
   },
   {
     path: 'profile',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/profile/feature').then((m) => m.ProfileModule),
   },
   {
     path: 'other-user/:id',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
   },
@@ -72,6 +82,8 @@ const routes: Routes = [
   // },
   {
     path: 'interests',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/interests/feature').then((m) => m.interestsPageModule),
   },
@@ -124,8 +136,8 @@ const routes: Routes = [
   {
     path: 'settings',
     pathMatch: 'full',
-    //canActivate: [AuthGuard],
-    //data: { authGuardPipe: redirectLoggedIn },
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/settings/feature').then((m) => m.SettingsPageModule),
   },
@@ -189,25 +201,29 @@ const routes: Routes = [
   },
   {
     path: 'messages',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/messages/feature').then((m) => m.MessagesModule),
   },
   {
     path: 'chat/:id',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedOut },
     loadChildren: () =>
       import('@mp/app/chat/feature').then((m) => m.ChatModule),
   },
   {
     path: 'profile',
-    // canActivate: [AuthGuard],
-    // data: { authGuardPipe: redirectLoggedIn },
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/profile/feature').then((m) => m.ProfileModule),
   },
   {
     path: 'notifications',
-    // canActivate: [AuthGuard],
-    // data: { authGuardPipe: redirectLoggedIn },
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/notifications/feature').then((m) => m.notificationsPageModule),
   }
