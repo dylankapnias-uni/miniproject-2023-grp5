@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { 
     ICreateChatListRequest,
