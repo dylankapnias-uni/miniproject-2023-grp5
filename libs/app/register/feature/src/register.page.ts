@@ -7,23 +7,13 @@ import {
 } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'ms-register-page',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage 
-{
-
- 
-
-  editProfile()
-  {
-    this.r.navigate(['/edit-profile']);
-  }
-
+export class RegisterPage {
   @Select(actionsExecuting([Register]))
   busy$!: Observable<ActionsExecuting>;
   registerForm = this.fb.group({
@@ -32,9 +22,6 @@ export class RegisterPage
       [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
     ],
     password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
-    phoneNumber:['', [Validators.minLength(10), Validators.maxLength(10)]],
-    age:['', [Validators.minLength(2), Validators.maxLength(2)]],
-    dateOfBirth:['', [Validators.minLength(10), Validators.maxLength(10)]],
   });
   showPassword = false;
 
@@ -69,8 +56,7 @@ export class RegisterPage
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly store: Store,
-    public r : Router
+    private readonly store: Store
   ) {}
 
   register() {

@@ -1,12 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { ToastController } from '@ionic/angular';
 import { SubscribeToAuthState } from '@mp/app/auth/util';
 import { Store } from '@ngxs/store';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { ModalController } from '@ionic/angular';
-import { PostComponent } from '@mp/app/core/ui';
 // import { CoreModule as NavComponent } from '@mp/app/core/ui';
 //  NavComponent
 
@@ -26,26 +23,10 @@ export class CoreShell implements OnInit, OnDestroy {
     takeUntil(this.ngUnsubscribe)
   );
 
-  async PostModal(){
-    const modal = await this.modalController.create({
-      component: PostComponent,
-    });
-    modal.componentProps = {
-      onOk: () => this.onOk()
-    };
-    await modal.present();
-  }
-  
-  onOk() {
-    this.modalController.dismiss();
-  }
-
   constructor(
     private readonly store: Store,
     private readonly swUpdate: SwUpdate,
-    private readonly toastController: ToastController,
-    private router: Router,
-    public modalController: ModalController
+    private readonly toastController: ToastController
   ) {}
 
   ngOnInit(): void {
@@ -56,15 +37,6 @@ export class CoreShell implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  }
-
-  hasRoute(route: string) {
-    return this.router.url === route;
-  }
-
-  hasRouteVariable(route: string) {
-    const pattern = new RegExp('^' + route.replace(':id', '\\d+') + '$');
-    return pattern.test(this.router.url);
   }
 
   async updateToast() {

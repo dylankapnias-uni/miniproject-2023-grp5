@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+
 import { EditProfilePage } from './lib/edit-profile.page';
 import { EditProfilePageRoutingModule } from './app-edit-profile-feature.routing';
 
@@ -9,8 +9,7 @@ import { EditProfilePageRoutingModule } from './app-edit-profile-feature.routing
   imports: [
     CommonModule,
     IonicModule,
-    EditProfilePageRoutingModule,
-    FormsModule
+    EditProfilePageRoutingModule
   ],
   declarations: [EditProfilePage],
   exports: [EditProfilePage]

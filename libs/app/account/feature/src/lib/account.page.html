@@ -1,84 +1,41 @@
-<ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="2"><a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
-      <ion-col size="8" >
-        <div class="ion-text-center down">
-          <ion-label class = "page">Account</ion-label>
-        </div></ion-col>
-    </ion-row>
-  </ion-grid>
+<body>
 
-  <ion-grid style="margin-top: 75px;">
-    <ion-row>
-      <ion-col>
-        <ion-item >
-          <ion-label position="stacked"><b>Full Name</b></ion-label>
-          <ion-input [(ngModel)]="name"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item >
-          <ion-label position="stacked"><b>E-mail Address</b></ion-label>
-          <ion-input [(ngModel)]="email" type="email"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item >
-          <ion-label position="stacked"><b>Phone Number</b></ion-label>
-          <ion-input [(ngModel)]="phone" type="tel"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>    
-    <ion-row>
-      <ion-col>
-        <!--ion-button id="open-modal" expand="block" class="btn">Date of Birth</ion-button-->
-        <ion-item>
-          <ion-label position="stacked"><b>Date of Birth</b></ion-label>
-          <ion-button fill="clear" id="open-modal" expand="block">
-            <ion-icon [ngStyle]="{'font-size': '25px'}" slot="icon-only" name="calendar-outline"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="justify-content: center;">
-        <ion-item>
-          <ion-label position="stacked"><b>Gender</b></ion-label>
-          <ion-select aria-label="Gender" interface="popover" placeholder="Gender" [(ngModel)]="gender">
-            <ion-select-option value="Male">Male</ion-select-option>
-            <ion-select-option value="Female">Female</ion-select-option>
-            <ion-select-option value="Other">Other</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="delete_account_button" id="delete" (click)="Update()">Update Account</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button class="delete_account_button" id="delete" (click)="presentAlert()">Delete Account</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <!-- <ion-button class = "back_button" color = "light" (click) = "LoadSettingsPage()">
+      <ion-icon class = "back-icon" slot = "icon-only" name = "arrow-back-outline"></ion-icon>
+    </ion-button> -->
 
-
-  <ion-modal #modal trigger="open-modal">
-    <ng-template>
-      <ion-toolbar color="primary">
-        <ion-title style="color:#000000">Date of Birth</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="modal.dismiss()" style="color:#000000">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-      <ion-datetime [(ngModel)]="dob" presentation="date"></ion-datetime>
-    </ng-template>
-  </ion-modal>
-</ion-content>
+    <a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
+    
+    <ion-label class = "page_name"><b>Account</b></ion-label>
+    
+    <ion-item class = "full_name">
+      <ion-label position = "stacked" ><b>Full Name</b></ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    
+    <ion-item class = "email">
+      <ion-label position = "stacked" ><b>E-mail Address</b></ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    
+    <ion-item class = "phone">
+      <ion-label position = "stacked" ><b>Phone Number</b></ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    
+    <ion-item class = "gender">
+      <ion-label position = "stacked" ><b>Gender</b></ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    
+    <ion-item class = "birthday">
+      <ion-label position = "stacked" ><b>Date of Birth</b></ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    
+      
+    <ion-button class = "delete_account_button">Delete Account</ion-button>
+      
+    
+</body>
+    

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Chat } from '../Chat.interface';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'mp-messages',
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 export class MessagesPage {
   chats!: Chat[];
   noChats!: boolean;
-  constructor(private router: Router) {
+  constructor() {
     //Fetch these chats later with a service which I(adrian) will develop
     this.chats = [
       {
@@ -110,9 +109,6 @@ export class MessagesPage {
 
   openChat(chatId: string){
     //Navigate to chat page once we've figured out a way to pass the chatId to the chat page
-    this.router.navigate([`/chat/${chatId}`]);
-    setTimeout(() => {
-      window.location.reload();
-    }, 100)
+    console.log(chatId);
   }
 }

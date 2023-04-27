@@ -1,17 +1,6 @@
 import { Component } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { chat } from '../chat.interface';
-import { ChatState } from '@mp/app/chat/data-access';
-import { Store, Select } from '@ngxs/store';
-import { 
-  SendMessage,
-  AddTime,
-  GetTime,
-  RemoveTime,
-  GetMessages
-} from '@mp/app/chat/util';
-import { Observable } from 'rxjs';
-import { Time } from '@angular/common';
 
 @Component({
   selector: 'mp-chat',
@@ -19,41 +8,21 @@ import { Time } from '@angular/common';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage {
-  @Select(ChatState.messages) messages$!: Observable<string[]>;
   Chat!: chat;
-  id!: any;
+  id!: number;
   me!: string;
   outgoingMessage = '';
   color = 'bronze';
-  openChatTime!: Time;
-
-  
-  ionViewDidEnter() {
-    const content = document.querySelector('.message');
-    if (content)
-      content.scrollTop = content.scrollHeight;
-  }
 
   constructor(
     private router:Router,
     private route: ActivatedRoute,
-    private store: Store
     ) {
       //Get id from route 
-      this.id = this.route.snapshot.paramMap.get('id');
-      console.log('ID:', this.id);
+      /*this.route.paramMap.subscribe(paramMap => {
+        this.id = parseInt(paramMap.get('id')!);
+      })*/
       //Grab the chat here
-      this.store.dispatch(new GetMessages({cid:this.id}));
-      this.messages$.subscribe((messages) => {
-        if(messages != null){
-          //this.chats = messages;
-          //this.noChats = this.chats.length === 0;
-        }
-      });
-      const now: Date = new Date();
-      //console.log(tyepOf(now.getTime()));
-
-      //this.openChatTime = Time();
       this.me='2';
       this.Chat = {
         id: '1',
@@ -78,13 +47,11 @@ export class ChatPage {
           { from: '3', content: 'Bye!', time: '12:47' },
           { from: '2', content: 'Later!', time: '12:48' },
           { from: '3', content: 'My name is Walter Hartwell White. I live at 308 Negra Arroyo Lane Albuquerque New Mexico 87104. This is my confession.', time: '12:49' },
-          { from: '3', content: 'Thats great to hear!', time: '12:50' }
+          { from: '2', content: 'Thats great to hear!', time: '12:50' }
         ],
         participants: '2,3',
         timeLeft: 7770
     }
-
-    this.startTimer();
   }
     isMe(id: string){return id===this.me;}
     showid(){
@@ -111,22 +78,8 @@ export class ChatPage {
       return timeString;
     }
 
-   /* startTimer(){
-      setInterval(() => {
-        this.Chat.timeLeft--;
-        }, 1000);
-      }
-    }*/
-
-    startTimer(){
-      setInterval(() => {
-        this.Chat.timeLeft--;
-        }, 1000);
-    }
-
     addTime(minutes:number){
       //Add to database
-      this.store.dispatch(new AddTime({time: minutes*60,cid:this.id}));
       this.Chat.timeLeft+=minutes*60;
     }
     
@@ -140,7 +93,6 @@ export class ChatPage {
 
     send(){
       //Add functionality to send message with service
-      this.store.dispatch(new SendMessage({cid:this.id,message: this.outgoingMessage}));
       if(this.outgoingMessage != ''){
         const now = new Date();
         const hour = now.getHours().toString().padStart(2, '0');
@@ -149,21 +101,12 @@ export class ChatPage {
 
         this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
         this.outgoingMessage = '';
-        setTimeout(() => {
-          const content = document.querySelector('.message');
-          if (content)
-            content.scrollTop = content.scrollHeight;
-        }, 100);
       }
     }
 
     return(){
-      this.router.navigate(['/messages']);
-    }
-
-    navigate(){
-      //fetch the user id with state or sumn
-      this.router.navigate(['/other-user/2']);
+      console.log('go back');
+      //this.router.navigate(['/messages']);
     }
 
 }
