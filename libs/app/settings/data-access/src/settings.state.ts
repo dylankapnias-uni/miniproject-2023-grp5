@@ -194,6 +194,7 @@ export class SettingsState {
   @Action(EditProfile)
   async EditProfile(ctx: StateContext<SettingsStateModel>, {payload}: EditProfile) {
     //Make call to api and update state
+    console.log("Update Made: " + payload);
     const tempRequest : IUserProfile = {
       userId: payload.uid,
       email: payload.email,
