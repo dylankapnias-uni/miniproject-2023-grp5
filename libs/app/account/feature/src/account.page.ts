@@ -6,10 +6,11 @@ import { UpdateAccount, DeleteAccount } from '@mp/app/settings/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 //import { IProfile } from '@mp/api/profiles/util';
-import { IUserProfile } from '@mp/api/users/util';
+import { IPost, IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Timestamp } from '@firebase/firestore-types';
+import { IInterests } from '@mp/api/interests/util';
 
 @Component({
   selector: 'mp-account',
@@ -25,59 +26,78 @@ export class AccountPage
   age!: number;
   bio!: string;
 
+  interests!: IInterests[];
+  time!: number;
+  posts!: IPost[];
+
   dateOfBirth!: Timestamp;
 
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   constructor(public r : Router, public alertController:AlertController, private store: Store){
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {
+      console.log("Before logged");
       if(profile != null)
       {
+        console.log("User Logged in: " + profile.userId);
         this.ourProfile = profile;
         this.uid = profile.userId;
+        if(profile.dob)
+        this.dob = profile.dob?.toString();
       }
         
     });
     //Fetch these from state
-    if(this.ourProfile.dob)
-    this.dob = this.ourProfile.dob.toString();
 
-    if (this.ourProfile.name)
+    if(this.ourProfile)
     {
-      this.name = this.ourProfile.name;
-    }
+      if (this.ourProfile.name)
+      {
+        this.name = this.ourProfile.name;
+      }
 
-    if (this.ourProfile.email)
-    {
-      this.email = this.ourProfile.email;
+      if (this.ourProfile.email)
+      {
+        this.email = this.ourProfile.email;
+      }
+      
+      if (this.ourProfile.phoneNumber)
+      {
+        this.phone = this.ourProfile.phoneNumber;
+      }
+
+      if (this.ourProfile.gender)
+      {
+        this.gender = this.ourProfile.gender;
+      }
+
+      if (this.ourProfile.sexuality)
+      {
+        this.sexuality = this.ourProfile.sexuality;
+      }
+
+      if(this.ourProfile.profilePicture)
+      this.profilePicture = this.ourProfile.profilePicture;
+
+      if(this.ourProfile.age)
+      this.age = this.ourProfile.age;
+
+      if(this.ourProfile.bio)
+      this.bio = this.ourProfile.bio;
+
+      if(this.ourProfile.dob)
+      this.dateOfBirth = this.ourProfile.dob;
+
+      if(this.ourProfile.interests)
+      this.interests = this.ourProfile.interests;
+
+      if(this.ourProfile.time)
+      this.time = this.ourProfile.time;
+
+      if(this.ourProfile.posts)
+      this.posts = this.ourProfile.posts;
     }
     
-    if (this.ourProfile.phoneNumber)
-    {
-      this.phone = this.ourProfile.phoneNumber;
-    }
-
-    if (this.ourProfile.gender)
-    {
-      this.gender = this.ourProfile.gender;
-    }
-
-    if (this.ourProfile.sexuality)
-    {
-      this.sexuality = this.ourProfile.sexuality;
-    }
-
-    if(this.ourProfile.profilePicture)
-    this.profilePicture = this.ourProfile.profilePicture;
-
-    if(this.ourProfile.age)
-    this.age = this.ourProfile.age;
-
-    if(this.ourProfile.bio)
-    this.bio = this.ourProfile.bio;
-
-    if(this.ourProfile.dob)
-    this.dateOfBirth = this.ourProfile.dob;
     //this.phone = '1234567890';
     //this.gender = 'Other';
     //this.sexuality = 'heterosexual';
@@ -143,10 +163,10 @@ export class AccountPage
       bio: this.bio,
       dob: this.dateOfBirth,
       gender: this.gender,
-      interests: this.ourProfile.interests,
+      interests: this.interests,
       sexuality: this.sexuality,
-      time: this.ourProfile.time,
-      posts: this.ourProfile.posts,
+      time: this.time,
+      posts: this.posts
     };
 
     this.store.dispatch(new UpdateAccount(query));
