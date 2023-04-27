@@ -21,6 +21,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 
 export class OtherUserPage {
   id!:any;
+  interests: string[] = ['Swimming', 'Dog', 'Food'];
   constructor (public r : Router, private route: ActivatedRoute){
     this.id = this.route.snapshot.paramMap.get('id');
     console.log(this.id);
