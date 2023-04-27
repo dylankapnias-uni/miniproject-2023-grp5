@@ -67,7 +67,7 @@ export class HomeState {
   async SwipeReject(ctx: StateContext<HomeStateModel>, {payload}: SwipeReject) {
     const request: IRejectUserRequest = {
       userId: payload.userId,
-      rejectedUserId : payload.swipedUserId
+      swipedUserId : payload.swipedUserId
     };
 
     const response = await this.homeApi.rejectUser(request);
