@@ -11,6 +11,6 @@ export class UserAcceptedHandler
   async handle(event: UserAcceptedEvent) {
     console.log(`${UserAcceptedHandler.name}`);
 
-    await this.repository.acceptUser(event.home.userId,event.home.userRef.accepted[event.home.userRef.accepted.length-1]);
+    await this.repository.acceptUser(event.home.userId,event.acceptedUser);
   }
 }

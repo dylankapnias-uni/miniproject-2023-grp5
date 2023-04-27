@@ -11,6 +11,6 @@ export class UserRejectedHandler
   async handle(event: UserRejectedEvent) {
     console.log(`${UserRejectedHandler.name}`);
 
-    await this.repository.rejectUser(event.home.userId,event.home.userRef.visited[event.home.userRef.visited.length-1]);
+    await this.repository.rejectUser(event.home.userId, event.rejectedUser);
   }
 }

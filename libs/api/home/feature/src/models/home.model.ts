@@ -22,25 +22,38 @@ export class Home extends AggregateRoot implements IParsingData {
     this.apply(new UserHomeCreatedEvent(this.toJSON()));
   }
 
-
   public acceptUser(newUser: IUserMatch) {
-    if(!newUser.user?.userId) throw new Error('User ID is null');
-
+    // bullshit existence check to appease the fictional typescript gods
+    if(!newUser.user?.userId) throw new Error('User is not, therefore user does not think');
+    // add accepted user to current user's visited array
+    this.userRef.visited.push(newUser.user?.userId);
+    const index =  this.userRef.accepted.indexOf(newUser.user?.userId);
+    // if other user has accepted current user
     if(newUser.match){
-      //TODO: Create New Chat
+      // remove other user from current user's accepted array
+      // such that they may no longer appear in future swipes
+      if (index == -1) return;
+        this.userRef.accepted.splice(index, 1);
     }
-    else{
-      this.userRef.accepted.push(newUser.user?.userId);
-      this.apply(new UserAcceptedEvent(this.toJSON()));
-    }
+    this.apply(new UserAcceptedEvent(this.toJSON(), newUser));
     
   }
 
-  public rejectUser(newUserId: string) {
-
-      this.userRef.visited.push(newUserId);
-      this.apply(new UserRejectedEvent(this.toJSON()));
-    
+  public rejectUser(newUser: IUserMatch) {
+    // bullshit existence check to appease the fictional typescript gods
+    if(newUser.user?.userId == null ||  newUser.user?.userId == undefined) 
+      throw new Error('User is not, therefore user does not think');
+    // add rejected user to current user's visited array
+    this.userRef.visited.push(newUser.user?.userId);
+    const index =  this.userRef.accepted.indexOf(newUser.user?.userId);
+    // if love is unrequited D:
+    if(newUser.match){
+      // remove other user from current user's accepted array
+      // such that they may no longer appear in future swipes
+      if (index == -1) return;
+        this.userRef.accepted.splice(index, 1);
+    }
+    this.apply(new UserRejectedEvent(this.toJSON(), newUser));
   }
 
   toJSON(): IParsingData {

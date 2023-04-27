@@ -16,7 +16,7 @@ export class CreateUserHomeHandler
     const request = command.request;
     const userId = request.userId;
     
-    const data: IParsingData={userId:userId, userRef:{accepted:[], visited:[userId]}};
+    const data: IParsingData={userId:userId, userRef:{userId:userId,accepted:[], visited:[userId]}};
     const home = this.publisher.mergeObjectContext(Home.fromData(data));
 
     home.create();

@@ -11,21 +11,21 @@ export class ChatListRepository {
       .firestore()
       .collection('Chatlist')
       .doc(creatorID)
-      .create({userList: []});
+      .create({userId: creatorID, chatList:[]});
   }
 
   async getForUserID(userID: string) {
     return (await admin
       .firestore()
       .collection('Chatlist')
-      .withConverter<(IChatReferences[])>({
+      .withConverter<(IChatList)>({
         fromFirestore: (snapshot) => {
-          return snapshot.data() as (IChatReferences[]);
+          return snapshot.data() as (IChatList);
         },
-        toFirestore: (it: (IChatReferences[])) => it,
+        toFirestore: (it: (IChatList)) => it,
       })
       .doc(userID)
-      .get()).data() as (IChatReferences[]);
+      .get()).data() as (IChatList);
   }
 
   async addToChatList(creatorID:string,chatID:string, otherUser:string ) {
@@ -34,7 +34,7 @@ export class ChatListRepository {
       .firestore()
       .collection('Chatlist')
       .doc(creatorID)
-      .update({userList: FieldValue.arrayUnion(entry)});
+      .update({chatList: FieldValue.arrayUnion(entry)});
   }
 
 }
