@@ -27,13 +27,15 @@ export class OtherUserPage {
   interests: string[] = ['Swimming', 'Dog', 'Food'];
   
   constructor (public r : Router, private route: ActivatedRoute, public store: Store){
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.store.dispatch(new SubscribeToProfile());
-    this.profile$.subscribe((profile) => {
-      if (profile)
-        this.profile = profile;
-    });
-    console.log(this.id);
+    this.id = this.store.dispatch(new )
+    
+    //this.store.dispatch(new SubscribeToProfile());
+   // this.dispatch(new SubscribeToProfile());
+    //this.profile$.subscribe((profile) => {
+      //if (profile)
+        //this.profile = profile;
+    //});
+    //console.log(this.id);
   }
 
   loadSettingsPage()

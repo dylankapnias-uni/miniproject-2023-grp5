@@ -44,6 +44,19 @@ export class ProfilePage {
     }, 100)
   }
   
+  convertTime()
+  {
+    if(this.profile?.time)
+    {
+      const seconds = this.profile?.time;
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const timeFormat = `${minutes}min ${remainingSeconds}s`;
+      return timeFormat;
+    }
+
+    return null;
+  }
 
   option = {
     
