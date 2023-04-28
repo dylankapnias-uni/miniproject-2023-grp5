@@ -50,8 +50,38 @@ describe("Chat", () => {
             expect(commandBus.execute).toHaveBeenCalledWith(new CreateChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
             expect(result.chat.users[0]).toBe("anotherUser")
-        })
+        }),
+        
+        it("Create chat without users", async () => {
+            //given
+            const mockRequest: ICreateChatRequest = {
+                userId: "mockUser",
+                chatId: "mockChat",
+                users: []
+            }
 
+            const mockChat: IChat = {
+                chatID: "mockChat",
+                messages: null,
+                timeAdderID: "mockChat",
+                timeRemaining: 5,
+                totalTimeUsed: 0,
+                users: []
+            }
+
+            const mockResponse: ICreateChatResponse = {
+                chat: mockChat
+            }
+
+            jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+
+            //when
+            const result = await chatService.createChat(mockRequest)
+
+            //then
+            expect(commandBus.execute).toHaveBeenCalledWith(new CreateChatQuery(mockRequest))
+            expect(result).toBe(mockResponse)
+        })
     })
 
 
