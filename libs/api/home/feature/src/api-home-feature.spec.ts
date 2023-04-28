@@ -2,7 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CommandBus } from '@nestjs/cqrs';
 import { HomeService } from './home.service';
 import expect from 'expect'
-import { AcceptUserCommand, CreateUserHomeCommand, IAcceptUserRequest, IAcceptUserResponse, ICreateUserHomeRequest, ICreateUserHomeResponse, IParsingData, IRejectUserRequest, IRejectUserResponse, IUserRef, RejectUserCommand } from '@mp/api/home/util';
+import { AcceptUserCommand, CreateUserHomeCommand, IAcceptUserRequest, IAcceptUserResponse, ICreateUserHomeRequest, ICreateUserHomeResponse, IHome, IParsingData, IRejectUserRequest, IRejectUserResponse, IRetrieveHomeUsersRequest, IRetrieveHomeUsersResponse, IUserMatch, IUserRef, RejectUserCommand, RetrieveHomeUsersQuery } from '@mp/api/home/util';
+import { IInterests } from '@mp/api/interests/util';
+import { IUserProfile } from '@mp/api/users/util';
 
 
 describe("API Home Feature Tests", () => {
@@ -159,6 +161,45 @@ describe("API Home Feature Tests", () => {
           expect(commandBus.execute).toHaveBeenCalledWith(new AcceptUserCommand(mockRequest))
           expect(result).toBe(null)
         });
+    })
+
+    describe("Fetch user", () => {
+      it("Fetch valid user with filter and matched", async () => {
+        //given
+        const mockFilter: IInterests = {
+          interest: "mock",
+          category: "fake"
+        }
+        const mockRequest: IRetrieveHomeUsersRequest = {
+          userId: "mockUser",
+          filter: [mockFilter]
+        }
+        const mockUserProfile: IUserProfile = {
+          userId: "anotherUser"
+        }
+        const mockUserMatch: IUserMatch = {
+          user: mockUserProfile,
+          match: true
+        }
+        const mockUsers: IHome = {
+          userId: "mockUser",
+          userList: [mockUserMatch]
+        }
+        const mockResponse: IRetrieveHomeUsersResponse = {
+          users: mockUsers
+        }
+
+        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+
+        //when
+        const result = await homeService.fetchUsers(mockRequest)
+
+        //then
+        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(result).toBe(mockResponse)
+        expect(result.users.userList[0].match).toBe(true)
+      })
+
     })
 
 })
