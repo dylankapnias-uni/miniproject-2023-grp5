@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CommandBus } from '@nestjs/cqrs';
 import { HomeService } from './home.service';
 import expect from 'expect'
-import { CreateUserHomeCommand, ICreateUserHomeRequest, ICreateUserHomeResponse, IParsingData, IUserRef } from '@mp/api/home/util';
+import { AcceptUserCommand, CreateUserHomeCommand, IAcceptUserRequest, IAcceptUserResponse, ICreateUserHomeRequest, ICreateUserHomeResponse, IParsingData, IUserRef } from '@mp/api/home/util';
 
 
 describe("API Home Feature Tests", () => {
@@ -11,6 +11,9 @@ describe("API Home Feature Tests", () => {
 
     let mockUserI: IUserRef
     let mockParsingData: IParsingData
+
+    let mockUserIB: IUserRef
+    let mockParsingDataB: IParsingData
 
 
     beforeEach(async () => {
@@ -35,6 +38,22 @@ describe("API Home Feature Tests", () => {
         }
 
         mockParsingData = tempMockParsingData
+
+        const tempMockUserIB: IUserRef = {
+          userId: "anotherUser",
+          accepted: ["anotherUser"],
+          visited: ["anotherUser", "yetAnotherUser"]
+        }
+
+        mockUserIB = tempMockUserI
+        
+        const tempMockParsingDataB: IParsingData = {
+          userId: "anotherUser",
+          userRef: mockUserI
+        }
+
+        mockParsingDataB = tempMockParsingData
+
 
 
       }),
@@ -61,4 +80,28 @@ describe("API Home Feature Tests", () => {
         });
     })
 
+
+    describe("AcceptUser function", () => {
+      it("Accepts valid user", ()=>{
+        //given
+        const mockRequest: IAcceptUserRequest = {
+          userId: "mockUser",
+          swipedUserId: "anotherUser"
+        }
+
+        const mockResponse: IAcceptUserResponse = {
+          home: mockParsingData
+        }
+
+        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+
+        //when
+        const result = homeService.acceptUser(mockRequest)
+
+        //then
+        expect(commandBus.execute).toHaveBeenCalledWith(new AcceptUserCommand(mockRequest))
+        expect(result).toBe(mockRequest)
+      })
+
+    })
 })
