@@ -298,7 +298,46 @@ describe("API Home Feature Tests", () => {
         expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(mockResponse)
         expect(result.users.userList[0].match).toBe(false)
+      }),
+
+      it("Fetch invalid user with filter", async () => {
+        //given
+        const mockFilter: IInterests = {
+          interest: "mock",
+          category: "fake"
+        }
+        const mockRequest: IRetrieveHomeUsersRequest = {
+          userId: "fakeUser",
+          filter: [mockFilter]
+        }
+        
+        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+
+        //when
+        const result = await homeService.fetchUsers(mockRequest)
+
+        //then
+        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(result).toBe(null)
+      }),
+
+      it("Fetch invalid user without filter", async () => {
+        //given
+        const mockRequest: IRetrieveHomeUsersRequest = {
+          userId: "fakeUser",
+          filter: null
+        }
+        
+        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+
+        //when
+        const result = await homeService.fetchUsers(mockRequest)
+
+        //then
+        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(result).toBe(null)
       })
+
 
     })
 
