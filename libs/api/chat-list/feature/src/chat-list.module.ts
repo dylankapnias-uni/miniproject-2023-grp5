@@ -1,31 +1,32 @@
-import { ProfilesModule as ProfilesDataAccessModule } from '@mp/api/profiles/data-access';
+import { ChatListModule as ChatListDataAccessModule } from '@mp/api/chat-list/data-access';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AddChatHandler, CreateChatListHandler } from './commands';
-import { ChatAddedEvent, ChatListCreatedEvent } from '@mp/api/chat-list/util';
+import { ChatAddedHandler, ChatListCreatedHandler } from './events';
 import { FetchChatListHandler } from './queries';
 import { ChatListService } from './chat-list.service';
-
+import { ChatListSagas } from './chat-list.sagas';
 export const CommandHandlers = [
   CreateChatListHandler,
   AddChatHandler
 ];
 export const EventHandlers = [
-  ChatListCreatedEvent,
-  ChatAddedEvent
+  ChatListCreatedHandler,
+  ChatAddedHandler
 ];
 export const QueryHandlers = [
     FetchChatListHandler
 ]
 
 @Module({
-  imports: [CqrsModule, ProfilesDataAccessModule],
+  imports: [CqrsModule, ChatListDataAccessModule],
   providers: [
     ChatListService,
     ...CommandHandlers,
     ...EventHandlers,
     ...QueryHandlers,
+    ChatListSagas,
   ],
   exports: [ChatListService],
 })
-export class ProfilesModule {}
+export class ChatListModule {}

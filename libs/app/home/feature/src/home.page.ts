@@ -19,7 +19,13 @@ import {
 })
 export class HomePage {
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
-  constructor(public store: Store){}
+  constructor(public store: Store)
+  {
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      // TODO stuff, comment is here because linter is a little bitch
+    });
+  }
   users: Array<any> = [
     {
       id: 1,

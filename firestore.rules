@@ -1,133 +1,197 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+     /* Functions */
+     
+    function signedIn() {
+    	return request.auth.uid != null;
+    }
+    
+    function incomingData(){
+      return request.resource.data
+    }
+    
+    function isOwner(userID){
+    	return userID == request.auth.uid
+    }
+    
+    
+    /* Rules for each Collection */
+    
+    
+    /* Rules for Profile */
+    match /profiles/{userID}
+    {
+    	 allow create ,read ,update , delete : if true;
+    }
+    
+    
+    /* Rules for Profile */
+    
+    match /User_Profile/{userID} {
+    
+         allow create :if  signedIn() &&
+         
+         "userId" in incomingData() || 
+         (incomingData().userId == null || incomingData().userId is string ) &&
+         
+         "name" in incomingData() || 
+         (incomingData().name == null || incomingData().name is string ) &&
+         
+         "age" in incomingData() || 
+         (incomingData().age == null || incomingData().age  is number ) &&
+         
+         "bio" in incomingData() || 
+         (incomingData().bio == null || incomingData().bio  is string) &&
+         
+         "phoneNumber" in incomingData() ||
+         (incomingData().phoneNumber == null || incomingData().phoneNumber  is string ) &&
+         
+         "gender" in incomingData() || 
+         (incomingData().gender == null || incomingData().gender  is string ) &&
+         
+         "sexuality" in incomingData() ||
+         (incomingData().sexuality == null || incomingData().sexuality  is string ) &&
+         
+         "dob" in incomingData() || 
+         (incomingData().dob == null || incomingData().dob  is timestamp ) &&
+         
+         "time" in incomingData() || 
+         (incomingData().time == null || incomingData().time  is number ) &&
+         
+         "profilePicture" in incomingData() ||
+         (incomingData().profilePicture == null || incomingData().profilePicture  is string ) &&
+         
+         "interests" in incomingData() || 
+         (incomingData().interests == null || incomingData().interests  is list ) &&
+         
+         "posts" in incomingData() ||
+         (incomingData().posts == null || incomingData().post is list)
+         
+         
+         allow read :if signedIn() && isOwner(userID)
+         
+         allow update :if signedIn() && isOwner(userID)
   
-    match /User_Profile/{User_ProfileID}
-    {
-         allow create :if request.resource.data.User_ProfileID == request.auth.uid &&
-         request.resource.data.Name is string &&
-         request.resource.data.Age is number &&
-         request.resource.data.PhoneNumber is string &&
-         request.resource.data.PhoneNumber.size() == 10 &&
-         request.resource.data.Gender is string &&
-         request.resource.data.Gender == "Male" || request.resource.data.Gender == "male" ||
-         request.resource.data.Gender == "Female" || request.resource.data.Gender == "female" &&
-         request.resource.data.Sexuality is string &&
-         request.resource.data.DOB is timestamp &&
-         request.resource.data.Time is number &&
-         request.resource.data.ProfilePicture is string &&
-         request.resource.data.Interest is list && 
-         request.resource.data.Interest.size() <= 7 &&
-         request.resource.data.Interest is list && 
-         request.resource.data.Interest.size() <= 10
-         
-         allow read :if request.resource.data.User_ProfileID == request.auth.uid && 
-         request.auth.uid != null
-         
-         allow delete :if request.resource.data.User_ProfileID == request.auth.uid && 
-         request.auth.uid != null
-         
+         allow delete :if signedIn() && isOwner(userID)
          
     }
     
     
-    match /Home/{HomeID}
-    {
-         allow create :if request.resource.data.HomeID == request.auth.uid &&
-         request.resource.data.swiped is path
-         
-         allow read :if request.resource.data.HomeID == request.auth.uid && 
-         request.auth.uid != null
-         
-         allow delete :if request.resource.data.HomeID == request.auth.uid && 
-         request.auth.uid != null
-         
-    }
+    /* Rules for Home */
     
-    match /Chatlist/{ChatlistID}
-    {
-    		 match /User_Profile/{User_ProfileID}
-         {
-         		allow create :if request.auth.uid !=null  &&
-         		resource.data.Userlist is list &&
-            resource.data.Userlist[0] is map && 
-            'ChatID' in resource.data.Userlist[0] &&
-            'OtherUserID' in resource.data.Userlist[0] &&
-            resource.data.Userlist[0].ChatID is path &&
-            resource.data.Userlist[0].OtherUserID is path &&
-            resource.data.Userlist[0].OtherUserID == User_ProfileID
-         }
-    	   
+    match /Home/{userID} {
          
-         allow read :if request.auth.uid !=null 
+         allow create :if signedIn() &&
+         "accepted" in incomingData() ||
+         (incomingData().accepted == null || incomingData().accepted is list)  &&
          
-         allow delete :if request.auth.uid !=null 
+         "visited" in incomingData() ||
+         (incomingData().visited == null || incomingData().visited is list)
+         
+         allow read :if signedIn() && isOwner(userID)
+         
+         allow update :if signedIn() && isOwner(userID)
+  
+         allow delete :if signedIn() && isOwner(userID) 
          
     }
     
     
-    match /Chats/{ChatsID}
-    {
-        allow create: if request.resource.data.message == request.auth.token.message;
-       
-      	allow read: if request.resource.data.userID ==request.auth.uid &&request.auth.uid && 
-      	   request.auth.uid != null &&
-   				 request.resource.data.time == request.auth.time && 
-         	 request.auth.time != null &&
-           request.resource.data.timeAdderID == request.auth.timeAdderID && 
-           request.auth.timeAdderID != null &&
-           request.resource.data.timeRemaining  == request.auth.timeRemaining && 
-           request.auth.timeRemaining != null &&
-           request.resource.data.totalTimeUsed == request.auth.totalTimeUsed  && 
-           request.auth.totalTimeUsed  != null 
-              
-    }
+    /* Rules for Chatlist */
     
-    match /Blocked_Account/{Blocked_AccountID}
-    {
-    	  allow create: if request.auth.uid !=null &&
-        	request.resource.data.Blocked is list 
+    match /Chatlist/{userID} {
+    
+         allow create :if signedIn()  &&
+         "userList" in incomingData() &&
+         (incomingData().userList is list || incomingData().userList == null ) 
+         
         
-        allow read:  if request.auth.uid !=null  
+         allow read :if signedIn() && isOwner(userID)
+         
+         allow update :if signedIn() && isOwner(userID)
+  
+         allow delete :if signedIn() && isOwner(userID) 
+    }
+    
+    
+    /* Rules for Chat */
+    
+    match /Chat/{ChatID} {
+    
+        allow create: if signedIn() &&
         
-        allow delete: if request.auth.uid !=null 
-          
-           
+        "messages" in incomingData() &&
+         (incomingData().messages is list || incomingData().messages == null ) &&
+         
+         "timeAdderID" in incomingData() &&
+         (incomingData().timeAdderID is string || incomingData().timeAdderID == null ) &&
+         
+         "timeRemaining" in incomingData() &&
+         (incomingData().timeRemaining is number || incomingData().timeRemaining == null ) &&
+         
+        "totalTimeUsed" in incomingData() &&
+         (incomingData().totalTimeUsed is number || incomingData().totalTimeUsed == null ) &&
+         
+         "users" in incomingData() &&
+         (incomingData().users is list || incomingData().users == null ) 
+         
+         
+         
+        
+        allow read :if signedIn() &&  request.auth.uid in get(/databases/$(database)/documents/Chat/$(ChatID)).data.users
+         
+        allow update :if signedIn() &&  request.auth.uid in get(/databases/$(database)/documents/Chat/$(ChatID)).data.users
+  
+        allow delete :if signedIn() &&  request.auth.uid in get(/databases/$(database)/documents/Chat/$(ChatID)).data.users
     }
     
     
-    match /Notifications/{Notifications}{
-      match /Notifications/{inbox} {
-      allow read, write: if request.auth.uid == resource.data.sender || request.auth.uid == resource.data.recipient;
+    /* Rules for Blocked Account */
+    
+    match /Blocked_Account/{userID} {
+    
+    	  allow create: if signedIn() &&
+        "blocked" in incomingData() &&
+        (incomingData().blocked is list || incomingData().blocked == null ) 
+         
+        allow read :if signedIn() && isOwner(userID)
+         
+        allow update :if signedIn() && isOwner(userID)
+  
+        allow delete :if signedIn() && isOwner(userID)    
     }
-       match /Notifications/{inbox} {
-     allow create: if request.auth.uid != null
-                   && request.resource.data.sender == request.auth.uid
-                   && request.resource.data.recipient != request.auth.uid
-                   && request.resource.data.time == request.timestamp.time();
-      allow update, delete: if false;
+    
+    
+    
+    /* Rules for Notifications */
+    
+    match /Notifications/{userID} {
+    
+    		allow create: if signedIn() &&
+        "inbox" in incomingData() &&
+        (incomingData().inbox is list || incomingData().inbox == null ) 
+        
+        
+        allow read :if signedIn() && isOwner(userID)
+         
+        allow update :if signedIn() && isOwner(userID)
+  
+        allow delete :if signedIn() && isOwner(userID) 
     }
-      match /About/{About} {
-     match /About/{document=**} {
-      allow read: if true;
-      allow write: if false;
-    } 
-     match /About/{document} {
-      allow create: if false;
-      allow update: if request.auth.uid != null;
-      allow delete: if false;
-      
-      match /Content {
-        allow write: if request.resource.data.keys().hasOnly(['Content', 'TimeEdited']);
-      }
+    
+    
+    /* Rules for About */
+    
+    match /About/{AboutID}{
+    
+        allow read :if signedIn() 
+        
+    }
        
-        match /TimeEdited {
-        allow write: if request.resource.data.keys().hasOnly(['TimeEdited']);
-      }
+       
     
-    
-    }
-    
-    }
-    }
-    }}
+  }
+}
+  

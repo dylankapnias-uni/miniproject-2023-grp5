@@ -7,6 +7,7 @@ import { FieldValue } from 'firebase-admin/firestore';
 export class ChatListRepository {
 
   async createChatList(creatorID:string) {
+    console.log("creating chatlist for user: "+creatorID);
     return await admin
       .firestore()
       .collection('Chatlist')

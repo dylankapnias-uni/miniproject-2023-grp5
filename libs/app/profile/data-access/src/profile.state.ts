@@ -28,6 +28,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
+import { IUserProfile } from '@mp/api/users/util';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
@@ -158,7 +159,7 @@ export class ProfileState {
 
     return this.profileApi
       .profile$(user.uid)
-      .pipe(tap((profile: IProfile) => ctx.dispatch(new SetProfile(profile))));
+      .pipe(tap((profile: IUserProfile) => ctx.dispatch(new SetProfile(profile))));
   }
 
   @Action(SetProfile)

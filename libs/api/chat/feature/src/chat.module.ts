@@ -1,4 +1,3 @@
-import { ProfilesModule as ProfilesDataAccessModule } from '@mp/api/profiles/data-access';
 import { ChatModule as ChatRepoModule} from '@mp/api/chat/data-access';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';

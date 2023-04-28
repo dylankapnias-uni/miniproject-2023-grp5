@@ -11,10 +11,10 @@ export class NotificationsSagas {
     onNotificationCreated = (events$: Observable<any>): Observable<ICommand> => {
 
       return events$.pipe(
-        ofType(NotificationCreatedEvent),
+        ofType(ProfileCreatedEvent),
         map(
-          (event: NotificationCreatedEvent) =>
-            new CreateNotificationCommand({ userId: event.notification.userId})
+          (event: ProfileCreatedEvent) =>
+            new CreateNotificationCommand({ userId: event.profile.userId})
         )
       );
     };

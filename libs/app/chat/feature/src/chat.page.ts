@@ -55,13 +55,13 @@ export class ChatPage {
       this.id = this.route.snapshot.paramMap.get('id');
       console.log('ID:', this.id);
       //Grab the chat here
-      this.store.dispatch(new GetMessages({cid:this.id}));
-      this.messages$.subscribe((messages) => {
-        if(messages != null){
-          //this.chats = messages;
-          //this.noChats = this.chats.length === 0;
-        }
-      });
+      // this.store.dispatch(new GetMessages({cid:this.id}));
+      // this.messages$.subscribe((messages) => {
+      //   if(messages != null){
+      //     //this.chats = messages;
+      //     //this.noChats = this.chats.length === 0;
+      //   }
+      // });
       const now: Date = new Date();
 
       //this.openChatTime = Time();

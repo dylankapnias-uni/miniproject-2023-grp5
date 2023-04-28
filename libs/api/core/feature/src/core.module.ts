@@ -4,6 +4,7 @@ import { ProfilesModule } from '@mp/api/profiles/feature';
 import { UserProfileModule } from '@mp/api/users/feature';
 import { SettingsModule } from '@mp/api/settings/feature';
 import { NotificationModule } from '@mp/api/notifications/feature';
+import { ChatListModule } from '@mp/api/chat-list/feature';
 import { HomeModule } from '@mp/api/home/feature';
 import { ChatModule } from '@mp/api/chat/feature';
 import { Module } from '@nestjs/common';
@@ -17,7 +18,8 @@ import { Module } from '@nestjs/common';
     SettingsModule, 
     NotificationModule,
     HomeModule,
-    ChatModule
+    ChatModule,
+    ChatListModule
   ],
 })
 export class CoreModule {}

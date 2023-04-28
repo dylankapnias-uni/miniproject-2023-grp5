@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { 
   CreateChatQuery, 
   GetChatQuery, 
@@ -15,7 +15,7 @@ import { AddChatCommand } from '@mp/api/chat-list/util';
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus:QueryBus) {}
 
     async createChat(
         request: ICreateChatRequest
@@ -29,7 +29,7 @@ export class ChatService {
     async getChat(
         request: IGetChatRequest
         ): Promise<IGetChatResponse> {
-        return await this.commandBus.execute<
+        return await this.queryBus.execute<
             GetChatQuery, 
             IGetChatResponse
         >(new GetChatQuery(request));
