@@ -22,7 +22,8 @@ import {
     UpdateAddressDetails,
     UpdateContactDetails,
     UpdateOccupationDetails,
-    UpdatePersonalDetails
+    UpdatePersonalDetails,
+    UploadPost
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -150,6 +151,12 @@ export class ProfileState {
   @Action(Logout)
   async logout(ctx: StateContext<ProfileStateModel>) {
     return ctx.dispatch(new AuthLogout());
+  }
+
+  @Action(UploadPost)
+  async uploadPost(ctx: StateContext<ProfileStateModel>, {payload}: UploadPost) {
+    //const response = this.profileApi.uploadPost(payload);
+    console.log("");
   }
 
   @Action(SubscribeToProfile)

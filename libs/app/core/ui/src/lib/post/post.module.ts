@@ -9,6 +9,6 @@ import { PostComponent } from './post.component';
         CommonModule,
         IonicModule,
     ],
-    exports: [PostComponent]
+    exports: [PostComponent],
 })
 export class PostModule {}

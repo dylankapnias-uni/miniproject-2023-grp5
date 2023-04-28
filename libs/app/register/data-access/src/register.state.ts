@@ -10,6 +10,9 @@ export interface RegisterStateModel {
       displayName: string | null;
       email: string | null;
       password: string | null;
+      phone: string | null;
+      age: number | null;
+      dateOfBirth: string | null;
     };
     dirty: false;
     status: string;
@@ -25,6 +28,9 @@ export interface RegisterStateModel {
         displayName: null,
         email: null,
         password: null,
+        phone: null,
+        age: null,
+        dateOfBirth: null,
       },
       dirty: false,
       status: '',

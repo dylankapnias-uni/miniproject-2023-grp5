@@ -1,24 +1,33 @@
-import { IInterests } from '@mp/api/interests/util';
+import { IInterestsDocument, IInterests } from '@mp/api/interests/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 @Injectable()
 export class InterestsRepository {
-    async getSubInterests(interest: string) {
-        return await admin
-          .firestore()
-          .collection('Interests')
-          .withConverter<IInterests>({
-            fromFirestore: (snapshot) => {
-              return snapshot.data() as IInterests;
-            },
-            toFirestore: (it: IInterests) => it,
-          })
-          .doc(interest)
-          .get();
-      }
+  async getInterests() {
+    return await admin
+      .firestore()
+      .collection('Interests')
+      .withConverter<IInterestsDocument>({
+        fromFirestore: (snapshot) => {
+          return snapshot.data() as IInterestsDocument;
+        },
+        toFirestore: (it: IInterestsDocument) => it,
+      })
+      .doc('Interests')
+      .get();
+  }
 
-      async getInterests() {
-        const snapshot = await admin.firestore().collection('Interests').get()
-        return snapshot.docs.map(doc => doc.data());
-      }
+  async addInterest( interest: IInterests) {
+    return await admin
+      .firestore()
+      .collection('Interests')
+      .doc('Interests')
+      .update({
+        'list': FieldValue.arrayUnion(interest)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }

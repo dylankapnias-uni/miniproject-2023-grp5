@@ -7,6 +7,7 @@ import { NotificationModule } from '@mp/api/notifications/feature';
 import { ChatListModule } from '@mp/api/chat-list/feature';
 import { HomeModule } from '@mp/api/home/feature';
 import { ChatModule } from '@mp/api/chat/feature';
+import { InterestsModule } from '@mp/api/interests/feature';
 import { Module } from '@nestjs/common';
 
 @Module({
@@ -19,7 +20,8 @@ import { Module } from '@nestjs/common';
     NotificationModule,
     HomeModule,
     ChatModule,
-    ChatListModule
+    ChatListModule,
+    InterestsModule
   ],
 })
 export class CoreModule {}

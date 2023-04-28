@@ -18,14 +18,22 @@ import { Router } from '@angular/router';
 
 export class ProfilePage {
   interests: string[] = ['Swimming', 'Dog', 'Food'];
+  //name : string | undefined;
+
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   profile!: IUserProfile | null;
+
   constructor (public r : Router, public store: Store){
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {
       if (profile)
         this.profile = profile;
     });
+
+    /*if(this.profile?.name != null)
+    {
+      this.name = this.profile?.name;
+    }*/
   }
 
   loadSettingsPage()

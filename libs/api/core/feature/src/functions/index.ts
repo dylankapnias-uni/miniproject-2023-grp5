@@ -6,4 +6,4 @@ export * from './settings.functions';
 export * from './notifications.function';
 export * from './home.functions';
 export * from './chat.functions';
-
+export * from './interests.functions';

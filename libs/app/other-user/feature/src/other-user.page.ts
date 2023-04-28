@@ -20,10 +20,19 @@ import { Router,ActivatedRoute } from '@angular/router';
 // } 
 
 export class OtherUserPage {
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  profile!: IUserProfile | null;
+
   id!:any;
   interests: string[] = ['Swimming', 'Dog', 'Food'];
-  constructor (public r : Router, private route: ActivatedRoute){
+  
+  constructor (public r : Router, private route: ActivatedRoute, public store: Store){
     this.id = this.route.snapshot.paramMap.get('id');
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if (profile)
+        this.profile = profile;
+    });
     console.log(this.id);
   }
 
@@ -34,7 +43,7 @@ export class OtherUserPage {
       window.location.reload();
     }, 100)
   }
-  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  //@Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 
   option = {
     

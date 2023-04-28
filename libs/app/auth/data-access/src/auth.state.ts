@@ -70,7 +70,7 @@ export class AuthState {
   ) {
     try {
       await this.authApi.register(email, password);
-      return ctx.dispatch(new Navigate(['home']));
+      return ctx.dispatch(new Navigate(['account']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }

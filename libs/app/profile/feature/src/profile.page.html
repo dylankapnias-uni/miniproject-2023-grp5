@@ -5,7 +5,7 @@
       </ion-col>
       <ion-col size="6">
         <div class="center">
-          <ion-chip>10min 05s</ion-chip>
+          <ion-chip>{{this.profile?.time}}</ion-chip>
         </div>
       </ion-col>
       <ion-col size="2" style="margin-top: 6px;">
@@ -16,7 +16,7 @@
     <ion-grid>
       <ion-row>
         <ion-card class="plz">
-          <ion-img class="firstphoto" src="https://images.unsplash.com/photo-1609741873305-3208c472c269?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"></ion-img>
+          <ion-img class="firstphoto" src="{{this.profile?.profilePicture}}"></ion-img>
         </ion-card>
       </ion-row>
     </ion-grid>
@@ -31,15 +31,15 @@
     </ion-grid>
     <ion-card class="card2">
       <ion-card-header>
-        <ion-card-title class="title1">Emily 23</ion-card-title>
-        <ion-card-title class="title2">Female</ion-card-title>
+        <ion-card-title class="title1">{{this.profile?.name}} {{this.profile?.age}}</ion-card-title>
+        <ion-card-title class="title2">{{this.profile?.gender}}</ion-card-title>
       </ion-card-header>
     
       <ion-chip class="desc">
-        Hi, my name is Emily. I am 23 years old and I am an Olympic athlete in star gazing.
+        {{this.profile?.bio}}
       </ion-chip>
       <ion-slides [options]="option" loop="true" class="ion-margin-top">
-        <ion-slide *ngFor="let i of photos">
+        <ion-slide *ngFor="let i of this.profile?.posts">
           <ion-card class="asb">
             <img class="photosecond" src="{{i}}"  />
           </ion-card>

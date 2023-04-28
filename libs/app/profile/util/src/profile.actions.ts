@@ -32,3 +32,8 @@ export class UpdateOccupationDetails {
 export class UpdatePersonalDetails {
   static readonly type = '[Profile] UpdatePersonalDetails';
 }
+
+export class UploadPost{
+  static readonly type = '[Profile] UploadPost';
+  constructor(public payload: {uid: string, post: File}){};
+}
