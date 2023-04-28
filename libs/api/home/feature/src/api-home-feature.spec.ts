@@ -14,9 +14,6 @@ describe("API Home Feature Tests", () => {
     let mockUserI: IUserRef
     let mockParsingData: IParsingData
 
-    let mockUserIB: IUserRef
-    let mockParsingDataB: IParsingData
-
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -40,23 +37,6 @@ describe("API Home Feature Tests", () => {
         }
 
         mockParsingData = tempMockParsingData
-
-        const tempMockUserIB: IUserRef = {
-          userId: "anotherUser",
-          accepted: ["anotherUser"],
-          visited: ["anotherUser", "yetAnotherUser"]
-        }
-
-        mockUserIB = tempMockUserI
-        
-        const tempMockParsingDataB: IParsingData = {
-          userId: "anotherUser",
-          userRef: mockUserI
-        }
-
-        mockParsingDataB = tempMockParsingData
-
-
 
       }),
 
