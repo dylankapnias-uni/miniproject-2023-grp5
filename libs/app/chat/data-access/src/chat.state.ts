@@ -8,7 +8,8 @@ import {
     AddTime,
     GetTime,
     RemoveTime,
-    GetMessages
+    GetMessages,
+    GetUser
  } from '@mp/app/chat/util';
  import { 
   ICreateChatRequest, 
@@ -17,6 +18,11 @@ import {
   IMessages,
   IChat
 } from '@mp/api/chat/util';
+
+import {
+  IGetUserProfileRequest
+} from '@mp/api/users/util';
+
 import { Timestamp } from '@angular/fire/firestore';
 import { ChatApi } from './chat.api';
 
@@ -94,6 +100,18 @@ export class ChatState {
 
 
     });
+  }
+
+  @Action(GetUser)
+  async GetUser(ctx: StateContext<ChatStateModel>, {payload}: GetUser) {
+    const request : IGetUserProfileRequest = {
+      userId: payload.ouid
+    };
+    const response = await this.chatApi.getUserProfile(request);
+    const rsps = response.data;
+    //Works and catches Chat id
+    ctx.patchState({
+    })
   }
 
   @Action(SendMessage)

@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CreateUserHandler, UpdateUserProfileHandler, DeleteUserProfileHandler } from './commands';
 import { UserCreatedHandler, UserProfileUpdatedHandler, UserProfileDeletedHandler } from './events';
-import { GetUserProfileHandler } from './queries';
+import { GetUserProfileHandler, GetUserProfileListHandler } from './queries';
 import { UsersSagas } from './user-profile.sagas';
 import { UserProfileService } from './user-profile.service';
 
@@ -20,7 +20,8 @@ export const EventHandlers = [
 ];
 
 export const QueryHandlers = [
-  GetUserProfileHandler
+  GetUserProfileHandler,
+  GetUserProfileListHandler
 ];
 @Module({
   imports: [CqrsModule, UserProfileDataAccessModule],

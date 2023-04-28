@@ -9,7 +9,7 @@ export class ChatRepository
     async getChat(chatID: string) {
         return (await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .withConverter<IChat>({
             fromFirestore: (snapshot) => {
               return snapshot.data() as IChat;
@@ -23,7 +23,7 @@ export class ChatRepository
       async sendMessage(chatID : string, message:IMessages) {
         return await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .doc(chatID)
           .update({messages: FieldValue.arrayUnion(message)});
       }
@@ -31,18 +31,18 @@ export class ChatRepository
       async createChat(chat: IChat) {
         const docRef = await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .add(chat);
         
         await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .doc(docRef.id)
           .update({chatID: docRef.id});
 
         return (await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .withConverter<IChat>({
             fromFirestore: (snapshot) => {
               return snapshot.data() as IChat;

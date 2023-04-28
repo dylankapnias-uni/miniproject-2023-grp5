@@ -12,12 +12,12 @@
           <div class="users" *ngIf="users.length > 0; emptyTemplate">
             <div class="user" *ngFor="let user of users; let i = index" [style.zIndex]="users.length-i" (touchstart)="touchStart($event)" (touchmove)="touchMove($event,i)" (touchend)="touchEnd(i)" id="{{'card-'+i}}">
               <ion-card class = "profile">
-                <img class="profile_picture" src="{{user.photo}}">
+                <img class="profile_picture" src="{{user.user?.profilePicture}}">
                 <div class="profile_info">
-                  <a routerLink="/other-user/{{user.id}}" class="my-button">View Profile</a>
-                  <h1 class="user_name">{{user.name}}</h1>
-                  <h2 class="age">{{user.age}}</h2>
-                  <ion-chip *ngFor="let interests of user.interests">{{interests}}</ion-chip>
+                  <a routerLink="/other-user/{{user.user?.userId}}" class="my-button">View Profile</a>
+                  <h1 class="user_name">{{user.user?.name}}</h1>
+                  <h2 class="age">{{user.user?.age}}</h2>
+                  <ion-chip *ngFor="let interests of user.user?.interests">{{interests}}</ion-chip>
                 </div>
               </ion-card>
             </div>

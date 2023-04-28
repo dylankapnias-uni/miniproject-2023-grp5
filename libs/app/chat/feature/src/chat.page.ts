@@ -128,8 +128,11 @@ export class ChatPage {
 
     startTimer(){
       setInterval(() => {
-        this.Chat.timeLeft--;
-        }, 1000);
+        if(this.Chat.timeLeft === 0)
+          this.router.navigate(['messages']);
+        else
+          this.Chat.timeLeft--;
+      }, 1000);
     }
 
     addTime(minutes:number){

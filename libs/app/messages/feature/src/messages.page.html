@@ -10,6 +10,12 @@
       <ion-row>
         <ion-col>
           <ion-grid class="scrl">
+            <!-- chatID : string,
+            messages: IMessages[] | null | undefined,
+            timeAdderID: string | null | undefined,
+            timeRemaining : number | null | undefined,
+            totalTimeUsed : number | null | undefined,
+            users: string[] -->
             <ion-row class="chat-bubble" *ngFor="let chat of chats" (click)="openChat(chat.chatID)">
               <ion-col size="2">
                 <ion-avatar>

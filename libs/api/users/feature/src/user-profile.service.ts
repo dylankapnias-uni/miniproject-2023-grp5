@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { 
+  IUserProfile,
+  CreateMockUserCommand,
   IGetUserProfileRequest, 
   IUpdateUserProfileRequest,
   IDeleteUserProfileRequest, 
@@ -12,7 +14,10 @@ import {
   GetUserProfileQuery,
   UpdateUserProfileCommand, 
   DeleteUserProfileCommand, 
-  CreateUserCommand
+  CreateUserCommand,
+  IGetUserProfileListRequest,
+  IGetUserProfileListResponse,
+  GetUserProfileListQuery,
 } from '@mp/api/users/util';
 
 @Injectable()
@@ -29,6 +34,15 @@ export class UserProfileService {
       GetUserProfileQuery,
       IGetUserProfileResponse
     >(new GetUserProfileQuery(request));
+  }
+  
+  async getUserProfileList(
+    request: IGetUserProfileListRequest
+  ): Promise<IGetUserProfileListResponse> {
+    return await this.queryBus.execute<
+      GetUserProfileListQuery,
+      IGetUserProfileListResponse
+    >(new GetUserProfileListQuery(request));
   }
 
   async updateUserProfile(
@@ -57,5 +71,14 @@ export class UserProfileService {
       CreateUserCommand, 
       ICreateUserResponse
     >(new CreateUserCommand(request));
+  }
+
+  async createMockUser(
+    request: IUserProfile
+  ): Promise<IUserProfile> {
+    return await this.commandBus.execute<
+      CreateMockUserCommand, 
+      IUserProfile
+    >(new CreateMockUserCommand(request));
   }
 }

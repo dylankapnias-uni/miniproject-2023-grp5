@@ -57,40 +57,64 @@ export class AccountPage
     {
       if (this.ourProfile.name)
         this.name = this.ourProfile.name;
+      else
+        this.valid = false;
 
       if (this.ourProfile.email)
         this.email = this.ourProfile.email;
+      else
+        this.valid = false;
       
       if (this.ourProfile.phoneNumber)
         this.phone = this.ourProfile.phoneNumber;
+      else
+        this.valid = false;
 
       if (this.ourProfile.gender)
         this.gender = this.ourProfile.gender;
+      else
+        this.valid = false;
 
       if (this.ourProfile.sexuality)
         this.sexuality = this.ourProfile.sexuality;
+      else
+        this.valid = false;
 
       if(this.ourProfile.profilePicture)
         this.profilePicture = this.ourProfile.profilePicture;
+      else
+        this.valid = false;
 
       if(this.ourProfile.age)
         this.age = this.ourProfile.age;
+      else
+        this.valid = false;
 
       if(this.ourProfile.bio)
         this.bio = this.ourProfile.bio;
+      else
+        this.valid = false;
         
       if(this.ourProfile.dob)
         this.dob = this.ourProfile.dob.toDate().toISOString();
+      else
+        this.valid = false;
         // inb4 copilot dum
 
       if(this.ourProfile.interests)
         this.interests = this.ourProfile.interests;
+      else
+        this.valid = false;
 
       if(this.ourProfile.time)
         this.time = this.ourProfile.time;
+      else
+        this.valid = false;
 
       if(this.ourProfile.posts)
         this.posts = this.ourProfile.posts;
+      else
+        this.valid = false;
     }
     
     //this.phone = '1234567890';
@@ -165,6 +189,7 @@ export class AccountPage
       };
 
       this.store.dispatch(new UpdateAccount(query));
+      this.valid = true;
     }
   }
 }

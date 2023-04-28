@@ -28,3 +28,8 @@ export class GetChatList{
     static readonly type = '[GetChatList] Get Chat List';
     constructor(public payload: { uid:string}) {}
 }
+
+export class GetUser{
+    static readonly type = '[GetUser] Get User';
+    constructor(public payload: { ouid:string }) {}
+}

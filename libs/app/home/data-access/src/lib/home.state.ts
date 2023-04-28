@@ -6,7 +6,8 @@ import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { 
     SwipeAccept,
     SwipeReject,
-    FilterCards
+    FilterCards,
+    GetCards
  } from '@mp/app/home/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { 
@@ -18,6 +19,7 @@ import {
   ICreateUserHomeRequest,
   IRetrieveHomeUsersResponse,
   IRetrieveHomeUsersRequest,
+  IUserMatch
  } from '@mp/api/home/util';
 
 import { HomeApi } from './home.api';
@@ -25,7 +27,7 @@ import { HomeApi } from './home.api';
 export interface HomeStateModel{
   home:{
     model:{
-      users: IUserProfile[] | null;
+      users: IUserMatch[] | null;
     };
     dirty: false;
     status: string;
@@ -84,12 +86,36 @@ export class HomeState {
       
     });
   }
+
+  @Action(GetCards)
+  async GetCards(ctx: StateContext<HomeStateModel>, {payload}: GetCards) {
+    
+    const request: IRetrieveHomeUsersRequest = {
+      userId: payload.uid,
+      filter: null
+    };
+
+    const response = await this.homeApi.retrieveHomeUsers(request);
+    const rsps = response.data;
+    if (rsps.users.userList === undefined) {
+      throw new Error('Unlovable');
+    }
+    ctx.patchState({
+      home:{
+        model:{
+          users: rsps.users.userList,
+        },
+        dirty: false,
+        status: '',
+        errors: {}
+      }
+    });
+  }
  
 
 
   @Selector()
-  static home(state: HomeStateModel) 
-  {
+  static home(state: HomeStateModel) {
     return state.home.model;
   }
 }

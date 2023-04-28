@@ -43,6 +43,10 @@ export class MessagesPage {
     }
   }
 
+  getOtherUserProfile(users:string[]){
+    const otherUser = users.filter((user) => user !== this.profile.userId);
+  }
+
   openChat(chatId: string){
     //Navigate to chat page once we've figured out a way to pass the chatId to the chat page
     //console.log(chatId);

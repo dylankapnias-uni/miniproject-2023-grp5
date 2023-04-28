@@ -14,11 +14,11 @@ import {
   RetrieveHomeUsersQuery 
 } from '@mp/api/home/util';
 import { Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 @Injectable()
 export class HomeService {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   async createUserHome(
     request: ICreateUserHomeRequest
@@ -52,7 +52,7 @@ export class HomeService {
   async fetchUsers(
     request: IRetrieveHomeUsersRequest
   ): Promise<IRetrieveHomeUsersResponse> {
-    return await this.commandBus.execute<
+    return await this.queryBus.execute<
       RetrieveHomeUsersQuery,
       IRetrieveHomeUsersResponse
     >(new RetrieveHomeUsersQuery(request));

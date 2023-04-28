@@ -63,10 +63,13 @@ export class HomeRepository {
     if (userProfileDoc == undefined) {
       throw new Error('User profile not found');
     }
+    console.log(filters);
     // If filter parameters were not passed then it defaults to 
     // user's interests
     if (filters == null || filters == undefined){
+      console.log("filters is null or undefined")
       filters=userProfileDoc.interests;
+      console.log(filters);
     }
     // if current user has less than 3 interests then throw error
     if (filters == null || filters == undefined || filters.length < 3){
@@ -77,29 +80,34 @@ export class HomeRepository {
     const out: IHome = {userId:userID,userList:userL};
     // Add users that swiped on current user to out
     userList.forEach(e => {
+      if(e != undefined && e != null &&  e.length > 0){
       userProfileRepository.getUserProfile(e).then((doc) => {
         if (doc == undefined) {
           throw new Error(`User profile not found: ${e}`);
         }
         const userMatch: IUserMatch = {user:doc.data(),match:true};
         out.userList.push(userMatch);
-      });
+      });}
     });
     // if out has less than 10 users then add more users
     if(out.userList.length < 10){
       // get query snapshot of all users that have not been visited, 
       // and that are not already added to out
+      userList.forEach(e => {
+        swiped.visited.push(e);
+      });
       let validDocsCollection = (admin
         .firestore()
         .collection('User_Profile')
-        .where('userId', 'not-in', swiped.visited)
-        .where('userId', 'not-in', userList));
+        .where('userId', 'not-in', swiped.visited));
+
+      // validDocsCollection = (validDocsCollection.where('userId', 'not-in', userList));
       // existence check to appease the linter
       if(filters){
         // narrow query to only contain users that share at least one interest
         if(filters.length>0){
-          validDocsCollection = (validDocsCollection
-            .where('interests', 'array-contains-any', filters));
+          // validDocsCollection = (validDocsCollection
+          //   .where('interests', 'array-contains-any', filters));
         }
       }
       // If user is heterosexual

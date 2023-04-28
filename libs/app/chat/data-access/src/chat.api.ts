@@ -10,6 +10,11 @@ import {
     ISendMessageResponse
   } from '@mp/api/chat/util';
 
+  import {
+    IGetUserProfileRequest,
+    IGetUserProfileResponse
+  } from '@mp/api/users/util';
+
 @Injectable()
 export class ChatApi {
   constructor(
@@ -26,6 +31,17 @@ export class ChatApi {
             'sendMessage'
         )(request)
     }
+
+    async getUserProfile(request: IGetUserProfileRequest){
+        return await httpsCallable<
+            IGetUserProfileRequest,
+            IGetUserProfileResponse
+        >(
+            this.functions,
+            'getUserProfile'
+        )(request)
+    }
+    
 
     async createChat(request: ICreateChatRequest){
         return await httpsCallable<
