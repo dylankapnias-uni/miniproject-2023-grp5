@@ -1,7 +1,8 @@
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { ChatService } from "./chat.service";
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICreateChatRequest, ICreateChatResponse, IChat, CreateChatQuery, IGetChatRequest } from "@mp/api/chat/util";
+import { ICreateChatRequest, ICreateChatResponse, IChat, CreateChatQuery, IGetChatRequest, IGetChatResponse, IMessages, GetChatQuery } from "@mp/api/chat/util";
+import { Timestamp } from "firebase-admin/firestore";
 
 
 describe("Chat", () => {
@@ -81,6 +82,44 @@ describe("Chat", () => {
             //then
             expect(commandBus.execute).toHaveBeenCalledWith(new CreateChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
+        })
+    }),
+
+    describe("GetChat", () => {
+        it("GetChat with valid chat id and messages and users", async () => {
+            //given
+            const mockRequest: IGetChatRequest = {
+                chatId: "mockChat"
+            }
+            const timeStamp = Timestamp.now()
+            const mockMessage: IMessages = {
+                message: "This is a message",
+                time: timeStamp,
+                userID: "anotherUser"
+            }
+
+            const mockChat: IChat = {
+                chatID: "mockChat",
+                messages: [mockMessage],
+                timeAdderID: "mockChat",
+                timeRemaining: 5,
+                totalTimeUsed: 0,
+                users: ["anotherUser"]
+            }
+
+            const mockResponse: IGetChatResponse = {
+                messages: mockChat
+            }
+
+            jest.spyOn(queryBus, "execute").mockResolvedValueOnce(mockResponse)
+
+            //when
+            const result = await chatService.getChat(mockRequest)
+
+            //then
+            expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
+            expect(result).toBe(mockResponse)
+            expect(result.messages.messages?.length).toBe(1)
         })
     })
 
