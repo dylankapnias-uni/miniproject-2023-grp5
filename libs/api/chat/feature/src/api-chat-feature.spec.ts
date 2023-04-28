@@ -270,6 +270,31 @@ describe("Chat", () => {
             //then
             expect(commandBus.execute).toHaveBeenCalledWith(new SendMessageCommand(mockRequest))
             expect(result).toBe(mockResponse)
+        }),
+
+        it("SendMessage with valid chat and invalid user and message", async () => {
+            //given
+            const timeStamp = Timestamp.now()
+            const mockMessage: IMessages = {
+                message: "This is a message",
+                time: timeStamp,
+                userID: "mockUser"
+            }
+            const mockRequest: ISendMessageRequest = {
+                userId: "invalidUser",
+                chatId: "mockChat",
+                message: mockMessage
+            }
+            
+
+            jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+
+            //when
+            const result = await chatService.sendMessage(mockRequest)
+
+            //then
+            expect(commandBus.execute).toHaveBeenCalledWith(new SendMessageCommand(mockRequest))
+            expect(result).toBe(null)
         })
     })
 
