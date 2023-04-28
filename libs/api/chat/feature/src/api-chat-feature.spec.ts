@@ -216,7 +216,24 @@ describe("Chat", () => {
             expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
             expect(result.messages.messages).toBe(null)
+        }),
+
+        it("GetChat with invalid chat id", async () => {
+            //given
+            const mockRequest: IGetChatRequest = {
+                chatId: "invalid"
+            }
+
+            jest.spyOn(queryBus, "execute").mockResolvedValueOnce(null)
+
+            //when
+            const result = await chatService.getChat(mockRequest)
+
+            //then
+            expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
+            expect(result).toBe(null)
         })
+   
     })
 
 
