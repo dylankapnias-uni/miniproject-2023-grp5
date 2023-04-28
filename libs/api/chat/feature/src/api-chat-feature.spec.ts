@@ -1,7 +1,7 @@
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { ChatService } from "./chat.service";
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICreateChatRequest, ICreateChatResponse, IChat, CreateChatQuery, IGetChatRequest, IGetChatResponse, IMessages, GetChatQuery } from "@mp/api/chat/util";
+import { ICreateChatRequest, ICreateChatResponse, IChat, CreateChatQuery, IGetChatRequest, IGetChatResponse, IMessages, GetChatQuery, ISendMessageRequest, ISendMessageResponse, SendMessageCommand } from "@mp/api/chat/util";
 import { Timestamp } from "firebase-admin/firestore";
 
 
@@ -234,6 +234,43 @@ describe("Chat", () => {
             expect(result).toBe(null)
         })
    
+    }),
+
+    describe("SendMessage", ()=>{
+        it("SendMessage with valid chat and user and message", async () => {
+            //given
+            const timeStamp = Timestamp.now()
+            const mockMessage: IMessages = {
+                message: "This is a message",
+                time: timeStamp,
+                userID: "mockUser"
+            }
+            const mockRequest: ISendMessageRequest = {
+                userId: "mockUser",
+                chatId: "mockChat",
+                message: mockMessage
+            }
+            const mockChat: IChat = {
+                chatID: "mockChat",
+                messages: [mockMessage],
+                timeAdderID: "mockChat",
+                timeRemaining: 5,
+                totalTimeUsed: 0,
+                users: ["anotherUser"]
+            }
+            const mockResponse: ISendMessageResponse = {
+                chat: mockChat
+            }
+
+            jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+
+            //when
+            const result = await chatService.sendMessage(mockRequest)
+
+            //then
+            expect(commandBus.execute).toHaveBeenCalledWith(new SendMessageCommand(mockRequest))
+            expect(result).toBe(mockResponse)
+        })
     })
 
 
