@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CommandBus } from '@nestjs/cqrs';
 import { HomeService } from './home.service';
 import expect from 'expect'
-import { AcceptUserCommand, CreateUserHomeCommand, IAcceptUserRequest, IAcceptUserResponse, ICreateUserHomeRequest, ICreateUserHomeResponse, IParsingData, IUserRef } from '@mp/api/home/util';
+import { AcceptUserCommand, CreateUserHomeCommand, IAcceptUserRequest, IAcceptUserResponse, ICreateUserHomeRequest, ICreateUserHomeResponse, IParsingData, IRejectUserRequest, IRejectUserResponse, IUserRef, RejectUserCommand } from '@mp/api/home/util';
 
 
 describe("API Home Feature Tests", () => {
@@ -119,6 +119,29 @@ describe("API Home Feature Tests", () => {
         expect(commandBus.execute).toHaveBeenCalledWith(new AcceptUserCommand(mockRequest))
         expect(result).toBe(null)
       });
-
     })
+
+    describe("Reject user", ()=>{
+        it("Reject valid user", async ()=>{
+          //given
+          const mockRequest: IRejectUserRequest = {
+            userId: "mockUser",
+            swipedUserId: "anotherUser"
+          }
+  
+          const mockResponse: IRejectUserResponse = {
+            home: mockParsingData
+          }
+  
+          jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+  
+          //when
+          const result = await homeService.rejectUser(mockRequest)
+  
+          //then
+          expect(commandBus.execute).toHaveBeenCalledWith(new RejectUserCommand(mockRequest))
+          expect(result).toBe(mockResponse)
+        })
+    })
+
 })
