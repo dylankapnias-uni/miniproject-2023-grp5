@@ -27,7 +27,7 @@ export class OtherUserPage {
   interests: string[] = ['Swimming', 'Dog', 'Food'];
   
   constructor (public r : Router, private route: ActivatedRoute, public store: Store){
-    this.id = this.store.dispatch(new )
+    //this.id = this.store.dispatch(new )
     
     //this.store.dispatch(new SubscribeToProfile());
    // this.dispatch(new SubscribeToProfile());

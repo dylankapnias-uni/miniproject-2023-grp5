@@ -49,9 +49,10 @@ export class ProfilePage {
     if(this.profile?.time)
     {
       const seconds = this.profile?.time;
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      const timeFormat = `${minutes}min ${remainingSeconds}s`;
+      const hours: number = Math.floor(seconds / 3600);
+      const minutes: number = Math.floor((seconds % 3600) / 60);
+      const remainingSeconds: number = seconds % 60;
+      const timeFormat = `${hours}h ${minutes}m ${remainingSeconds}s`;
       return timeFormat;
     }
 
