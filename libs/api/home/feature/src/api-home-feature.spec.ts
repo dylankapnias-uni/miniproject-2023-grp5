@@ -82,7 +82,7 @@ describe("API Home Feature Tests", () => {
 
 
     describe("AcceptUser function", () => {
-      it("Accepts valid user", ()=>{
+      it("Accepts valid user", async ()=>{
         //given
         const mockRequest: IAcceptUserRequest = {
           userId: "mockUser",
@@ -96,12 +96,29 @@ describe("API Home Feature Tests", () => {
         jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
 
         //when
-        const result = homeService.acceptUser(mockRequest)
+        const result = await homeService.acceptUser(mockRequest)
 
         //then
         expect(commandBus.execute).toHaveBeenCalledWith(new AcceptUserCommand(mockRequest))
-        expect(result).toBe(mockRequest)
-      })
+        expect(result).toBe(mockResponse)
+      }),
+
+      it("Accepts invalid user", async ()=>{
+        //given
+        const mockRequest: IAcceptUserRequest = {
+          userId: "mockUser",
+          swipedUserId: "incorrectUser"
+        }
+
+        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+
+        //when
+        const result = await homeService.acceptUser(mockRequest)
+
+        //then
+        expect(commandBus.execute).toHaveBeenCalledWith(new AcceptUserCommand(mockRequest))
+        expect(result).toBe(null)
+      });
 
     })
 })
