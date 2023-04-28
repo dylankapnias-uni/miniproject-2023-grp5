@@ -1,7 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
 import { CoreModule } from '../core.module';
-import { IAddChatRequest, IAddChatResponse, ICreateChatListRequest, ICreateChatListResponse, IFetchChatListRequest, IFetchChatListResponse } from '@mp/api/chat-list/util';
+import { 
+  IAddChatRequest,
+  IAddChatResponse, 
+  ICreateChatListRequest, 
+  ICreateChatListResponse, 
+  IFetchChatListRequest, 
+  IFetchChatListResponse
+} from '@mp/api/chat-list/util';
 import { ChatListService } from '@mp/api/chat-list/feature';
 
 export const addChat = functions.https.onCall(

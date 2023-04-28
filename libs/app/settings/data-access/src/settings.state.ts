@@ -46,7 +46,7 @@ from '@mp/app/settings/util';
 
 import { IUserProfile } from '@mp/api/users/util';
 
-import { IChat } from '@mp/app/chat/data-access';
+import { IChat } from '@mp/api/chat/util';
 import { Timestamp } from '@angular/fire/firestore';
 
 import { ITime, IPrivacyDetails, ProfilePrivacy } from '@mp/api/settings/util';

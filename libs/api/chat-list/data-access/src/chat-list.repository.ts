@@ -1,7 +1,7 @@
 import { IChatList, IChatReferences } from '@mp/api/chat-list/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import { DocumentReference } from '@firebase/firestore-types'
+//import { DocumentReference } from '@firebase/firestore-types'
 import { FieldValue } from 'firebase-admin/firestore';
 @Injectable()
 export class ChatListRepository {

@@ -6,7 +6,7 @@ import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { MessagesState } from '@mp/app/messages/data-access';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Observable } from 'rxjs';
-import { IChat } from '@mp/app/chat/data-access';
+import { IChat } from '@mp/api/chat/util';
 //import { IProfile } from '@mp/api/profiles/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { Block } from '@mp/app/settings/util';

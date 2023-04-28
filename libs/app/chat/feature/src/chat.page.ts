@@ -7,13 +7,15 @@ import { Select, Store } from '@ngxs/store';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
+import { Timestamp } from '@angular/fire/firestore';
 import { 
   SendMessage,
   AddTime,
   GetTime,
   RemoveTime,
-  GetMessages
+  GetMessages,
 } from '@mp/app/chat/util';
+import { IMessages } from '@mp/api/chat/util';
 import { Observable } from 'rxjs';
 import { Time } from '@angular/common';
 
@@ -50,9 +52,6 @@ export class ChatPage {
         if (profile)
           this.profile = profile;
       });
-
-      //Subscribe to chat state after getting id from route
-      //Get id from route 
       this.id = this.route.snapshot.paramMap.get('id');
       console.log('ID:', this.id);
       //Grab the chat here
@@ -149,7 +148,20 @@ export class ChatPage {
 
     send(){
       //Add functionality to send message with service
-      this.store.dispatch(new SendMessage({cid:this.id,message: this.outgoingMessage}));
+     // this.store.dispatch(new SendMessage({cid:this.id,message: this.outgoingMessage}));
+  //    export interface IMessages{
+  //     message: string | null | undefined;
+  //     time : Timestamp;
+  //     userID : string;
+  // }
+      const msg : IMessages = {
+        message: this.outgoingMessage,
+        time: Timestamp.now(),
+        userID: this.me
+      };
+      if(this.profile)
+        this.store.dispatch(new SendMessage({cid:this.id,message: msg, uid:this.profile.userId}));
+        
       if(this.outgoingMessage != ''){
         const now = new Date();
         const hour = now.getHours().toString().padStart(2, '0');

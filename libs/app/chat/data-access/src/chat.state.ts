@@ -10,9 +10,15 @@ import {
     RemoveTime,
     GetMessages
  } from '@mp/app/chat/util';
-import { IMessages } from './messages.interface';
-import { IChat } from './chat.interface';
+ import { 
+  ICreateChatRequest, 
+  IGetChatRequest,
+  ISendMessageRequest,
+  IMessages,
+  IChat
+} from '@mp/api/chat/util';
 import { Timestamp } from '@angular/fire/firestore';
+import { ChatApi } from './chat.api';
 
 export interface ChatStateModel {
   chatForm: {
@@ -53,29 +59,39 @@ export interface ChatStateModel {
 @Injectable()
 export class ChatState {
 
-  private static chat: IChat = {
-    ChatID: '1',
-    messages: [
-      {
-        message: 'Hello World!',
-        time: Timestamp.now(),
-        userID: '1'
-      },
-      {
-        message: 'How are you?',
-        time: Timestamp.now(),
-        userID: '2'
-      }
-    ],
-    timeAdderID: '1',
-    timeRemaining: 1000,
-    totalTimeUsed: 0
-  };
+  constructor(
+    private chatApi: ChatApi,
+  ) {}
+
+  // private static chat: IChat = {
+  //   ChatID: '1',
+  //   messages: [
+  //     {
+  //       message: 'Hello World!',
+  //       time: Timestamp.now(),
+  //       userID: '1'
+  //     },
+  //     {
+  //       message: 'How are you?',
+  //       time: Timestamp.now(),
+  //       userID: '2'
+  //     }
+  //   ],
+  //   timeAdderID: '1',
+  //   timeRemaining: 1000,
+  //   totalTimeUsed: 0
+  // };
 
   @Action(GetMessages)
   async GetMessages(ctx: StateContext<ChatStateModel>, {payload}: GetMessages) {
+    const request : IGetChatRequest = {
+      chatId: payload.cid
+    };
+    const response = await this.chatApi.getChat(request);
+    const rsps = response.data;
     //Works and catches Chat id
     ctx.patchState({
+
 
     });
   }
@@ -83,6 +99,13 @@ export class ChatState {
   @Action(SendMessage)
   async SendMessage(ctx: StateContext<ChatStateModel>, {payload}: SendMessage) {
     //Works and catches Chat id and outGoingMessage
+    const request : ISendMessageRequest = {
+      userId : payload.uid,
+      chatId : payload.cid,
+      message : payload.message
+    };
+    const response = await this.chatApi.sendMessage(request);
+    const rsps = response.data;
     ctx.patchState({
       
     });

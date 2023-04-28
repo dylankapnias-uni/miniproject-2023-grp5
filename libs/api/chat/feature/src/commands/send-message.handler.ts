@@ -1,6 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { SendMessageCommand, ISendMessageResponse, IChat } from "@mp/api/chat/util";
-import {ChatRepository} from '@mp/api/chat/data-access'
+import { ChatRepository } from '@mp/api/chat/data-access'
 import { Chat } from "../models";
 @CommandHandler(SendMessageCommand)
 export class SendMessageHandler implements ICommandHandler<SendMessageCommand, ISendMessageResponse>

@@ -1,7 +1,8 @@
 import { ProfilesModule as ProfilesDataAccessModule } from '@mp/api/profiles/data-access';
+import { ChatModule as ChatRepoModule} from '@mp/api/chat/data-access';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { SendMessageHandler } from './commands/send-message.handler';
+import { SendMessageHandler } from './commands';
 import { GetChatHandler, CreateChatHandler } from './queries';
 import { ChatService } from './chat.service';
 
@@ -17,7 +18,7 @@ export const QueryHandlers = [
 ]
 
 @Module({
-  imports: [CqrsModule, ProfilesDataAccessModule],
+  imports: [CqrsModule, ChatRepoModule],
   providers: [
     ChatService,
     ...CommandHandlers,
