@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" >
   <ion-toolbar>
     <ion-buttons slot="start">
       <a routerLink="/"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" scrollY="false">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Login</ion-title>
@@ -69,7 +69,7 @@
           </ion-button>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-padding-top">
+      <!-- <ion-row class="ion-padding-top">
         <ion-col class="ion-text-center">
           Having trouble?
           <ion-nav-link routerLink="/forgot">
@@ -84,7 +84,7 @@
             <ion-text color="primary">Register</ion-text>
           </ion-nav-link>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </ion-grid>
   </form>
 </ion-content>

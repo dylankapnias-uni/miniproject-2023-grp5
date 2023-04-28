@@ -30,11 +30,11 @@ ion-card {
 // border-radius: 8px;
 }
 
-.set {
-  margin-top: 1vh;
- // margin-right: 5vh;
- margin-left: 1.5vh;
-}
+// .set {
+//   margin-top: 1vh;
+//  // margin-right: 5vh;
+//  margin-left: 1.5vh;
+// }
 
 ion-card-content {
   margin-top: 0;
@@ -85,12 +85,6 @@ ion-img {
 .center {
   margin-top: 7%;
   margin-left: 5%;
-}
-
-ion-icon{
-  color: #f87c7c;
-  font-size: 2.3rem;
-//  float: left;
 }
 
 ion-chip {
@@ -207,3 +201,21 @@ ion-chip {
    
 }
 
+.settings_btn
+{
+  --background: #FDE0E0;
+  --background-activated: #FDE0E0;
+  width: 60px;
+
+ 
+  
+}
+
+.set
+{
+  color: #f87c7c;
+  font-size: 100px !important;
+  width: 100% !important;
+
+//  float: left;
+}

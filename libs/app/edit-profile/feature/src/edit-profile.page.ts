@@ -12,7 +12,9 @@ import { Observable } from 'rxjs';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
-
+import { Timestamp } from '@firebase/firestore-types';
+import { IInterests } from '@mp/api/interests/util';
+import { IPost } from '@mp/api/users/util';
 
 @Component({
   selector: 'mp-edit-profile',
@@ -23,6 +25,21 @@ export class EditProfilePage
 {
   Bio!: string;
   uid!:string;
+  email!: string;
+  name!: string;
+  profilePicture!: string;
+  phoneNumber!: string;
+  customClaims!: { [key: string]: any };
+  created!: Timestamp;
+  age!: number;
+  bio!: string;
+  dob!: Timestamp;
+  gender!: string;
+  interests!: IInterests[];
+  sexuality!: string;
+  time!: number;
+  posts!: IPost[];
+
   StateBio!: string;
   changed = false;
   uploadImg = false;
@@ -33,9 +50,55 @@ export class EditProfilePage
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {
       if (profile)
+      {
         this.uid = profile.userId;
+
+        if(profile.email)
+        this.email = profile.email;
+
+        if (profile.name)
+        this.name = profile.name;
+        
+        if (profile.profilePicture)
+        this.profilePicture = profile.profilePicture;
+
+        if (profile.phoneNumber)
+        this.phoneNumber = profile.phoneNumber;
+
+        if (profile.customClaims)
+        this.customClaims = profile.customClaims;
+
+        if (profile.created)
+        this.created = profile.created;
+
+        if (profile.age)
+        this.age = profile.age;
+
+        if(profile.bio)
+        this.bio = profile.bio;
+
+        if (profile.dob)
+        this.dob = profile.dob;
+
+        if (profile.gender)
+        this.gender = profile.gender;
+        
+        if (profile.interests)
+        this.interests = profile.interests;
+ 
+        if (profile.sexuality)
+        this.sexuality = profile.sexuality;
+
+        if (profile.time)
+        this.time = profile.time;
+        
+        if (profile.posts)
+        this.posts = profile.posts;
+
+  
+      }   
     });
-    this.StateBio = "This is my bio pulled from state";
+    this.StateBio = this.bio;
     this.Bio = this.StateBio;
   }
 
@@ -51,6 +114,25 @@ export class EditProfilePage
 
   UpdateBio(){
     console.log(this.Bio, " Push to state from here");
+    
+    const query  = {
+      uid: this.uid,
+      email: this.email,
+      name: this.name,
+      profilePicture: this.profilePicture,
+      phoneNumber: this.phoneNumber,
+      customClaims: this.customClaims,
+      age: this.age,
+      bio: this.Bio,
+      dob: this.dob,
+      gender: this.gender,
+      interests: this.interests,
+      sexuality: this.sexuality,
+      time: this.time,
+      posts: this.posts
+    };
+    
+    this.store.dispatch(new EditProfile(query));
   }
 
   validateBio(){

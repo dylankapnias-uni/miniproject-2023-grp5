@@ -64,30 +64,29 @@ ion-content
    
 }
 .title {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-    flex-grow: 2;
-    text-align: center;
-  }
-  input {
-    border-bottom: 3px solid #000000;
-    font-weight: bold;
-  }
-  ion-input {
-    --border-color: black;
-    --border-style: solid;
-    --border-width: 1px;
-  }
-  div:first-child {
-    margin-bottom: 20px;
-  }
-  
-  div:nth-child(2) {
-    margin-top: 20px;
-  }
-  
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  flex-grow: 2;
+  text-align: center;
+}
+input {
+  border-bottom: 3px solid #000000;
+  font-weight: bold;
+}
+ion-input {
+  --border-color: black;
+  --border-style: solid;
+  --border-width: 1px;
+}
+div:first-child {
+  margin-bottom: 20px;
+}
 
+div:nth-child(2) {
+  margin-top: 20px;
+}
+  
 
   
   
