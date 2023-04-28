@@ -9,6 +9,10 @@ describe("API Home Feature Tests", () => {
     let homeService : HomeService
     let commandBus: CommandBus
 
+    let mockUserI: IUserRef
+    let mockParsingData: IParsingData
+
+
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
           providers: [HomeService, CommandBus],
@@ -16,33 +20,45 @@ describe("API Home Feature Tests", () => {
     
         homeService = module.get<HomeService>(HomeService);
         commandBus = module.get<CommandBus>(CommandBus);
+
+        const tempMockUserI: IUserRef = {
+          userId: "mockUser",
+          accepted: ["anotherUser"],
+          visited: ["anotherUser", "yetAnotherUser"]
+        }
+
+        mockUserI = tempMockUserI
+        
+        const tempMockParsingData: IParsingData = {
+          userId: "mockUser",
+          userRef: mockUserI
+        }
+
+        mockParsingData = tempMockParsingData
+
+
       }),
 
     describe("CreateUser function", () => {
         it("Should create a user", async () => {
-            const mockRequest: ICreateUserHomeRequest = {
+              //given
+              const mockRequest: ICreateUserHomeRequest = {
                 userId: "mockUser"
               };
-              const mockUserI: IUserRef = {
-                userId: "mockUser",
-                accepted: ["anotherUser"],
-                visited: ["anotherUser", "yetAnotherUser"]
-              }
-
-              const mockParsingData: IParsingData = {
-                userId: "mockUser",
-                userRef: mockUserI
-              }
+              
               const mockResponse: ICreateUserHomeResponse = {
                 home: mockParsingData
               };
 
               jest.spyOn(commandBus, 'execute').mockResolvedValueOnce(mockResponse);
         
+              //when
               const result = await homeService.createUserHome(mockRequest);
         
+              //then
               expect(commandBus.execute).toHaveBeenCalledWith(new CreateUserHomeCommand(mockRequest));
               expect(result).toBe(mockResponse);
         });
     })
+
 })
