@@ -142,6 +142,23 @@ describe("API Home Feature Tests", () => {
           expect(commandBus.execute).toHaveBeenCalledWith(new RejectUserCommand(mockRequest))
           expect(result).toBe(mockResponse)
         })
+
+        it("Reject invalid user", async ()=>{
+          //given
+          const mockRequest: IAcceptUserRequest = {
+            userId: "mockUser",
+            swipedUserId: "incorrectUser"
+          }
+  
+          jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+  
+          //when
+          const result = await homeService.acceptUser(mockRequest)
+  
+          //then
+          expect(commandBus.execute).toHaveBeenCalledWith(new AcceptUserCommand(mockRequest))
+          expect(result).toBe(null)
+        });
     })
 
 })
