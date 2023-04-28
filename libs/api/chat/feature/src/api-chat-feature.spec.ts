@@ -156,7 +156,37 @@ describe("Chat", () => {
             expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
             expect(result.messages.messages?.length).toBe(1)
-        })
+        }),
+
+        it("GetChat with valid chat id and no messages and users", async () => {
+            //given
+            const mockRequest: IGetChatRequest = {
+                chatId: "mockChat"
+            }
+
+            const mockChat: IChat = {
+                chatID: "mockChat",
+                messages: null,
+                timeAdderID: "mockChat",
+                timeRemaining: 5,
+                totalTimeUsed: 0,
+                users: ["anotherUser"]
+            }
+
+            const mockResponse: IGetChatResponse = {
+                messages: mockChat
+            }
+
+            jest.spyOn(queryBus, "execute").mockResolvedValueOnce(mockResponse)
+
+            //when
+            const result = await chatService.getChat(mockRequest)
+
+            //then
+            expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
+            expect(result).toBe(mockResponse)
+            expect(result.messages.messages).toBe(null)
+        }) 
     })
 
 
