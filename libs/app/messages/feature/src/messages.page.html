@@ -10,12 +10,15 @@
       <ion-row>
         <ion-col>
           <ion-grid class="scrl">
-            <ion-row class="chat-bubble" *ngFor="let chat of chats">
-              <ion-nav-link routerLink="/chat/{{chat.chatRef}}">
-                <ion-col size="2">
-                  <ion-avatar>
-                    <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
-                  </ion-avatar>
+            <ion-row class="chat-bubble" *ngFor="let chat of chats" routerLink="/chat/{{chat.chatRef}}">
+            
+                <ion-col size="2" >
+                   
+                    <ion-avatar class = "profile_img">
+                      <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
+                    </ion-avatar>
+                  
+                  
                 </ion-col>
                 <ion-col size="9">
                   <div>
@@ -25,7 +28,7 @@
                     </div>
                   </div>
                 </ion-col>
-              </ion-nav-link>
+           
             </ion-row>
           </ion-grid>
         </ion-col>

@@ -10,7 +10,6 @@
       <ion-row>
         <ion-col>
           <div class="users" *ngIf="users.length > 0; emptyTemplate">
-            {{log()}}
             <div class="user" *ngFor="let u of users; let i = index" [style.zIndex]="users.length-i" (touchstart)="touchStart($event)" (touchmove)="touchMove($event,i)" (touchend)="touchEnd(i, u.user?.userId)" id="{{'card-'+i}}">
               <ion-card class = "profile">
                 <img class="profile_picture" src="{{u.user?.profilePicture}}">

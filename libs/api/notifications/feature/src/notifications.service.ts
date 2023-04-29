@@ -1,13 +1,13 @@
 
 import { Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { ClearNotificationsCommand, CreateNotificationCommand, IClearNotificationsRequest, IClearNotificationsResponse, ICreateNotificationRequest, IDeleteNotificationRequest, ISendNotificationRequest } from '@mp/api/notifications/util';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { IFetchNotificationsRequest, IFetchNotificationsResponse, FetchNotificationsQuery, ClearNotificationsCommand, CreateNotificationCommand, IClearNotificationsRequest, IClearNotificationsResponse, ICreateNotificationRequest, IDeleteNotificationRequest, ISendNotificationRequest } from '@mp/api/notifications/util';
 import { DeleteNotificationCommand, SendNotificationCommand } from '@mp/api/notifications/util';
 import { ICreateNotificationResponse, IDeleteNotificationResponse, ISendNotificationResponse } from '@mp/api/notifications/util';
 
 @Injectable()
 export class NotificationService {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   async deleteNotification(
     request: IDeleteNotificationRequest
@@ -43,6 +43,15 @@ export class NotificationService {
       ClearNotificationsCommand,
       IClearNotificationsResponse
     >(new ClearNotificationsCommand(request));
+  }
+
+  async fetchNotifications(
+    request: IFetchNotificationsRequest
+  ): Promise<IFetchNotificationsResponse> {
+    return await this.queryBus.execute<
+      FetchNotificationsQuery,
+      IFetchNotificationsResponse
+    >(new FetchNotificationsQuery(request));
   }
 
 }

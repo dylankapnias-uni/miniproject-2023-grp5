@@ -80,6 +80,7 @@ export class ChatState {
     console.log(response);
     const rsps = response.data;
     //Works and catches Chat id
+    console.log(rsps);
     ctx.patchState({
       chatForm: {
         ...ctx.getState().chatForm,

@@ -13,9 +13,9 @@ export class CreateChatHandler implements IQueryHandler<CreateChatQuery, ICreate
       const request = Query.request;
       
       const data: IChat = {
-        chatID: request.chatId,
+        chatId: request.chatId,
         messages: [],
-        timeAdderID: request.userId,
+        timeAdderId: request.userId,
         timeRemaining: 1800,
         totalTimeUsed: 0,
         users: request.users,
@@ -24,7 +24,7 @@ export class CreateChatHandler implements IQueryHandler<CreateChatQuery, ICreate
       const chat = await this.repository.createChat(data);
       if(!chat)
         throw new Error('Chat not created');
-      data.chatID = chat.chatID;
+      data.chatId = chat.chatId;
       const response: ICreateChatResponse = {chat: data};
       
       return response;

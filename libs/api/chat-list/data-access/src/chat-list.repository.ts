@@ -16,18 +16,22 @@ export class ChatListRepository {
   }
 
   async getForUserID(userID: string) {
-    console.log(userID);
-    return (await admin
-      .firestore()
-      .collection('Chatlist')
-      .withConverter<(IChatList)>({
-        fromFirestore: (snapshot) => {
-          return snapshot.data() as (IChatList);
-        },
-        toFirestore: (it: (IChatList)) => it,
-      })
-      .doc(userID)
-      .get()).data() as (IChatList);
+    if(userID != undefined && userID != null &&  userID.length > 0)
+    {
+      return (await admin
+        .firestore()
+        .collection('Chatlist')
+        .withConverter<(IChatList)>({
+          fromFirestore: (snapshot) => {
+            return snapshot.data() as (IChatList);
+          },
+          toFirestore: (it: (IChatList)) => it,
+        })
+        .doc(userID)
+        .get()).data() as (IChatList);
+    }
+
+    return null;
   }
 
   async addToChatList(creatorID:string,chatID:string, otherUser:string ) {

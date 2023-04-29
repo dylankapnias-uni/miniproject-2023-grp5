@@ -48,11 +48,6 @@ export class HomePage {
     }
   }
 
-  log()
-  {
-    console.log("GGGGGGG");
-  }
-
   startX = 0;
   endX = 0;
   touchStart(evt: any) {

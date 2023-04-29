@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { NotificationRepository } from '@mp/api/notifications/data-access';
-import { FetchNotificationsQuery } from '@mp/api/notifications/util';
+import { FetchNotificationsQuery, INotification } from '@mp/api/notifications/util';
 
 @QueryHandler(FetchNotificationsQuery)
 export class FetchNotificationsHandler implements IQueryHandler<FetchNotificationsQuery> {
@@ -8,6 +8,12 @@ export class FetchNotificationsHandler implements IQueryHandler<FetchNotificatio
 
   async execute(query: FetchNotificationsQuery) {
     console.log(`${FetchNotificationsHandler.name}`);
-    return this.repository.getNotifications(query.request.userId);
+
+    const request = query.request;
+    const response =  await this.repository.getNotifications(request.userId);
+
+    if(response == undefined) throw new Error('Notifications not found');
+
+    return {notifications: response};
   }
 }

@@ -84,7 +84,6 @@ export class HomeState {
     const response = await this.homeApi.retrieveHomeUsers(request);
     //const rsps = response.data;
     const uHolder = response.data.users.userList as Array<IUserMatch>;
-
     if (!response.data.users.userList) 
       throw new Error('Unlovable');
     

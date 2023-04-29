@@ -10,6 +10,8 @@ import {
     ICreateNotificationResponse,
     IClearNotificationsRequest,
     IClearNotificationsResponse,
+    IFetchNotificationsRequest,
+    IFetchNotificationsResponse
 } from '@mp/api/notifications/util';
 
 
@@ -59,5 +61,16 @@ export class NotificationsApi {
             this.functions,
             'ClearNotifications'
         )(resquest)    
+    }
+
+    async FetchNotifications(request: IFetchNotificationsRequest)
+    {
+        return await httpsCallable<
+            IFetchNotificationsRequest,
+            IFetchNotificationsResponse
+        >(
+            this.functions,
+            'FetchNotifications'
+        )(request)
     }
 }
