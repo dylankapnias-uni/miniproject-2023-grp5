@@ -169,6 +169,21 @@ export class ProfileState {
       .pipe(tap((profile: IUserProfile) => ctx.dispatch(new SetProfile(profile))));
   }
 
+  // @Action(GetUserProfile)
+  // getUserProfile(ctx: StateContext<ProfileStateModel>, { userId }: GetUserProfile) {
+    
+  //   const request = {
+  //     userId: userId
+  //   }
+  //   const response = this.profileApi.getUserProfile(userId);
+    
+  //   ctx.patchState()
+  //   {
+  //     profile: response.profile
+  //   }
+
+  // }
+
   @Action(SetProfile)
   setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
     return ctx.setState(

@@ -35,7 +35,7 @@ export interface ChatStateModel {
         // timeAdderID: string | null;
         // timeRemaining: number | null;
         // totalTimeUsed: number | null;
-        chat: IChat | null;
+        chat: IChat | null | undefined;
       }
     }
     dirty: false;

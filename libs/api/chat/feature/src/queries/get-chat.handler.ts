@@ -10,8 +10,7 @@ implements IQueryHandler<GetChatQuery, IGetChatResponse> {
 
     const request = query.request;
     const response = await this.repository.getChat(request.chatId);
-
-    if (response == undefined) throw new Error('Chat not found');
+    //if (response == undefined) throw new Error('Chat not found');
     
     return {messages: response};
   }

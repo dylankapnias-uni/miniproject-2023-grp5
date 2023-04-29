@@ -1,5 +1,5 @@
 import { IChat } from "../interfaces";
 
 export interface IGetChatResponse {
-  messages: IChat;
+  messages: IChat | null | undefined;
 }

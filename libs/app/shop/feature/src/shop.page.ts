@@ -25,7 +25,8 @@ export class ShopPage
   
   addTime(time:number){
     console.log("Add "+ time +" minutes to the time");
+    const t = (time*60);
     if(this.profile)
-      this.store.dispatch(new BuyTime({time:time, uid:this.profile.userId}));
+      this.store.dispatch(new BuyTime({time: t, uid:this.profile.userId}));
   }
 }

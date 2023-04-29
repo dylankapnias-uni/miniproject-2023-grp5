@@ -4,8 +4,6 @@ import { SetError } from '@mp/app/errors/util';
 import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
-import { IMessages } from '@mp/api/chat/util';
-import { IChat } from '@mp/api/chat/util';
 import { IChatReferences } from '@mp/api/chat-list/util';
 import { Timestamp } from '@angular/fire/firestore';
 import { MessagesApi } from './messages.api';
@@ -63,7 +61,7 @@ export class MessagesState {
         chatMessages: {
           model: {
             ...state.chatForm.chatMessages.model,
-            chats: rsps.chatList.chatList,
+            chats: rsps.chatList?.chatList,
           },
         },
       },

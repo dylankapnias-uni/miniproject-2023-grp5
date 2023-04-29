@@ -10,7 +10,9 @@
       <ion-row>
         <ion-col>
           <ion-grid class="scrl">
-            <ion-row class="chat-bubble" *ngFor="let chat of chats" routerLink="/chat/{{chat.chatRef}}">
+            
+            <ion-row class="chat-bubble" *ngFor="let chat of chats">
+            <!-- <ion-row class="chat-bubble" *ngFor="let chat of chats" routerLink="/chat/{{chat?.chatRef}}"> -->
             
                 <ion-col size="2" >
                    
@@ -23,7 +25,10 @@
                 <ion-col size="9">
                   <div>
                     <div class="content">
-                      <div class="name">{{chat?.chatRef}}</div>
+
+                      <button class="chat-button" (click)="loadChat(chat?.chatRef)" style = "background-color: #F3C1C0">
+                        <div class="name">{{chat?.chatRef}}</div>
+                      </button>
                       <!-- <div class="last-message" *ngIf="chat.unread">Sent you a new message!</div> -->
                     </div>
                   </div>

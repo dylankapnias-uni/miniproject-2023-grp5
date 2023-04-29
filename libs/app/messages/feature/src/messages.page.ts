@@ -5,7 +5,6 @@ import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { MessagesState } from '@mp/app/messages/data-access';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Observable } from 'rxjs';
-import { IChat } from '@mp/api/chat/util';
 //import { IProfile } from '@mp/api/profiles/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { Block } from '@mp/app/settings/util';
@@ -22,7 +21,7 @@ export class MessagesPage {
   noChats!: boolean;
   profile!: IUserProfile;
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
-  @Select(MessagesState.messages) messages$!: Observable<IChatReferences[]>;
+  @Select(MessagesState.messages) messages$!: Observable<IChatReferences[] | null>;
 
 
   constructor(private router: Router, private store: Store) {
@@ -53,12 +52,20 @@ export class MessagesPage {
     this.store.dispatch(new SearchMessages({query}));
   }
 
+  loadChat(ref : string | null | undefined)
+  {
+    this.router.navigate(['/chat/' + ref]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 100)
+  }
+  
   Reset(){
-    this.store.dispatch(new GetMessages({uid: '1'}));
+    //this.store.dispatch(new GetMessages({uid: '1'}));
   }
 
   block(id:string){
-    this.store.dispatch(new Block({uid:'1', blockId: id}));
+    //this.store.dispatch(new Block({uid:'1', blockId: id}));
   }
   
 }

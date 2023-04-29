@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 //import { IProfile } from '@mp/api/profiles/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
-import { SubscribeToProfile } from '@mp/app/profile/util';
+import { SetProfile, SubscribeToProfile } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Router,ActivatedRoute } from '@angular/router';
@@ -28,7 +28,7 @@ export class OtherUserPage {
   
   constructor (public r : Router, private route: ActivatedRoute, public store: Store){
     //this.id = this.store.dispatch(new )
-    
+    //this.store.dispatch(new SetProfile());
     //this.store.dispatch(new SubscribeToProfile());
    // this.dispatch(new SubscribeToProfile());
     //this.profile$.subscribe((profile) => {
