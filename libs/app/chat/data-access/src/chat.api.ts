@@ -23,6 +23,8 @@ export class ChatApi {
   ) {}
 
     async sendMessage(request: ISendMessageRequest){
+        console.log("ChatApi.sendMessage:");
+        console.log(request);
         return await httpsCallable<
             ISendMessageRequest,
             ISendMessageResponse

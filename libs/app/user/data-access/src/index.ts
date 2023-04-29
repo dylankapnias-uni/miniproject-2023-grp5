@@ -1,1 +1,3 @@
-export * from './lib/app-user-data-access';
+export * from './user.state';
+export * from './user.api';
+export * from './user.module';

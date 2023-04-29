@@ -27,7 +27,8 @@
     <ion-content>
         <div class="chat">
             <div class="message">
-                <p *ngFor="let message of this.Chat?.messages" [ngClass]="{'from-me': isMe(message?.userId), 'from-them': !isMe(message?.userId)}">{{message.message}}<small class="time">{{message?.time}}</small></p>
+                <!-- <p *ngFor="let message of this.Chat?.messages" [ngClass]="{'from-me': isMe(message?.userId), 'from-them': !isMe(message?.userId)}">{{message.message}}<small class="time">{{messageTime(message.time)}}</small></p> -->
+                <p *ngFor="let message of this.Chat?.messages" [ngClass]="{'from-me': isMe(message?.userId), 'from-them': !isMe(message?.userId)}">{{message.message}}<small class="time">{{message.time}}</small></p>
             </div>
             <ion-grid class="inp">
                 <ion-row>

@@ -109,6 +109,8 @@ export class ChatState {
 
   @Action(SendMessage)
   async SendMessage(ctx: StateContext<ChatStateModel>, {payload}: SendMessage) {
+    console.log("ChatState.SendMessage:");
+    console.log(payload);
     //Works and catches Chat id and outGoingMessage
     const request : ISendMessageRequest = {
       userId : payload.uid,
