@@ -10,14 +10,15 @@
       <ion-row>
         <ion-col>
           <div class="users" *ngIf="users.length > 0; emptyTemplate">
-            <div class="user" *ngFor="let user of users; let i = index" [style.zIndex]="users.length-i" (touchstart)="touchStart($event)" (touchmove)="touchMove($event,i)" (touchend)="touchEnd(i)" id="{{'card-'+i}}">
+            {{log()}}
+            <div class="user" *ngFor="let u of users; let i = index" [style.zIndex]="users.length-i" (touchstart)="touchStart($event)" (touchmove)="touchMove($event,i)" (touchend)="touchEnd(i, u.user?.userId)" id="{{'card-'+i}}">
               <ion-card class = "profile">
-                <img class="profile_picture" src="{{user.user?.profilePicture}}">
+                <img class="profile_picture" src="{{u.user?.profilePicture}}">
                 <div class="profile_info">
-                  <a routerLink="/other-user/{{user.user?.userId}}" class="my-button">View Profile</a>
-                  <h1 class="user_name">{{user.user?.name}}</h1>
-                  <h2 class="age">{{user.user?.age}}</h2>
-                  <ion-chip *ngFor="let interests of user.user?.interests">{{interests}}</ion-chip>
+                  <a routerLink="/other-user/{{u.user?.userId}}" class="my-button">View Profile</a>
+                  <h1 class="user_name">{{u.user?.name}}</h1>
+                  <h2 class="age">{{u.user?.age}}</h2>
+                  <ion-chip *ngFor="let interests of u.user?.interests">{{interests.interest}}</ion-chip>
                 </div>
               </ion-card>
             </div>

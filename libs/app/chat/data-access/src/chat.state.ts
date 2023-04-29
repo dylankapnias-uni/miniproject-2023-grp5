@@ -30,11 +30,12 @@ export interface ChatStateModel {
   chatForm: {
     chatMessages:{
       model:{
-        chatID: string | null;
-        messages: IMessages[] | null;
-        timeAdderID: string | null;
-        timeRemaining: number | null;
-        totalTimeUsed: number | null;
+        // chatID: string | null;
+        // messages: IMessages[] | null;
+        // timeAdderID: string | null;
+        // timeRemaining: number | null;
+        // totalTimeUsed: number | null;
+        chat: IChat | null;
       }
     }
     dirty: false;
@@ -49,11 +50,12 @@ export interface ChatStateModel {
     chatForm: {
       chatMessages:{
         model:{
-          chatID: null,
-          messages: null,
-          timeAdderID: null,
-          timeRemaining: null,
-          totalTimeUsed: null,
+          // chatID: null,
+          // messages: null,
+          // timeAdderID: null,
+          // timeRemaining: null,
+          // totalTimeUsed: null,
+          chat: null,
         }
       },
       dirty: false,
@@ -69,36 +71,26 @@ export class ChatState {
     private chatApi: ChatApi,
   ) {}
 
-  // private static chat: IChat = {
-  //   ChatID: '1',
-  //   messages: [
-  //     {
-  //       message: 'Hello World!',
-  //       time: Timestamp.now(),
-  //       userID: '1'
-  //     },
-  //     {
-  //       message: 'How are you?',
-  //       time: Timestamp.now(),
-  //       userID: '2'
-  //     }
-  //   ],
-  //   timeAdderID: '1',
-  //   timeRemaining: 1000,
-  //   totalTimeUsed: 0
-  // };
-
   @Action(GetMessages)
   async GetMessages(ctx: StateContext<ChatStateModel>, {payload}: GetMessages) {
     const request : IGetChatRequest = {
       chatId: payload.cid
     };
     const response = await this.chatApi.getChat(request);
+    console.log(response);
     const rsps = response.data;
     //Works and catches Chat id
     ctx.patchState({
-
-
+      chatForm: {
+        ...ctx.getState().chatForm,
+        chatMessages: {
+          ...ctx.getState().chatForm.chatMessages,
+          model: {
+            ...ctx.getState().chatForm.chatMessages.model,
+            chat: rsps.messages
+          }
+        }
+      }
     });
   }
 
@@ -147,41 +139,35 @@ export class ChatState {
   @Action(RemoveTime)
   async RemoveTime(ctx: StateContext<ChatStateModel>, {payload}: RemoveTime) {
     const state = ctx.getState();
-    const timeRemaining = state.chatForm.chatMessages.model.timeRemaining || 0;
-    const totalTimeUsed = state.chatForm.chatMessages.model.totalTimeUsed || 0;
-    if(timeRemaining <= 0){
-      ctx.patchState({
-        chatForm: {
-          ...state.chatForm,
-          status: 'TimeUp',
-        },
-      });
-    }
-    else{
-      ctx.patchState({
-        chatForm: {
-          ...state.chatForm,
-          chatMessages: {
-            ...state.chatForm.chatMessages,
-            model: {
-              ...state.chatForm.chatMessages.model,
-              timeRemaining: timeRemaining - 1,
-              totalTimeUsed: totalTimeUsed + 1,
-            },
-          },
-        },
-      });
-    }
+    // const timeRemaining = state.chatForm.chatMessages.model.timeRemaining || 0;
+    // const totalTimeUsed = state.chatForm.chatMessages.model.totalTimeUsed || 0;
+    // if(timeRemaining <= 0){
+    //   ctx.patchState({
+    //     chatForm: {
+    //       ...state.chatForm,
+    //       status: 'TimeUp',
+    //     },
+    //   });
+    // }
+    // else{
+    //   ctx.patchState({
+    //     chatForm: {
+    //       ...state.chatForm,
+    //       chatMessages: {
+    //         ...state.chatForm.chatMessages,
+    //         model: {
+    //           ...state.chatForm.chatMessages.model,
+    //           timeRemaining: timeRemaining - 1,
+    //           totalTimeUsed: totalTimeUsed + 1,
+    //         },
+    //       },
+    //     },
+    //   });
+    // }
   }
 
   @Selector()
   static messages(state: ChatStateModel) {
-    return state.chatForm.chatMessages.model.messages;
-  }
-
-
-  @Selector()
-  static timeLeft(state: ChatStateModel) {
-    return state.chatForm.chatMessages.model.timeRemaining;
+    return state.chatForm.chatMessages.model.chat;
   }
 }

@@ -22,9 +22,9 @@
     </ion-grid>
     <ion-grid>
       <ion-row style = "margin-top: 10px;">
-        <ion-col size="4" *ngFor="let i of interests">
+        <ion-col size="4" *ngFor="let i of this.profile?.interests">
           <ion-chip class="interests">
-            <ion-label>{{i}}</ion-label>
+            <ion-label>{{i.interest}}</ion-label>
           </ion-chip>
         </ion-col>
       </ion-row>

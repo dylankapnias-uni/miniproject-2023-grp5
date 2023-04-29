@@ -25,7 +25,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       interests: [],
       posts: [],
       sexuality: null,
-      time: null
+      time: 7200
     };
     const user = this.publisher.mergeObjectContext(UserProfile.fromData(data));
 

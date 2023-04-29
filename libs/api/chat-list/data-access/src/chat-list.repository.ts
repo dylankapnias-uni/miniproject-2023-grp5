@@ -16,6 +16,7 @@ export class ChatListRepository {
   }
 
   async getForUserID(userID: string) {
+    console.log(userID);
     return (await admin
       .firestore()
       .collection('Chatlist')

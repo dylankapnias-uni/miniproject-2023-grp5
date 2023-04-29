@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Chat } from './Chat.interface';
 import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
@@ -11,6 +10,7 @@ import { IChat } from '@mp/api/chat/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { Block } from '@mp/app/settings/util';
 import { SubscribeToProfile } from '@mp/app/profile/util';
+import { IChatReferences } from '@mp/api/chat-list/util';
 
 @Component({
   selector: 'mp-messages',
@@ -18,11 +18,11 @@ import { SubscribeToProfile } from '@mp/app/profile/util';
   styleUrls: ['./messages.page.scss'],
 })
 export class MessagesPage {
-  chats!: IChat[];
+  chats!: IChatReferences[];
   noChats!: boolean;
   profile!: IUserProfile;
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
-  @Select(MessagesState.messages) messages$!: Observable<IChat[]>;
+  @Select(MessagesState.messages) messages$!: Observable<IChatReferences[]>;
 
 
   constructor(private router: Router, private store: Store) {
@@ -31,6 +31,7 @@ export class MessagesPage {
       if (profile)
         this.profile = profile;
     });
+
     if(this.profile){
       this.store.dispatch(new GetMessages({uid: this.profile.userId}));
       this.messages$.subscribe((messages) => {
@@ -45,15 +46,6 @@ export class MessagesPage {
 
   getOtherUserProfile(users:string[]){
     const otherUser = users.filter((user) => user !== this.profile.userId);
-  }
-
-  openChat(chatId: string){
-    //Navigate to chat page once we've figured out a way to pass the chatId to the chat page
-    //console.log(chatId);
-    this.router.navigate([`/chat/${chatId}`]);
-    setTimeout(() => {
-      window.location.reload();
-    }, 100)
   }
 
   handleChange(event:any) {

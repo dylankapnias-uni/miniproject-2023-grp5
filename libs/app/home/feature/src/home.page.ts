@@ -22,11 +22,11 @@ import { IUserMatch } from '@mp/api/home/util';
 })
 export class HomePage {
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
-  @Select(HomeState.home) home$!: Observable<IUserMatch[] | null>;
+  @Select(HomeState.home) home$!: Observable<Array<IUserMatch> | null>;
 
-  //Just select the home state then chekc there is a selector that matches it then get the cards similar to how you get the profiles
   profile!: IUserProfile | null;
-  users!: IUserMatch[];
+  users!: Array<IUserMatch>;
+  loaded = false;
 
   constructor(public store: Store)
   {
@@ -40,43 +40,18 @@ export class HomePage {
     if(this.profile){
       this.store.dispatch(new GetCards({uid: this.profile.userId}));
       this.home$.subscribe((home) => {
-        if(home){
-          this.users = home;
-          console.log("Logging home " + this.users.length);
-        }
+        if(home)
+          this.users = home;  
+          console.log(this.users);
+          console.log(this.loaded);
       });
     }
   }
-  /*users: Array<any> = [
-    {
-      id: '9n7YPhjAHoYkEFiMUjjIIiqxTCv1',
-      photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-      name: 'Emily',
-      age: 22,
-      interests: ["At Uni", "Aries", "Vegan"]
-    },
-    {
-      id: 'A2Yp4whHYmaBCNKXyPzuX7QiAXm1',
-      photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      name: 'John',
-      age: 21,
-      interests: ["At Uni", "Aries", "Vegan"]
-    },
-    {
-      id:'BYjm2oO8wSS0q97z5JBbiHcn1AK2',
-      photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
-      name: 'Jessica',
-      age: 25,
-      interests: ["At Uni", "Aries", "Vegan"]
-    },
-    {
-      id:4,
-      photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      name: 'Chris',
-      age: 35,
-      interests: ["At Uni", "Aries", "Vegan"]
-    }
-  ];*/
+
+  log()
+  {
+    console.log("GGGGGGG");
+  }
 
   startX = 0;
   endX = 0;
@@ -99,8 +74,9 @@ export class HomePage {
 
   }
 
-  touchEnd(index: number) {
+  touchEnd(index: number, swipedUID: unknown) {
     if(this.endX > 0){
+      const strSwipedUID = swipedUID as string;
       const finalX = this.endX - this.startX;
       if(finalX > -100 && finalX < 100){ //Reset Card
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = ".3s";
@@ -110,10 +86,9 @@ export class HomePage {
           (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "0s";
         }, 350);
       }
-      else if(finalX <= -100){
-        //if(this.users) //Reject Card
-       // const t = this.users[index].userId;
-        //this.store.dispatch(new SwipeReject({uid:t}));
+      else if(finalX <= -100){//Reject Card
+        if(this.profile)
+          this.store.dispatch(new SwipeReject({userId: this.profile.userId, swipedUserId : strSwipedUID}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(-1000px) rotate(-30deg)";
 
@@ -121,41 +96,14 @@ export class HomePage {
           this.users.splice(index, 1);
           if(this.users.length == 1){
             //Repopulate array
-            /*this.users.push(              
-              {
-                id:3,
-                photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
-                name: 'Jessica',
-                age: 25,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:4,
-                photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'Chris',
-                age: 35,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:2,
-                photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'John',
-                age: 21,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:1,
-                photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-                name: 'Emily',
-                age: 22,
-                interests: ["At Uni", "Aries", "Vegan"]
-              })*/
+            if(this.profile)
+              this.store.dispatch(new GetCards({uid: this.profile.userId}));
           }
         }, 100);
       }
       else if(finalX >= 100){  //Accept Card
-        //const t = this.users[index].userId;
-        //this.store.dispatch(new SwipeAccept({uid:t}));
+        if(this.profile)
+          this.store.dispatch(new SwipeAccept({userId: this.profile.userId, swipedUserId : strSwipedUID}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(1000px) rotate(30deg)";
 
@@ -163,35 +111,8 @@ export class HomePage {
           this.users.splice(index, 1);
           if(this.users.length == 1){
             //Repopulate array
-            /*this.users.push(              
-              {
-                id:3,
-                photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
-                name: 'Jessica',
-                age: 25,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:4,
-                photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'Chris',
-                age: 35,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:2,
-                photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'John',
-                age: 21,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:1,
-                photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-                name: 'Emily',
-                age: 22,
-                interests: ["At Uni", "Aries", "Vegan"]
-              })*/
+            if(this.profile)
+              this.store.dispatch(new GetCards({uid: this.profile.userId}));
           }
         }, 100)
       }

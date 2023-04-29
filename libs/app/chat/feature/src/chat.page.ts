@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
-import { chat } from './chat.interface';
 import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 //import { IProfile } from '@mp/api/profiles/util';
@@ -15,6 +14,7 @@ import {
   RemoveTime,
   GetMessages,
 } from '@mp/app/chat/util';
+import { IChat } from '@mp/api/chat/util';
 import { IMessages } from '@mp/api/chat/util';
 import { Observable } from 'rxjs';
 import { Time } from '@angular/common';
@@ -25,9 +25,9 @@ import { Time } from '@angular/common';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage {
-  @Select(ChatState.messages) messages$!: Observable<string[]>;
-  Chat!: chat;
-  id!: any;
+  
+  Chat!: IChat;
+  id!: string;
   profile!: IUserProfile | null;
   outgoingMessage = '';
   color = 'bronze';
@@ -40,8 +40,9 @@ export class ChatPage {
     if (content)
       content.scrollTop = content.scrollHeight;
   }
-  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
 
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  @Select(ChatState.messages) messages$!: Observable<IChat>;
   constructor(
     private router:Router,
     private route: ActivatedRoute,
@@ -52,93 +53,82 @@ export class ChatPage {
         if (profile)
           this.profile = profile;
       });
-      this.id = this.route.snapshot.paramMap.get('id');
-      console.log('ID:', this.id);
-      //Grab the chat here
-      // this.store.dispatch(new GetMessages({cid:this.id}));
-      // this.messages$.subscribe((messages) => {
-      //   if(messages != null){
-      //     //this.chats = messages;
-      //     //this.noChats = this.chats.length === 0;
-      //   }
-      // });
-      const now: Date = new Date();
-
-      //this.openChatTime = Time();
-      if(!this.profile)
-        this.me='2';
-      else
-        this.me=this.profile.userId;
-      
-      this.Chat = {
-        id: '1',
-        messages: [
-          { from: '2', content: 'Hello', time: '12:30' },
-          { from: '3', content: 'Hi', time: '12:31' },
-          { from: '2', content: 'How are you?', time: '12:32' },
-          { from: '3', content: 'I am good, thanks!', time: '12:33' },
-          { from: '2', content: 'What are you up to?', time: '12:34' },
-          { from: '3', content: 'Just working on some stuff.', time: '12:35' },
-          { from: '2', content: 'Sounds busy!', time: '12:36' },
-          { from: '3', content: 'Yeah, it is!', time: '12:37' },
-          { from: '2', content: 'Well, good luck with that.', time: '12:38' },
-          { from: '3', content: 'Thanks!', time: '12:39' },
-          { from: '2', content: 'Talk to you later.', time: '12:40' },
-          { from: '3', content: 'Bye!', time: '12:41' },
-          { from: '2', content: 'See ya!', time: '12:42' },
-          { from: '3', content: 'Take care!', time: '12:43' },
-          { from: '2', content: 'You too!', time: '12:44' },
-          { from: '3', content: 'Thanks!', time: '12:45' },
-          { from: '2', content: 'No problem.', time: '12:46' },
-          { from: '3', content: 'Bye!', time: '12:47' },
-          { from: '2', content: 'Later!', time: '12:48' },
-          { from: '3', content: 'My name is Walter Hartwell White. I live at 308 Negra Arroyo Lane Albuquerque New Mexico 87104. This is my confession.', time: '12:49' },
-          { from: '3', content: 'Thats great to hear!', time: '12:50' }
-        ],
-        participants: '2,3',
-        timeLeft: 7770
-    }
-
+      this.id = this.route.snapshot.paramMap.get('id') as string;
+      if(this.profile){
+        this.store.dispatch(new GetMessages({cid:this.id}));
+        this.messages$.subscribe((messages) => {
+          if(messages != null){
+            this.Chat = messages;
+            //this.noChats = this.chats.length === 0;
+          }
+        });
+      }
     this.startTimer();
   }
-    isMe(id: string){return id===this.me;}
+
+  getOtherUser(){
+    if(this.Chat?.users[0] == this.profile?.userId){
+      return this.Chat?.users[1];
+    }
+
+    else{
+      return this.Chat?.users[0];
+    }
+
+  }
+
+    isMe(id: string | null | undefined){
+      return id===this.profile?.userId;
+    }
     showid(){
       alert(this.id);
     }
 
-    secondsToTime(seconds: number) {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const remainingSeconds = seconds % 60;
-      let timeString = '';
-      if (hours > 0)
-        timeString += `${hours}:`;
-      
-      if (minutes < 10)
-        timeString += `0${minutes}:`;
-      else 
-        timeString += `${minutes}:`;
-      
-      if (remainingSeconds < 10) 
-        timeString += `0${remainingSeconds}`;
-      else 
-        timeString += `${remainingSeconds}`;
-      return timeString;
+    secondsToTime(seconds: number|null|undefined) {
+      if(seconds){
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const remainingSeconds = seconds % 60;
+        let timeString = '';
+        if (hours > 0)
+          timeString += `${hours}:`;
+        
+        if (minutes < 10)
+          timeString += `0${minutes}:`;
+        else 
+          timeString += `${minutes}:`;
+        
+        if (remainingSeconds < 10) 
+          timeString += `0${remainingSeconds}`;
+        else 
+          timeString += `${remainingSeconds}`;
+        return timeString;
+      }
+      return '00:00';
     }
 
     startTimer(){
       setInterval(() => {
-        if(this.Chat.timeLeft === 0)
-          this.router.navigate(['messages']);
-        else
-          this.Chat.timeLeft--;
+        // if(this.Chat.timeLeft === 0)
+        //   this.router.navigate(['messages']);
+        // else
+        //   this.Chat.timeLeft--;
+        if(this.Chat){
+          if(this.Chat.timeRemaining === 0){
+            this.store.dispatch(new RemoveTime({cid:this.id}));
+            this.router.navigate(['messages']);
+          }else{
+            if(this.Chat.timeRemaining)
+              this.Chat.timeRemaining--;
+          }
+        }
       }, 1000);
     }
 
     addTime(minutes:number){
       //Add to database
       this.store.dispatch(new AddTime({time: minutes*60,cid:this.id}));
-      this.Chat.timeLeft+=minutes*60;
+      //this.Chat.timeLeft+=minutes*60;
     }
     
     Report(){
@@ -160,7 +150,7 @@ export class ChatPage {
       const msg : IMessages = {
         message: this.outgoingMessage,
         time: Timestamp.now(),
-        userID: this.me
+        userId: this.me
       };
       if(this.profile)
         this.store.dispatch(new SendMessage({cid:this.id,message: msg, uid:this.profile.userId}));
@@ -172,7 +162,7 @@ export class ChatPage {
         const time = `${hour}:${minute}`;
 
 
-        this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
+       // this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
         this.outgoingMessage = '';
         setTimeout(() => {
           const content = document.querySelector('.message');

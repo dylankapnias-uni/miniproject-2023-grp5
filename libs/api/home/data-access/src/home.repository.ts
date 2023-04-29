@@ -101,6 +101,7 @@ export class HomeRepository {
         .collection('User_Profile')
         .where('userId', 'not-in', swiped.visited));
 
+
       // validDocsCollection = (validDocsCollection.where('userId', 'not-in', userList));
       // existence check to appease the linter
       if(filters){
@@ -111,80 +112,95 @@ export class HomeRepository {
         }
       }
       // If user is heterosexual
-      if (userProfileDoc.sexuality == 'heterosexual'){
-        // select users that are of opposite gender from collection of all users
-        validDocsCollection = (validDocsCollection
-          .where('gender', '!=', userProfileDoc.gender));
-        // select users that are not homosexual from collection of oposite gender users
-        validDocsCollection = (validDocsCollection
-          .where('sexuality', '!=', "homosexual"));
-      }
-      // If user is homosexual
-      else if(userProfileDoc.sexuality == 'homosexual'){
-        // select users that are of same gender from collection of all users
-        validDocsCollection = (validDocsCollection
-          .where('gender', '==', userProfileDoc.gender));
-        // select users that are not heterosexual from collection of same gender user
-        validDocsCollection = (validDocsCollection
-          .where('sexuality', '==', "heterosexual"));
-      }
-      // If user is bisexual
-      else if(userProfileDoc.sexuality == 'bisexual') {
-        // contains user IDs that are invalid due to gender/orientation mismatch
-        const invalidIDs: string[] = [];
+      // if (userProfileDoc.sexuality == 'heterosexual'){
+      //   // select users that are of opposite gender from collection of all users
+      //   let opGender:String;
+      //   if(userProfileDoc.gender=="Male"){
+      //     opGender="Female";
+      //   }else{
+      //     opGender="Male";
+      //   }
 
-        // Create query of users in valid docs that are of opposite gender
-        // but homosexual
-        let temp0 = (validDocsCollection
-          .where('gender', '!=', userProfileDoc.gender));
-        temp0 = (temp0.where('sexuality', '==', 'homosexual'));
+      //   validDocsCollection = (validDocsCollection
+      //     .where('gender', '==', opGender));
+      //   // select users that are not homosexual from collection of oposite gender users
+      //   validDocsCollection = (validDocsCollection
+      //     .where('sexuality', '==', "heterosexual"));
+      // }
+      // // If user is homosexual
+      // else if(userProfileDoc.sexuality == 'homosexual'){
+      //   // select users that are of same gender from collection of all users
+      //   validDocsCollection = (validDocsCollection
+      //     .where('gender', '==', userProfileDoc.gender));
+      //   // select users that are not heterosexual from collection of same gender user
+      //   validDocsCollection = (validDocsCollection
+      //     .where('sexuality', '==', "heterosexual"));
+      // }
+      // // If user is bisexual
+      // else if(userProfileDoc.sexuality == 'bisexual') {
+      //   // contains user IDs that are invalid due to gender/orientation mismatch
+      //   const invalidIDs: string[] = [];
+      //   let opGender:String;
+      //   if(userProfileDoc.gender=="Male"){
+      //     opGender="Female";
+      //   }else{
+      //     opGender="Male";
+      //   }
+      //   // Create query of users in valid docs that are of opposite gender
+      //   // but homosexual
+      //   let temp0 = (validDocsCollection
+      //     .where('gender', '==', opGender));
+      //   temp0 = (temp0.where('sexuality', '==', 'homosexual'));
 
-        const temp0QSnap = await temp0.get();
-        // Add invalid IDs to list
-        temp0QSnap.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
-          const userData = doc.data() as IUserProfile;
-          if (userData) {
-            invalidIDs.push(userData.userId);
-          }
-        });
+      //   const temp0QSnap = await temp0.get();
+      //   // Add invalid IDs to list
+      //   temp0QSnap.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+      //     const userData = doc.data() as IUserProfile;
+      //     if (userData) {
+      //       invalidIDs.push(userData.userId);
+      //     }
+      //   });
 
-        // Create query of users in valid docs that are of same gender
-        // but heterosexual
-        let temp1 = (validDocsCollection
-          .where('gender', '==', userProfileDoc.gender));
-        temp1 = (temp1.where('sexuality', '==', 'heterosexual'));
+      //   // Create query of users in valid docs that are of same gender
+      //   // but heterosexual
+      //   let temp1 = (validDocsCollection
+      //     .where('gender', '==', userProfileDoc.gender));
+      //   temp1 = (temp1.where('sexuality', '==', 'heterosexual'));
         
-        const temp1QSnap = await temp1.get();
-        // Add invalid IDs to list
-        temp1QSnap.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
-          const userData = doc.data() as IUserProfile;
-          if (userData) {
-            invalidIDs.push(userData.userId);
-          }
-        });
-        console.log(JSON.stringify(invalidIDs));
-        // Remove users from query that are in invalidIDs
-        validDocsCollection = (validDocsCollection
-          .where('userId', 'not-in', invalidIDs));
-      }
+      //   const temp1QSnap = await temp1.get();
+      //   // Add invalid IDs to list
+      //   temp1QSnap.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
+      //     const userData = doc.data() as IUserProfile;
+      //     if (userData) {
+      //       invalidIDs.push(userData.userId);
+      //     }
+      //   });
+      //   console.log(JSON.stringify(invalidIDs));
+      //   // Remove users from query that are in invalidIDs
+      //   //validDocsCollection = (validDocsCollection
+      //   //  .where('userId', 'not-in', invalidIDs));
+      // }
 
       // Fill out with users that are in validDocsCollection
-      validDocsCollection = validDocsCollection
-        .where('userId', '<=', randomIDGeneratorInator(userProfileDoc.userId.length))
-        .limit(10-out.userList.length);
+      // validDocsCollection = validDocsCollection
+      //   .where('userId', '<=', randomIDGeneratorInator(userProfileDoc.userId.length))
+      //   .limit(10-out.userList.length);
       const validDocsSnapshot = await validDocsCollection.get();
       validDocsSnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
         const userMatch: IUserMatch = {user:doc.data() as IUserProfile,match:false};
-        out.userList.push(userMatch);
+        if(out.userList.length < 10)
+          out.userList.push(userMatch);
       });
     }
-
+      console.log("194:"+out.userList.length)
       return out;
   }
 
   async acceptUser(userID:string, acceptedUser: IUserMatch){
     // another bullshit check to appease the fictional typescript gods
     // because the dozens of checks before this are not enough
+    console.log("GGGGGGGGGGG");
+    
     if (acceptedUser == undefined || acceptedUser.user == undefined) {
       throw new Error("Scizzo swiped on a user that doesn't exist :(");
     }

@@ -10,9 +10,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 
 export class Chat extends AggregateRoot implements IChat {
   constructor(
-    public chatID: string,
+    public chatId: string,
     public messages: IMessages[]|null|undefined,
-    public timeAdderID: string|null|undefined,
+    public timeAdderId: string|null|undefined,
     public timeRemaining: number|null|undefined,
     public totalTimeUsed: number|null|undefined,
     public users: string[]
@@ -22,9 +22,9 @@ export class Chat extends AggregateRoot implements IChat {
 
   static fromData(chat: IChat): Chat {
     const instance = new Chat(
-      chat.chatID,
+      chat.chatId,
       chat.messages,
-      chat.timeAdderID,
+      chat.timeAdderId,
       chat.timeRemaining,
       chat.totalTimeUsed,
       [chat.users[0], chat.users[1]]
@@ -46,12 +46,12 @@ export class Chat extends AggregateRoot implements IChat {
 
   toJSON(): IChat {
     return {
-      chatID: this.chatID,
+      chatId: this.chatId,
       messages: this.messages,
-      timeAdderID: this.timeAdderID,
-     timeRemaining: this.timeRemaining,
-     totalTimeUsed: this.totalTimeUsed,
-     users:[this.users[0], this.users[1]]
+      timeAdderId: this.timeAdderId,
+      timeRemaining: this.timeRemaining,
+      totalTimeUsed: this.totalTimeUsed,
+      users:[this.users[0], this.users[1]]
     };
   }
 }

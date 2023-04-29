@@ -6,7 +6,8 @@ import { IMessages } from '@mp/api/chat/util';
 @Injectable()
 export class ChatRepository 
 {
-    async getChat(chatID: string) {
+    async getChat(chatId: string) {
+      if(chatId != undefined && chatId != null &&  chatId.length > 0){
         return (await admin
           .firestore()
           .collection('Chat')
@@ -16,15 +17,19 @@ export class ChatRepository
             },
             toFirestore: (it: IChat) => it,
           })
-          .doc(chatID)
+          .doc(chatId)
           .get()).data();
+        }
+
+        else
+          return null;
       }
 
-      async sendMessage(chatID : string, message:IMessages) {
+      async sendMessage(chatId : string, message:IMessages) {
         return await admin
           .firestore()
           .collection('Chat')
-          .doc(chatID)
+          .doc(chatId)
           .update({messages: FieldValue.arrayUnion(message)});
       }
 
@@ -38,7 +43,7 @@ export class ChatRepository
           .firestore()
           .collection('Chat')
           .doc(docRef.id)
-          .update({chatID: docRef.id});
+          .update({chatId: docRef.id});
 
         return (await admin
           .firestore()
@@ -53,17 +58,17 @@ export class ChatRepository
           .get()).data();
       }
 
-      async updateTime(chatID: string, time: number) {
+      async updateTime(chatId: string, time: number) {
         await admin
           .firestore()
           .collection('Chats')
-          .doc(chatID)
+          .doc(chatId)
           .update({timeRemaining: FieldValue.increment(time)});
           
-        return this.getTime(chatID);
+        return this.getTime(chatId);
       }
 
-      async getTime(chatID: string) {
+      async getTime(chatId: string) {
         return (await admin
           .firestore()
           .collection('Chats')
@@ -73,7 +78,7 @@ export class ChatRepository
             },
             toFirestore: (it: IChat) => it,
           })
-          .doc(chatID)
+          .doc(chatId)
           .get()).data()?.timeRemaining;
       }
 }

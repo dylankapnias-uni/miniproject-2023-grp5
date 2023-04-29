@@ -12,12 +12,8 @@ import {
 import { IUserProfile } from '@mp/api/users/util';
 import { 
   IAcceptUserRequest,
-  IAcceptUserResponse,
   IRejectUserRequest,
-  IRejectUserResponse,
-  ICreateUserHomeResponse,
   ICreateUserHomeRequest,
-  IRetrieveHomeUsersResponse,
   IRetrieveHomeUsersRequest,
   IUserMatch
  } from '@mp/api/home/util';
@@ -27,7 +23,7 @@ import { HomeApi } from './home.api';
 export interface HomeStateModel{
   home:{
     model:{
-      users: IUserMatch[] | null;
+      users: Array<IUserMatch> | null;
     };
     dirty: false;
     status: string;
@@ -57,12 +53,7 @@ export class HomeState {
       userId: payload.userId,
       swipedUserId : payload.swipedUserId,
     };
-
     const response = await this.homeApi.acceptUser(request);
-    const rsps = response.data;
-    ctx.patchState({
-      
-    });
   }
 
   @Action(SwipeReject)
@@ -71,17 +62,12 @@ export class HomeState {
       userId: payload.userId,
       swipedUserId : payload.swipedUserId
     };
-
     const response = await this.homeApi.rejectUser(request);
-    const rsps = response.data;
-    ctx.patchState({
-      
-    });
   }
 
   @Action(FilterCards)
   async FilterCards(ctx: StateContext<HomeStateModel>, {payload}: FilterCards) {
-    //Works and catches Chat id and time
+    
     ctx.patchState({
       
     });
@@ -89,21 +75,24 @@ export class HomeState {
 
   @Action(GetCards)
   async GetCards(ctx: StateContext<HomeStateModel>, {payload}: GetCards) {
-    
+    const state = ctx.getState();
     const request: IRetrieveHomeUsersRequest = {
       userId: payload.uid,
       filter: null
     };
 
     const response = await this.homeApi.retrieveHomeUsers(request);
-    const rsps = response.data;
-    if (rsps.users.userList === undefined) {
+    //const rsps = response.data;
+    const uHolder = response.data.users.userList as Array<IUserMatch>;
+
+    if (!response.data.users.userList) 
       throw new Error('Unlovable');
-    }
+    
     ctx.patchState({
       home:{
         model:{
-          users: rsps.users.userList,
+          ...state.home.model,
+          users: uHolder,
         },
         dirty: false,
         status: '',
@@ -116,6 +105,6 @@ export class HomeState {
 
   @Selector()
   static home(state: HomeStateModel) {
-    return state.home.model;
+    return state.home.model.users;
   }
 }

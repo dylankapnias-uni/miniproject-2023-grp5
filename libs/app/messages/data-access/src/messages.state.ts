@@ -6,6 +6,7 @@ import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { GetMessages, SearchMessages } from '@mp/app/messages/util';
 import { IMessages } from '@mp/api/chat/util';
 import { IChat } from '@mp/api/chat/util';
+import { IChatReferences } from '@mp/api/chat-list/util';
 import { Timestamp } from '@angular/fire/firestore';
 import { MessagesApi } from './messages.api';
 import { 
@@ -18,7 +19,7 @@ export interface MessagesStateModel {
   chatForm: {
     chatMessages:{
       model:{
-        chats: IChat[] | null;
+        chats: IChatReferences[] | null | undefined;
       }
     }
     dirty: false;
@@ -49,14 +50,20 @@ export class MessagesState {
   constructor(private messagesApi: MessagesApi) {}
   @Action(GetMessages)
   async GetMessages(ctx: StateContext<MessagesStateModel>, {payload}: GetMessages) {
-    //Works and catches Chat id
     const state = ctx.getState();
+    const request : IFetchChatListRequest = {
+      userId: payload.uid
+    }
+    const response = await this.messagesApi.fetchChatList(request);
+    const rsps = response.data;
+    console.table(response.data);
     ctx.patchState({
       chatForm: {
         ...state.chatForm,
         chatMessages: {
           model: {
-            chats: null,
+            ...state.chatForm.chatMessages.model,
+            chats: rsps.chatList.chatList,
           },
         },
       },
@@ -81,7 +88,7 @@ export class MessagesState {
 
 
   @Selector()
-  static messages(state: MessagesStateModel): IChat[] | null {
+  static messages(state: MessagesStateModel): IChatReferences[] | null | undefined{
     return state.chatForm.chatMessages.model.chats;
   }
 }
