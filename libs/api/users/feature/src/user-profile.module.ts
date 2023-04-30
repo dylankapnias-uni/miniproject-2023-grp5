@@ -10,7 +10,8 @@ import { UserProfileService } from './user-profile.service';
 export const CommandHandlers = [
   CreateUserHandler,
   UpdateUserProfileHandler,
-  DeleteUserProfileHandler
+  DeleteUserProfileHandler,
+  //CreateMockUserHandler
 ];
 
 export const EventHandlers = [

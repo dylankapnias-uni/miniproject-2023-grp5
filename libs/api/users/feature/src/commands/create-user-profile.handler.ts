@@ -1,6 +1,7 @@
 import { CreateUserCommand, IUserProfile } from '@mp/api/users/util';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { UserProfile } from '../models';
+import { Timestamp } from 'firebase-admin/firestore';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -8,7 +9,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
   async execute(command: CreateUserCommand) {
     console.log(`${CreateUserHandler.name}`);
-
+    const dob = Timestamp.fromDate(new Date());
     const request = command.request;
     const data: IUserProfile = {
       userId: request.auth.id,
@@ -18,9 +19,9 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       phoneNumber: request.auth.phoneNumber,
       customClaims: request.auth.customClaims,
       created: request.auth.created,
-      age : null,
+      age : 0, // way too young to be using a dating app
       bio: null,
-      dob: null,
+      dob: dob,
       gender: null,
       interests: [],
       posts: [],

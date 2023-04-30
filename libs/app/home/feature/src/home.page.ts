@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 //import { IProfile } from '@mp/api/profiles/util';
+import { Router } from '@angular/router';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
@@ -28,7 +29,7 @@ export class HomePage {
   users!: Array<IUserMatch>;
   loaded = false;
 
-  constructor(public store: Store)
+  constructor(private router: Router, public store: Store)
   {
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {
@@ -67,6 +68,15 @@ export class HomePage {
       (<HTMLStyleElement>document.getElementById("accept-icon")).style.opacity = String(-deltaX/100);
     }
 
+  }
+
+  openUser(uid: string | undefined | null)
+  {
+    console.log(uid)
+    this.router.navigate(['/other-user/' + uid]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 200)
   }
 
   touchEnd(index: number, swipedUID: unknown) {

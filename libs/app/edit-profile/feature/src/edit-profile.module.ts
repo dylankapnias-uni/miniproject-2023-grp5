@@ -5,10 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { EditProfilePage } from './edit-profile.page';
 import { EditProfilePageRoutingModule } from './edit-profile.routing';
 import { NgxsModule } from '@ngxs/store';
-import { SettingsState } from '@mp/app/settings/data-access';
+import { SettingsState, SettingsApi } from '@mp/app/settings/data-access';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ProfileState, ProfilesApi } from '@mp/app/profile/data-access';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,9 +19,10 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     AngularFireModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    NgxsModule.forFeature([SettingsState])
+    NgxsModule.forFeature([SettingsState, ProfileState])
   ],
   declarations: [EditProfilePage],
-  exports: [EditProfilePage]
+  exports: [EditProfilePage],
+  providers: [SettingsApi, ProfilesApi]
 })
 export class EditProfilePageModule {}

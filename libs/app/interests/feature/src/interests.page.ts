@@ -13,17 +13,17 @@ import { SubscribeToProfile } from '@mp/app/profile/util';
 })
 export class InterestsPage{
   MyInterests: string[] = ['Swimming', 'Dog', 'Food'];
-  uid!:string;
+  profile!:IUserProfile;
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   constructor(private store: Store){
     this.store.dispatch(new SubscribeToProfile());
     this.profile$.subscribe((profile) => {
       if (profile)
-        this.uid = profile.userId;
+        this.profile = profile;
     });
   }
 
-  interests: any[] = [
+  interests: unknown[] = [
     {
       catagory:'Sports',
       content:['Cycling', 'Swimming', 'Tennis']
@@ -47,7 +47,8 @@ export class InterestsPage{
   ];
 
   removeItem(item: string){
-    this.MyInterests = this.MyInterests.filter(i => i !== item);
+    console.log(item);
+    // this.MyInterests = this.MyInterests.filter(i => i !== item);
   }
 
   addItem(item: string){

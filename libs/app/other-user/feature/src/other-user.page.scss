@@ -1,5 +1,20 @@
 
-
+.back_button{
+  height:37px;
+  width:42px;
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  //top: 1.5%;
+  left: 1.5%;
+}
+.back-icon{
+  font-size:30px;
+}
 ion-card {
     position: relative;
     height:240%;
@@ -42,6 +57,7 @@ ion-card {
     height: 220px;
     z-index: -1;
     align-content: center;
+    margin-top: 40px;
   }
   
   .pls {
@@ -68,6 +84,8 @@ ion-card {
   .center {
     margin-top: 7%;
     margin-left: 5%;
+    align-items: center;
+    align-content: center;
   }
   
   ion-icon{

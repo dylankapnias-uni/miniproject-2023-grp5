@@ -97,6 +97,8 @@ export class ChatState {
 
   @Action(GetUser)
   async GetUser(ctx: StateContext<ChatStateModel>, {payload}: GetUser) {
+
+    console.log("API User " + payload.ouid)
     const state = ctx.getState();
     const request : IGetUserProfileRequest = {
       userId: payload.ouid
@@ -190,6 +192,11 @@ export class ChatState {
 
   @Selector()
   static otherUser(state: ChatStateModel) {
+    return state.chatForm.chatMessages.model.otherUser;
+  }
+
+  @Selector()
+  static homeOtherUser(state: ChatStateModel){
     return state.chatForm.chatMessages.model.otherUser;
   }
 }

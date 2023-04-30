@@ -40,7 +40,8 @@ import {
     BuyTime,
     Unblock,
     GetBlocked,
-    CreateSetting
+    CreateSetting,
+    Logout
 }
 from '@mp/app/settings/util';
 
@@ -155,7 +156,7 @@ export class SettingsState {
 
     const request : IUpdateUserProfileRequest = {
       userProfile : {
-        userId: payload.uid,
+        userId: payload.userId,
         email: payload.email,
         name: payload.name,
         profilePicture: payload.profilePicture,
@@ -195,25 +196,25 @@ export class SettingsState {
   async EditProfile(ctx: StateContext<SettingsStateModel>, {payload}: EditProfile) {
     //Make call to api and update state
     console.log("Update Made: " + payload);
-    const tempRequest : IUserProfile = {
-      userId: payload.uid,
-      email: payload.email,
-      name: payload.name,
-      profilePicture: payload.profilePicture,
-      phoneNumber: payload.phoneNumber,
-      customClaims: payload.customClaims,
-      age: payload.age,
-      bio: payload.bio,
-      dob: payload.dob,
-      gender: payload.gender,
-      interests: payload.interests,
-      sexuality: payload.sexuality,
-      time: payload.time,
-      posts: payload.posts
-    };
+    // const tempRequest : IUserProfile = {
+    //   userId: payload.userId,
+    //   email: payload.email,
+    //   name: payload.name,
+    //   profilePicture: payload.profilePicture,
+    //   phoneNumber: payload.phoneNumber,
+    //   customClaims: payload.customClaims,
+    //   age: payload.age,
+    //   bio: payload.bio,
+    //   dob: payload.dob,
+    //   gender: payload.gender,
+    //   interests: payload.interests,
+    //   sexuality: payload.sexuality,
+    //   time: payload.time,
+    //   posts: payload.posts
+    // };
 
     const request : IUpdateUserProfileRequest = {
-      userProfile : tempRequest
+      userProfile : payload
     };
     const response = await this.settingsApi.updateUserProfile(request);
     const rsps = response.data;
@@ -273,6 +274,18 @@ export class SettingsState {
             //messages: MessagesState.chats
         })
     }
+
+  @Action(Logout)
+  async Logout(ctx: StateContext<SettingsStateModel>) {
+    //Make call to api and update state
+    // const request : ILogoutRequest = {
+    //   userId: payload.uid,
+    // };
+    // const response = await this.settingsApi.logout(request);
+    
+  }
+  
+    
 
   @Selector()
   static settings(state: SettingsStateModel) {

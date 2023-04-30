@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
 import { IPost, IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
-//import { Timestamp } from '@firebase/firestore-types';
-// import { Timestamp } from '@angular/fire/firestore';
-import { Timestamp } from '@angular/fire/firestore';
+// Fucking Ash Cache-em, gotta import 'em all
+import { Timestamp as Timestamp3 } from '@firebase/firestore-types';
+import { Timestamp as Timestamp1 } from '@firebase/firestore';
+import { Timestamp as Timestamp2 } from '@angular/fire/firestore';
+import { Timestamp } from '@firebase/firestore';
 import { IInterests } from '@mp/api/interests/util';
-
 @Component({
   selector: 'mp-account',
   templateUrl: './account.page.html',
@@ -31,12 +32,22 @@ export class AccountPage
   interests!: IInterests[];
   time!: number;
   posts!: IPost[];
-
+  // Sometimes my genius is frightening
+  // dateOfBirth: Timestamp1 | Timestamp2 | Timestamp3 | Timestamp4;
   dateOfBirth!: Timestamp;
 
   valid = true;
 
 
+  name!: string;
+  email!: string;
+  phone!: string;
+  gender!: string;
+  dob!: string;
+  sexuality!: string;
+
+  num! : number;
+  test!:number
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   constructor(public r : Router, public alertController:AlertController, private store: Store){
     this.store.dispatch(new SubscribeToProfile());
@@ -46,8 +57,26 @@ export class AccountPage
         console.log("User Logged in: " + profile.userId);
         this.ourProfile = profile;
         this.uid = profile.userId;
-        if(profile.dob)
-        this.dob = profile.dob?.toString();
+        if(profile.dob){
+          this.test = profile.dob?.seconds;
+          console.log("Profile date of birth");
+          console.log(profile.dob);
+        }
+        const numberStringThatIWantToLogBecauseAllOfThiFsIsSoFuckingObtuseAndEsotericIHateIt:string = 
+        JSON.stringify(profile.dob).substr((JSON.stringify(profile.dob).indexOf(':') + 1), 9);
+        console.log(numberStringThatIWantToLogBecauseAllOfThiFsIsSoFuckingObtuseAndEsotericIHateIt)
+        this.num = +(numberStringThatIWantToLogBecauseAllOfThiFsIsSoFuckingObtuseAndEsotericIHateIt);
+          // 924134400
+        this.assignDOB(profile.dob);
+        
+        // this.dob = profile.dob?.toDate();
+        const date = new Date(this.num * 1000); // convert seconds to milliseconds
+        const dateString = date.toISOString().substring(0, 10); // get yyyy-mm-dd from ISO string
+        console.log("Date: " + dateString);
+        // const d = dateString.replace(/\//g, "-")
+        this.dob = dateString + "T00:00:00";
+        console.log("GGGGGGGGGGGGGGGGGGGGGGG I want to die", this.dob);
+        //console.log("Entered birth: ", this.dob.toLocaleDateString());
       }
         
     });
@@ -94,11 +123,8 @@ export class AccountPage
         this.bio = this.ourProfile.bio;
       else
         this.valid = false;
-        
-      if(this.ourProfile.dob)
-        this.dob = this.ourProfile.dob.toDate().toISOString();
-      else
-        this.valid = false;
+      
+     
         // inb4 copilot dum
 
       if(this.ourProfile.interests)
@@ -121,6 +147,13 @@ export class AccountPage
     //this.gender = 'Other';
     //this.sexuality = 'heterosexual';
   }
+
+  assignDOB(date: any){
+    this.dob = date;
+    
+    console.log("DOB: " + this.dob.toString());
+  }
+
   @ViewChild('popover', { static: false }) popover!: IonPopover;
 
   isOpen = false;
@@ -129,13 +162,6 @@ export class AccountPage
     this.popover.event = e;
     this.isOpen = true;
   }
-
-  name!: string;
-  email!: string;
-  phone!: string;
-  gender!: string;
-  dob!: string;
-  sexuality!: string;
 
   LoadSettingsPage()
   {
@@ -167,10 +193,24 @@ export class AccountPage
     await alert.present();
   }
   Update(){
+    console.log("On Update" + this.dob);
     if(this.dob && this.email && this.name && this.phone && this.gender && this.sexuality){
-      const dateString = this.dob.split('T')[0];
+      const dateString = this.dob.toString().split('T')[0];
       const dateObj = new Date(Date.parse(dateString));
-      const t = Timestamp.fromDate(dateObj);
+      
+      let t: any; 
+      if (t == undefined)
+        try {
+          t = Timestamp1.fromDate(dateObj);
+        }catch (e) {
+          console.log("Guess it's not of type Timestamp");
+        }
+      if (t == undefined)
+        try{
+          t = Timestamp2.fromDate(dateObj);
+        }catch (e) {
+          console.log("Guess it's not of type Timestamp");
+        }
       const query  = {
         uid: this.uid,
         email: this.email,
@@ -188,7 +228,7 @@ export class AccountPage
         posts: this.posts
       };
 
-      this.store.dispatch(new UpdateAccount(query));
+      //this.store.dispatch(new UpdateAccount(query));
       this.valid = true;
     }
   }

@@ -45,10 +45,80 @@ export class UserProfile extends AggregateRoot implements IUserProfile {
   }
   
   create() {
+    if(!this.profilePicture){
+      this.profilePicture="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+    }
     this.apply(new UserCreatedEvent(this.toJSON()));
   }
 
   update() {
+
+    const now: any = Timestamp.fromDate(new Date());
+    let dob: any = this.dob;
+    let millis: number;
+    if(!dob) {
+      dob = Timestamp.fromDate(new Date());
+    }
+    // guess the now object's format
+    if (dob._seconds != undefined) {
+      millis = now._seconds*1000;
+    }
+    else if (now.seconds != undefined) {
+      millis = now.seconds*1000;
+    }
+    else {
+      console.log("yeah idk");
+      throw new Error("seconds not here bro");
+    }
+    // guess the dob object's format
+    if (dob._seconds != undefined) {
+      millis -= dob._seconds*1000;
+    }
+    else if (dob.seconds != undefined) {
+      millis -= dob.seconds*1000;
+    }
+    else {
+      console.log("yeah idk");
+      throw new Error("seconds not here bro");
+    }
+    console.log(typeof millis);
+    if (isNaN(millis)) {
+      throw new Error("How the fuck does number - number = NaN?");
+    }
+    console.log("milliseconds:", millis);
+    try{
+      this.age = Math.floor(millis/31557600000);
+      this.dob = dob;
+    } catch (e5) {
+      console.log("Timestamps are dumb");
+      console.log({dob: dob, now: now, millis: millis});
+      console.log(e5);
+    }
+
+    // try {
+    //   const bruh :{s: number, n:number} = dob;
+    //   const bruh2ElectricBoogaloo:[s: number, n:number] = now;
+    //   // const s:seconds, n:nanos}: {s:number, n: number} = bruh2ElectricBoogaloo;
+
+    //   let temp: number = Number.MAX_SAFE_INTEGER;
+    //   try {
+    //     bruh2ElectricBoogaloo.forEach((element: number) => {
+    //       if ( temp < element) {
+    //         temp = element;
+    //       }
+    //     });
+    //   }catch(e2) {
+    //     console.log("My last hope")
+    //   }
+    //   console.log("Seconds: ", temp);
+      
+    //   const bruhClone={s:dob.seconds,n:dob.nanoseconds};
+    //   console.log("Sawubona: ", JSON.stringify(bruhClone));
+      
+    //   console.log({bruh:bruh, bruh2:bruh2ElectricBoogaloo, flag:"This one"});
+    // }catch(ohFuckoff){
+    //   console.log("We Try, i cri ;-;");
+    // }
     this.apply(new UserProfileUpdatedEvent({userProfile: this.toJSON()}));
   }
 
