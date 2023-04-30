@@ -2,32 +2,25 @@ import { Component } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
-// import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
-// import { AngularFireStorage } from '@angular/fire/compat/storage';
-import {
-  DeleteAccount,
-  EditProfile,
-}
-from '@mp/app/settings/util';
+import { DeleteAccount, EditProfile } from '@mp/app/settings/util';
 import { Observable } from 'rxjs';
-//import { IProfile } from '@mp/api/profiles/util';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Timestamp } from '@firebase/firestore-types';
-// import { Timestamp } from '@angular/firestore';
 import { IInterests } from '@mp/api/interests/util';
 import { IPost } from '@mp/api/users/util';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import { update } from '@angular/fire/database';
+// ALL PRAISE THE TIMESTAMP \[T]/
+import { Timestamp as Timestamp1 } from '@firebase/firestore';
+import { Timestamp as Timestamp2electricboogaloo } from '@angular/fire/firestore';
+import { Timestamp as Timestamp3 } from 'firebase-admin/firestore';
 // import { finalize } from 'rxjs/operators';
-
-export interface FileUpload {
-  key: string;
-  name: string;
-  url: string;
-  file: File;
-}
+// import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
+// import { AngularFireStorage } from '@angular/fire/compat/storage';
+// import { Timestamp } from '@angular/firestore';
+//import { IProfile } from '@mp/api/profiles/util';
 
 @Component({
   selector: 'mp-edit-profile',
@@ -37,28 +30,34 @@ export interface FileUpload {
 export class EditProfilePage 
 {
   Bio!: string;
-  // uid!:string;
-  // email!: string;
-  // name!: string;
-  // profilePicture!: string;
-  // phoneNumber!: string;
-  // customClaims!: { [key: string]: any };
-  // created!: Timestamp;
-  // age!: number;
-  // bio!: string;
-  // dob!: Timestamp;
-  // gender!: string;
-  // interests!: IInterests[];
-  // sexuality!: string;
-  // time!: number;
-  // posts!: IPost[];
+  /* I Love Comments♥ :smile: */
+  /*// Very poignant commentary*/
+  /* // // // // uid!:string; */
+  /* // // // // email!: string; */
+  /* // // // // name!: string; */
+  /* // // // // profilePicture!: string; */
+  /* // // // // phoneNumber!: string; */
+  /* // // // // customClaims!: { [key: string]: any }; */
+  /* // // // // created!: Timestamp; */
+  /* // // // // age!: number; */
+  /* // // // // bio!: string; */
+  /* // // // // dob!: Timestamp; */
+  /* // // // // gender!: string; */
+  /* // // // // interests!: IInterests[]; */   
+  /* // // // // sexuality!: string; */
+  /* // // // // // time!: number; */
+  /****** // // // // posts!: IPost[];******/
+  /*
+  * @param IWANTTODIE
+  * @return fuckthisshit
+  */
 
   StateBio!: string | null | undefined;
   changed = false;
   uploadImg = false;
   imagePreview!: SafeResourceUrl;
   //imagePreview!: File;
-  fileToUpload!: File|null;
+  fileToUpload!: File | null;
   url! : string;
   profile!: IUserProfile | null;
   
@@ -68,7 +67,7 @@ export class EditProfilePage
     this.profile$.subscribe((profile) => {
       if (profile) {
         this.profile = profile;
-        if(this.profile.bio){
+        if(this.profile.bio) {
           this.StateBio = profile.bio;
           this.Bio = this.profile.bio;
         }
@@ -121,48 +120,20 @@ export class EditProfilePage
 
   }
 
-  LoadSettingsPage(){
+  LoadSettingsPage() {
     this.r.navigate(['/settings'])
   }
 
-  LoadInterests(){
+  LoadInterests() {
     this.r.navigate(['/interests'])
   }
 
-  UpdateBio(){
-    console.log(this.profile?.bio, " Push to state from here");
-    
-    if(this.profile){
-      const query: IUserProfile  = {
-        userId: this.profile.userId,
-        email: this.profile.email,
-        name: this.profile.name,
-        profilePicture: this.profile.profilePicture, //New profile picture to be uploaded
-        phoneNumber: this.profile.phoneNumber,
-        customClaims: this.profile.customClaims,
-        age: this.profile.age,
-        bio: this.profile.bio,
-        dob: this.profile.dob,
-        gender: this.profile.gender,
-        interests: this.profile.interests,
-        sexuality: this.profile.sexuality,
-        time: this.profile.time,
-        posts: this.profile.posts
-      };
-    
-      this.store.dispatch(new EditProfile(query));
-    }
-  }
-
-  validateBio(){
+  validateBio() {
     if(this.profile)
       this.changed = (this.profile.bio != this.StateBio);
-
-     //if(this.fileToUpload)
-     // this.url =  this.onUpload(this.fileToUpload);
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any | unknown | null | undefined | Timestamp | void | Timestamp1 | Timestamp2electricboogaloo | Timestamp3/* Bruh again? */) {
     this.changed= true;
     this.uploadImg = true;
     const file: File = event.target.files[0];
@@ -178,23 +149,32 @@ export class EditProfilePage
       };
     }
   }
-  async UpdateProfile(){
-    if(this.fileToUpload){
-      try{
+
+  async UpdateProfile() {
+
+    if(this.fileToUpload) {
+      console.log(this.Bio);
+      if(this.profile)
+      try {
         const url = await this.onUpload(this.fileToUpload);
         console.log(`This is the url: ${url}`);
 
-        if(url != "fucked")
-        {
-          if(this.profile)
+        if(url != "fucked") {
+          if(this.profile) {
             this.profile.profilePicture = url;
+            this.profile.bio = this.Bio;
+          }
         }
-          
-       
-        this.UpdateBio();
-      }catch (error){
+      } catch (error) {
         console.error("Error uploading image", error);
       }
+    }
+  
+    if(this.profile)
+    {
+      console.log(this.profile.profilePicture);
+      console.log(this.profile.bio)
+      this.store.dispatch(new EditProfile(this.profile));
     }
   }
 
@@ -204,7 +184,7 @@ export class EditProfilePage
     if(!this.profile){
       throw new Error ("Log in pls");
     };
-    const filePath = `/${this.profile.userId}/${file.name}}`;
+    const filePath = `/${this.profile.userId}/${file.name}`;
     const storage = getStorage();
     const fileRef = ref(storage, filePath);
     // const task = this.storage.uploadByt(filePath, file);
@@ -221,71 +201,7 @@ export class EditProfilePage
           return downloadURL;
         })
       }
-    )
-  
-
-    
+    ) 
     return "fucked";
   }
-
-  async uploadProfileImage(fileUpload:FileUpload, userId: string) {
-    //Tf? ffs
-    // const basePath = `${userId}/profilePicture`;
-
-    // const filePath = `${basePath}/${fileUpload.name}`;
-    // const storageRef = this.storage.ref(filePath);
-    // const uploadTask = this.storage.upload(filePath, fileUpload.file);
-    // uploadTask.snapshotChanges().pipe(  
-    //   finalize(() => {
-    //     storageRef.getDownloadURL().subscribe(downloadURL => {
-    //       fileUpload.url = downloadURL;
-    //       fileUpload.name = fileUpload.file.name;
-    //       this.saveFileData(fileUpload);
-    //     });
-    //   })
-    // ).subscribe();
-
-    // const filePath = `${userId}/${file.name}`;
-    // const storage = getStorage();
-    // const fileRef = ref(storage, filePath);
-    // const task = uploadBytesResumable(fileRef, file);
-    // I swear I have downs too
-    /*const downs: string =  await getDownloadURL(task.snapshot.ref).then(async downloadURL => {
-      console.log(downloadURL);
-      return downloadURL;
-    });*/
-
-    // task.on('state_changed' ,(snapshot) => {
-    //   console.log(snapshot);
-    // }, (error) => {
-    //   console.log(error);
-    // }, () => {
-    //   getDownloadURL(task.snapshot.ref).then(async downloadURL => {
-    //     console.log(downloadURL);
-    //     return downloadURL;
-    //   })
-    // }
-    // )
-    // return uploadTask.percentageChanges();
-    return userId;
-  }
-  //TODO Figure this shit out
-  // getFiles(numberItems: number, userId: string): AngularFireList<FileUpload> {
-  //   const basePath = `${userId}/profilePicture`;
-  //   return this.db.list(basePath, ref =>
-  //     ref.limitToLast(numberItems)
-  //   )
-  // }
 }
-
-// export class uploadingIGuess {
-//   private basePath = '/uploads';
-
-//   constructor(private storage: AngularFireStorage) { }
-
-//   pushFileToStorage(file: File) {
-//     const filePath = `${this.basePath}/${file.name}`;
-//     const storageRef = this.storage.ref(filePath);
-//     const uploadTask = this.storage.upload(filePath, file);
-//   }
-// }

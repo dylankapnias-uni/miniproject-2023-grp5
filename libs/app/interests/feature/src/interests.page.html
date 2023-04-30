@@ -12,10 +12,10 @@
   
   <ion-grid *ngFor="let i of interests">
     <ion-row>
-      <ion-col class = "cat" size = "12" >{{i.catagory}}</ion-col>
+      <ion-col class = "cat" size = "12" >{{i.category}}</ion-col>
     </ion-row>
     <ion-row style = "margin-top: 10px;">
-      <ion-col *ngFor="let j of i.content" size="4"><ion-chip (click)="addItem(j)">{{ j}}</ion-chip></ion-col>
+      <ion-col *ngFor="let j of i.interest" size="4"><ion-chip (click)="addItem(j)">{{ j}}</ion-chip></ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid>

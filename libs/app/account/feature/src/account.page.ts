@@ -212,7 +212,7 @@ export class AccountPage
           console.log("Guess it's not of type Timestamp");
         }
       const query  = {
-        uid: this.uid,
+        userId: this.uid,
         email: this.email,
         name: this.name,
         profilePicture: this.profilePicture,
@@ -228,7 +228,7 @@ export class AccountPage
         posts: this.posts
       };
 
-      //this.store.dispatch(new UpdateAccount(query));
+      this.store.dispatch(new UpdateAccount(query));
       this.valid = true;
     }
   }

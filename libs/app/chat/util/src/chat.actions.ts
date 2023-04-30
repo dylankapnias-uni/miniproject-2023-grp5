@@ -21,7 +21,7 @@ export class GetTime{
 
 export class RemoveTime{
     static readonly type = '[RemoveTime] Remove Time';
-    constructor(public payload: { cid: string }) {}
+    constructor(public payload: { cid: string, time : number }) {}
 }
 
 export class GetChatList{

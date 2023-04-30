@@ -11,14 +11,17 @@ import {
  import { 
   IGetChatRequest,
   ISendMessageRequest,
-  IChat
+  IChat,
+  IAddTimeRequest,
+  ISubtractTimeRequest,
+  IMessages,
 } from '@mp/api/chat/util';
 
 import {
   IGetUserProfileRequest
 } from '@mp/api/users/util';
 
-import { Timestamp } from '@angular/fire/firestore';
+// import { Timestamp } from '@angular/fire/firestore';
 import { ChatApi } from './chat.api';
 import { Store } from '@ngxs/store';
 import { IUserProfile } from '@mp/api/users/util';
@@ -27,12 +30,13 @@ export interface ChatStateModel {
   chatForm: {
     chatMessages:{
       model:{
-        // chatID: string | null;
-        // messages: IMessages[] | null;
-        // timeAdderID: string | null;
-        // timeRemaining: number | null;
-        // totalTimeUsed: number | null;
-        chat: IChat | null | undefined;
+        actualFuckingChat:{
+          chatID: string | null | undefined;
+          messages: IMessages[] | null | undefined;
+          timeAdderID: string | null | undefined;
+          timeRemaining: number | null | undefined;
+          totalTimeUsed: number | null | undefined;
+        }
         otherUser: IUserProfile | null | undefined;
       }
     }
@@ -48,14 +52,17 @@ export interface ChatStateModel {
     chatForm: {
       chatMessages:{
         model:{
-          // chatID: null,
-          // messages: null,
-          // timeAdderID: null,
-          // timeRemaining: null,
-          // totalTimeUsed: null,
-          chat: null,
+          actualFuckingChat:{
+            chatID: null,
+            messages: null,
+            timeAdderID: null,
+            timeRemaining: null,
+            totalTimeUsed: null,
+            // chat: null,
+            // please let me join I have fomo
+          },
           otherUser: null
-        }
+        },
       },
       dirty: false,
       status: '',
@@ -88,7 +95,7 @@ export class ChatState {
           ...ctx.getState().chatForm.chatMessages,
           model: {
             ...ctx.getState().chatForm.chatMessages.model,
-            chat: rsps.messages
+           // chat: rsps.messages
           }
         }
       }
@@ -142,9 +149,38 @@ export class ChatState {
 
   @Action(AddTime)
   async AddTime(ctx: StateContext<ChatStateModel>, {payload}: AddTime) {
-    //Works and catches Chat id and time
+    const request : IAddTimeRequest = {
+      chatId : payload.cid,
+      time : payload.time,
+    }
+    this.chatApi.addTime(request);
+    const state = ctx.getState();
+    let FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo;
+    let FuckThisShitV3;
+    if(state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining)
+      FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo = state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining + payload.time;
+    if(state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed)
+      FuckThisShitV3 = state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed;
+    
     ctx.patchState({
-      
+      chatForm: {
+        ...state.chatForm,
+        chatMessages: {
+          ...state.chatForm.chatMessages,
+          model: {
+            ...state.chatForm.chatMessages.model,
+            actualFuckingChat:{
+              chatID: payload.cid,
+              messages: state.chatForm.chatMessages.model.actualFuckingChat.messages,
+              timeAdderID: state.chatForm.chatMessages.model.actualFuckingChat.timeAdderID,
+              timeRemaining: (FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == null 
+                              || FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == undefined
+                              ? 0 : FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo),
+              totalTimeUsed: (FuckThisShitV3 == null || FuckThisShitV3 == undefined? 0 : FuckThisShitV3),
+            },
+          },
+        },
+      },
     });
   }
 
@@ -158,36 +194,45 @@ export class ChatState {
   @Action(RemoveTime)
   async RemoveTime(ctx: StateContext<ChatStateModel>, {payload}: RemoveTime) {
     const state = ctx.getState();
-    // const timeRemaining = state.chatForm.chatMessages.model.timeRemaining || 0;
-    // const totalTimeUsed = state.chatForm.chatMessages.model.totalTimeUsed || 0;
-    // if(timeRemaining <= 0){
-    //   ctx.patchState({
-    //     chatForm: {
-    //       ...state.chatForm,
-    //       status: 'TimeUp',
-    //     },
-    //   });
-    // }
-    // else{
-    //   ctx.patchState({
-    //     chatForm: {
-    //       ...state.chatForm,
-    //       chatMessages: {
-    //         ...state.chatForm.chatMessages,
-    //         model: {
-    //           ...state.chatForm.chatMessages.model,
-    //           timeRemaining: timeRemaining - 1,
-    //           totalTimeUsed: totalTimeUsed + 1,
-    //         },
-    //       },
-    //     },
-    //   });
-    // }
+    const request : ISubtractTimeRequest = {
+      chatId : payload.cid,
+      time : payload.time,
+    }
+
+    this.chatApi.subtractTime(request);
+    let FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo;
+    let FuckThisShitV3;
+    if(state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining)
+      FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo = state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining - 1;
+    if(state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed)
+      FuckThisShitV3 = state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed + 1;
+    
+    this.store.dispatch(new GetMessages({cid:payload.cid}));
+    ctx.patchState({
+      chatForm: {
+        ...state.chatForm,
+        chatMessages: {
+          ...state.chatForm.chatMessages,
+          model: {
+            ...state.chatForm.chatMessages.model,
+            actualFuckingChat:{
+              chatID: payload.cid,
+              messages: state.chatForm.chatMessages.model.actualFuckingChat.messages,
+              timeAdderID: state.chatForm.chatMessages.model.actualFuckingChat.timeAdderID,
+              timeRemaining: (FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == null 
+                              || FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == undefined
+                              ? 0 : FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo),
+              totalTimeUsed: (FuckThisShitV3 == null || FuckThisShitV3 == undefined? 0 : FuckThisShitV3),
+            },
+          },
+        },
+      },
+    });
   }
 
   @Selector()
   static messages(state: ChatStateModel) {
-    return state.chatForm.chatMessages.model.chat;
+    return state.chatForm.chatMessages.model.actualFuckingChat;
   }
 
   @Selector()

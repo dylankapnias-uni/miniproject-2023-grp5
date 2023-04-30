@@ -5,6 +5,13 @@ import { Observable } from 'rxjs';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
+import {IInterests} from '@mp/api/interests/util'
+
+
+interface IInterestsArray {
+  category: string;
+  interest: string[];
+}
 
 @Component({
   selector: 'mp-interests',
@@ -23,26 +30,26 @@ export class InterestsPage{
     });
   }
 
-  interests: unknown[] = [
+  interests: IInterestsArray[] = [
     {
-      catagory:'Sports',
-      content:['Cycling', 'Swimming', 'Tennis']
+      category:'Sports',
+      interest:['Cycling', 'Swimming', 'Tennis']
     },
     {
-      catagory:'Food',
-      content:['Vegan', 'Pasta', 'Pizza']
+      category:'Food',
+      interest:['Vegan', 'Pasta', 'Pizza']
     },
     {
-      catagory:'Music',
-      content:['Rock','Pop','Techo']
+      category:'Music',
+      interest:['Rock','Pop','Techo']
     },
     {
-      catagory:'Hobbies',
-      content:['Painting','Hiking', 'Pottery']
+      category:'Hobbies',
+      interest:['Painting','Hiking', 'Pottery']
     },
     {
-      catagory:'Pets',
-      content:['Hamster', 'Dogs','Cats']
+      category:'Pets',
+      interest:['Hamster', 'Dogs','Cats']
     }
   ];
 

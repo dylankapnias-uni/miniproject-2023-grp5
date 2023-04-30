@@ -60,7 +60,7 @@ export class UserProfile extends AggregateRoot implements IUserProfile {
       dob = Timestamp.fromDate(new Date());
     }
     // guess the now object's format
-    if (dob._seconds != undefined) {
+    if (now._seconds != undefined) {
       millis = now._seconds*1000;
     }
     else if (now.seconds != undefined) {
@@ -85,9 +85,9 @@ export class UserProfile extends AggregateRoot implements IUserProfile {
     if (isNaN(millis)) {
       throw new Error("How the fuck does number - number = NaN?");
     }
-    console.log("milliseconds:", millis);
+    console.log("How old is my baby? Oh he's only ", millis, " seconds old");
     try{
-      this.age = Math.floor(millis/31557600000);
+      this.age = Math.floor(millis/31557600);
       this.dob = dob;
     } catch (e5) {
       console.log("Timestamps are dumb");
@@ -119,6 +119,7 @@ export class UserProfile extends AggregateRoot implements IUserProfile {
     // }catch(ohFuckoff){
     //   console.log("We Try, i cri ;-;");
     // }
+    console.log(this.toJSON());
     this.apply(new UserProfileUpdatedEvent({userProfile: this.toJSON()}));
   }
 

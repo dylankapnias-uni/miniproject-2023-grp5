@@ -2,7 +2,7 @@ import { ChatModule as ChatRepoModule} from '@mp/api/chat/data-access';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { SendMessageHandler } from './commands';
-import { GetChatHandler, CreateChatHandler } from './queries';
+import { GetChatHandler, CreateChatHandler, AddTimeHandler, SubtractTimeHandler } from './queries';
 import { ChatService } from './chat.service';
 import { MessageSentHandler } from './events';
 export const CommandHandlers = [
@@ -12,6 +12,8 @@ export const EventHandlers = [
   MessageSentHandler,
 ];
 export const QueryHandlers = [
+    AddTimeHandler,
+    SubtractTimeHandler,
     GetChatHandler,
     CreateChatHandler
 ]

@@ -16,6 +16,8 @@ implements ICommandHandler<UpdateUserProfileCommand,IUpdateUserProfileResponse> 
 
     async execute(command: UpdateUserProfileCommand) {
         const userProfileData = command.request.userProfile;
+        // console.log(userProfileData);
+
         const userProfile = this.publisher.mergeObjectContext(UserProfile.fromData(userProfileData));
 
         userProfile.update();

@@ -9,7 +9,13 @@ import {
   IGetChatResponse, 
   ISendMessageRequest, 
   ISendMessageResponse, 
-  SendMessageCommand 
+  SendMessageCommand,
+  IAddTimeRequest,
+  IAddTimeResponse,
+  ISubtractTimeRequest,
+  ISubtractTimeResponse,
+  AddTimeQuery,
+  SubtractTimeQuery
 } from '@mp/api/chat/util';
 
 @Injectable()
@@ -42,5 +48,25 @@ export class ChatService {
           ISendMessageResponse
       >(new SendMessageCommand(request));
   }
+
+  async addTime(
+    request: IAddTimeRequest,
+  ): Promise<IAddTimeResponse> {
+    return await this.queryBus.execute<
+      AddTimeQuery,
+      IAddTimeResponse
+    >(new AddTimeQuery(request))
+  }
+  
+
+  async subtractTime(
+    request: ISubtractTimeRequest,
+  ): Promise<ISubtractTimeResponse> {
+    return await this.queryBus.execute<
+      SubtractTimeQuery,
+      ISubtractTimeResponse
+    >(new SubtractTimeQuery(request));
+  }
+  
 
 }

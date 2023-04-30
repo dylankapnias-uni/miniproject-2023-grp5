@@ -7,7 +7,11 @@ import {
   IGetChatRequest,
   IGetChatResponse,
   ISendMessageRequest,
-  ISendMessageResponse
+  ISendMessageResponse,
+  ISubtractTimeRequest,
+  ISubtractTimeResponse,
+  IAddTimeRequest,
+  IAddTimeResponse
 } from '@mp/api/chat/util';
 import { ChatService } from '@mp/api/chat/feature';
 
@@ -38,5 +42,25 @@ export const getChat = functions.https.onCall(
       const app = await NestFactory.createApplicationContext(CoreModule);
       const service = app.get(ChatService);
       return service.getChat(request);
+    }
+  );
+
+  export const addChatTime = functions.https.onCall(
+    async (
+      request: IAddTimeRequest
+    ): Promise<IAddTimeResponse> => {
+      const app = await NestFactory.createApplicationContext(CoreModule);
+      const service = app.get(ChatService);
+      return service.addTime(request);
+    }
+  );
+
+  export const subtractChatTime = functions.https.onCall(
+    async (
+      request: ISubtractTimeRequest
+    ): Promise<ISubtractTimeResponse> => {
+      const app = await NestFactory.createApplicationContext(CoreModule);
+      const service = app.get(ChatService);
+      return service.subtractTime(request);
     }
   );

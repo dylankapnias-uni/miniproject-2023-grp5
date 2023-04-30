@@ -8,6 +8,8 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { HomeState } from '@mp/app/home/data-access';
 //import {profile} from './profile.interface';
+
+// I try but I'm bullied :( Alas I am proud of the home page 
 import { 
   SwipeAccept,
   SwipeReject,

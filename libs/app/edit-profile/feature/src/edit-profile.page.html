@@ -17,7 +17,7 @@
           </div>
         </div>
         <ion-card *ngIf="imagePreview">
-          <img [src]="profile?.profilePicture" alt="Selected Image">
+          <img [src]="this.imagePreview" alt="Selected Image">
           <ion-button class = "add_picture_btn" id="open-modal" expand="block">Change profile picture</ion-button>
         </ion-card>
       </ion-col>
@@ -33,8 +33,8 @@
     <ion-row class="text-center">
       <ion-button class="interests_btn" (click)="LoadInterests()">Interests</ion-button>
     </ion-row>
-    <ion-row class="text-center">
-      <ion-button class="btn" (click)="UpdateProfile()">Save Changes</ion-button>
+    <ion-row class="text-center" style="margin-top: 10px;">
+      <ion-button class="interests_btn" (click)="UpdateProfile()">Save Changes</ion-button>
     </ion-row>
   </ion-grid>
 

@@ -7,7 +7,8 @@ import {
   ICreateChatListRequest, 
   ICreateChatListResponse, 
   IFetchChatListRequest, 
-  IFetchChatListResponse
+  IFetchChatListResponse,
+  
 } from '@mp/api/chat-list/util';
 import { ChatListService } from '@mp/api/chat-list/feature';
 
@@ -40,3 +41,5 @@ export const fetchChatList = functions.https.onCall(
       return service.fetchChatList(request);
     }
   );
+
+  

@@ -7,7 +7,11 @@ import {
     IGetChatRequest,
     IGetChatResponse,
     ISendMessageRequest,
-    ISendMessageResponse
+    ISendMessageResponse,
+    IAddTimeRequest,
+    IAddTimeResponse,
+    ISubtractTimeRequest,
+    ISubtractTimeResponse
   } from '@mp/api/chat/util';
 
   import {
@@ -64,5 +68,27 @@ export class ChatApi {
             'getChat'
         )(request)
     }
+
+    async addTime(request: IAddTimeRequest){
+        return await httpsCallable<
+            IAddTimeRequest,
+            IAddTimeResponse
+        >(
+            this.functions,
+            'addTime'
+        )(request)
+    }
+
+    async subtractTime(request: ISubtractTimeRequest){
+        return await httpsCallable<
+            ISubtractTimeRequest,
+            ISubtractTimeResponse
+        >(
+            this.functions,
+            'subtractTime'
+        )(request)
+    }
+
+      
 
 }

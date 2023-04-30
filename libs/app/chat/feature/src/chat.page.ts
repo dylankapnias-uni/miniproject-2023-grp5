@@ -31,12 +31,12 @@ export class ChatPage {
   
   Chat!: IChat;
   id!: string;
-  profile!: IUserProfile | null;
+  profile!: IUserProfile;
   outgoingMessage = '';
   color = 'bronze';
   openChatTime!: Time;
   me!: string;
-  otherUser: IUserProfile | null = null;
+  otherUser!: IUserProfile;
 
   
   ionViewDidEnter() {
@@ -80,14 +80,24 @@ export class ChatPage {
     this.startTimer();
   }
 
-  getOtherUser(){
-    if(this.Chat?.users[0] == this.profile?.userId){
-      return this.Chat?.users[1];
-    }
+  getOtherUser() {
+    if (this.profile == null || this.profile == undefined) 
+      throw new Error("I will blow my brains on the fucking walls I swear to god");
+    if (this.Chat == null || this.Chat == undefined) 
+      throw new Error("I will blow my brains on the fucking walls I swear to god");
+    if (this.Chat.users == null || this.Chat.users == undefined) 
+      throw new Error("I will blow my brains on the fucking walls I swear to god");
 
-    else{
-      return this.Chat?.users[0];
-    }
+    const index = (this.Chat.users.indexOf(this.profile?.userId) + 1 ) % 2;
+    
+    return this.Chat.users[index];
+    // if(this.Chat?.users[0] == this.profile?.userId){
+    //   return this.Chat?.users[1];
+    // }
+
+    // else{
+    //   return this.Chat?.users[0];
+    // }
 
   }
 
@@ -168,12 +178,13 @@ export class ChatPage {
       //   this.router.navigate(['messages']);
       // else
       //   this.Chat.timeLeft--;
-      if(this.Chat){
+      if(this.Chat) {
         if(this.Chat.timeRemaining === 0){
-          this.store.dispatch(new RemoveTime({cid:this.id}));
+          this.store.dispatch(new RemoveTime({cid:this.id, time: -1}));
           this.router.navigate(['messages']);
-        }else{
-          if(this.Chat.timeRemaining){
+        } else {
+          if(this.Chat.timeRemaining) {
+           // this.store.dispatch(new RemoveTime({cid:this.id, time: -1}));
             this.Chat.timeRemaining--;
           }
         }
@@ -181,9 +192,9 @@ export class ChatPage {
     }, 1000);
   }
 
-  addTime(minutes:number){
+  addTime(minutes:number) {
     //Add to database
-    this.store.dispatch(new AddTime({time: minutes*60,cid:this.id}));
+    this.store.dispatch(new AddTime({time: minutes * 60, cid: this.id}));
     //this.Chat.timeLeft+=minutes*60;
   }
   
