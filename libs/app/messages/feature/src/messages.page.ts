@@ -57,7 +57,7 @@ export class MessagesPage {
     this.router.navigate(['/chat/' + ref]);
     setTimeout(() => {
       window.location.reload();
-    }, 100)
+    }, 200)
   }
   
   Reset(){

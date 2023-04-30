@@ -6,6 +6,9 @@ import { UserAcceptedHandler, UserHomeCreatedHandler, UserRejectedHandler } from
 import { HomeService } from './home.service';
 import { RetrieveHomeUsersHandler } from './queries';
 import { HomeSagas } from './home.sagas';
+import { ChatRepository } from '@mp/api/chat/data-access';
+import { ChatListRepository } from '@mp/api/chat-list/data-access';
+import { UserProfileRepository } from '@mp/api/users/data-access';
 
 export const CommandHandlers = [AcceptUserHandler, RejectUserHandler, CreateUserHomeHandler];
 export const EventHandlers = [UserAcceptedHandler, UserRejectedHandler, UserHomeCreatedHandler];
@@ -18,7 +21,10 @@ export const QueryHandlers = [RetrieveHomeUsersHandler];
     ...CommandHandlers,
     ...EventHandlers,
     ...QueryHandlers,
-    HomeSagas
+    HomeSagas,
+    ChatRepository,
+    ChatListRepository,
+    UserProfileRepository,
   ],
   exports: [HomeService],
 })

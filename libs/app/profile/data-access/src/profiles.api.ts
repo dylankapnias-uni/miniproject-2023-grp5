@@ -35,6 +35,19 @@ export class ProfilesApi {
     return docData(docRef, { idField: 'userId' });
   }
 
+  user$(id: string) {
+    const docRef = doc(
+      this.firestore,
+      `User_Profile/${id}`
+    ).withConverter<IUserProfile>({
+      fromFirestore: (snapshot) => {
+        return snapshot.data() as IUserProfile;
+      },
+      toFirestore: (it: IUserProfile) => it,
+    });
+    return docData(docRef, { idField: 'userId' });
+  }
+
   async updateAccountDetails(request: IUpdateAccountDetailsRequest) {
     return await httpsCallable<
       IUpdateAccountDetailsRequest,

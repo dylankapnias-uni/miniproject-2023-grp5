@@ -83,6 +83,9 @@ export interface ProfileStateModel {
   };
 }
 
+export interface IUserProfileStateModel{
+  profile: IUserProfile | null;
+}
 @State<ProfileStateModel>({
   name: 'profile',
   defaults: {
@@ -136,6 +139,14 @@ export interface ProfileStateModel {
     },
   },
 })
+
+@State<IUserProfileStateModel>({
+  name: 'userProfile',
+  defaults: {
+    profile: null
+  }
+})
+
 @Injectable()
 export class ProfileState {
   constructor(
@@ -159,13 +170,23 @@ export class ProfileState {
     console.log("");
   }
 
+  // @Action(SubscribeToProfile)
+  // subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
+  //   const user = this.store.selectSnapshot(AuthState.user);
+  //   if (!user) return ctx.dispatch(new SetError('User not set'));
+
+  //   return this.profileApi
+  //     .profile$(user.uid)
+  //     .pipe(tap((profile: IUserProfile) => ctx.dispatch(new SetProfile(profile))));
+  // }
+
   @Action(SubscribeToProfile)
-  subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
+  subscribeToProfile(ctx: StateContext<IUserProfileStateModel>) {
     const user = this.store.selectSnapshot(AuthState.user);
     if (!user) return ctx.dispatch(new SetError('User not set'));
 
     return this.profileApi
-      .profile$(user.uid)
+      .user$(user.uid)
       .pipe(tap((profile: IUserProfile) => ctx.dispatch(new SetProfile(profile))));
   }
 
@@ -184,8 +205,17 @@ export class ProfileState {
 
   // }
 
+  // @Action(SetProfile)
+  // setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
+  //   return ctx.setState(
+  //     produce((draft) => {
+  //       draft.profile = profile;
+  //     })
+  //   );
+  // }
+
   @Action(SetProfile)
-  setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
+  setProfile(ctx: StateContext<IUserProfileStateModel>, { profile }: SetProfile) {
     return ctx.setState(
       produce((draft) => {
         draft.profile = profile;
