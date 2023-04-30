@@ -1,6 +1,8 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { SendMessageCommand, ISendMessageResponse, IChat } from "@mp/api/chat/util";
 import { ChatRepository } from '@mp/api/chat/data-access'
+// Shit, can this guy even code???
+// I'm sorry
 import { Chat } from "../models";
 @CommandHandler(SendMessageCommand)
 export class SendMessageHandler implements ICommandHandler<SendMessageCommand, ISendMessageResponse>
@@ -9,7 +11,7 @@ export class SendMessageHandler implements ICommandHandler<SendMessageCommand, I
   
     async execute(command: SendMessageCommand) {
       console.log(`${SendMessageHandler.name}`);
-  
+      console.log("please fucking work, I beg I don't want to deal with this fuck");
       const request = command.request;
     
       
@@ -18,7 +20,7 @@ export class SendMessageHandler implements ICommandHandler<SendMessageCommand, I
       const chat = this.publisher.mergeObjectContext(Chat.fromData(resp));
       chat.sendMessage(request.message);
       chat.commit();
-  
+      console.log("yeah i don't fucking know what to type anymore bro I;mso tired")
       const response: ISendMessageResponse ={chat:chat} as ISendMessageResponse;
       
       return response;

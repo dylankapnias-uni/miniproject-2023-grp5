@@ -10,6 +10,7 @@ export class MessageSentHandler
 
   async handle(event: MessageSentEvent) {
     console.log(`${MessageSentHandler.name}`);
+    console.log("why the fuck isn'ty this logging");
     if(!event.chat.messages) throw new Error('Messages not found');
     await this.repository.sendMessage(event.chat.chatId, event.chat.messages[event.chat.messages.length-1]);
   }

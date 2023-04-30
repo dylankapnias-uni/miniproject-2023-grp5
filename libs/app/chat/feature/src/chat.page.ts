@@ -6,15 +6,16 @@ import { Select, Store } from '@ngxs/store';
 import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
-import { UserState } from '@mp/app/user/data-access';
-import { GetUser } from '@mp/app/user/util';
-import { Timestamp } from '@angular/fire/firestore';
+import { Timestamp } from 'firebase/firestore';
+// import { Timestamp } from 'firebase-admin/firestore';
+// import {Timestamp as s} from '@angular/fire/firestore';
+// @angular/fire/compat/firestore Timestamp isn't real, it can't hurt you
 import { 
   SendMessage,
   AddTime,
-  GetTime,
   RemoveTime,
   GetMessages,
+  GetUser
 } from '@mp/app/chat/util';
 import { IChat } from '@mp/api/chat/util';
 import { IMessages } from '@mp/api/chat/util';
@@ -35,6 +36,7 @@ export class ChatPage {
   color = 'bronze';
   openChatTime!: Time;
   me!: string;
+  otherUser: IUserProfile | null = null;
 
   
   ionViewDidEnter() {
@@ -45,7 +47,7 @@ export class ChatPage {
 
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
   @Select(ChatState.messages) messages$!: Observable<IChat>;
-  @Select(UserState.userForm) user$!: Observable<IUserProfile | null>;
+  @Select(ChatState.otherUser) otherUser$!: Observable<IUserProfile | null>;
 
   constructor(
     private router:Router,
@@ -64,13 +66,14 @@ export class ChatPage {
           if(messages != null){
             this.Chat = messages;
             
-            this.store.dispatch(new GetUser({userId:this.getOtherUser()}));
-            this.user$.subscribe((user) => {
-              if(user != null){
-                console.log("IT WORKS");
-                console.log(user);
+            this.store.dispatch(new GetUser({ouid:this.getOtherUser()}));
+            this.otherUser$.subscribe((otherUser) => {
+              if(otherUser != null){
+                this.otherUser = otherUser;
+                
               }
             });
+            
           }
         });
       }
@@ -94,15 +97,45 @@ export class ChatPage {
   showid(){
     alert(this.id);
   }
-
-  messageTime(time: Timestamp | null | undefined){
+  // fucking die typescript I hate you please kill yourself
+  messageTime(time: any){
     if(time){
-      const date = new Date(time.seconds * 1000);
-      const hour = date.getHours().toString().padStart(2, '0');
-      const minute = date.getMinutes().toString().padStart(2, '0');
-      return `${hour}:${minute}`;
+      // const date = new Date(time.seconds * 1000);
+      // const hour = date.getHours().toString().padStart(2, '0');
+      // const minute = date.getMinutes().toString().padStart(2, '0');
+      // return `${hour}:${minute}`;
+      // what the fuck am I even doing at this poinmt?
+      //I want to fucking die
+      //if(JSON.stringify(time).substr((JSON.stringify(time).indexOf(':') + 1), 9) as number)
+      // Firebase Timestamps are the dumbest fucking things I've seen in my entire fucking like like holy shit
+      //  where is the standardization like what the fuck even is going on I hate it and I hate myself for
+      //   spending 3 hours of my life on this mmy liver is destroyed an my mental stae is in shambles please help
+      //    I want to die and I want to kill the peolpe who made ehis language like holy fuck how retarded must
+      //     you die please die you fucking cunt I hate you you bastard fucking asshole I hate you 
+      const seconds = +(
+        JSON.stringify(time)
+        .substr((JSON
+          .stringify(time)
+          .indexOf(':') + 1)
+          , 10
+          )
+        );//3 hours of fucking work, ffs
+      // console.log(JSON.stringify(time).substr((JSON.stringify(time).indexOf(':') + 1), 9));
+      //const rem: number = seconds % 86400;
+      // const hours: number = Math.floor(rem / 3600);
+      // const minutes: number = Math.floor((rem % 3600) / 60);
+      // const remainingSeconds: number = rem % 60;
+      // const timeFormat = `${hours}h ${minutes}m ${remainingSeconds}s`;
+      // return timeFormat;
+      const now = new Date(); // get the current date and time
+      const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // set the time to midnight
+      const target = new Date(midnight.getTime() + seconds * 1000); // add the number of seconds to the midnight time
+      target.setUTCHours(target.getUTCHours() + 2);
+      
+      return target.toLocaleTimeString();
+     // return "not fuckal bt y?";
     }
-    return '';
+    return '00:00';
   }
 
   secondsToTime(seconds: number|null|undefined) {
@@ -140,8 +173,9 @@ export class ChatPage {
           this.store.dispatch(new RemoveTime({cid:this.id}));
           this.router.navigate(['messages']);
         }else{
-          if(this.Chat.timeRemaining)
+          if(this.Chat.timeRemaining){
             this.Chat.timeRemaining--;
+          }
         }
       }
     }, 1000);
@@ -174,24 +208,27 @@ export class ChatPage {
       time: Timestamp.now(),
       userId: this.me
     };
-    console.log(msg.time);
-    if(this.profile)
+    // console.log(msg.time);
+    if(this.profile){
       this.store.dispatch(new SendMessage({cid:this.id,message: msg, uid:this.profile.userId}));
-      
-    if(this.outgoingMessage != ''){
-      const now = new Date();
-      const hour = now.getHours().toString().padStart(2, '0');
-      const minute = now.getMinutes().toString().padStart(2, '0');
-      const time = `${hour}:${minute}`;
-
-      // this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
       this.outgoingMessage = '';
-      setTimeout(() => {
-        const content = document.querySelector('.message');
-        if (content)
-          content.scrollTop = content.scrollHeight;
-      }, 100);
     }
+    setTimeout(() => {
+      const content = document.querySelector('.message');
+      if (content){
+        content.scrollTop = content.scrollHeight;
+      }
+    }, 100);
+    // if(this.outgoingMessage != ''){
+    //   const now = new Date();
+    //   const hour = now.getHours().toString().padStart(2, '0');
+    //   const minute = now.getMinutes().toString().padStart(2, '0');
+    //   const time = `${hour}:${minute}`;
+
+    //   // this.Chat.messages.push({from: this.me, content: this.outgoingMessage, time: time});
+    //   this.outgoingMessage = '';
+
+    //}
   }
 
   return(){

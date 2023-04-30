@@ -1,5 +1,5 @@
-import { FetchChatListCommand, FetchChatListQuery, IChatList, IChatReferences, IFetchChatListResponse } from "@mp/api/chat-list/util";
-import { CommandHandler, EventPublisher, ICommandHandler, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { FetchChatListQuery, IChatList, IFetchChatListResponse } from "@mp/api/chat-list/util";
+import { EventPublisher, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 import { ChatListRepository } from "@mp/api/chat-list/data-access";
 

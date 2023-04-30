@@ -39,6 +39,7 @@ export class Chat extends AggregateRoot implements IChat {
 
   public sendMessage(newMessage: IMessages) {
     if(!newMessage.message) throw new Error('Message is null');
+    console.log("If this prints I will beat the shit out of the stupid fucks who made typescript/firebase/this whole goddamn module I fucking hate you and myself and the goddamn tadpole that initially crawled out of the ocean and forced me to be born that fucking cunt bastard I hate it");
     if(!this.messages) this.messages = [];
     this.messages.push(newMessage);
     this.apply(new MessageSentEvent(this.toJSON()));

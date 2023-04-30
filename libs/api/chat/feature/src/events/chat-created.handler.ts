@@ -10,6 +10,7 @@ export class ChatCreatedHandler
 
   async handle(event: ChatCreatedEvent) {
     console.log(`${ChatCreatedHandler.name}`);
+    console.log("Yeah idk anymore");
     if(!event.chat) throw new Error('Chat not found');
     await this.repository.createChat(event.chat);
   }

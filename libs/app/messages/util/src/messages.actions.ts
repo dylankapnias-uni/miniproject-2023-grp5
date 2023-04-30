@@ -7,3 +7,8 @@ export class SearchMessages{
     static readonly type = '[SearchMessages] Search Messages';
     constructor(public payload: {query:string}){}
 }
+
+export class RemoveTime{
+    static readonly type = '[RemoveTime] Remove Time';
+    constructor(public payload: {cid:string}){}
+}

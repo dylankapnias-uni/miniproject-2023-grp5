@@ -10,8 +10,7 @@ import {
   ISendMessageRequest, 
   ISendMessageResponse, 
   SendMessageCommand 
-} from '@mp/api/chat/util'
-import { AddChatCommand } from '@mp/api/chat-list/util';
+} from '@mp/api/chat/util';
 
 @Injectable()
 export class ChatService {

@@ -4,12 +4,12 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { SendMessageHandler } from './commands';
 import { GetChatHandler, CreateChatHandler } from './queries';
 import { ChatService } from './chat.service';
-
+import { MessageSentHandler } from './events';
 export const CommandHandlers = [
   SendMessageHandler,
 ];
 export const EventHandlers = [
-  SendMessageHandler,
+  MessageSentHandler,
 ];
 export const QueryHandlers = [
     GetChatHandler,

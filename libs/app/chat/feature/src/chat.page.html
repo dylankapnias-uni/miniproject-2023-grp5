@@ -5,9 +5,9 @@
             <ion-col size="8">
                 <div class="center" [ngStyle]="{'margin-top':'29px'}">
                     <ion-avatar slot="start" (click)="navigate()">
-                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="avatar">
+                        <img src="{{otherUser?.profilePicture}}" alt="Avatar" class="avatar">
                     </ion-avatar>
-                    <ion-label class="name">{{getOtherUser()}}</ion-label>
+                    <ion-label class="name">{{otherUser?.name}}</ion-label>
                 </div>
             </ion-col>
             <ion-col size="1">
@@ -19,7 +19,7 @@
         <ion-row>
             <ion-col size="12">
                 <div class="center">
-                    <ion-chip class="{{this.color}}" id="open-custom-dialog" expand="block">{{secondsToTime(this.Chat?.timeRemaining)}}</ion-chip>
+                    <ion-chip class="{{this.color}}" id="open-custom-dialog" expand="block">{{secondsToTime(this.Chat.timeRemaining)}}</ion-chip>
                 </div>
             </ion-col>
         </ion-row>
@@ -27,8 +27,8 @@
     <ion-content>
         <div class="chat">
             <div class="message">
-                <!-- <p *ngFor="let message of this.Chat?.messages" [ngClass]="{'from-me': isMe(message?.userId), 'from-them': !isMe(message?.userId)}">{{message.message}}<small class="time">{{messageTime(message.time)}}</small></p> -->
-                <p *ngFor="let message of this.Chat?.messages" [ngClass]="{'from-me': isMe(message?.userId), 'from-them': !isMe(message?.userId)}">{{message.message}}<small class="time">{{message.time}}</small></p>
+                <p *ngFor="let message of this.Chat.messages" [ngClass]="{'from-me': isMe(message.userId), 'from-them': !isMe(message.userId)}">{{message.message}}<small class="time">{{messageTime(message.time)}}</small></p>
+                <!-- <p *ngFor="let message of this.Chat?.messages" [ngClass]="{'from-me': isMe(message?.userId), 'from-them': !isMe(message?.userId)}">{{message.message}}<small class="time">{{message.time}}</small></p> -->
             </div>
             <ion-grid class="inp">
                 <ion-row>
@@ -83,10 +83,10 @@
             <div class="wrapper">
             <ion-list lines="none">
                 <ion-item [ngStyle]="{'margin-top':'29px'}" button="true" detail="false" (click)="modal2.dismiss()" (click)="Report()">
-                <ion-label>Report User</ion-label>
+                <ion-label>Block User</ion-label>
                 </ion-item>
                 <ion-item button="true" detail="false" (click)="modal2.dismiss()" (click)="Block()">
-                    <ion-label>Block User</ion-label>
+                    <ion-label>Block User 2: Electric Boogaloo</ion-label>
                 </ion-item>
             </ion-list>
             </div>

@@ -3,10 +3,11 @@ import { Register as AuthRegister } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
-import { GetMessages, SearchMessages } from '@mp/app/messages/util';
+import { GetMessages, SearchMessages, RemoveTime } from '@mp/app/messages/util';
 import { IChatReferences } from '@mp/api/chat-list/util';
 import { Timestamp } from '@angular/fire/firestore';
 import { MessagesApi } from './messages.api';
+import { IUserProfile } from '@mp/api/users/util';
 import { 
   IAddChatRequest, 
   ICreateChatListRequest,  
@@ -18,6 +19,7 @@ export interface MessagesStateModel {
     chatMessages:{
       model:{
         chats: IChatReferences[] | null | undefined;
+        userList: IUserProfile[] | null | undefined;
       }
     }
     dirty: false;
@@ -32,7 +34,8 @@ export interface MessagesStateModel {
     chatForm: {
       chatMessages:{
         model:{
-          chats: null
+          chats: null,
+          userList: null,
         }
       },
       dirty: false,
@@ -77,6 +80,23 @@ export class MessagesState {
         ...state.chatForm,
         chatMessages: {
           model: {
+            chats: null,
+            userList: null
+          },
+        },
+      },
+    });
+  }
+
+  @Action(RemoveTime)
+  async RemoveTime(ctx: StateContext<MessagesStateModel>, {payload}: RemoveTime) {
+    const state = ctx.getState();
+    ctx.patchState({
+      chatForm: {
+        ...state.chatForm,
+        chatMessages: {
+          model: {
+            ...state.chatForm.chatMessages.model,
             chats: null,
           },
         },

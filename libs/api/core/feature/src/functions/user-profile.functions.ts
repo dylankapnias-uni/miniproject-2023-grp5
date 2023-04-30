@@ -19,7 +19,6 @@ import {
 import { Timestamp } from 'firebase-admin/firestore';
 export const addShit = functions.https.onCall(
   async (
-    req: any
     ): Promise<IUserProfile[]> => {
       const profilesNShit: IUserProfile[] = [
         {
