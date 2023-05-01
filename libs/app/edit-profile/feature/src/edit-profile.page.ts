@@ -71,6 +71,7 @@ export class EditProfilePage
           this.StateBio = profile.bio;
           this.Bio = this.profile.bio;
         }
+        
         // this.uid = profile.userId;
 
         // if(profile.email)
@@ -116,6 +117,11 @@ export class EditProfilePage
         // this.posts = profile.posts;
 
       }   
+      if(this.profile) {
+        // this.profile.bio = this.Bio;
+        console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+        console.log(this.profile)
+      }
     });
 
   }
@@ -133,7 +139,7 @@ export class EditProfilePage
       this.changed = (this.profile.bio != this.StateBio);
   }
 
-  onFileSelected(event: any | unknown | null | undefined | Timestamp | void | Timestamp1 | Timestamp2electricboogaloo | Timestamp3/* Bruh again? */) {
+  onFileSelected(event: any /*| unknown | null | undefined | Timestamp | void | Timestamp1 | Timestamp2electricboogaloo | Timestamp3 Bruh again? */) {
     this.changed= true;
     this.uploadImg = true;
     const file: File = event.target.files[0];
@@ -156,15 +162,33 @@ export class EditProfilePage
       console.log(this.Bio);
       if(this.profile)
       try {
-        const url = await this.onUpload(this.fileToUpload);
-        console.log(`This is the url: ${url}`);
+        // const url = await this.onUpload(this.fileToUpload);
 
-        if(url != "fucked") {
-          if(this.profile) {
-            this.profile.profilePicture = url;
-            this.profile.bio = this.Bio;
+        const filePath = `/${this.profile.userId}/${this.fileToUpload.name}`;
+        const storage = getStorage();
+        const fileRef = ref(storage, filePath);
+        // const task = this.storage.uploadByt(filePath, file);
+        const task = uploadBytesResumable(fileRef, this.fileToUpload);
+
+        //What is the import for this fucking shit
+        task.on('state_changed' ,(snapshot) => {
+            console.log(snapshot);
+          }, (error) => {
+            console.log(error);
+          }, () => {
+            getDownloadURL(task.snapshot.ref).then(async downloadURL => {
+              console.log(downloadURL);
+              if(this.profile)
+                this.url = downloadURL;
+            })
           }
-        }
+        ) 
+ 
+          if(this.profile) {
+            // this.profile.bio = this.Bio;
+            console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+            console.log(this.profile)
+          }
       } catch (error) {
         console.error("Error uploading image", error);
       }
@@ -172,9 +196,28 @@ export class EditProfilePage
   
     if(this.profile)
     {
+      const sendProfile : IUserProfile = {
+        userId: this.profile.userId,
+        email: this.profile.bio,
+        name: this.profile.name,
+        profilePicture: this.url,
+        phoneNumber: this.profile.phoneNumber,
+        customClaims: this.profile.customClaims,
+        created: this.profile.created,
+        age: this.profile.age,
+        bio: this.Bio,
+        dob: this.profile.dob,
+        gender: this.profile.gender,
+        interests: this.profile.interests,
+        sexuality: this.profile.sexuality,
+        time: this.profile.time,
+        posts: this.profile.posts
+
+      }
+
       console.log(this.profile.profilePicture);
       console.log(this.profile.bio)
-      this.store.dispatch(new EditProfile(this.profile));
+      this.store.dispatch(new EditProfile(sendProfile));
     }
   }
 
