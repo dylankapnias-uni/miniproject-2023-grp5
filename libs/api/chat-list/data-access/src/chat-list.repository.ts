@@ -156,11 +156,11 @@ export class ChatListRepository {
     //         response.chatList.chatList.push({
     //           chatRef: chat.chatRef,
     //           otherUser: {
-    //             userId: (otherUserData != undefined ? otherUserData.userId : " Fuck you typescript you daft cunt"),
+    //             userId: (otherUserData != undefined ? otherUserData.userId : " Fuck you typescript you daft redacted"),
     //             name: (otherUserData != undefined && otherUserData.name != undefined && otherUserData.name != null 
-    //               ? otherUserData.name : " Fuck you typescript you daft cunt"),
+    //               ? otherUserData.name : " Fuck you typescript you daft redacted"),
     //             profilePicture: (otherUserData != undefined && otherUserData.profilePicture != undefined && otherUserData.profilePicture != null
-    //               ? otherUserData.profilePicture: " Fuck you typescript you daft cunt")
+    //               ? otherUserData.profilePicture: " Fuck you typescript you daft redacted")
     //           }
     //         })
 

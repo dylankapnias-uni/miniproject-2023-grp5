@@ -13,12 +13,14 @@
       <ion-col size="12" >
         <div class = "img-container" *ngIf="!uploadImg">
           <div class = "img">
-          <ion-button class = "add_picture_btn" id="open-modal" expand="block">Add profile picture</ion-button>
+          <!-- <ion-button class = "add_picture_btn" id="open-modal" expand="block">Add profile picture</ion-button> -->
+          <ion-input type="file" (change)="onFileSelected($event)" style="display: block; margin: 0 auto;"></ion-input>
           </div>
         </div>
         <ion-card *ngIf="imagePreview">
           <img [src]="this.imagePreview" alt="Selected Image">
-          <ion-button class = "add_picture_btn" id="open-modal" expand="block">Change profile picture</ion-button>
+          <!-- <ion-button class = "add_picture_btn" id="open-modal" expand="block">Change profile picture</ion-button> -->
+          <ion-input type="file" (change)="onFileSelected($event)" style="display: block; margin: 0 auto;"></ion-input>
         </ion-card>
       </ion-col>
     </ion-row>

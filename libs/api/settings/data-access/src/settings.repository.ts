@@ -78,7 +78,7 @@ export class SettingsRepository {
   }
 
   async addTime(userId: string, data: {amount: number, date: Timestamp}) {
-    return await admin
+    await admin
       .firestore()
       .collection('Settings')
       .doc(userId)
@@ -87,25 +87,38 @@ export class SettingsRepository {
         'time.history': FieldValue.arrayUnion(data)
       })
       .catch((error) => {console.log(`Error while adding time to ${userId}: ${error}`)});
+
+      return await admin
+        .firestore()
+        .collection('User_Profile')
+        .doc(userId)
+        .update({
+          'time': FieldValue.increment(data.amount)
+        })
   }
 
   async subtractTime(userId: string, time: {amount: number, date: Timestamp}) {
 
-    if(userId != null && userId != undefined && userId.length > 0)
-    {
-      return await admin
+    if(userId == null || userId == undefined || userId.length == 0) {
+      throw new Error(`subtractTime(): userId is null or undefined or empty`);
+    }
+    await admin
+    .firestore()
+    .collection('Settings')
+    .doc(userId)
+    .update({
+      'time.remaining': FieldValue.increment(time.amount),
+      'time.history': FieldValue.arrayUnion(time)
+    })
+    .catch((error) => {console.log(`Error while subtracting time from ${userId}: ${error}`)})
+
+    return await admin
       .firestore()
-      .collection('Settings')
+      .collection('User_Profile')
       .doc(userId)
       .update({
-        'time.remaining': FieldValue.increment(time.amount),
-        'time.history': FieldValue.arrayUnion(time)
+        'time': FieldValue.increment(time.amount)
       })
-      .catch((error) => {console.log(`Error while subtracting time from ${userId}: ${error}`)})
-    }
-    
-    else
-      throw new Error(`subtractTime(): userId is null or undefined or empty`);
   }
   async blockUser(userId: string, blockedId: string) {
     return await admin

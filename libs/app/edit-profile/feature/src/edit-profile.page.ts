@@ -13,9 +13,9 @@ import { IPost } from '@mp/api/users/util';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import { update } from '@angular/fire/database';
 // ALL PRAISE THE TIMESTAMP \[T]/
-import { Timestamp as Timestamp1 } from '@firebase/firestore';
-import { Timestamp as Timestamp2electricboogaloo } from '@angular/fire/firestore';
-import { Timestamp as Timestamp3 } from 'firebase-admin/firestore';
+// import { Timestamp as Timestamp1 } from '@firebase/firestore';
+// import { Timestamp as Timestamp2electricboogaloo } from '@angular/fire/firestore';
+// import { Timestamp as Timestamp3 } from 'firebase-admin/firestore';
 // import { finalize } from 'rxjs/operators';
 // import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 // import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -190,7 +190,7 @@ export class EditProfilePage
     {
       const sendProfile : IUserProfile = {
         userId: this.profile.userId,
-        email: this.profile.bio,
+        email: this.profile.email,
         name: this.profile.name,
         profilePicture: this.url,
         phoneNumber: this.profile.phoneNumber,

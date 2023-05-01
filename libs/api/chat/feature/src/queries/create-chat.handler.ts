@@ -16,7 +16,7 @@ export class CreateChatHandler implements IQueryHandler<CreateChatQuery, ICreate
         chatId: request.chatId,
         messages: [],
         timeAdderId: request.userId,
-        timeRemaining: 1800,
+        timeRemaining: 2040,
         totalTimeUsed: 0,
         users: request.users,
       }

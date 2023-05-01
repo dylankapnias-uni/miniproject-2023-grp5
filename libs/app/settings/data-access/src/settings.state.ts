@@ -41,7 +41,8 @@ import {
     Unblock,
     GetBlocked,
     CreateSetting,
-    Logout
+    Logout,
+    Block
 }
 from '@mp/app/settings/util';
 
@@ -130,26 +131,18 @@ export interface SettingsStateModel {
 @Injectable()
 export class SettingsState {
 
-  /*private static chat: IChat = {
-    ChatID: '1',
-    messages: [
-      {
-        message: 'Hello World!',
-        time: Timestamp.now(),
-        userID: '1'
-      },
-      {
-        message: 'How are you?',
-        time: Timestamp.now(),
-        userID: '2'
-      }
-    ],
-    timeAdderID: '1',
-    timeRemaining: 1000,
-    totalTimeUsed: 0
-  };*/
 
   constructor(public settingsApi: SettingsApi){};
+
+
+  @Action(Block)
+  async Block(ctx: StateContext<SettingsStateModel>, {payload}: Block) {
+    const request : IBlockUserRequest = {
+      userId: payload.uid,
+      blockedUserId: payload.blockId
+    };
+    this.settingsApi.blockUser(request);
+  }
 
   @Action(UpdateAccount)
   async UpdateAccount(ctx: StateContext<SettingsStateModel>, {payload}: UpdateAccount) {

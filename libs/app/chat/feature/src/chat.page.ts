@@ -17,6 +17,7 @@ import {
   GetMessages,
   GetUser
 } from '@mp/app/chat/util';
+import { Block } from '@mp/app/settings/util';
 import { IChat } from '@mp/api/chat/util';
 import { IMessages } from '@mp/api/chat/util';
 import { Observable } from 'rxjs';
@@ -125,7 +126,7 @@ export class ChatPage {
       //  where is the standardization like what the fuck even is going on I hate it and I hate myself for
       //   spending 3 hours of my life on this mmy liver is destroyed an my mental stae is in shambles please help
       //    I want to die and I want to kill the peolpe who made ehis language like holy fuck how retarded must
-      //     you die please die you fucking cunt I hate you you bastard fucking asshole I hate you 
+      //     you die please die you fucking redacted I hate you you bastard fucking asshole I hate you 
       const seconds = +(
         JSON.stringify(time)
         .substr((JSON
@@ -213,7 +214,9 @@ export class ChatPage {
   }
 
   Block(){
-    //Add functiinality to Block
+    //Why in gods name did I leave this for so l
+    this.store.dispatch(new Block({uid:this.id, blockId:this.getOtherUser()}));
+    this.router.navigate(['messages']);
   }
 
   send(){

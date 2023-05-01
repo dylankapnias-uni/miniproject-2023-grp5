@@ -9,13 +9,16 @@ import { HomeSagas } from './home.sagas';
 import { ChatRepository } from '@mp/api/chat/data-access';
 import { ChatListRepository } from '@mp/api/chat-list/data-access';
 import { UserProfileRepository } from '@mp/api/users/data-access';
-
+import { NotificationRepository } from '@mp/api/notifications/data-access';
 export const CommandHandlers = [AcceptUserHandler, RejectUserHandler, CreateUserHomeHandler];
 export const EventHandlers = [UserAcceptedHandler, UserRejectedHandler, UserHomeCreatedHandler];
 export const QueryHandlers = [RetrieveHomeUsersHandler];
 
 @Module({
-  imports: [CqrsModule, HomeDataAccessModule],
+  imports: [
+    CqrsModule, 
+    HomeDataAccessModule, 
+  ],
   providers: [
     HomeService,
     ...CommandHandlers,
@@ -25,6 +28,7 @@ export const QueryHandlers = [RetrieveHomeUsersHandler];
     ChatRepository,
     ChatListRepository,
     UserProfileRepository,
+    NotificationRepository
   ],
   exports: [HomeService],
 })

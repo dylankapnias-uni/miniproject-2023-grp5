@@ -5,6 +5,7 @@ import { SendMessageHandler } from './commands';
 import { GetChatHandler, CreateChatHandler, AddTimeHandler, SubtractTimeHandler } from './queries';
 import { ChatService } from './chat.service';
 import { MessageSentHandler } from './events';
+import { NotificationRepository } from '@mp/api/notifications/data-access';
 export const CommandHandlers = [
   SendMessageHandler,
 ];
@@ -25,6 +26,7 @@ export const QueryHandlers = [
     ...CommandHandlers,
     ...EventHandlers,
     ...QueryHandlers,
+    NotificationRepository
   ],
   exports: [ChatService],
 })

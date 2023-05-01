@@ -107,7 +107,7 @@ export class UserProfile extends AggregateRoot implements IUserProfile {
     }
     console.log("How old is my baby? Oh he's only ", millis, " seconds old");
     try{
-      this.age = Math.floor(millis/31557600);
+      this.age = Math.floor(millis/31557600000);
       this.dob = dob;
     } catch (e5) {
       console.log("Timestamps are dumb");
