@@ -2,7 +2,7 @@ import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { ChatService } from "./chat.service";
 import { Test, TestingModule } from '@nestjs/testing';
 import { ICreateChatRequest, ICreateChatResponse, IChat, CreateChatQuery, IGetChatRequest, IGetChatResponse, IMessages, GetChatQuery, ISendMessageRequest, ISendMessageResponse, SendMessageCommand } from "@mp/api/chat/util";
-import { Timestamp } from "firebase-admin/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 
 describe("Chat", () => {
@@ -30,9 +30,9 @@ describe("Chat", () => {
             }
 
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: null,
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: ["anotherUser"]
@@ -62,9 +62,9 @@ describe("Chat", () => {
             }
 
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: null,
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: []
@@ -95,13 +95,13 @@ describe("Chat", () => {
             const mockMessage: IMessages = {
                 message: "This is a message",
                 time: timeStamp,
-                userID: "anotherUser"
+                userId: "anotherUser"
             }
 
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: [mockMessage],
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: ["anotherUser"]
@@ -119,7 +119,8 @@ describe("Chat", () => {
             //then
             expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
-            expect(result.messages.messages?.length).toBe(1)
+            expect(result.messages).not.toBeNull
+            expect(result.messages?.messages?.length).toBe(1)
         }),
 
         it("GetChat with valid chat id and messages and no users", async () => {
@@ -131,13 +132,13 @@ describe("Chat", () => {
             const mockMessage: IMessages = {
                 message: "This is a message",
                 time: timeStamp,
-                userID: ""
+                userId: ""
             }
 
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: [mockMessage],
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: []
@@ -155,7 +156,8 @@ describe("Chat", () => {
             //then
             expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
-            expect(result.messages.messages?.length).toBe(1)
+            expect(result.messages).not.toBeNull
+            expect(result.messages?.messages?.length).toBe(1)
         }),
 
         it("GetChat with valid chat id and no messages and users", async () => {
@@ -165,9 +167,9 @@ describe("Chat", () => {
             }
 
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: null,
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: ["anotherUser"]
@@ -185,7 +187,8 @@ describe("Chat", () => {
             //then
             expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
-            expect(result.messages.messages).toBe(null)
+            expect(result.messages).not.toBeNull
+            expect(result.messages?.messages).toBe(null)
         }) ,
 
         it("GetChat with valid chat id and no messages and no users", async () => {
@@ -195,9 +198,9 @@ describe("Chat", () => {
             }
 
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: null,
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: []
@@ -215,7 +218,8 @@ describe("Chat", () => {
             //then
             expect(queryBus.execute).toHaveBeenCalledWith(new GetChatQuery(mockRequest))
             expect(result).toBe(mockResponse)
-            expect(result.messages.messages).toBe(null)
+            expect(result.messages).not.toBeNull
+            expect(result.messages?.messages).toBe(null)
         }),
 
         it("GetChat with invalid chat id", async () => {
@@ -243,7 +247,7 @@ describe("Chat", () => {
             const mockMessage: IMessages = {
                 message: "This is a message",
                 time: timeStamp,
-                userID: "mockUser"
+                userId: "mockUser"
             }
             const mockRequest: ISendMessageRequest = {
                 userId: "mockUser",
@@ -251,9 +255,9 @@ describe("Chat", () => {
                 message: mockMessage
             }
             const mockChat: IChat = {
-                chatID: "mockChat",
+                chatId: "mockChat",
                 messages: [mockMessage],
-                timeAdderID: "mockChat",
+                timeAdderId: "mockChat",
                 timeRemaining: 5,
                 totalTimeUsed: 0,
                 users: ["anotherUser"]
@@ -278,7 +282,7 @@ describe("Chat", () => {
             const mockMessage: IMessages = {
                 message: "This is a message",
                 time: timeStamp,
-                userID: "mockUser"
+                userId: "mockUser"
             }
             const mockRequest: ISendMessageRequest = {
                 userId: "invalidUser",
@@ -303,7 +307,7 @@ describe("Chat", () => {
             const mockMessage: IMessages = {
                 message: "This is a message",
                 time: timeStamp,
-                userID: "mockUser"
+                userId: "mockUser"
             }
             const mockRequest: ISendMessageRequest = {
                 userId: "mockUser",
