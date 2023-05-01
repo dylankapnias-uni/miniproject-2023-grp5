@@ -6,6 +6,7 @@ name: (PROD) Build and Preview
 
 jobs:
   prod_build_pr:
+    name: Build
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     environment: production
     runs-on: ubuntu-latest
@@ -53,8 +54,9 @@ jobs:
           path: dist
           retention-days: 1
       
-  prod_deploy:
+  prod_deploy_pr:
     name: Deploy
+    environment: production
     needs: prod_build_pr
     runs-on: ubuntu-latest
     steps:
