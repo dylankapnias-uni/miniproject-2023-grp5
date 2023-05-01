@@ -56,6 +56,7 @@ jobs:
   prod_deploy:
     name: Deploy
     needs: prod_build_pr
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
