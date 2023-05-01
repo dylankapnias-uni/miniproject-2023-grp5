@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { HomeService } from './home.service';
 import expect from 'expect'
 import { AcceptUserCommand, CreateUserHomeCommand, IAcceptUserRequest, IAcceptUserResponse, ICreateUserHomeRequest, ICreateUserHomeResponse, IHome, IParsingData, IRejectUserRequest, IRejectUserResponse, IRetrieveHomeUsersRequest, IRetrieveHomeUsersResponse, IUserMatch, IUserRef, RejectUserCommand, RetrieveHomeUsersQuery } from '@mp/api/home/util';
@@ -10,6 +10,7 @@ import { IUserProfile } from '@mp/api/users/util';
 describe("API Home Feature Tests", () => {
     let homeService : HomeService
     let commandBus: CommandBus
+    let queryBus: QueryBus
 
     let mockUserI: IUserRef
     let mockParsingData: IParsingData
@@ -17,11 +18,12 @@ describe("API Home Feature Tests", () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-          providers: [HomeService, CommandBus],
+          providers: [HomeService, CommandBus, QueryBus],
         }).compile();
     
         homeService = module.get<HomeService>(HomeService);
         commandBus = module.get<CommandBus>(CommandBus);
+        queryBus = module.get<QueryBus>(QueryBus)
 
         const tempMockUserI: IUserRef = {
           userId: "mockUser",
@@ -169,13 +171,13 @@ describe("API Home Feature Tests", () => {
           users: mockUsers
         }
 
-        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+        jest.spyOn(queryBus, "execute").mockResolvedValueOnce(mockResponse)
 
         //when
         const result = await homeService.fetchUsers(mockRequest)
 
         //then
-        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(queryBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(mockResponse)
         expect(result.users.userList[0].match).toBe(true)
       }),
@@ -205,13 +207,13 @@ describe("API Home Feature Tests", () => {
           users: mockUsers
         }
 
-        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+        jest.spyOn(queryBus, "execute").mockResolvedValueOnce(mockResponse)
 
         //when
         const result = await homeService.fetchUsers(mockRequest)
 
         //then
-        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(queryBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(mockResponse)
         expect(result.users.userList[0].match).toBe(false)
       }),
@@ -237,13 +239,13 @@ describe("API Home Feature Tests", () => {
           users: mockUsers
         }
 
-        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+        jest.spyOn(queryBus, "execute").mockResolvedValueOnce(mockResponse)
 
         //when
         const result = await homeService.fetchUsers(mockRequest)
 
         //then
-        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(queryBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(mockResponse)
         expect(result.users.userList[0].match).toBe(true)
       }),
@@ -269,13 +271,13 @@ describe("API Home Feature Tests", () => {
           users: mockUsers
         }
 
-        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(mockResponse)
+        jest.spyOn(queryBus, "execute").mockResolvedValueOnce(mockResponse)
 
         //when
         const result = await homeService.fetchUsers(mockRequest)
 
         //then
-        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(queryBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(mockResponse)
         expect(result.users.userList[0].match).toBe(false)
       }),
@@ -291,13 +293,13 @@ describe("API Home Feature Tests", () => {
           filter: [mockFilter]
         }
         
-        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+        jest.spyOn(queryBus, "execute").mockResolvedValueOnce(null)
 
         //when
         const result = await homeService.fetchUsers(mockRequest)
 
         //then
-        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(queryBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(null)
       }),
 
@@ -308,13 +310,13 @@ describe("API Home Feature Tests", () => {
           filter: null
         }
         
-        jest.spyOn(commandBus, "execute").mockResolvedValueOnce(null)
+        jest.spyOn(queryBus, "execute").mockResolvedValueOnce(null)
 
         //when
         const result = await homeService.fetchUsers(mockRequest)
 
         //then
-        expect(commandBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
+        expect(queryBus.execute).toHaveBeenCalledWith(new RetrieveHomeUsersQuery(mockRequest))
         expect(result).toBe(null)
       })
 
