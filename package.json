@@ -26,7 +26,10 @@
     "shipit:prod": "yarn build:app:prod && yarn build:api:prod && yarn deploy:prod",
     "generate:pwa:assets:icons": "pwa-asset-generator apps/app/src/assets/logos/schadre-logo-only.png apps/app/src/assets/pwa --favicon --icon-only --padding \"20px\" --mstile --maskable --manifest apps/app/src/manifest.webmanifest",
     "generate:pwa:assets:splashes": "pwa-asset-generator apps/app/src/assets/logos/schadre-logo-only.png apps/app/src/assets/pwa --favicon --splash-only --padding \"150px\" --mstile --maskable --manifest apps/app/src/manifest.webmanifest",
-    "host:app": "http-server dist/apps/app"
+    "host:app": "http-server dist/apps/app",
+    "test": "nx run-many --target=test --all --skip-nx-cache --parallel=5",
+    "test:ci": "nx run-many --target=test --all --skip-nx-cache --parallel=5 --configuration=ci",
+    "lint": "nx run-many --target=lint --all --skip-nx-cache --parallel=5"
   },
   "private": true,
   "dependencies": {

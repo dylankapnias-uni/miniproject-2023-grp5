@@ -1,0 +1,193 @@
+ion-content
+{
+    --ion-background-color: #FDE0E0;
+}
+
+.back_button{
+    height:37px;
+    width:42px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1.5%;
+    left: 1.5%;
+}
+.back-icon{
+    font-size:30px;
+}
+
+.label_bio
+{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.page_name
+{
+    position: absolute;
+    top: 2.3%;
+    left: 20%;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    align-items: center;
+
+    color: #000000;
+}
+
+
+
+
+
+.delete_account_button
+{
+    --background: #F3C1C0;
+    width: 365px;
+    height: 69px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    //position: absolute;
+    //bottom: 10%;
+    left: 2.5%;
+    color: black;
+    font-size: 24px;
+}
+
+.page
+{
+    top: 50%;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #000000;
+}
+
+ion-item
+{
+   --background: #FDE0E0;
+}
+
+ion-item ion-label
+{
+    font-size : 20px;
+    font-weight: 500;
+}
+
+ion-item ion-input
+{
+    font-size : 16px;
+    font-weight: 400;
+    
+}
+
+.full_name
+{
+    position: absolute;
+    top: 12%;
+}
+
+
+.email
+{
+    position: absolute;
+    top: 24%;
+}
+
+.phone
+{
+    position: absolute;
+    top: 36%;
+}
+
+.gender
+{
+
+    position: absolute;
+    top: 48%;
+}
+
+.birthday
+{
+    position: absolute;
+    top: 60%;
+}
+
+ion-modal {
+    --height: 50%;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+  
+  ion-modal::part(backdrop) {
+    background: rgba(209, 213, 219);
+    opacity: 1;
+  }
+  
+  ion-modal ion-toolbar {
+    --background: rgb(14 116 144);
+    --color: white;
+  }
+
+  .modal-content {
+    height: calc(100% - 56px); /* subtract the height of the toolbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  ion-datetime {
+    --background-color: #FFFFFF;
+    --color: black;
+    //align-items: center;
+
+  }
+
+  .modal-content {
+    /*display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;*/
+    //width: 80%;
+    //height: 80%;
+
+  }
+
+  ion-modal {
+    --width: 92%;
+    //--height: 80%;
+  }
+  ion-toolbar {
+    --ion-color-primary: #F3C1C0;
+  }
+
+  /*ion-datetime .picker-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }*/
+
+  .btn
+{
+   
+    border-radius: 40% !important;
+    --background:#FFFFFF;
+    color: black;
+    width: 40%;
+    height: 35px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.4px; 
+
+    margin-left: 4%;
+    //margin-right: 30%; 
+}
+  
+  

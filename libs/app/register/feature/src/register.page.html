@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <a [routerLink] = "['/']"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a>
     </ion-buttons>
     <ion-title>Register</ion-title>
   </ion-toolbar>
@@ -20,7 +20,7 @@
     (submit)="register()">
     <ion-list class="ion-padding-vertical">
       <ion-item>
-        <ion-label position="floating" class="required">Email</ion-label>
+        <ion-label position="floating">Email</ion-label>
         <ion-input
           type="email"
           minlength="6"
@@ -37,21 +37,68 @@
         <small>{{ emailError }}</small>
       </ion-text>
       <ion-item>
-        <ion-label position="floating" class="required">Password</ion-label>
+        <ion-label position="floating">Phone Number</ion-label>
         <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          minlength="6"
-          maxlength="64"
-          placeholder="Enter password"
+          type="tel"
+          minlength="10"
+          maxlength="15"
+          placeholder="Enter phone number"
           required="true"
-          autocomplete="password"
-          formControlName="password"></ion-input>
-        <ion-icon
-          [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
-          slot="end"
-          class="ion-align-self-center"
-          (click)="toggleShowPassword()"></ion-icon>
+          autocomplete="tel"
+          formControlName="phoneNumber"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label position="floating">Date of Birth</ion-label>
+        <ion-input
+          type="date"
+          placeholder="Enter date of birth"
+          required="true"
+          formControlName="dateOfBirth"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+        <ion-label position="floating">Age</ion-label>
+        <ion-input
+          type="number"
+          min="1"
+          max="120"
+          placeholder="Enter age"
+          required="true"
+          formControlName="age"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating" class="required">Password</ion-label>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            minlength="6"
+            maxlength="64"
+            placeholder="Enter password"
+            required="true"
+            autocomplete="password"
+            formControlName="password"></ion-input>
+          <ion-icon
+            [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
+            slot="end"
+            class="ion-align-self-center"
+            (click)="toggleShowPassword()"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" class="required">Confirm Password</ion-label>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            minlength="6"
+            maxlength="64"
+            placeholder="Enter password"
+            required="true"
+            autocomplete="password"
+            formControlName="password"></ion-input>
+          <ion-icon
+            [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
+            slot="end"
+            class="ion-align-self-center"
+            (click)="toggleShowPassword()"></ion-icon>
+        </ion-item>
       <ion-text
         *ngIf="password?.invalid && (password?.dirty || password?.touched)"
         class="ion-padding-start"
@@ -59,12 +106,12 @@
         <small>{{ passwordError }}</small>
       </ion-text>
     </ion-list>
-
     <ion-grid class="ion-padding">
       <ion-row>
         <ion-col>
           <ion-button
             expand="block"
+            class="custom-buttons"
             [disabled]="!this.registerForm.valid || (busy$ | async)"
             type="submit">
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
@@ -92,6 +139,10 @@
   </form>
 </ion-content>
 
-<ion-footer collapse="condense" class="ion-padding ion-text-center">
-  <ms-copyright-component></ms-copyright-component>
-</ion-footer>
+  
+  
+  
+
+  
+  
+

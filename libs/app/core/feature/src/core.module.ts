@@ -40,6 +40,7 @@ import { AuthState } from '@mp/app/auth/data-access';
 import { AuthModule } from '@mp/app/auth/feature';
 import { ErrorsState } from '@mp/app/errors/data-access';
 import { ErrorsModule } from '@mp/app/errors/feature';
+import { SettingsPageModule } from '@mp/app/settings/feature';
 import { NgxsActionsExecutingModule } from '@ngxs-labs/actions-executing';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
@@ -88,7 +89,7 @@ const FIREBASE_OPTIONS: FirebaseOptions = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    CoreRouting,
+    CoreRouting, SettingsPageModule,
     provideRemoteConfig(() => getRemoteConfig()),
     provideAnalytics(() => getAnalytics()),
     provideMessaging(() => getMessaging()),
