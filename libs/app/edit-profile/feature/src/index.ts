@@ -1,3 +1,3 @@
-export * from './app-edit-profile-feature.module';
-export * from './app-edit-profile-feature.routing';
-export * from './lib/edit-profile.page';
+export * from './edit-profile.module';
+export * from './edit-profile.routing';
+export * from './edit-profile.page';

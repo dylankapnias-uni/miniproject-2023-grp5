@@ -22,12 +22,14 @@ import {
     UpdateAddressDetails,
     UpdateContactDetails,
     UpdateOccupationDetails,
-    UpdatePersonalDetails
+    UpdatePersonalDetails,
+    UploadPost
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
+import { IUserProfile } from '@mp/api/users/util';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
@@ -81,6 +83,9 @@ export interface ProfileStateModel {
   };
 }
 
+export interface IUserProfileStateModel{
+  profile: IUserProfile | null;
+}
 @State<ProfileStateModel>({
   name: 'profile',
   defaults: {
@@ -134,6 +139,14 @@ export interface ProfileStateModel {
     },
   },
 })
+
+@State<IUserProfileStateModel>({
+  name: 'userProfile',
+  defaults: {
+    profile: null
+  }
+})
+
 @Injectable()
 export class ProfileState {
   constructor(
@@ -151,18 +164,58 @@ export class ProfileState {
     return ctx.dispatch(new AuthLogout());
   }
 
+  @Action(UploadPost)
+  async uploadPost(ctx: StateContext<ProfileStateModel>, {payload}: UploadPost) {
+    //const response = this.profileApi.uploadPost(payload);
+    console.log("");
+  }
+
+  // @Action(SubscribeToProfile)
+  // subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
+  //   const user = this.store.selectSnapshot(AuthState.user);
+  //   if (!user) return ctx.dispatch(new SetError('User not set'));
+
+  //   return this.profileApi
+  //     .profile$(user.uid)
+  //     .pipe(tap((profile: IUserProfile) => ctx.dispatch(new SetProfile(profile))));
+  // }
+
   @Action(SubscribeToProfile)
-  subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
+  subscribeToProfile(ctx: StateContext<IUserProfileStateModel>) {
     const user = this.store.selectSnapshot(AuthState.user);
     if (!user) return ctx.dispatch(new SetError('User not set'));
 
     return this.profileApi
-      .profile$(user.uid)
-      .pipe(tap((profile: IProfile) => ctx.dispatch(new SetProfile(profile))));
+      .user$(user.uid)
+      .pipe(tap((profile: IUserProfile) => ctx.dispatch(new SetProfile(profile))));
   }
 
+  // @Action(GetUserProfile)
+  // getUserProfile(ctx: StateContext<ProfileStateModel>, { userId }: GetUserProfile) {
+    
+  //   const request = {
+  //     userId: userId
+  //   }
+  //   const response = this.profileApi.getUserProfile(userId);
+    
+  //   ctx.patchState()
+  //   {
+  //     profile: response.profile
+  //   }
+
+  // }
+
+  // @Action(SetProfile)
+  // setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
+  //   return ctx.setState(
+  //     produce((draft) => {
+  //       draft.profile = profile;
+  //     })
+  //   );
+  // }
+
   @Action(SetProfile)
-  setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
+  setProfile(ctx: StateContext<IUserProfileStateModel>, { profile }: SetProfile) {
     return ctx.setState(
       produce((draft) => {
         draft.profile = profile;

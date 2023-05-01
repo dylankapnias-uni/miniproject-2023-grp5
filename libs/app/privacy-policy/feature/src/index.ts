@@ -1,3 +1,3 @@
-export * from './app-privacy-policy-feature.module';
-export * from './app-privacy-policy-feature.routing';
-export * from './lib/privacy-policy.page';
+export * from './privacy-policy.module';
+export * from './privacy-policy.routing';
+export * from './privacy-policy.page';

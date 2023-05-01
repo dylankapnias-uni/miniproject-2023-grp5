@@ -1,0 +1,23 @@
+<ion-content>
+    <ion-button expand="block" shape="round" (click)="clear()">Clear</ion-button>
+    <ion-grid>
+        <!-- export interface INotification {
+            userId:string;
+            inbox : IInbox[] | null | undefined;    
+        }
+        export interface IInbox{
+            content: string; 
+            recipient : string;
+            sender : string;
+            time : Timestamp;
+        } -->
+        <ion-row *ngFor="let i of this.notification.inbox; let j = index" class="notification-bubble">
+            <ion-col>
+                <div style="text-align: center;">{{i.content}}</div>
+            </ion-col>
+            <ion-col size = "1">
+                <ion-icon name="close" (click)="clearNotification(j)"></ion-icon>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,18 +1,197 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write, list: if false;
+    
+     /* Functions */
+     
+    function signedIn() {
+    	return request.auth.uid != null;
     }
     
-    // Request.auth is empty due to a bug
-    // match /profiles/{userId} {
-    //   allow read: if request.auth != null && request.auth.uid == userId;
-    // }
-    
-    match /profiles/{userId} {
-      allow read: if true;
+    function incomingData(){
+      return request.resource.data
     }
-
+    
+    function isOwner(userID){
+    	return userID == request.auth.uid
+    }
+    
+    
+    /* Rules for each Collection */
+    
+    
+    /* Rules for Profile */
+    match /profiles/{userID}
+    {
+    	 allow create ,read ,update , delete : if true;
+    }
+    
+    
+    /* Rules for Profile */
+    
+    match /User_Profile/{userID} {
+    
+         allow create :if  signedIn() &&
+         
+         "userId" in incomingData() || 
+         (incomingData().userId == null || incomingData().userId is string ) &&
+         
+         "name" in incomingData() || 
+         (incomingData().name == null || incomingData().name is string ) &&
+         
+         "age" in incomingData() || 
+         (incomingData().age == null || incomingData().age  is number ) &&
+         
+         "bio" in incomingData() || 
+         (incomingData().bio == null || incomingData().bio  is string) &&
+         
+         "phoneNumber" in incomingData() ||
+         (incomingData().phoneNumber == null || incomingData().phoneNumber  is string ) &&
+         
+         "gender" in incomingData() || 
+         (incomingData().gender == null || incomingData().gender  is string ) &&
+         
+         "sexuality" in incomingData() ||
+         (incomingData().sexuality == null || incomingData().sexuality  is string ) &&
+         
+         "dob" in incomingData() || 
+         (incomingData().dob == null || incomingData().dob  is timestamp ) &&
+         
+         "time" in incomingData() || 
+         (incomingData().time == null || incomingData().time  is number ) &&
+         
+         "profilePicture" in incomingData() ||
+         (incomingData().profilePicture == null || incomingData().profilePicture  is string ) &&
+         
+         "interests" in incomingData() || 
+         (incomingData().interests == null || incomingData().interests  is list ) &&
+         
+         "posts" in incomingData() ||
+         (incomingData().posts == null || incomingData().post is list)
+         
+         
+         allow read :if signedIn() && isOwner(userID)
+         
+         allow update :if signedIn() && isOwner(userID)
+  
+         allow delete :if signedIn() && isOwner(userID)
+         
+    }
+    
+    
+    /* Rules for Home */
+    
+    match /Home/{userID} {
+         
+         allow create :if signedIn() &&
+         "accepted" in incomingData() ||
+         (incomingData().accepted == null || incomingData().accepted is list)  &&
+         
+         "visited" in incomingData() ||
+         (incomingData().visited == null || incomingData().visited is list)
+         
+         allow read :if signedIn() && isOwner(userID)
+         
+         allow update :if signedIn() && isOwner(userID)
+  
+         allow delete :if signedIn() && isOwner(userID) 
+         
+    }
+    
+    
+    /* Rules for Chatlist */
+    
+    match /Chatlist/{userID} {
+    
+         allow create :if signedIn()  &&
+         "userList" in incomingData() &&
+         (incomingData().userList is list || incomingData().userList == null ) 
+         
+        
+         allow read :if signedIn() && isOwner(userID)
+         
+         allow update :if signedIn() && isOwner(userID)
+  
+         allow delete :if signedIn() && isOwner(userID) 
+    }
+    
+    
+    /* Rules for Chat */
+    
+    match /Chat/{ChatID} {
+    
+        allow create: if signedIn() &&
+        
+        "messages" in incomingData() &&
+         (incomingData().messages is list || incomingData().messages == null ) &&
+         
+         "timeAdderID" in incomingData() &&
+         (incomingData().timeAdderID is string || incomingData().timeAdderID == null ) &&
+         
+         "timeRemaining" in incomingData() &&
+         (incomingData().timeRemaining is number || incomingData().timeRemaining == null ) &&
+         
+        "totalTimeUsed" in incomingData() &&
+         (incomingData().totalTimeUsed is number || incomingData().totalTimeUsed == null ) &&
+         
+         "users" in incomingData() &&
+         (incomingData().users is list || incomingData().users == null ) 
+         
+         
+         
+        
+        allow read :if signedIn() &&  request.auth.uid in get(/databases/$(database)/documents/Chat/$(ChatID)).data.users
+         
+        allow update :if signedIn() &&  request.auth.uid in get(/databases/$(database)/documents/Chat/$(ChatID)).data.users
+  
+        allow delete :if signedIn() &&  request.auth.uid in get(/databases/$(database)/documents/Chat/$(ChatID)).data.users
+    }
+    
+    
+    /* Rules for Blocked Account */
+    
+    match /Blocked_Account/{userID} {
+    
+    	  allow create: if signedIn() &&
+        "blocked" in incomingData() &&
+        (incomingData().blocked is list || incomingData().blocked == null ) 
+         
+        allow read :if signedIn() && isOwner(userID)
+         
+        allow update :if signedIn() && isOwner(userID)
+  
+        allow delete :if signedIn() && isOwner(userID)    
+    }
+    
+    
+    
+    /* Rules for Notifications */
+    
+    match /Notifications/{userID} {
+    
+    		allow create: if signedIn() &&
+        "inbox" in incomingData() &&
+        (incomingData().inbox is list || incomingData().inbox == null ) 
+        
+        
+        allow read :if signedIn() && isOwner(userID)
+         
+        allow update :if signedIn() && isOwner(userID)
+  
+        allow delete :if signedIn() && isOwner(userID) 
+    }
+    
+    
+    /* Rules for About */
+    
+    match /About/{AboutID}{
+    
+        allow read :if signedIn() 
+        
+    }
+       
+       
+    
   }
 }
+  

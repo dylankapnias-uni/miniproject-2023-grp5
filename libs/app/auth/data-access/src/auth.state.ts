@@ -58,6 +58,7 @@ export class AuthState {
       await this.authApi.login(email, password);
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
+      console.log("error in login action");
       return ctx.dispatch(new SetError((error as Error).message));
     }
   }
@@ -69,7 +70,7 @@ export class AuthState {
   ) {
     try {
       await this.authApi.register(email, password);
-      return ctx.dispatch(new Navigate(['home']));
+      return ctx.dispatch(new Navigate(['account']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }

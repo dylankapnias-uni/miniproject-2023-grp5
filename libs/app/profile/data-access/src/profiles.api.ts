@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
-    IProfile,
     IUpdateAccountDetailsRequest,
     IUpdateAccountDetailsResponse,
     IUpdateAddressDetailsRequest,
@@ -15,6 +14,7 @@ import {
     IUpdatePersonalDetailsResponse
 } from '@mp/api/profiles/util';
 
+import { IUserProfile } from '@mp/api/users/util';
 @Injectable()
 export class ProfilesApi {
   constructor(
@@ -25,14 +25,27 @@ export class ProfilesApi {
   profile$(id: string) {
     const docRef = doc(
       this.firestore,
-      `profiles/${id}`
-    ).withConverter<IProfile>({
+      `User_Profile/${id}`
+    ).withConverter<IUserProfile>({
       fromFirestore: (snapshot) => {
-        return snapshot.data() as IProfile;
+        return snapshot.data() as IUserProfile;
       },
-      toFirestore: (it: IProfile) => it,
+      toFirestore: (it: IUserProfile) => it,
     });
-    return docData(docRef, { idField: 'id' });
+    return docData(docRef, { idField: 'userId' });
+  }
+
+  user$(id: string) {
+    const docRef = doc(
+      this.firestore,
+      `User_Profile/${id}`
+    ).withConverter<IUserProfile>({
+      fromFirestore: (snapshot) => {
+        return snapshot.data() as IUserProfile;
+      },
+      toFirestore: (it: IUserProfile) => it,
+    });
+    return docData(docRef, { idField: 'userId' });
   }
 
   async updateAccountDetails(request: IUpdateAccountDetailsRequest) {

@@ -3,11 +3,10 @@ import { NgModule } from '@angular/core';
 import { AuthModule } from '@mp/app/auth/data-access';
 import { NgxsModule } from '@ngxs/store';
 import { ChatState } from './chat.state';
-// import { ProfileState } from './profile.state';
-// import { ProfilesApi } from './profiles.api';
+import { ChatApi } from './chat.api';
 
 @NgModule({
   imports: [CommonModule, NgxsModule.forFeature([ChatState]), AuthModule],
-  providers: [/*ProfilesApi*/],
+  providers: [ChatApi],
 })
 export class ChatModule {}

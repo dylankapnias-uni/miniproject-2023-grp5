@@ -6,13 +6,24 @@ import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { 
     SwipeAccept,
     SwipeReject,
-    FilterCards
+    FilterCards,
+    GetCards
  } from '@mp/app/home/util';
+import { IUserProfile } from '@mp/api/users/util';
+import { 
+  IAcceptUserRequest,
+  IRejectUserRequest,
+  ICreateUserHomeRequest,
+  IRetrieveHomeUsersRequest,
+  IUserMatch
+ } from '@mp/api/home/util';
+
+import { HomeApi } from './home.api';
 
 export interface HomeStateModel{
   home:{
     model:{
-      users: any[] | null;
+      users: Array<IUserMatch> | null;
     };
     dirty: false;
     status: string;
@@ -35,35 +46,64 @@ export interface HomeStateModel{
 })
 @Injectable()
 export class HomeState {
-
+  constructor(public homeApi: HomeApi) {};
   @Action(SwipeAccept)
   async SwipeAccept(ctx: StateContext<HomeStateModel>, {payload}: SwipeAccept) {
-    //Works and catches Chat id
-    ctx.patchState({
-      
-    });
+    const request: IAcceptUserRequest = {
+      userId: payload.userId,
+      swipedUserId : payload.swipedUserId,
+    };
+    const response = await this.homeApi.acceptUser(request);
   }
 
   @Action(SwipeReject)
   async SwipeReject(ctx: StateContext<HomeStateModel>, {payload}: SwipeReject) {
-    //Works and catches Chat id and outGoingMessage
-    ctx.patchState({
-      
-    });
+    const request: IRejectUserRequest = {
+      userId: payload.userId,
+      swipedUserId : payload.swipedUserId
+    };
+    const response = await this.homeApi.rejectUser(request);
   }
 
   @Action(FilterCards)
   async FilterCards(ctx: StateContext<HomeStateModel>, {payload}: FilterCards) {
-    //Works and catches Chat id and time
+    
     ctx.patchState({
       
     });
   }
 
+  @Action(GetCards)
+  async GetCards(ctx: StateContext<HomeStateModel>, {payload}: GetCards) {
+    const state = ctx.getState();
+    const request: IRetrieveHomeUsersRequest = {
+      userId: payload.uid,
+      filter: null
+    };
+
+    const response = await this.homeApi.retrieveHomeUsers(request);
+    //const rsps = response.data;
+    const uHolder = response.data.users.userList as Array<IUserMatch>;
+    if (!response.data.users.userList) 
+      throw new Error('Unlovable');
+    
+    ctx.patchState({
+      home:{
+        model:{
+          ...state.home.model,
+          users: uHolder,
+        },
+        dirty: false,
+        status: '',
+        errors: {}
+      }
+    });
+  }
+ 
+
 
   @Selector()
-  static home(state: HomeStateModel) 
-  {
-    return state.home.model;
+  static home(state: HomeStateModel) {
+    return state.home.model.users;
   }
 }

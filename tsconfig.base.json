@@ -19,6 +19,14 @@
       "@mp/api/auth/data-access": ["libs/api/auth/data-access/src/index.ts"],
       "@mp/api/auth/feature": ["libs/api/auth/feature/src/index.ts"],
       "@mp/api/auth/util": ["libs/api/auth/util/src/index.ts"],
+      "@mp/api/chat-list/data-access": [
+        "libs/api/chat-list/data-access/src/index.ts"
+      ],
+      "@mp/api/chat-list/feature": ["libs/api/chat-list/feature/src/index.ts"],
+      "@mp/api/chat-list/util": ["libs/api/chat-list/util/src/index.ts"],
+      "@mp/api/chat/data-access": ["libs/api/chat/data-access/src/index.ts"],
+      "@mp/api/chat/feature": ["libs/api/chat/feature/src/index.ts"],
+      "@mp/api/chat/util": ["libs/api/chat/util/src/index.ts"],
       "@mp/api/core/feature": ["libs/api/core/feature/src/index.ts"],
       "@mp/api/eventstore/data-access": [
         "libs/api/eventstore/data-access/src/index.ts"
@@ -32,11 +40,40 @@
       ],
       "@mp/api/history/feature": ["libs/api/history/feature/src/index.ts"],
       "@mp/api/history/util": ["libs/api/history/util/src/index.ts"],
+      "@mp/api/home/data-access": ["libs/api/home/data-access/src/index.ts"],
+      "@mp/api/home/feature": ["libs/api/home/feature/src/index.ts"],
+      "@mp/api/home/util": ["libs/api/home/util/src/index.ts"],
+      "@mp/api/interests/data-access": [
+        "libs/api/interests/data-access/src/index.ts"
+      ],
+      "@mp/api/interests/feature": ["libs/api/interests/feature/src/index.ts"],
+      "@mp/api/interests/util": ["libs/api/interests/util/src/index.ts"],
+      "@mp/api/notifications/data-access": [
+        "libs/api/notifications/data-access/src/index.ts"
+      ],
+      "@mp/api/notifications/feature": [
+        "libs/api/notifications/feature/src/index.ts"
+      ],
+      "@mp/api/notifications/util": [
+        "libs/api/notifications/util/src/index.ts"
+      ],
       "@mp/api/profiles/data-access": [
         "libs/api/profiles/data-access/src/index.ts"
       ],
       "@mp/api/profiles/feature": ["libs/api/profiles/feature/src/index.ts"],
       "@mp/api/profiles/util": ["libs/api/profiles/util/src/index.ts"],
+      "@mp/api/settings/data-access": [
+        "libs/api/settings/data-access/src/index.ts"
+      ],
+      "@mp/api/settings/feature": ["libs/api/settings/feature/src/index.ts"],
+      "@mp/api/settings/util": ["libs/api/settings/util/src/index.ts"],
+      "@mp/api/user-profile/data-access": [
+        "libs/api/user-profile/data-access/src/index.ts"
+      ],
+      "@mp/api/user-profile/feature": [
+        "libs/api/user-profile/feature/src/index.ts"
+      ],
+      "@mp/api/user-profile/util": ["libs/api/user-profile/util/src/index.ts"],
       "@mp/api/users/data-access": ["libs/api/users/data-access/src/index.ts"],
       "@mp/api/users/feature": ["libs/api/users/feature/src/index.ts"],
       "@mp/api/users/util": ["libs/api/users/util/src/index.ts"],
@@ -81,9 +118,20 @@
       "@mp/app/login/data-access": ["libs/app/login/data-access/src/index.ts"],
       "@mp/app/login/feature": ["libs/app/login/feature/src/index.ts"],
       "@mp/app/login/util": ["libs/app/login/util/src/index.ts"],
+      "@mp/app/messages/data-access": [
+        "libs/app/messages/data-access/src/index.ts"
+      ],
       "@mp/app/messages/feature": ["libs/app/messages/feature/src/index.ts"],
+      "@mp/app/messages/ui": ["libs/app/messages/ui/src/index.ts"],
+      "@mp/app/messages/util": ["libs/app/messages/util/src/index.ts"],
+      "@mp/app/notifications/data-access": [
+        "libs/app/notifications/data-access/src/index.ts"
+      ],
       "@mp/app/notifications/feature": [
         "libs/app/notifications/feature/src/index.ts"
+      ],
+      "@mp/app/notifications/util": [
+        "libs/app/notifications/util/src/index.ts"
       ],
       "@mp/app/other-user/feature": [
         "libs/app/other-user/feature/src/index.ts"
@@ -106,7 +154,11 @@
       "@mp/app/reset/data-access": ["libs/app/reset/data-access/src/index.ts"],
       "@mp/app/reset/feature": ["libs/app/reset/feature/src/index.ts"],
       "@mp/app/reset/util": ["libs/app/reset/util/src/index.ts"],
+      "@mp/app/settings/data-access": [
+        "libs/app/settings/data-access/src/index.ts"
+      ],
       "@mp/app/settings/feature": ["libs/app/settings/feature/src/index.ts"],
+      "@mp/app/settings/util": ["libs/app/settings/util/src/index.ts"],
       "@mp/app/shop/feature": ["libs/app/shop/feature/src/index.ts"],
       "@mp/app/tos/feature": ["libs/app/tos/feature/src/index.ts"],
       "@mp/app/updates/data-access": [

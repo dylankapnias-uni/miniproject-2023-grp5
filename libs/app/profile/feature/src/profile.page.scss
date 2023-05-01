@@ -30,11 +30,11 @@ ion-card {
 // border-radius: 8px;
 }
 
-.set {
-  margin-top: 1vh;
- // margin-right: 5vh;
- margin-left: 1.5vh;
-}
+// .set {
+//   margin-top: 1vh;
+//  // margin-right: 5vh;
+//  margin-left: 1.5vh;
+// }
 
 ion-card-content {
   margin-top: 0;
@@ -71,16 +71,20 @@ ion-img {
   // rgb(33, 33, 33);
 }
 
+.interests{
+  background-color: #F3C1C0;
+  width: 92%;
+  height: 28px;
+  font-size: 14px;
+  justify-content: center;
+  box-shadow: 3px 3px 5px rgb(73, 72, 72);
+  text-transform: bold;
+  letter-spacing: 0.2px;
+}
 
 .center {
   margin-top: 7%;
   margin-left: 5%;
-}
-
-ion-icon{
-  color: #f87c7c;
-  font-size: 2.3rem;
-//  float: left;
 }
 
 ion-chip {
@@ -93,7 +97,7 @@ ion-chip {
 
 .first {
   margin-top: -2.2vh;
-  margin-left: 35%;
+  // margin-left: 35%;
   //width: ;
   //font-weight: bold;
 }
@@ -197,3 +201,21 @@ ion-chip {
    
 }
 
+.settings_btn
+{
+  --background: #FDE0E0;
+  --background-activated: #FDE0E0;
+  width: 60px;
+
+ 
+  
+}
+
+.set
+{
+  color: #f87c7c;
+  font-size: 100px !important;
+  width: 100% !important;
+
+//  float: left;
+}

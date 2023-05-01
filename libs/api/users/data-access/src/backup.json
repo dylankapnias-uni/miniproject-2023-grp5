@@ -1,0 +1,547 @@
+{
+  "__collections__": {
+    "About": {
+      "TermofUse": {
+        "TimeEdited": {
+          "_seconds": 1680714122,
+          "_nanoseconds": 817000000
+        }
+      }
+    },
+    "Blocked_Account": {
+      "9n7YPhjAHoYkEFiMUjjIIiqxTCv1": {
+        "blocked": [""]
+      },
+      "BYjm2oO8wSS0q97z5JBbiHcn1AK2": {
+        "blocked": ["ep9MlvBfdhOwJHaF0RyH"]
+      },
+      "doS7AJ5qfUTNmqvfWlWBn3w3pxB3": {
+        "blocked": ""
+      },
+      "iNwqWTPZw2boZnvwlch6U9C5J6c2": {
+        "blocked": [""]
+      }
+    },
+    "Chat": {
+      "2CzOf17OkMnJbMKcDwGY": {
+        "timeRemaining ": 1126,
+        "totalTimeUsed ": 12,
+        "timeAdderID": " 9n7YPhjAHoYkEFiMUjjIIiqxTCv1",
+        "users": [
+          "9n7YPhjAHoYkEFiMUjjIIiqxTCv1",
+          "BYjm2oO8wSS0q97z5JBbiHcn1AK2"
+        ],
+        "chatId": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1",
+        "messages": [
+          {
+            "value": {
+              "_seconds": 1682418880,
+              "_nanoseconds": 785000000
+            },
+            "message": "hi",
+            "userId": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1",
+            "username": "IntegrationTest"
+          },
+          {
+            "name": "Katleho",
+            "messages": "hello",
+            "time": {
+              "_seconds": 1682418974,
+              "_nanoseconds": 324000000
+            },
+            "userId": "BYjm2oO8wSS0q97z5JBbiHcn1AK2"
+          }
+        ]
+      },
+      "SFQVJFZceJmxGClLKhQQ": {
+        "timeRemaining ": 12,
+        "totalTimeUsed ": 488466,
+        "messages": [
+          {
+            "time": {
+              "_seconds": 1682280604,
+              "_nanoseconds": 163000000
+            },
+            "message": "hi",
+            "userID": "SFQVJFZceJmxGClLKhQQ"
+          }
+        ],
+        "timeAdderID": "SFQVJFZceJmxGClLKhQQ"
+      }
+    },
+    "Chatlist": {
+      "9n7YPhjAHoYkEFiMUjjIIiqxTCv1": {
+        "userList": [
+          {
+            "chatRef": "2CzOf17OkMnJbMKcDwGY",
+            "otherUserID": "BYjm2oO8wSS0q97z5JBbiHcn1AK2"
+          }
+        ],
+        "userId": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1"
+      },
+      "BYjm2oO8wSS0q97z5JBbiHcn1AK2": {
+        "userList": [
+          {
+            "chatRef": "2CzOf17OkMnJbMKcDwGY",
+            "otherUserID": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1"
+          }
+        ]
+      },
+      "doS7AJ5qfUTNmqvfWlWBn3w3pxB3": {
+        "userList": [
+          {
+            "chatRef": "",
+            "otherUserID": ""
+          }
+        ]
+      }
+    },
+    "Home": {
+      "9n7YPhjAHoYkEFiMUjjIIiqxTCv1": {
+        "accepted": [""],
+        "visited": [""],
+        "userId": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1"
+      },
+      "iNwqWTPZw2boZnvwlch6U9C5J6c2  ": {
+        "visited": [""],
+        "accepted": [""],
+        "userId": "iNwqWTPZw2boZnvwlch6U9C5J6c2  "
+      }
+    },
+    "Interests": {
+      "Interests": {
+        "list": [
+          {
+            "interest": "Soccer",
+            "category": "Sport"
+          },
+          {
+            "interest": "Tennis",
+            "category ": "Sport"
+          },
+          {
+            "interest": "Cricket",
+            "category": "Sport"
+          }
+        ]
+      }
+    },
+    "Notifications": {
+      "doS7AJ5qfUTNmqvfWlWBn3w3pxB3": {
+        "inbox ": [
+          {
+            "sender": "doS7AJ5qfUTNmqvfWlWBn3w3pxB3",
+            "recipient": "BYjm2oO8wSS0q97z5JBbiHcn1AK2",
+            "time": {
+              "_seconds": 1682277649,
+              "_nanoseconds": 130000000
+            },
+            "content": "New Message"
+          }
+        ],
+        "userID": ""
+      }
+    },
+    "Settings": {
+      "9n7YPhjAHoYkEFiMUjjIIiqxTCv1": {
+        "privacy": "Everyone",
+        "time": {
+          "history": [
+            {
+              "date": {
+                "_seconds": 1682505274,
+                "_nanoseconds": 857000000
+              },
+              "amount": 33
+            }
+          ],
+          "remaining": 34
+        },
+        "userId": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1"
+      }
+    },
+    "User_Profile": {
+      "9n7YPhjAHoYkEFiMUjjIIiqxTCv1": {
+        "age": 25,
+        "bio": "Old , not wild and not free",
+        "dob": {
+          "_seconds": 911849319,
+          "_nanoseconds": 413000000
+        },
+        "time": 1226514,
+        "gender": "Male",
+        "phoneNumber": "0789874578",
+        "posts ": ["", ""],
+        "sexuality ": "Straight",
+        "name": "Test",
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "userId": "9n7YPhjAHoYkEFiMUjjIIiqxTCv1",
+        "created": {
+          "_seconds": 1681298959,
+          "_nanoseconds": 589000000
+        },
+        "email": "",
+        "customClaims": [
+          {
+            "\"\"": "\"\""
+          }
+        ],
+        "profilePicture": "gs://miniproject-2023-grp5-dev.appspot.com/miniproject_profilePicture_1.jpeg"
+      },
+      "A2Yp4whHYmaBCNKXyPzuX7QiAXm1": {
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "created": {
+          "_seconds": 1682546920,
+          "_nanoseconds": 491000000
+        },
+        "bio": "I'm a graphic designer who loves reading science fiction",
+        "posts": [""],
+        "userId": "A2Yp4whHYmaBCNKXyPzuX7QiAXm1",
+        "phoneNumber": "0712345678",
+        "dob": {
+          "_seconds": 793188560,
+          "_nanoseconds": 536000000
+        },
+        "name": "William",
+        "time": 1654654,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "age": 28,
+        "customClaims": "",
+        "email": "william.brown@gmail.com",
+        "profilePicture": "gs://miniproject-2023-grp5-dev.appspot.com/miniproject_profilePicture_2.jpeg"
+      },
+      "BYjm2oO8wSS0q97z5JBbiHcn1AK2": {
+        "age": 21,
+        "bio": "Love watching football with my mates and love exercising ",
+        "dob": {
+          "_seconds": 1682278797,
+          "_nanoseconds": 162000000
+        },
+        "gender": "Male",
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "name": "Katleho",
+        "phoneNumber": "0796548653",
+        "posts ": ["", ""],
+        "sexuality ": "Straight",
+        "time": 8765465,
+        "userId": "BYjm2oO8wSS0q97z5JBbiHcn1AK2",
+        "profilePicture": "gs://miniproject-2023-grp5-dev.appspot.com/miniproject_profilePicture_3.jpeg"
+      },
+      "FVFBhJYQz1NiZbCSu8OoJNUX7B43": {
+        "userId ": "FVFBhJYQz1NiZbCSu8OoJNUX7B43",
+        "sexuality ": "Straight",
+        "email ": "sarah.williams@gmail.com",
+        "dob ": {
+          "_seconds": 715816800,
+          "_nanoseconds": 844000000
+        },
+        "gender ": "Female",
+        "time ": "15465465",
+        "bio": "I'm a nurse who enjoys practicing yoga and watching documentaries.",
+        "interests    ": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "name": "Sarah ",
+        "customClaims ": "",
+        "phoneNumber ": "0831234567",
+        "posts ": [""],
+        "age": 31
+      },
+      "NAEf9QR038VqH0yyHKYV7YO2JEp1": {
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "created": {
+          "_seconds": 1682607352,
+          "_nanoseconds": 955000000
+        },
+        "bio": "I'm a lawyer who enjoys cycling and going to the opera",
+        "posts": [""],
+        "userId": "NAEf9QR038VqH0yyHKYV7YO2JEp1",
+        "profilePicture": "",
+        "phoneNumber": "0733456789",
+        "dob": {
+          "_seconds": 406479381,
+          "_nanoseconds": 335000000
+        },
+        "name": "Michael ",
+        "time": 4588641,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "age": 41,
+        "customClaims": "",
+        "email": "michael.johnson@gmail.com"
+      },
+      "RoX4akG6mcXS3y6D0RtPRTPTCf62": {
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "created": {
+          "_seconds": 1682607688,
+          "_nanoseconds": 504000000
+        },
+        "bio": "I'm a student studying computer science and I enjoy",
+        "userId": "RoX4akG6mcXS3y6D0RtPRTPTCf62",
+        "phoneNumber": "0744567890",
+        "dob": {
+          "_seconds": 964389600,
+          "_nanoseconds": 805000000
+        },
+        "name": "David",
+        "time": "165465",
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "age": 23,
+        "customClaims": "",
+        "email": "david.lee@gmail.com",
+        "profilePicture": "",
+        "posts": [""]
+      },
+      "YJpBmL72dHTrcJi899Qidw5pIzI2": {
+        "\"\"": "\"\"",
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "bio": "I'm a software engineer who enjoys hiking and trying new craft beers.",
+        "age ": "34",
+        "posts": [""],
+        "userId": "YJpBmL72dHTrcJi899Qidw5pIzI2",
+        "profilePicture": "",
+        "phoneNumber": "0721234567",
+        "name": "Benjamin",
+        "time": 15651,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "email": "benjamin.smith@gmail.com",
+        "dob": {
+          "_seconds": 613603720,
+          "_nanoseconds": 128000000
+        }
+      },
+      "dbbkIPrN2tRZpmr1weArYGi63Wp1": {
+        "gender": "female",
+        "sexuality": "straight",
+        "created": {
+          "_seconds": 1682546400,
+          "_nanoseconds": 718000000
+        },
+        "bio": " I'm a chef who loves trying new recipes and experimenting with different cuisines.",
+        "posts": "",
+        "userId": "dbbkIPrN2tRZpmr1weArYGi63Wp1",
+        "profilePicture": "",
+        "phoneNumber": "0735678901",
+        "dob": {
+          "_seconds": 634168800,
+          "_nanoseconds": 38000000
+        },
+        "name": "Nomsa",
+        "time": 33,
+        "interests": [
+          {
+            "subCategory": "",
+            "interest": ""
+          }
+        ],
+        "age": 33,
+        "customClaims": "",
+        "email": "nomsa.ndlovu@gmail.com"
+      },
+      "doS7AJ5qfUTNmqvfWlWBn3w3pxB3": {
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "created": {
+          "_seconds": 1682542210,
+          "_nanoseconds": 910000000
+        },
+        "bio": "Love playing the football is my first ",
+        "age ": 22,
+        "posts": [""],
+        "userId": "doS7AJ5qfUTNmqvfWlWBn3w3pxB3",
+        "profilePicture": "",
+        "phoneNumber": "0789874512",
+        "dob": {
+          "_seconds": 975271857,
+          "_nanoseconds": 561000000
+        },
+        "name": "Akani",
+        "time": 126565,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "customClaims": "",
+        "email": "akanihlungwani41@gmail.com"
+      },
+      "iNwqWTPZw2boZnvwlch6U9C5J6c2": {
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "created": {
+          "_seconds": 1682541465,
+          "_nanoseconds": 101000000
+        },
+        "age ": 21,
+        "posts": ["", ""],
+        "userId": "iNwqWTPZw2boZnvwlch6U9C5J6c2",
+        "profilePicture": "",
+        "phoneNumber": "0786432312",
+        "bio ": "Never get tired of exploring the wonders of the world",
+        "dob": {
+          "_seconds": 1682541484,
+          "_nanoseconds": 217000000
+        },
+        "name": "TestDev",
+        "time": 15654,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "customClaims": "",
+        "email": "test@dev.com"
+      },
+      "luI1sbzmcJZVAn5Bup2y7XeZobU2": {
+        "gender": "female",
+        "sexuality": "straight",
+        "created": {
+          "_seconds": 1682546400,
+          "_nanoseconds": 750000000
+        },
+        "bio": " I'm a student studying psychology and I enjoy playing video games and watching horror movies.",
+        "posts": [""],
+        "userId": "luI1sbzmcJZVAn5Bup2y7XeZobU2",
+        "profilePicture": "",
+        "phoneNumber": "0724567890",
+        "dob": {
+          "_seconds": 935272800,
+          "_nanoseconds": 620000000
+        },
+        "name": "Samantha",
+        "time": 45,
+        "interests": [
+          {
+            "subCategory": "",
+            "interests": ""
+          }
+        ],
+        "age": "24",
+        "customClaims": "",
+        "email": "samantha.mkhize@gmail.com"
+      },
+      "mwfBxd6hTMYqvk21IscGzvxE28E2": {
+        "sexuality ": "Straight",
+        "gender": "Male",
+        "created": {
+          "_seconds": 1682608158,
+          "_nanoseconds": 582000000
+        },
+        "bio": "I'm a marketer who loves trying new restaurants and going to art galleries.",
+        "posts": [""],
+        "userId": "mwfBxd6hTMYqvk21IscGzvxE28E2",
+        "profilePicture": "",
+        "phoneNumber": "0725678901",
+        "dob": {
+          "_seconds": 763682400,
+          "_nanoseconds": 795000000
+        },
+        "name": "Daniel",
+        "time": 454621,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "age": 29,
+        "customClaims": "",
+        "email": "daniel.ngubane@gmail.com"
+      },
+      "tt5tOWwNiVgSEc6ZyvqCL2fLwfj1": {
+        "gender": "female",
+        "sexuality": "straight",
+        "created": {
+          "_seconds": 1682546400,
+          "_nanoseconds": 746000000
+        },
+        "bio": "I'm a writer who loves traveling and trying new foods.",
+        "posts": [""],
+        "userid": "tt5tOWwNiVgSEc6ZyvqCL2fLwfj1",
+        "profilePicture": "",
+        "phoneNumber": "0822345678",
+        "dob": {
+          "_seconds": 883519200,
+          "_nanoseconds": 241000000
+        },
+        "name": "Emily",
+        "time": 12,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "age": 26,
+        "customClaims": "",
+        "email": "emily.jones@gmail.com"
+      },
+      "yhp2vuJ7b4hYnbNIFuzCFbu4AxI3": {
+        "gender": "female",
+        "sexuality": "straight",
+        "created": {
+          "_seconds": 1682546400,
+          "_nanoseconds": 527000000
+        },
+        "bio": "I'm a teacher who enjoys hiking and going to music festivals.",
+        "posts": [""],
+        "userId": "yhp2vuJ7b4hYnbNIFuzCFbu4AxI3",
+        "profilePicture": "",
+        "phoneNumber": "0813456789",
+        "dob": {
+          "_seconds": 516751200,
+          "_nanoseconds": 690000000
+        },
+        "name": "Jessica",
+        "time": 34,
+        "interests": [
+          {
+            "interest": "",
+            "subcategory": ""
+          }
+        ],
+        "age": 37,
+        "customClaims": "",
+        "email": "jessica.naidoo@gmail.com"
+      }
+    }
+  }
+}

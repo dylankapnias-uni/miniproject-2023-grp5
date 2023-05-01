@@ -4,13 +4,17 @@
       <ion-col size="2"><a routerLink = "/settings"><div class="back_button"><ion-icon name="arrow-back" class="back-icon"></ion-icon></div></a></ion-col>
       <ion-col size="8" >
         <div class="ion-text-center down">
-          <ion-label>Shop</ion-label>
+          <ion-label>Privacy</ion-label>
         </div></ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid style="margin-top: 75px;">
     <ion-row>
-      <ion-col size="12"><ion-button class = "blocked_accounts" (click) = "LoadBlockedPage()">Blocked Accounts</ion-button></ion-col>
+      <ion-col size="12">
+        <ion-nav-link routerLink="/blocked">
+          <ion-button class = "blocked_accounts">Blocked Accounts</ion-button>
+        </ion-nav-link>
+      </ion-col>
     </ion-row>
 
   </ion-grid>

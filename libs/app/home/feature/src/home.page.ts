@@ -1,10 +1,22 @@
 import { Component } from '@angular/core';
-import { IProfile } from '@mp/api/profiles/util';
+//import { IProfile } from '@mp/api/profiles/util';
+import { Router } from '@angular/router';
+import { IUserProfile } from '@mp/api/users/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import {profile} from './profile.interface';
+import { HomeState } from '@mp/app/home/data-access';
+//import {profile} from './profile.interface';
+
+// I try but I'm bullied :( Alas I am proud of the home page 
+import { 
+  SwipeAccept,
+  SwipeReject,
+  FilterCards,
+  GetCards
+} from '@mp/app/home/util';
+import { IUserMatch } from '@mp/api/home/util';
 
 @Component({
   selector: 'ms-home-page',
@@ -12,44 +24,35 @@ import {profile} from './profile.interface';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  users: Array<any> = [
-    {
-      id: 1,
-      photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-      name: 'Emily',
-      age: 22,
-      interests: ["At Uni", "Aries", "Vegan"]
-    },
-    {
-      id:2,
-      photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      name: 'John',
-      age: 21,
-      interests: ["At Uni", "Aries", "Vegan"]
-    },
-    {
-      id:3,
-      photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
-      name: 'Jessica',
-      age: 25,
-      interests: ["At Uni", "Aries", "Vegan"]
-    },
-    {
-      id:4,
-      photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-      name: 'Chris',
-      age: 35,
-      interests: ["At Uni", "Aries", "Vegan"]
+  @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
+  @Select(HomeState.home) home$!: Observable<Array<IUserMatch> | null>;
+
+  profile!: IUserProfile | null;
+  users!: Array<IUserMatch>;
+  loaded = false;
+
+  constructor(private router: Router, public store: Store)
+  {
+    this.store.dispatch(new SubscribeToProfile());
+    this.profile$.subscribe((profile) => {
+      if(profile){
+        this.profile = profile;
+      }
+    });
+    
+    if(this.profile){
+      this.store.dispatch(new GetCards({uid: this.profile.userId}));
+      this.home$.subscribe((home) => {
+        if(home)
+          this.users = home;  
+          console.log(this.users);
+          console.log(this.loaded);
+      });
     }
-  ];
+  }
 
   startX = 0;
   endX = 0;
-
-  //constructor(){}
-
-
   touchStart(evt: any) {
     this.startX = evt.touches[0].pageX;  
   }
@@ -69,8 +72,18 @@ export class HomePage {
 
   }
 
-  touchEnd(index: number) {
+  openUser(uid: string | undefined | null)
+  {
+    console.log(uid)
+    this.router.navigate(['/other-user/' + uid]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 200)
+  }
+
+  touchEnd(index: number, swipedUID: unknown) {
     if(this.endX > 0){
+      const strSwipedUID = swipedUID as string;
       const finalX = this.endX - this.startX;
       if(finalX > -100 && finalX < 100){ //Reset Card
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = ".3s";
@@ -80,7 +93,9 @@ export class HomePage {
           (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "0s";
         }, 350);
       }
-      else if(finalX <= -100){ //Reject Card
+      else if(finalX <= -100){//Reject Card
+        if(this.profile)
+          this.store.dispatch(new SwipeReject({userId: this.profile.userId, swipedUserId : strSwipedUID}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(-1000px) rotate(-30deg)";
 
@@ -88,39 +103,14 @@ export class HomePage {
           this.users.splice(index, 1);
           if(this.users.length == 1){
             //Repopulate array
-            this.users.push(              
-              {
-                id:3,
-                photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
-                name: 'Jessica',
-                age: 25,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:4,
-                photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'Chris',
-                age: 35,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:2,
-                photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'John',
-                age: 21,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:1,
-                photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-                name: 'Emily',
-                age: 22,
-                interests: ["At Uni", "Aries", "Vegan"]
-              })
+            if(this.profile)
+              this.store.dispatch(new GetCards({uid: this.profile.userId}));
           }
         }, 100);
       }
       else if(finalX >= 100){  //Accept Card
+        if(this.profile)
+          this.store.dispatch(new SwipeAccept({userId: this.profile.userId, swipedUserId : strSwipedUID}));
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transition = "1s";
         (<HTMLStyleElement>document.getElementById("card-"+index)).style.transform = "translateX(1000px) rotate(30deg)";
 
@@ -128,37 +118,10 @@ export class HomePage {
           this.users.splice(index, 1);
           if(this.users.length == 1){
             //Repopulate array
-            this.users.push(              
-              {
-                id:3,
-                photo: "https://plus.unsplash.com/premium_photo-1678303396253-72e9f330baae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80",
-                name: 'Jessica',
-                age: 25,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:4,
-                photo: "https://images.unsplash.com/photo-1678436682639-17f121b68c8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'Chris',
-                age: 35,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:2,
-                photo: "https://images.unsplash.com/photo-1678489820694-df1b1388dd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                name: 'John',
-                age: 21,
-                interests: ["At Uni", "Aries", "Vegan"]
-              },
-              {
-                id:1,
-                photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-                name: 'Emily',
-                age: 22,
-                interests: ["At Uni", "Aries", "Vegan"]
-              })
+            if(this.profile)
+              this.store.dispatch(new GetCards({uid: this.profile.userId}));
           }
-        }, 100);
+        }, 100)
       }
 
       this.startX = 0;

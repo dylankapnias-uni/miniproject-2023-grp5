@@ -1,0 +1,42 @@
+<body [ngStyle]="{'background':'#FDE0E0'}">
+  <ion-grid>
+      <ion-row>
+          <ion-col>
+            <div class="search">
+              <ion-searchbar class = "search" (keyup)="handleChange($event)" (ionClear)="Reset()" clear-icon="close-outline"></ion-searchbar>
+            </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-grid class="scrl">
+            <ion-row class="chat-bubble" *ngFor="let chat of filteredChats?.chatList" (click)="loadChat(chat?.chatRef)">
+            <!-- <ion-row class="chat-bubble" *ngFor="let chat of chats" routerLink="/chat/{{chat?.chatRef}}"> -->
+            
+                <ion-col size="2" >
+                   
+                    <ion-avatar class = "profile_img">
+                      <img src="{{chat.otherUser?.profilePicture}}">
+                    </ion-avatar>
+                  
+                  
+                </ion-col>
+                <ion-col size="9">
+                  <div>
+                    <div class="content">
+
+                      <button class="chat-button" style = "background-color: #F3C1C0">
+                        <div class="name">{{chat.otherUser?.name}}</div>
+                      </button>
+                      <!-- <div class="last-message" *ngIf="chat.unread">Sent you a new message!</div> -->
+                    </div>
+                  </div>
+                </ion-col>
+           
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+  <!--h3 *ngIf="noChats">No chats</h3-->
+</body>

@@ -1,3 +1,3 @@
-export * from './lib/chat.module';
-export * from './lib/chat.page';
-export * from './lib/chat.routing';
+export * from './chat.module';
+export * from './chat.page';
+export * from './chat.routing';

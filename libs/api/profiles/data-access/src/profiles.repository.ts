@@ -33,7 +33,7 @@ export class ProfilesRepository {
     delete profile.accountDetails?.password;
     return await admin
       .firestore()
-      .collection('profiles')
+      .collection('pro9files')
       .doc(profile.userId)
       .set(profile, { merge: true });
   }

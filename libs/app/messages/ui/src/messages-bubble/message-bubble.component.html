@@ -1,0 +1,25 @@
+<ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-grid>
+          <ion-row class="chat-bubble">
+          <!-- <ion-row class="chat-bubble" *ngFor="let chat of chats" routerLink="/chat/{{chat?.chatRef}}"> -->
+              <ion-col size="2" >
+                  <ion-avatar class = "profile_img">
+                    <img src="{{otherUser?.profilePicture}}">
+                  </ion-avatar>
+              </ion-col>
+              <ion-col size="9">
+                <div>
+                  <div class="content">
+                    <button class="chat-button" (click)="loadChat()" style = "background-color: #F3C1C0">
+                      <div class="name">{{otherUser?.name}}</div>
+                    </button>
+                  </div>
+                </div>
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+</ion-grid>

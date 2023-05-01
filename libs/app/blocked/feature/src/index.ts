@@ -1,3 +1,3 @@
-export * from './app-blocked-feature.module';
-export * from './app-blocked-feature.routing';
-export * from './lib/blocked.page';
+export * from './blocked.module';
+export * from './blocked.routing';
+export * from './blocked.page';

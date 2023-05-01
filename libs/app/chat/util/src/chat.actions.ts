@@ -1,3 +1,4 @@
+import { IMessages } from '@mp/api/chat/util';
 export class GetMessages{
     static readonly type = '[GetMessages] Get Messages';
     constructor(public payload: { cid: string }) {}
@@ -5,7 +6,7 @@ export class GetMessages{
 
 export class SendMessage {
     static readonly type = '[SendMessage] Send Message';
-    constructor(public payload: { message: string, cid: string }) {}
+    constructor(public payload: { message: IMessages, cid: string, uid:string }) {}
 }
 
 export class AddTime{
@@ -20,5 +21,15 @@ export class GetTime{
 
 export class RemoveTime{
     static readonly type = '[RemoveTime] Remove Time';
-    constructor(public payload: { cid: string }) {}
+    constructor(public payload: { cid: string, time : number }) {}
+}
+
+export class GetChatList{
+    static readonly type = '[GetChatList] Get Chat List';
+    constructor(public payload: { uid:string}) {}
+}
+
+export class GetUser{
+    static readonly type = '[GetUser] Get User';
+    constructor(public payload: { ouid:string }) {}
 }
