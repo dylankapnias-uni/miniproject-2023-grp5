@@ -2,5 +2,8 @@ import { IChatList, IChatReferences } from "../interfaces";
 
 export interface IAddChatRequest{
     userId:string,
-    chatRef: IChatReferences
+    chatRef: {
+        chatRef: string,
+        otherUserId: string
+    }
 }

@@ -27,14 +27,15 @@ export class CoreShell implements OnInit, OnDestroy {
     takeUntil(this.ngUnsubscribe)
   );
 
-  async PostModal(){
-    const modal = await this.modalController.create({
-      component: PostComponent,
-    });
-    modal.componentProps = {
-      onOk: () => this.onOk()
-    };
-    await modal.present();
+  PostModal(){
+    //console.log("");
+    // const modal = await this.modalController.create({
+    //   component: PostComponent,
+    // });
+    // modal.componentProps = {
+    //   onOk: () => this.onOk()
+    // };
+    // await modal.present();
   }
   
   onOk() {

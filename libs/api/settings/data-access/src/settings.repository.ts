@@ -5,6 +5,8 @@ import { FieldValue, Timestamp, WriteResult } from 'firebase-admin/firestore';
 @Injectable()
 export class SettingsRepository {
   async findOne(userId: string) {
+
+    if(userId != null && userId != undefined && userId.length > 0){
     return await admin
       .firestore()
       .collection('Settings')
@@ -16,6 +18,10 @@ export class SettingsRepository {
       })
       .doc(userId)
       .get();
+    }
+    else{
+      throw new Error(`findOne(): Settings data for user ${userId} does not exist`);
+    }
   }
   async getBlockedAccounts(userId: string) {
     const settingsRef = await admin
@@ -84,7 +90,10 @@ export class SettingsRepository {
   }
 
   async subtractTime(userId: string, time: {amount: number, date: Timestamp}) {
-    return await admin
+
+    if(userId != null && userId != undefined && userId.length > 0)
+    {
+      return await admin
       .firestore()
       .collection('Settings')
       .doc(userId)
@@ -93,6 +102,10 @@ export class SettingsRepository {
         'time.history': FieldValue.arrayUnion(time)
       })
       .catch((error) => {console.log(`Error while subtracting time from ${userId}: ${error}`)})
+    }
+    
+    else
+      throw new Error(`subtractTime(): userId is null or undefined or empty`);
   }
   async blockUser(userId: string, blockedId: string) {
     return await admin

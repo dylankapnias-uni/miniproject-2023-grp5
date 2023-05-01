@@ -21,17 +21,17 @@ export class UserProfileRepository {
     return await admin
       .firestore()
       .collection('User_Profile')
-      .doc(userId)
       .withConverter<IUserProfile>({
         fromFirestore: (snapshot) => {
           return snapshot.data() as IUserProfile;
         },
         toFirestore: (it: IUserProfile) => it,
       })
+      .doc(userId)
       .get()
       .catch((err) => {
         console.log(`Error while retrieving User Profile document from Firestore for user ${userId}:`);
-        console.log(err);
+        // console.log(err);
         return null;
       });
   }

@@ -9,8 +9,17 @@ import { SettingsState, SettingsApi } from '@mp/app/settings/data-access';
 import { ProfileState, ProfilesApi } from '@mp/app/profile/data-access';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, MessagesRouting,  NgxsModule.forFeature([MessagesState, SettingsState, ProfileState])],
+  imports: [
+    CommonModule,
+    IonicModule,
+    MessagesRouting,
+    NgxsModule.forFeature([MessagesState, SettingsState, ProfileState])
+  ],
   declarations: [MessagesPage],
-  providers:[ProfilesApi, MessagesApi, SettingsApi]
+  providers:[
+    ProfilesApi,
+    MessagesApi, 
+    SettingsApi
+  ]
 })
 export class MessagesModule {}

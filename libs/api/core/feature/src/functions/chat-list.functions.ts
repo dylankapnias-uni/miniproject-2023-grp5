@@ -7,7 +7,7 @@ import {
   ICreateChatListRequest, 
   ICreateChatListResponse, 
   IFetchChatListRequest, 
-  IFetchChatListResponse,
+  IFetchChatListResponse
   
 } from '@mp/api/chat-list/util';
 import { ChatListService } from '@mp/api/chat-list/feature';
@@ -36,10 +36,9 @@ export const fetchChatList = functions.https.onCall(
     async (
       request: IFetchChatListRequest
     ): Promise<IFetchChatListResponse> => {
+      console.log("Work you stupid fucking bitch please fucking work I hate you I hate you I hate you I hate you I hate you I hate you")
       const app = await NestFactory.createApplicationContext(CoreModule);
       const service = app.get(ChatListService);
       return service.fetchChatList(request);
     }
   );
-
-  

@@ -61,7 +61,7 @@ export class ChatRepository
       async updateTime(chatId: string, time: number) {
         await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .doc(chatId)
           .update({timeRemaining: FieldValue.increment(time)});
           
@@ -71,7 +71,7 @@ export class ChatRepository
       async getTime(chatId: string) {
         return (await admin
           .firestore()
-          .collection('Chats')
+          .collection('Chat')
           .withConverter<IChat>({
             fromFirestore: (snapshot) => {
               return snapshot.data() as IChat;

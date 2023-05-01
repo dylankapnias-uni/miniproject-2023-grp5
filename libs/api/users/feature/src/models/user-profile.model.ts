@@ -45,8 +45,28 @@ export class UserProfile extends AggregateRoot implements IUserProfile {
   }
   
   create() {
-    if(!this.profilePicture){
+    if(this.profilePicture == null || this.profilePicture == undefined || this.profilePicture.length < 1){
       this.profilePicture="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+    }
+
+    if(this.interests == null || this.interests == undefined || this.interests.length < 1)
+    {
+      this.interests =[
+        {
+          category: "No Interest",
+          interest: "No Interest",
+        },
+
+        {
+          category: "No Interest",
+          interest: "No Interest",
+        },
+
+        {
+          category: "No Interest",
+          interest: "No Interest",
+        },
+      ]
     }
     this.apply(new UserCreatedEvent(this.toJSON()));
   }

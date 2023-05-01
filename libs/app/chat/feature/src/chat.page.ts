@@ -37,6 +37,7 @@ export class ChatPage {
   openChatTime!: Time;
   me!: string;
   otherUser!: IUserProfile;
+  mockTime = 0;
 
   
   ionViewDidEnter() {
@@ -65,7 +66,6 @@ export class ChatPage {
         this.messages$.subscribe((messages) => {
           if(messages != null){
             this.Chat = messages;
-            
             this.store.dispatch(new GetUser({ouid:this.getOtherUser()}));
             this.otherUser$.subscribe((otherUser) => {
               if(otherUser != null){
@@ -81,16 +81,20 @@ export class ChatPage {
   }
 
   getOtherUser() {
+    // let index = 0;
     if (this.profile == null || this.profile == undefined) 
-      throw new Error("I will blow my brains on the fucking walls I swear to god");
-    if (this.Chat == null || this.Chat == undefined) 
-      throw new Error("I will blow my brains on the fucking walls I swear to god");
-    if (this.Chat.users == null || this.Chat.users == undefined) 
-      throw new Error("I will blow my brains on the fucking walls I swear to god");
+      throw new Error("I will blow my brains on the fucking walls I swear to god this.profile");
+    else if (this.Chat == null || this.Chat == undefined) 
+      throw new Error("I will blow my brains on the fucking walls I swear to god this.Chat");
+    else if (this.Chat.users == null || this.Chat.users == undefined) 
+      throw new Error("I will blow my brains on the fucking walls I swear to god this.Chat.users");
 
-    const index = (this.Chat.users.indexOf(this.profile?.userId) + 1 ) % 2;
-    
-    return this.Chat.users[index];
+    const bugChecker = this.Chat.users[(this.Chat?.users.indexOf(this.profile?.userId) + 1 ) % 2];
+    console.log("Other user: ", bugChecker);
+    return bugChecker;;
+
+    // index = (this.Chat?.users.indexOf(this.profile?.userId) + 1 ) % 2;
+    // return this.Chat.users[index];
     // if(this.Chat?.users[0] == this.profile?.userId){
     //   return this.Chat?.users[1];
     // }
@@ -184,8 +188,14 @@ export class ChatPage {
           this.router.navigate(['messages']);
         } else {
           if(this.Chat.timeRemaining) {
-           // this.store.dispatch(new RemoveTime({cid:this.id, time: -1}));
+            //this.store.dispatch(new RemoveTime({cid:this.id, time: -1}));
             this.Chat.timeRemaining--;
+            //this.store.dispatch(new RemoveTime({cid:this.id, time: -1}));
+            this.mockTime++;
+            if(this.mockTime == 2){
+              this.store.dispatch(new RemoveTime({cid:this.id, time: -2}));
+              this.mockTime = 0;
+            }
           }
         }
       }
@@ -214,11 +224,20 @@ export class ChatPage {
     //     time : Timestamp;
     //     userID : string;
     // }
+    
+  //   export interface IMessages{
+  //     message: string | null | undefined;
+  //     time : Timestamp;
+  //     userId : string;
+      
+  // }
+  
     const msg : IMessages = {
       message: this.outgoingMessage,
       time: Timestamp.now(),
       userId: this.me
     };
+    this.Chat?.messages?.push(msg);
     // console.log(msg.time);
     if(this.profile){
       this.store.dispatch(new SendMessage({cid:this.id,message: msg, uid:this.profile.userId}));

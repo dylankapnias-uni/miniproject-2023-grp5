@@ -12,17 +12,19 @@ export class AddChatHandler
         console.log(`${AddChatHandler.name}`);
 
         const request = command.request;
-        const userId=request.userId;
-        const req = await this.repository.getForUserID(request.userId);
-        if(!req) throw new Error('Chatlist not found');
+        const userId =request.userId;
+        const req = await this.repository.getForUserID(userId);
         const data:IChatList = {
             userId:userId,
             chatList:req.chatList
         };
         const chatList = this.publisher.mergeObjectContext(Chatlist.fromData(data));
         chatList.addChat(request.chatRef);
-        chatList.commit();
-        const response: IAddChatResponse = {chat:chatList};
+        chatList.commit(); 
+        // const chatList = await this.repository.addToChatList(creatorID,request.chatRef.chatRef,request.chatRef.otherUserId);
+        const response: IAddChatResponse = {chat:chatList.toJSON()};
+        if (response.chat == null || response.chat == undefined)
+            throw new Error("The chatlist got snapped or some shit idk man");
         return response;
     }
 }

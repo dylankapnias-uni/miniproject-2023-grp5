@@ -10,14 +10,13 @@
       <ion-row>
         <ion-col>
           <ion-grid class="scrl">
-            
-            <ion-row class="chat-bubble" *ngFor="let chat of chats">
+            <ion-row class="chat-bubble" *ngFor="let chat of filteredChats?.chatList" (click)="loadChat(chat?.chatRef)">
             <!-- <ion-row class="chat-bubble" *ngFor="let chat of chats" routerLink="/chat/{{chat?.chatRef}}"> -->
             
                 <ion-col size="2" >
                    
                     <ion-avatar class = "profile_img">
-                      <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250">
+                      <img src="{{chat.otherUser?.profilePicture}}">
                     </ion-avatar>
                   
                   
@@ -26,8 +25,8 @@
                   <div>
                     <div class="content">
 
-                      <button class="chat-button" (click)="loadChat(chat?.chatRef)" style = "background-color: #F3C1C0">
-                        <div class="name">{{chat?.chatRef}}</div>
+                      <button class="chat-button" style = "background-color: #F3C1C0">
+                        <div class="name">{{chat.otherUser?.name}}</div>
                       </button>
                       <!-- <div class="last-message" *ngIf="chat.unread">Sent you a new message!</div> -->
                     </div>

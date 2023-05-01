@@ -77,6 +77,7 @@ export const subtractTime = functions.https.onCall(
   async (
     request: ISubtractTimeRequest
   ): Promise<ISubtractTimeResponse> => {
+    console.warn("Do not call this function");
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(SettingsService);
     return service.subtractTime(request);

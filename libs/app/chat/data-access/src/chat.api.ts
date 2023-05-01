@@ -85,10 +85,7 @@ export class ChatApi {
             ISubtractTimeResponse
         >(
             this.functions,
-            'subtractTime'
+            'subtractChatTime'
         )(request)
     }
-
-      
-
 }

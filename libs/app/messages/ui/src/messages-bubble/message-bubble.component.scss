@@ -1,20 +1,11 @@
-ion-searchbar {
-    --background: #FFFFFF;
-    --icon-color: #F6A7A7;
-    //transform:scale(1.01);
-    --border-radius: 20px;
-}
-
-
-
 .chat-bubble {
     display: flex;
     align-items: center;
-    height: 69px;
+    height: 75px;
     background-color: #F3C1C0;
     border-radius: 12px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin: 14px 0;
+    margin: 8px 0;
     margin-left: 13px;
     margin-right: 13px;
     overflow: hidden;
@@ -52,17 +43,3 @@ ion-searchbar {
     font-size: 15px;
     color: #FFFFFF;
   }
-
-  .profile_img
-  {
-    
-    align-content: center;
-    position: relative;
-    
-    left: 4%;
-
-  }
-
- 
-
- 

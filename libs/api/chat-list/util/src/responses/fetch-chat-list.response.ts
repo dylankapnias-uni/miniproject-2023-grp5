@@ -1,5 +1,5 @@
-import { IChatList } from "../interfaces";
+import { IMuthaFuckingAppChatList } from "../interfaces";
 
 export interface IFetchChatListResponse {
-    chatList:IChatList | null | undefined;
+    chatList:IMuthaFuckingAppChatList;
 }

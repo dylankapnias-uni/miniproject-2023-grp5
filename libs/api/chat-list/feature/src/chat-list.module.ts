@@ -6,20 +6,21 @@ import { ChatAddedHandler, ChatListCreatedHandler } from './events';
 import { FetchChatListHandler } from './queries';
 import { ChatListService } from './chat-list.service';
 import { ChatListSagas } from './chat-list.sagas';
+import {UserProfileModule} from "@mp/api/users/data-access";
 export const CommandHandlers = [
   CreateChatListHandler,
-  AddChatHandler
+    AddChatHandler
 ];
 export const EventHandlers = [
   ChatListCreatedHandler,
   ChatAddedHandler
 ];
 export const QueryHandlers = [
-    FetchChatListHandler
+  FetchChatListHandler
 ]
 
 @Module({
-  imports: [CqrsModule, ChatListDataAccessModule],
+  imports: [CqrsModule, ChatListDataAccessModule, UserProfileModule],
   providers: [
     ChatListService,
     ...CommandHandlers,

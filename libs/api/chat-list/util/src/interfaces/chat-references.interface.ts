@@ -1,4 +1,6 @@
+import { IUserProfile } from '@mp/api/users/util';
+
 export interface IChatReferences {
     chatRef: string,
-    otherUserID: string
+    otherUserId: string
 }

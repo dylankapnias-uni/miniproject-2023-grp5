@@ -36,6 +36,7 @@ export interface ChatStateModel {
           timeAdderID: string | null | undefined;
           timeRemaining: number | null | undefined;
           totalTimeUsed: number | null | undefined;
+          users:string[] | null | undefined
         }
         otherUser: IUserProfile | null | undefined;
       }
@@ -58,7 +59,7 @@ export interface ChatStateModel {
             timeAdderID: null,
             timeRemaining: null,
             totalTimeUsed: null,
-            // chat: null,
+            users:null
             // please let me join I have fomo
           },
           otherUser: null
@@ -95,7 +96,14 @@ export class ChatState {
           ...ctx.getState().chatForm.chatMessages,
           model: {
             ...ctx.getState().chatForm.chatMessages.model,
-           // chat: rsps.messages
+            actualFuckingChat:{
+              chatID: rsps.messages?.chatId,
+              messages: rsps.messages?.messages,
+              timeAdderID: rsps.messages?.timeAdderId,
+              timeRemaining: rsps.messages?.timeRemaining,
+              totalTimeUsed: rsps.messages?.totalTimeUsed,
+              users:rsps.messages?.users
+            }
           }
         }
       }
@@ -132,6 +140,7 @@ export class ChatState {
   async SendMessage(ctx: StateContext<ChatStateModel>, {payload}: SendMessage) {
     console.log("ChatState.SendMessage:");
     console.log("Fuck: ", payload.uid , ", bitch - Jesse pinkman)");
+    const state = ctx.getState();
     //Works(not) and catches Chat id and outGoingMessage
     payload.message.userId = payload.uid;
 
@@ -140,10 +149,29 @@ export class ChatState {
       chatId : payload.cid,
       message : payload.message
     };
-    console.log(request);
     const response = await this.chatApi.sendMessage(request);
-    console.log(response);
-    this.store.dispatch(new GetMessages({cid: payload.cid}));
+    console.table(state.chatForm.chatMessages.model.actualFuckingChat.messages);
+    ctx.patchState({
+      chatForm: {
+        ...state.chatForm,
+        chatMessages: {
+          ...state.chatForm.chatMessages,
+          model: {
+            ...state.chatForm.chatMessages.model,
+            actualFuckingChat:{
+              chatID: payload.cid,
+              messages: state.chatForm.chatMessages.model.actualFuckingChat.messages,
+              timeAdderID: state.chatForm.chatMessages.model.actualFuckingChat.timeAdderID,
+              timeRemaining: state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining,
+              totalTimeUsed: state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed,
+              users:state.chatForm.chatMessages.model.actualFuckingChat.users
+            },
+          },
+        },
+      },
+    });
+    // this.store.dispatch(new GetMessages({cid: payload.cid}));
+
     console.log("why not just another one there isn;t enough as isd");
   }
 
@@ -173,10 +201,9 @@ export class ChatState {
               chatID: payload.cid,
               messages: state.chatForm.chatMessages.model.actualFuckingChat.messages,
               timeAdderID: state.chatForm.chatMessages.model.actualFuckingChat.timeAdderID,
-              timeRemaining: (FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == null 
-                              || FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == undefined
-                              ? 0 : FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo),
-              totalTimeUsed: (FuckThisShitV3 == null || FuckThisShitV3 == undefined? 0 : FuckThisShitV3),
+              timeRemaining: FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo,
+              totalTimeUsed: FuckThisShitV3,
+              users:state.chatForm.chatMessages.model.actualFuckingChat.users
             },
           },
         },
@@ -200,14 +227,17 @@ export class ChatState {
     }
 
     this.chatApi.subtractTime(request);
-    let FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo;
-    let FuckThisShitV3;
-    if(state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining)
-      FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo = state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining - 1;
-    if(state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed)
-      FuckThisShitV3 = state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed + 1;
+    // let FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo;
+    // let FuckThisShitV3;
     
-    this.store.dispatch(new GetMessages({cid:payload.cid}));
+    // if(state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining)
+    //   FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo = state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining - payload.time;
+    // if(state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed)
+    //   FuckThisShitV3 = state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed + -payload.time;
+    
+    // console.error("OLD TIME: ", state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining);
+    // console.error("This is the new fucking time: ", FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo);
+    
     ctx.patchState({
       chatForm: {
         ...state.chatForm,
@@ -219,10 +249,9 @@ export class ChatState {
               chatID: payload.cid,
               messages: state.chatForm.chatMessages.model.actualFuckingChat.messages,
               timeAdderID: state.chatForm.chatMessages.model.actualFuckingChat.timeAdderID,
-              timeRemaining: (FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == null 
-                              || FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo == undefined
-                              ? 0 : FuckThisShitImOutIHaveLoadsheddingElectricBoogaloo),
-              totalTimeUsed: (FuckThisShitV3 == null || FuckThisShitV3 == undefined? 0 : FuckThisShitV3),
+              timeRemaining: state.chatForm.chatMessages.model?.actualFuckingChat.timeRemaining,
+              totalTimeUsed: state.chatForm.chatMessages.model?.actualFuckingChat.totalTimeUsed,
+              users:state.chatForm.chatMessages.model.actualFuckingChat.users
             },
           },
         },

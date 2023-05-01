@@ -59,6 +59,7 @@ export class EditProfilePage
   //imagePreview!: File;
   fileToUpload!: File | null;
   url! : string;
+  isDone! : boolean | null;
   profile!: IUserProfile | null;
   
   @Select(ProfileState.profile) profile$!: Observable<IUserProfile | null>;
@@ -171,30 +172,21 @@ export class EditProfilePage
         const task = uploadBytesResumable(fileRef, this.fileToUpload);
 
         //What is the import for this fucking shit
-        task.on('state_changed' ,(snapshot) => {
-            console.log(snapshot);
-          }, (error) => {
-            console.log(error);
-          }, () => {
-            getDownloadURL(task.snapshot.ref).then(async downloadURL => {
-              console.log(downloadURL);
-              if(this.profile)
-                this.url = downloadURL;
-            })
-          }
-        ) 
- 
-          if(this.profile) {
-            // this.profile.bio = this.Bio;
-            console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-            console.log(this.profile)
-          }
+        this.url = await this.onUpload(this.fileToUpload)
+        this.isDone = true;
+          
       } catch (error) {
         console.error("Error uploading image", error);
+        this.isDone = true;
       }
     }
-  
-    if(this.profile)
+    
+    /*while(!this.isDone)
+    {
+      console.log("Still uploading");
+    }*/
+
+    if(this.profile && this.isDone && this.url != "fucked")
     {
       const sendProfile : IUserProfile = {
         userId: this.profile.userId,
@@ -223,14 +215,15 @@ export class EditProfilePage
 
   async onUpload(file: File) : Promise<string> {
     // Add your code to post the image here
-    console.log("In onUpload")
+    return new Promise((resolve) => {
+      console.log("In onUpload")
     if(!this.profile){
       throw new Error ("Log in pls");
     };
     const filePath = `/${this.profile.userId}/${file.name}`;
     const storage = getStorage();
     const fileRef = ref(storage, filePath);
-    // const task = this.storage.uploadByt(filePath, file);
+     //const task = this.storage.uploadByt(filePath, file);
     const task = uploadBytesResumable(fileRef, file);
 
     //What is the import for this fucking shit
@@ -241,10 +234,11 @@ export class EditProfilePage
       }, () => {
         getDownloadURL(task.snapshot.ref).then(async downloadURL => {
           console.log(downloadURL);
-          return downloadURL;
+          // return downloadURL;
+          resolve(downloadURL);
         })
       }
     ) 
-    return "fucked";
+    })
   }
 }

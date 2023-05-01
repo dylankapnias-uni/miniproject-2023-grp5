@@ -27,6 +27,10 @@ ICommandHandler<SubtractTimeCommand, ISubtractTimeResponse> {
         amount: -command.request.amount,
         date: Timestamp.fromDate(new Date())
       }};
+
+      
+      console.error("ERROR" + request.userId);
+      
     const settingsDoc = await this.repository.findOne(request.userId);
     const settingsData = settingsDoc.data();
 

@@ -4,7 +4,6 @@ import {
     ICreateChatListRequest,
     IFetchChatListRequest,
     AddChatCommand,
-    FetchChatListCommand,
     IAddChatResponse,
     IFetchChatListResponse,
     ICreateChatListResponse,
@@ -30,7 +29,7 @@ export class ChatListService {
         request: IFetchChatListRequest
         ): Promise<IFetchChatListResponse> {
         return await this.queryBus.execute<
-            FetchChatListCommand, 
+            FetchChatListQuery, 
             IFetchChatListResponse
         >(new FetchChatListQuery(request));
     }

@@ -4,7 +4,7 @@ import { SetError } from '@mp/app/errors/util';
 import { Register } from '@mp/app/register/util';
 import { Action, State, StateContext, Selector } from '@ngxs/store';
 import { GetMessages, SearchMessages, RemoveTime } from '@mp/app/messages/util';
-import { IChatReferences } from '@mp/api/chat-list/util';
+import { IChatReferences, IMuthaFuckingAppChatList } from '@mp/api/chat-list/util';
 import { Timestamp } from '@angular/fire/firestore';
 import { MessagesApi } from './messages.api';
 import { IUserProfile } from '@mp/api/users/util';
@@ -18,7 +18,7 @@ export interface MessagesStateModel {
   chatForm: {
     chatMessages:{
       model:{
-        chats: IChatReferences[] | null | undefined;
+        chats: IMuthaFuckingAppChatList | null | undefined;
         userList: IUserProfile[] | null | undefined;
       }
     }
@@ -57,6 +57,7 @@ export class MessagesState {
     }
     const response = await this.messagesApi.fetchChatList(request);
     const rsps = response.data;
+    console.error("HEre")
     console.table(response.data);
     ctx.patchState({
       chatForm: {
@@ -64,7 +65,7 @@ export class MessagesState {
         chatMessages: {
           model: {
             ...state.chatForm.chatMessages.model,
-            chats: rsps.chatList?.chatList,
+            chats: rsps.chatList,
           },
         },
       },
@@ -106,7 +107,12 @@ export class MessagesState {
 
 
   @Selector()
-  static messages(state: MessagesStateModel): IChatReferences[] | null | undefined{
+  static messages(state: MessagesStateModel): IMuthaFuckingAppChatList | null | undefined{
     return state.chatForm.chatMessages.model.chats;
+  }
+
+  @Selector()
+  static userList(state: MessagesStateModel): IUserProfile[] | null | undefined{
+    return state.chatForm.chatMessages.model.userList;
   }
 }
