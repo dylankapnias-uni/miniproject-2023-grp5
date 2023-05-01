@@ -44,7 +44,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build Project
-        run: yarn build:app:prod
+        run: yarn build:app:prod && yarn build:api:prod
 
       - name: Archive Build Artifact
         uses: actions/upload-artifact@v3
